@@ -8,10 +8,7 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%String username = (String)request.getAttribute("username");%>
-<jsp:useBean id="recentGame" class="beans.RecentGame" scope="request"/>
-<jsp:useBean id="recentLogbook" class="beans.RecentLogbook" scope="request"/>
 <jsp:useBean id="recentReview" class="beans.RecentReview" scope="request"/>
-<jsp:useBean id="gameInfo" class="beans.GameInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%@include file="header.jsp"%>
 <!-- Add code here -->
@@ -38,29 +35,6 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <%
-                                rank = 1;
-                                RecentGame recent = (RecentGame) recentGame.getGame(rank);
-                                while(rank <= cap && recent != null) {
-                            %>
-                            <tr>
-                                <td id="entry_small">
-                                    <form id="gameForm<%=rank%>" action="GameServlet" method="POST">
-                                        <input type="hidden" name="action" value="game">
-                                        <input type="hidden" name="username" value="<%=username%>">
-                                        <input type="hidden" name="gameid" value="<%=recent.getId()%>">
-                                        <a href="#" align="center" onclick="document.getElementById('gameForm<%=rank%>').submit();"><%=recent.getTitle()%></a>
-                                    </form>
-                                </td>
-                                <td id="entry_medium"><img src="<%=recent.getImage()%>" alt="No game image" id="entry_medium"/></td>
-                                <td id="entry_medium"><%=recent.getScore()%></td>
-                                <td id="entry_medium"><%=recent.getMembers()%></td>
-                            </tr>
-                            <%
-                                    rank++;
-                                    recent = (RecentGame) recentGame.getGame(rank);
-                                }
-                            %>
                         </tbody>
                     </table>
                 </div>
@@ -80,24 +54,13 @@
                             <%
                                 rank = 1;
                                 RecentReview review = (RecentReview) recentReview.getReview(rank);
-                                while(rank <= cap && recent != null) {
+                                while(rank <= cap && review != null) {
                             %>
                             <tr>
-                                <td id="entry_small">
-                                    <form id="gameForm<%=rank%>" action="GameServlet" method="POST">
-                                        <input type="hidden" name="action" value="game">
-                                        <input type="hidden" name="username" value="<%=username%>">
-                                        <input type="hidden" name="gameid" value="<%=recent.getId()%>">
-                                        <a href="#" align="center" onclick="document.getElementById('gameForm<%=rank%>').submit();"><%=recent.getTitle()%></a>
-                                    </form>
-                                </td>
-                                <td id="entry_medium"><img src="<%=recent.getImage()%>" alt="No game image" id="entry_medium"/></td>
-                                <td id="entry_medium"><%=recent.getScore()%></td>
-                                <td id="entry_medium"><%=recent.getMembers()%></td>
                             </tr>
                             <%
                                     rank++;
-                                    recent = (RecentGame) recentGame.getGame(rank);
+                                    review = (RecentReview) recentReview.getReview(rank);
                                 }
                             %>
                         </tbody>
