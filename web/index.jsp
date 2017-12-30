@@ -20,10 +20,18 @@
     int rank;
     int cap = 50;
 %>
-<div id="content">
+<div>
     <div class="container-fluid">
         <div class="row" align="left">
-            <div class="col-md-12 col-lg-6">
+            <!-- Ad Bar -->
+            <div class="hidden-xs col-sm-2">
+                <div style="background-color:black;height:100%;">
+                    Ad-Bar!
+                </div>
+            </div>
+            <!-- Content -->
+            <div id="content" class="col-xs-8">
+                <div class="col-xs-12 col-md-6">
                 <h1>Leaderboards</h1><br>
                 <div class="panel panel-default" align="center">
                     <table class="table table-bordered">
@@ -39,32 +47,39 @@
                     </table>
                 </div>
             </div>
-            <div class="col-md-12 col-lg-6">
-                <h1>Recent Reviews</h1><br>
-                <div class="panel panel-default" align="center">
-                    <table class="table table-bordered">
-                        <thead id="head_bar">
-                            <tr>
-                                <th>Card Name</th>
-                                <th>Username</th>
-                                <th>Review</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <%
-                                rank = 1;
-                                RecentReview review = (RecentReview) recentReview.getReview(rank);
-                                while(rank <= cap && review != null) {
-                            %>
-                            <tr>
-                            </tr>
-                            <%
-                                    rank++;
-                                    review = (RecentReview) recentReview.getReview(rank);
-                                }
-                            %>
-                        </tbody>
-                    </table>
+                <div class="col-xs-12 col-md-6">
+                    <h1>Recent Reviews</h1><br>
+                    <div class="panel panel-default" align="center">
+                        <table class="table table-bordered">
+                            <thead id="head_bar">
+                                <tr>
+                                    <th>Card Name</th>
+                                    <th>Username</th>
+                                    <th>Review</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <%
+                                    rank = 1;
+                                    RecentReview review = (RecentReview) recentReview.getReview(rank);
+                                    while(rank <= cap && review != null) {
+                                %>
+                                <tr>
+                                </tr>
+                                <%
+                                        rank++;
+                                        review = (RecentReview) recentReview.getReview(rank);
+                                    }
+                                %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- Ad Bar -->
+            <div class="hidden-xs col-sm-2">
+                <div style="background-color:black;height:100%;">
+                    Ad-Bar!
                 </div>
             </div>
         </div>

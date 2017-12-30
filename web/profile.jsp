@@ -4,8 +4,6 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
-<jsp:useBean id="logInfo" class="beans.Logbook" scope="request"/>
-<jsp:useBean id="gameInfo" class="beans.GameInfo" scope="request"/>
 <%
     String username;
     if((String)request.getAttribute("username") == null) {
@@ -16,7 +14,7 @@
     }
 %>
 <%@include file="header.jsp"%>
-<%UserInfo user = userInfo.getUser(username);%>
+<%UserInfo user = new UserInfo();%>
     <!-- Add code here -->
     <div id="content">
       <div class="container-fluid">
@@ -124,36 +122,9 @@
                     </tr>
                     </thead>
                       <%
-                        int logSize = (int) logInfo.getLogbookSize();
-                        int logid = 1;
-                        boolean foundGame = false;
-                        while(logid <= logSize) {
-                            Logbook entry = (Logbook) logInfo.getLog(logid);
-                            if((entry == null) && (foundGame == false) && (logid == logSize)) {
-                                %>No favorites!<%
-                                break;
-                            }
-                            if ((entry == null) || (entry.getIsFavorite() == 0) || (!entry.getUsername().equals(username))) {
-                                logid++;
-                                continue;
-                            }
-                            foundGame = true;
-                            GameInfo game = (GameInfo) gameInfo.getGameById(entry.getGameId());
                       %>
                     <tr>
-                        <td id="entry_medium">
-                            <form id="gameForm<%=logid%>" action="GameServlet" method="POST">
-                                <input type="hidden" name="action" value="game">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <input type="hidden" name="gameid" value="<%=game.getId()%>">
-                                <a href="#" align="center" onclick="document.getElementById('gameForm<%=logid%>').submit();"><%=game.getTitle()%></a>
-                            </form>
-                        </td>
-                        <td id="entry_medium"><img src="<%=game.getImage()%>" alt="<%=game.getTitle()%>" id="entry_medium"/></td>
-                        <td id="entry_medium_center"><span id="<%=entry.getScoreName()[0]%>"><%=entry.getScoreName()[1]%></span></td>
-                        <td id="entry_large"><%=game.getPlatform()%></td>
                     </tr>
-                    <%logid++;}%>
                         </tbody>
                       </table>
                 </div>
