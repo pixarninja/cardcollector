@@ -45,9 +45,9 @@
                 <input type="hidden" name="publisher" value="<%=request.getParameter("publisher")%>">
                 <input type="hidden" name="studio" value="<%=request.getParameter("studio")%>">
                 <input type="hidden" name="platform" value="<%=request.getParameter("platform")%>">
-                <input type="hidden" name="min_score" value="<%=request.getParameter("min_score")%>">
-                <input type="hidden" name="max_score" value="<%=request.getParameter("max_score")%>">
-                <input id="form_submit" type="submit" value="Previous 100 Games">
+                <input type="hidden" name="min-score" value="<%=request.getParameter("min-score")%>">
+                <input type="hidden" name="max-score" value="<%=request.getParameter("max-score")%>">
+                <input id="form-submit" type="submit" value="Previous 100 Games">
               </form>
             </div>
             <%}%>
@@ -64,16 +64,16 @@
                 <input type="hidden" name="publisher" value="<%=request.getParameter("publisher")%>">
                 <input type="hidden" name="studio" value="<%=request.getParameter("studio")%>">
                 <input type="hidden" name="platform" value="<%=request.getParameter("platform")%>">
-                <input type="hidden" name="min_score" value="<%=request.getParameter("min_score")%>">
-                <input type="hidden" name="max_score" value="<%=request.getParameter("max_score")%>">
-                <input id="form_submit" type="submit" value="Next 100 Games">
+                <input type="hidden" name="min-score" value="<%=request.getParameter("min-score")%>">
+                <input type="hidden" name="max-score" value="<%=request.getParameter("max-score")%>">
+                <input id="form-submit" type="submit" value="Next 100 Games">
               </form>
             </div>
             <%}%>
             <br><br><br>
             <div class="panel panel-default">
               <table class="table table-bordered">
-                <thead id="head_bar">
+                <thead id="head-bar">
                   <tr>
                     <th>Number</th>
                     <th>Title</th>
@@ -96,8 +96,8 @@
                           }
                   %>
                   <tr>
-                    <td id="entry_small"><%=count%></td>
-                    <td id="entry_medium">
+                    <td id="entry-small"><%=count%></td>
+                    <td id="entry-medium">
                         <form id="gameForm<%=count%>" action="GameServlet" method="POST">
                             <input type="hidden" name="action" value="game">
                             <input type="hidden" name="username" value="<%=username%>">
@@ -105,7 +105,7 @@
                             <a href="#" align="center" onclick="document.getElementById('gameForm<%=count%>').submit();"><%=game.getTitle()%></a>
                         </form>
                     </td>
-                    <td id="entry_medium"><img src="<%=game.getImage()%>" alt="No game image" id="entry_medium"/></td>
+                    <td id="entry-medium"><img src="<%=game.getImage()%>" alt="No game image" id="entry-medium"/></td>
                     <td>
                       <%
                         if(game.getDescription() == null) {
@@ -119,10 +119,10 @@
                         }
                       %>
                     </td>
-                    <td id="entry_medium"><%=game.getScore()%></td>
-                    <td id="entry_medium"><%=game.getMembers()%></td>
-                    <td id="entry_medium"><img src="<%=game.getEsrb()%>" alt="Unknown ESRB rating" id="entry_medium"/></td>
-                    <td id="entry_large"><%=game.getPlatform()%></td>
+                    <td id="entry-medium"><%=game.getScore()%></td>
+                    <td id="entry-medium"><%=game.getMembers()%></td>
+                    <td id="entry-medium"><img src="<%=game.getEsrb()%>" alt="Unknown ESRB rating" id="entry-medium"/></td>
+                    <td id="entry-large"><%=game.getPlatform()%></td>
                   </tr>
                   <%count++;}%>
                 </tbody>

@@ -39,7 +39,7 @@
             <h4>Please select a password shorter than 24 characters long</h4> <br>
             <%}%>
             <form id="changeUserForm" action="UserServlet" method="POST" enctype="multipart/form-data">
-              <input type="hidden" name="action" value="submit_edit">
+              <input type="hidden" name="action" value="submit-edit">
               <input type="hidden" name="username" value="<%=username%>">
               <table class="table">
                 <tr>
@@ -72,7 +72,7 @@
                   <th><textarea name="bio" form="changeUserForm" style="min-width: 100%;min-height: 250px;" placeholder="<%=user.getBio()%>"></textarea></th>
                 </tr>
               </table>
-            <input id="form_submit" type="submit" value="Submit Changes">
+            <input id="form-submit" type="submit" value="Submit Changes">
           </form>
           </div>
         </div>

@@ -14,123 +14,405 @@
     }
 %>
 <%@include file="header.jsp"%>
-<%UserInfo user = new UserInfo();%>
-    <!-- Add code here -->
-    <div id="content">
-      <div class="container-fluid">
-        <div class="col-xs-12">
-            <h1>Profile</h1><br>
-            <div class="col-xs-12 col-sm-3">
-                <h2>Profile Picture:</h2><br>
+<%
+    UserInfo user = userInfo.getUser(username);;
+    String picture;
+    if(user == null) {
+        picture = "images/blank_user.jpg";
+    }
+    else {
+        picture = user.getPicture();
+    }
+%>
+<!-- Content -->
+<div class="well row">
+    <div class="row">
+        <div class="col-xs-2 hidden-sm"></div>
+        <div class="col-xs-8 col-sm-12">
+            <h2 id="special-h2">Username</h2><br>
+        </div>
+        <div class="col-xs-2 hidden-sm"></div>
+    </div>
+    <div class="hidden-xs col-sm-12">
+        <div class="row">
+            <div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div>
+            <div class="col-xs-8 col-sm-4">
                 <h4>
-                <img width="100%" src="<%=user.getPicture()%>" alt="<%=user%>" id="center_img"></img>
-                <br><br>
-                <form id="editForm" action="GameServlet" method="POST">
-                  <input type="hidden" name="action" value="edit_profile">
-                  <input type="hidden" name="username" value="<%=username%>">
-                  <input id="form_submit" type="submit" value="Edit Information">
-                </form>
-                <br>
-                <form id="logbookForm2" action="GameServlet" method="POST">
-                  <input type="hidden" name="action" value="logbook">
-                  <input type="hidden" name="username" value="<%=username%>">
-                  <input id="form_submit" type="submit" value="Logbook">
-                </form>
+                    <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                    <br><br>
+                    <form id="editForm" action="UserServlet" method="POST">
+                        <input type="hidden" name="action" value="edit-profile">
+                        <input type="hidden" name="username" value="<%=username%>">
+                        <input id="form-submit" type="submit" value="Edit Information">
+                    </form>
+                    <br>
                 </h4>
             </div>
-            <div class="col-xs-12 col-sm-1"></div>
-            <div class="col-xs-12 col-sm-8">
-                <h2>Profile Information:</h2><br>
+            <div class="col-sm-1 hidden-lg"></div>
+            <div class="col-sm-7 col-lg-8">
+                <h3>Personal Information<hr></h3>
                 <h4>
-                <div class="row">
-                  <div class="col-xs-3">
                     <div class="row">
-                      <span id="strong">Name:</span>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right">Name:&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                Derp
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
                     </div>
-                  </div>
-                  <div class="col-xs-9">
                     <div class="row">
-                      <%=user.getName()%>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right">Email:&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
                     </div>
-                  </div>
-                  <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-3">
                     <div class="row">
-                      <span id="strong">Username:</span>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right">Age:&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
                     </div>
-                  </div>
-                  <div class="col-sx-9">
+                </h4>
+                <h3>Site Information<hr></h3>
+                <h4>
                     <div class="row">
-                      <%=user.getUsername()%>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right">Collections:&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
                     </div>
-                  </div>
-                  <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-3">
                     <div class="row">
-                      <strong>Email:</strong>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right">Decks:&nbsp;&nbsp;</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
                     </div>
-                  </div>
-                  <div class="col-xs-9">
-                    <div class="row">
-                      <%=user.getEmail()%>
-                    </div>
-                  </div>
-                  <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div class="row">
-                      <span id="strong">Age:</span>
-                    </div>
-                  </div>
-                  <div class="col-xs-9">
-                    <div class="row">
-                      <%=user.getAge()%>
-                    </div>
-                  </div>
-                  <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                  <div class="col-xs-3">
-                    <div class="row">
-                      <span id="strong">Bio:</span>
-                    </div>
-                  </div>
-                  <div class="col-xs-9">
-                    <div class="row">
-                      <%=user.getBio()%>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-xs-12"><br></div>
                 </h4>
             </div>
-            <div class="col-xs-12">
-                <h2>Favorites</h2><br>
-                <div class="panel panel-default" id="large_table">
-                  <table class="table table-bordered">
-                    <thead id="head_bar">
-                    <tr>
-                      <th>Name</th>
-                      <th>Image</th>
-                      <th>Score</th>
-                      <th>Platform</th>
-                    </tr>
-                    </thead>
-                      <%
-                      %>
-                    <tr>
-                    </tr>
-                        </tbody>
-                      </table>
-                </div>
+            <div class="col-sm-1"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>Favorites<hr></h3>
+                <h4>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="col-xs-1">
+                                <div class="row">
+                                    <span class="pull-right">Name:&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-11">
+                                <div class="row">
+                                    <%%>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-1">
+                                <div class="row">
+                                    <span class="pull-right">Cost:&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-11">
+                                <div class="row">
+                                    <%%>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                        </div>
+                    </div>
+                </h4>
+                <h3>Friends<hr></h3>
+                <h4>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="col-xs-1">
+                                <div class="row">
+                                    <span class="pull-right">Name:&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-11">
+                                <div class="row">
+                                    <%%>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-1">
+                                <div class="row">
+                                    <span class="pull-right">Cost:&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-11">
+                                <div class="row">
+                                    <%%>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                        </div>
+                    </div>
+                </h4>
+                <h3>History<hr></h3>
+                <h4>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="col-xs-1">
+                                <div class="row">
+                                    <span class="pull-right">Name:&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-11">
+                                <div class="row">
+                                    <%%>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-1">
+                                <div class="row">
+                                    <span class="pull-right">Cost:&nbsp;&nbsp;</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-11">
+                                <div class="row">
+                                    <%%>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                        </div>
+                    </div>
+                </h4>
             </div>
         </div>
-      </div>
     </div>
-  </body>
-</html>
+    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+        <div class="col-xs-2 hidden-sm hidden-md hidden-lg"></div>
+        <div class="col-xs-8 col-sm-4">
+            <h4>
+                <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                <br><br>
+                <form id="editForm" action="UserServlet" method="POST">
+                    <input type="hidden" name="action" value="edit-profile">
+                    <input type="hidden" name="username" value="<%=username%>">
+                    <input id="form-submit" type="submit" value="Edit Information">
+                </form>
+                <br>
+            </h4>
+        </div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-12"></div>
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <h3>Personal Information<hr></h3>
+            <h4>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <span class="pull-right"><strong>Name:</strong></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <%%>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <span class="pull-right"><strong>Email:</strong></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <%%>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <span class="pull-right"><strong>Age:</strong></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <%%>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+            </h4>
+            <h3>Site Information<hr></h3>
+            <h4>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <span class="pull-right"><strong>Collections:</strong></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <%%>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <div class="row">
+                            <span class="pull-right"><strong>Decks:</strong></span>
+                        </div>
+                    </div>
+                    <div class="col-xs-10">
+                        <div class="row">
+                            <%%>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+            </h4>
+            <h3>Favorites<hr></h3>
+            <h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right"><strong>Name:</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right"><strong>Cost:</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                </div>
+            </h4>
+            <h3>Friends<hr></h3>
+            <h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right"><strong>Name:</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right"><strong>Cost:</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                </div>
+            </h4>
+            <h3>History<hr></h3>
+            <h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right"><strong>Name:</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <span class="pull-right"><strong>Cost:</strong></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-10">
+                            <div class="row">
+                                <%%>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                </div>
+            </h4>
+        </div>
+        <div class="hidden-xs"></div>
+    </div>
+</div>
+<%@include file="footer.jsp"%>

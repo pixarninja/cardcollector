@@ -7,44 +7,74 @@
     }
 %>
 <%@include file="header.jsp"%>
-    <!-- Add code here -->
-    <div id="content">
-      <div class="container-fluid">
+<!-- Content -->
+<div class="well row">
+    <div class="col-xs-12 col-md-5">
+        <%if(username == null) {%>
         <div class="row">
-          <div class="col-xs-12 col-sm-6">
-            <%if(username == null) {%>
-            <h1>Login</h1> <br>
-            <h4>Fill out the fields below with your username and password in order to login and view/update your account information. If you are a new user, use the "Register" button below to create an account. If you forgot your password, use the "Forgot Password" button below to be send an email with instructions on how to recover your password. Have fun gaming!</h4> <br>
-            <%}%>
-            <%if(username != null && buffer.equals("error: invalid credentials")) {%>
-            <h1>Login Error: Invalid password combination</h1> <br>
-            <h4>Please re-enter your credentials below</h4> <br>
-            <%}%>
-            <%if(username != null && buffer.equals("error: user does not exist")) {%>
-            <h1>Login Error: User does not exist</h1> <br>
-            <h4>Please register as a new user to use that username</h4> <br>
-            <%}%>
-            <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: user does not exist")) {%>
-            <h1>Login</h1> <br>
-            <h4>You have been logged out. Fill out the fields below with your username and password in order to login and view/update your account information. If you are a new user, use the "Register" button below to create an account. If you forgot your password, use the "Forgot Password" button below to be send an email with instructions on how to recover your password. Have fun gaming!</h4> <br>
-            <%}%>
-          </div>
+            <h2>Login</h2> <br>
+            <h4>
+                Fill out the fields below with your username and password in order to login and view/update your account information. If you forgot your password, use the "Forgot Password" button below to be send an email with instructions on how to recover your password. Have fun gaming!
+            </h4><br>
         </div>
-        <div class="row">
-          <div class="col-xs-12 col-sm-6">
-            <form id="loginForm" action="UserServlet" method="POST">
-                <input type="hidden" name="action" value="validate">
-                <h4><strong>Username:</strong></h4>
-                <input name="username" type="text" size="24" required /> <br><br>
-                <h4><strong>Password:</strong></h4>
-                <input name="password" type="password" size="24" required /> <br><br>
-                <div align="right">
-                <input id="form_submit" type="submit" value="Login">
+        <%}%>
+        <%if(username != null && buffer.equals("error: invalid credentials")) {%>
+        <h1>Login Error: Invalid password combination</h1> <br>
+        <h4>Please re-enter your credentials below</h4> <br>
+        <%}%>
+        <%if(username != null && buffer.equals("error: user does not exist")) {%>
+        <h1>Login Error: User does not exist</h1> <br>
+        <h4>Please register as a new user to use that username</h4> <br>
+        <%}%>
+        <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: user does not exist")) {%>
+        <h1>Login</h1> <br>
+        <h4>You have been logged out. Fill out the fields below with your username and password in order to login and view/update your account information. If you are a new user, use the "Register" button below to create an account. If you forgot your password, use the "Forgot Password" button below to be send an email with instructions on how to recover your password. Have fun gaming!</h4> <br>
+        <%}%>
+        <form id="loginForm" action="UserServlet" method="POST">
+            <input type="hidden" name="action" value="validate">
+            <h4>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span class="pull-right">Username:&nbsp;&nbsp;</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="username" type="text" size="24" required /><br><br>
+                    </div>
                 </div>
-            </form>
-          </div>
-        </div>
-      </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <span class="pull-right">Password:&nbsp;&nbsp;</span>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="password" type="password" size="24" required /><br><br><br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="hidden-xs col-md-4"></div>
+                    <div class="col-xs-12 col-md-8">
+                        <input id="form-submit" type="submit" value="Login">
+                    </div>
+                </div>
+            </h4>
+        </form>
     </div>
-  </body>
-</html>
+    <div class="hidden-xs hidden-sm col-md-2" style="border-right: 1px solid white;position: relative;right: 85px;height: 70%;"></div>
+    <div class="col-xs-12 col-md-5">
+        <form id="registerForm" action="UserServlet" method="POST">
+            <div class="row">
+                <h2>Register</h2><br>
+                <h4>
+                    Don't have an account with us yet? Click below to register! Registration is free, and only requires a name, email, age, username, and password.<br><br><br>
+                </h4>
+                <div class="col-xs-12 col-md-8">
+                    <h4>
+                        <input type="hidden" name="action" value="register">
+                        <input id="form-submit" type="submit" value="Register">
+                    </h4>
+                </div>
+                <div class="hidden-xs col-md-4"></div>
+            </div>
+        </form>
+    </div>
+</div>
+<%@include file="footer.jsp"%>
