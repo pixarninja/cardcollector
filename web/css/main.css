@@ -13,7 +13,7 @@
     width: 100%;
     height: 3em;
     font-size : 16px;
-    background: linear-gradient(#758fff, #1a4a77, #06080c);
+    background: linear-gradient(#758fff, #0d2e4c);
     color: white;
     border: none;
 }
@@ -28,7 +28,7 @@
 }
 
 #menu-submit:hover, #form-submit:hover, #info-submit:hover {
-    background: linear-gradient(#758fff, #1a4a77);
+    background: #758fff;
     color: white;
 }
 
@@ -132,6 +132,15 @@
     height: 20px;
 }
 
+/* PLAYMAT */
+#playmat {
+    width: 100%;
+    height: 82%;
+    overflow: hidden;
+    background: darkgrey;
+    border: 1px solid white;
+}
+
 /* BODY */
 img {
     border: 1px solid white !important;
@@ -191,6 +200,26 @@ p {
 input {
     background-color: #4c4c57;
     color: white;
-    border: 5px solid #4c4c57;
+    border: 2px solid #4c4c57;
     font-size: 14px !important;
+}
+
+.deck-image {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.sleeves {
+    position: relative;
+    top: 15px;
+    left: 9px;
+    width: 90%;
+}
+
+.cover {
+    position: absolute;
+    top: -15px;
+    left: -9px;
+    width: 90%;
 }

@@ -39,7 +39,7 @@
             <input type="hidden" name="action" value="search">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="helpForm" action="CardServlet" method="POST">
+        <form id="helpForm" action="UserServlet" method="POST">
             <input type="hidden" name="action" value="help">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
