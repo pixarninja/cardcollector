@@ -18,11 +18,17 @@
 <%@include file="header.jsp"%>
 <%
     UserInfo user = userInfo.getUser(username);;
+    String cardImage;
+    String sleevesImage;
     String picture;
     if(user == null) {
+        cardImage = "images/magic_card_back_hd.png";
+        sleevesImage = "images/magic_card_back_hd.png";
         picture = "images/blank_user.jpg";
     }
     else {
+        cardImage = user.getPicture();
+        sleevesImage = user.getPicture();
         picture = user.getPicture();
     }
 %>
@@ -42,8 +48,8 @@
                 <div class="col-xs-8 col-sm-4">
                     <h4>
                         <div class="deck-image">
-                            <img class="sleeves" width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
-                            <img class="cover" width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
+                            <img class="sleeves" width="100%" src="<%=sleevesImage%>" alt="<%=sleevesImage%>" id="center-img"></img>
+                            <img class="cover" width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img>
                         </div>
                         <br><br><br>
                         <div class="col-xs-12 col-lg-6">
@@ -67,21 +73,37 @@
                 <div class="col-sm-1 hidden-lg"></div>
                 <div class="col-sm-7 col-lg-8">
                     <h3>Deck Title<hr></h3>
-                    <h4>
-                        <div id="containerId" class="col-sm-6 col-lg-3">
-                            <span onmouseover="reveal('imageId', 'containerId', event)" onmouseout="conceal('imageId')"><a href="#">Derp card x 2</a></span>
+                    <h4 id="capsule-1">
+                        <div id="container-1" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-1', 'arrow-right', 'container-1', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-1" href="#">Derp card x 2</a></span>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            Derp card x 2
+                        <div id="container-2" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-2', 'arrow-right', 'container-2', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-2" href="#">Derp card x 2</a></span>
                         </div>
                         <div class="col-sm-12 hidden-lg"><br></div>
-                        <div class="col-sm-6 col-lg-3">
-                            Derp card x 2
+                        <div id="container-3" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-3', 'arrow-right', 'container-3', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-3" href="#">Derp card x 2</a></span>
                         </div>
-                        <div class="col-sm-6 col-lg-3">
-                            Derp card x 2
+                        <div id="container-4" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-4', 'arrow-right', 'container-4', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-4" href="#">Derp card x 2</a></span>
                         </div>
-                        <img id="imageId" src="images/blank_user.jpg" href="#" style="display: none;"/>
+                        <div class="col-sx-12"><br>&nbsp;<br></div>
+                        <div id="container-5" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-5', 'arrow-right', 'container-5', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-5" href="#">Derp card x 2</a></span>
+                        </div>
+                        <div id="container-6" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-6', 'arrow-right', 'container-6', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-6" href="#">Derp card x 2</a></span>
+                        </div>
+                        <div class="col-sm-12 hidden-lg"><br></div>
+                        <div id="container-7" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-7', 'arrow-right', 'container-7', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-7" href="#">Derp card x 2</a></span>
+                        </div>
+                        <div id="container-8" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'text-8', 'arrow-right', 'container-8', 'capsule-1')" onmouseout="conceal('imageId', 'arrow-right')"><a id="text-8" href="#">Derp card x 2</a></span>
+                        </div>
+                        <div class="col-sx-12"><br></div>
+                        <img id="imageId" src="images/magic_card_back_hd.png" href="#" style="display: none;"/>
+                        <img id="arrow-right" class="img-noborder" src="images/right_arrow.png" href="#" style="display: none;"/>
                         <div class="col-sm-12 hidden-lg"><br></div>
                         <div class="col-sm-12 hidden-lg"><br></div>
                     </h4>

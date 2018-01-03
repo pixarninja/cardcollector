@@ -146,6 +146,10 @@ img {
     border: 1px solid white !important;
 }
 
+.img-noborder {
+    border: none !important;
+}
+
 h2 {
     color: #758fff !important;
     font-size: 28px !important;

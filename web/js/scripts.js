@@ -4,21 +4,37 @@ function refresh() {
     selectMana(-1);
 }
 
-function reveal(imageId, containerId, event) {
+function reveal(imageId, textId, arrowId, containerId, capsuleId) {
     var image = document.getElementById(imageId);
+    var text = document.getElementById(textId);
+    var arrow = document.getElementById(arrowId);
     var container = document.getElementById(containerId);
-    var xOffset = event.clientX - (container.clientWidth + 1);
-    var yOffset = event.clientY + (container.clientHeight + 1);
+    var capsule = document.getElementById(capsuleId);
+    
+    var rect = container.getBoundingClientRect();
+    var textRect = text.getBoundingClientRect();
+    var cap = capsule.getBoundingClientRect();
+    var xpos = rect.left - cap.left - container.clientWidth + 10;
+    var ypos = rect.top - cap.top - container.clientHeight;
+    var ycoor = textRect.bottom - cap.top - container.clientHeight;
     
     image.style.position = "absolute";
-    image.style.left = (event.clientX - xOffset) + "px";
-    image.style.top = (event.clientY - yOffset) + "px";
+    image.style.left = (xpos) + "px";
+    image.style.top = (ypos) + "px";
     image.style.display = "block";
     image.style.width = (container.clientWidth + 1) + "px";
+    
+    arrow.style.position = "absolute";
+    arrow.style.left = (xpos + container.clientWidth) + "px";
+    arrow.style.top = (ycoor + 85) + "px";
+    arrow.style.display = "block";
 }
 
-function conceal(imageId) {
+function conceal(imageId, arrowId) {
+    var arrow = document.getElementById(arrowId);
     var image = document.getElementById(imageId);
+    
+    arrow.style.display = "none";
     image.style.display = "none";
 }
 
