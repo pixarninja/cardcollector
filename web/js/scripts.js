@@ -1,32 +1,25 @@
-$(document).ready(function() {
-    var xOffset = 0;
-    var yOffset = 0;
-    var path = "/images/blank_user.jpg";
-    
-    $(".text-hover-image").hover(function(e) {
-        $("body").append("<p id='image-when-hovering-text'> Derp derp derp <img src='" + path + "'/></p>");
-        $("#image-when-hovering-text")
-                .css("position", "absolute")
-                .css("top", (e.pageY - yOffset) + "px")
-                .css("left", (e.pageX - xOffset) + "px")
-                .fadeIn("fast");
-    },
-    
-    function () {
-        $("#image-when-hovering-text").remove();
-    });
-    
-    $(".text-hover-image").mousemove(function(e) {
-        $("#image-when-hovering-text")
-                .css("top", (e.pageY - yOffset) + "px")
-                .css("left", (e.pageX - xOffset) + "px");
-    });
-});
-
 var mana = [false, false, false, false, false];
 
 function refresh() {
     selectMana(-1);
+}
+
+function reveal(imageId, containerId, event) {
+    var image = document.getElementById(imageId);
+    var container = document.getElementById(containerId);
+    var xOffset = event.clientX - (container.clientWidth + 1);
+    var yOffset = event.clientY + (container.clientHeight + 1);
+    
+    image.style.position = "absolute";
+    image.style.left = (event.clientX - xOffset) + "px";
+    image.style.top = (event.clientY - yOffset) + "px";
+    image.style.display = "block";
+    image.style.width = (container.clientWidth + 1) + "px";
+}
+
+function conceal(imageId) {
+    var image = document.getElementById(imageId);
+    image.style.display = "none";
 }
 
 function  selectMana(num) {

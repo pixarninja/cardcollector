@@ -214,12 +214,12 @@ input {
     position: relative;
     top: 15px;
     left: 9px;
-    width: 90%;
+    width: 85%;
 }
 
 .cover {
     position: absolute;
-    top: -15px;
-    left: -9px;
-    width: 90%;
+    top: -12px;
+    left: 0px;
+    width: 85%;
 }

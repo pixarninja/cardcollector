@@ -14,32 +14,7 @@
     }
 %>
 <script src="js/scripts.js"></script>
-<script>
-    $(document).ready(function() {
-        var xOffset = 0;
-        var yOffset = 0;
-        var path = "/images/blank_user.jpg";
-
-        $(".text-hover-image").hover(function(e) {
-            $("body").append("<p id='image-when-hovering-text'> Derp derp derp <img src='" + path + "'/></p>");
-            $("#image-when-hovering-text")
-                    .css("position", "absolute")
-                    .css("top", (e.pageY - yOffset) + "px")
-                    .css("left", (e.pageX - xOffset) + "px")
-                    .fadeIn("fast");
-        },
-
-        function () {
-            $("#image-when-hovering-text").remove();
-        });
-
-        $(".text-hover-image").mousemove(function(e) {
-            $("#image-when-hovering-text")
-                    .css("top", (e.pageY - yOffset) + "px")
-                    .css("left", (e.pageX - xOffset) + "px");
-        });
-    });
-</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <%@include file="header.jsp"%>
 <%
     UserInfo user = userInfo.getUser(username);;
@@ -93,8 +68,8 @@
                 <div class="col-sm-7 col-lg-8">
                     <h3>Deck Title<hr></h3>
                     <h4>
-                        <div class="col-sm-6 col-lg-3">
-                            <p><a class="text-hover-image" href="#">Derp card x 2</a></p>
+                        <div id="containerId" class="col-sm-6 col-lg-3">
+                            <span onmouseover="reveal('imageId', 'containerId', event)" onmouseout="conceal('imageId')"><a href="#">Derp card x 2</a></span>
                         </div>
                         <div class="col-sm-6 col-lg-3">
                             Derp card x 2
@@ -106,6 +81,7 @@
                         <div class="col-sm-6 col-lg-3">
                             Derp card x 2
                         </div>
+                        <img id="imageId" src="images/blank_user.jpg" href="#" style="display: none;"/>
                         <div class="col-sm-12 hidden-lg"><br></div>
                         <div class="col-sm-12 hidden-lg"><br></div>
                     </h4>
@@ -155,14 +131,14 @@
                 <h4>
                     <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
                     <br><br>
-                    <div class="col-xs-6">
+                    <div class="col-xs-12">
                         <form id="editForm" action="UserServlet" method="POST">
                             <input type="hidden" name="action" value="edit-profile">
                             <input type="hidden" name="username" value="<%=username%>">
                             <input id="form-submit" type="submit" value="Edit Deck">
                         </form>
                     </div>
-                    <div class="col-xs-6">
+                    <div class="col-xs-12">
                         <form id="editForm" action="UserServlet" method="POST">
                             <input type="hidden" name="action" value="edit-profile">
                             <input type="hidden" name="username" value="<%=username%>">
