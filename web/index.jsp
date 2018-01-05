@@ -22,48 +22,50 @@
 %>
 <!-- Content -->
 <div class="well row">
-    <div class="col-sm-12 col-md-6">
-        <h2 id="special-h2">Leaderboards</h2><br>
-        <div class="panel panel-default" align="center">
-            <table class="table table-bordered">
-                <thead id="head-bar">
-                    <tr>
-                        <th>Deck Title</th>
-                        <th>Username</th>
-                        <th>Win/Loss Ratio</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+    <div class="col-xs-12">
+        <div class="col-sm-12 col-md-6">
+            <h2 id="special-h2">Leaderboards</h2><br>
+            <div class="panel panel-default" align="center">
+                <table class="table table-bordered">
+                    <thead id="head-bar">
+                        <tr>
+                            <th>Deck Title</th>
+                            <th>Username</th>
+                            <th>Win/Loss Ratio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
-    <div class="col-sm-12 col-md-6">
-        <h2>Recent Reviews</h2><br>
-        <div class="panel panel-default" align="center">
-            <table class="table table-bordered">
-                <thead id="head-bar">
-                    <tr>
-                        <th>Card Name</th>
-                        <th>Username</th>
-                        <th>Review</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <%
-                        rank = 1;
-                        RecentReview review = (RecentReview) recentReview.getReview(rank);
-                        while(rank <= cap && review != null) {
-                    %>
-                    <tr>
-                    </tr>
-                    <%
-                            rank++;
-                            review = (RecentReview) recentReview.getReview(rank);
-                        }
-                    %>
-                </tbody>
-            </table>
+        <div class="col-sm-12 col-md-6">
+            <h2>Recent Reviews</h2><br>
+            <div class="panel panel-default" align="center">
+                <table class="table table-bordered">
+                    <thead id="head-bar">
+                        <tr>
+                            <th>Card Name</th>
+                            <th>Username</th>
+                            <th>Review</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            rank = 1;
+                            RecentReview review = (RecentReview) recentReview.getReview(rank);
+                            while(rank <= cap && review != null) {
+                        %>
+                        <tr>
+                        </tr>
+                        <%
+                                rank++;
+                                review = (RecentReview) recentReview.getReview(rank);
+                            }
+                        %>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

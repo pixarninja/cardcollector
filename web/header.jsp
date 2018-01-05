@@ -35,6 +35,10 @@
             <input type="hidden" name="action" value="playmat">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
+        <form id="selectedForm" action="UserServlet" method="POST">
+            <input type="hidden" name="action" value="selected">
+            <input type="hidden" name="username" value="<%=username%>">
+        </form>
         <form id="searchForm" action="SearchServlet" method="POST">
             <input type="hidden" name="action" value="search">
             <input type="hidden" name="username" value="<%=username%>">
@@ -94,6 +98,11 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (0)<hr>
+                                    </a>
+                                </li>
+                                <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login<hr>
                                     </a>
@@ -141,6 +150,11 @@
                                 <li>
                                     <a title="Advanced Search" href="#" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                                    </a>
+                                </li>
+                                <li>
+                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
                                     </a>
                                 </li>
                                 <li>
@@ -194,6 +208,11 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
+                                    </a>
+                                </li>
+                                <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>
                                     </a>
@@ -208,6 +227,6 @@
     <div class="container-fluid">
         <div class="row" align="left">
             <!-- Ad Bar -->
-            <div class="hidden-xs col-sm-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
-            <div class="hidden-xs col-sm-1"></div>
-            <div id="content" class="col-xs-12 col-sm-10" style="background-color: #06080c;background-repeat: repeat;min-height: 100%;">
+            <div class="col-xs-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
+            <div class="col-xs-1"></div>
+            <div id="content" class="col-xs-10" style="background-color: #06080c;background-repeat: repeat;min-height: 100%;">

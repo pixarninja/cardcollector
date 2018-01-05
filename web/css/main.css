@@ -13,7 +13,7 @@
     width: 100%;
     height: 3em;
     font-size : 16px;
-    background: linear-gradient(#758fff, #0d2e4c);
+    background: linear-gradient(#758fff, #0d324e);
     color: white;
     border: none;
 }
@@ -32,11 +32,11 @@
     color: white;
 }
 
-/* HEADER */
+/* HEADER AND FOOTER */
 .navbar-default {
     font-family: "Calibri";
     font-size : 18px;
-    background: linear-gradient(#06080c, #1a4a77, #758fff);
+    background: linear-gradient(#081824, #1a4a77, #758fff);
 }
 
 #custom-navbar a, #custom-navbar button {
@@ -59,6 +59,18 @@
 
 #search-bar {
     padding-top: 5px;
+}
+
+#footer {
+    padding-bottom: 20px;
+    font-family: 'Quicksand', sans-serif;
+    color: white;
+    font-size: 14px;
+}
+
+.footer-link, .footer-link:hover {
+    color: white !important;
+    text-decoration: none !important;
 }
 
 /* TABLE */
@@ -93,6 +105,11 @@
 
 #striped-table tr:nth-child(even){
     background-color: #f2f2f2;
+}
+
+.table-item {
+    display: block;
+    overflow-wrap: break-word;
 }
 
 /* MANA BUTTONS */
@@ -134,6 +151,7 @@
 
 /* PLAYMAT */
 #playmat {
+    color: black;
     width: 100%;
     height: 82%;
     overflow: hidden;
@@ -142,6 +160,18 @@
 }
 
 /* BODY */
+#in-line-hr {
+    position: relative;
+    left: -8px;
+    width: 98%;
+}
+
+#in-line-hr-big {
+    position: relative;
+    left: -15px;
+    width: 100%;
+}
+
 img {
     border: 1px solid white !important;
 }
@@ -181,8 +211,22 @@ p {
     font-family: 'Quicksand', sans-serif;
 }
 
+#content a {
+    color: #587bd7;
+    text-decoration: underline;
+}
+
+#content a:hover {
+    color: #758fff;
+    text-decoration: underline;
+}
+
 #input-field {
     width: 100%;
+    background-color: #4c4c57;
+    color: white;
+    border: 2px solid #4c4c57;
+    font-size: 14px !important;
 }
 
 #ad-bar {
@@ -201,13 +245,7 @@ p {
     background-attachment: fixed;
 }
 
-input {
-    background-color: #4c4c57;
-    color: white;
-    border: 2px solid #4c4c57;
-    font-size: 14px !important;
-}
-
+/* DECKS AND COLLECTIONS */
 .deck-image {
     position: relative;
     top: 0;
@@ -217,7 +255,7 @@ input {
 .sleeves {
     position: relative;
     top: 15px;
-    left: 9px;
+    left: 7px;
     width: 85%;
 }
 
@@ -226,4 +264,35 @@ input {
     top: -12px;
     left: 0px;
     width: 85%;
+}
+
+.collection-image {
+    position: relative;
+    top: 0;
+    left: 0;
+}
+
+.collect-back {
+    position: relative;
+    top: 40px;
+    left: 32px;
+    width: 70%;
+    opacity: 0.33;
+    filter: alpha(opacity=33);
+}
+
+.collect-mid {
+    position: absolute;
+    top: 15px;
+    left: 37px;
+    width: 70%;
+    opacity: 0.67;
+    filter: alpha(opacity=67);
+}
+
+.collect-fore {
+    position: absolute;
+    top: -12px;
+    left: 0px;
+    width: 70%;
 }

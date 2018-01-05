@@ -4,11 +4,14 @@
 <script src="js/scripts.js"></script>
 <!-- Add code here -->
 <div class="well row">
-    <div class = col-xs-12>
-        <h2>Advanced Search</h2><br>
-        <h4>
-            Fill in the fields below in order to search our database for cards, decks, or users. In order to search for multiple keywords of a single category, separate each query parameter with a '|' (vertical pipe) character.
-        </h4><br><br>
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <h2>Advanced Search</h2><br>
+            <h4>
+                Fill in the fields below in order to search our database for cards, decks, or users. In order to search for multiple keywords of a single category, separate each query parameter with a '|' (vertical pipe) character.
+                <br><br><br><hr>
+            </h4>
+        </div>
         <div class="col-xs-12 col-md-5">
             <h3>Cards<hr></h3>
             <form id="searchCardsForm" action="Servlet" method="POST">
@@ -16,7 +19,7 @@
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Order:&nbsp;&nbsp;</span>
+                        <p>Order</p>
                     </div>
                     <div class="col-xs-4">
                         <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
@@ -28,7 +31,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Rarity:&nbsp;&nbsp;</span>
+                        <p>Rarity</p>
                     </div>
                     <div class="col-xs-4">
                         <input name="common" type="checkbox">&nbsp;Common
@@ -49,7 +52,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Search:&nbsp;&nbsp;</span>
+                        <p>Search</p>
                     </div>
                     <div class="col-xs-4">
                         <input name="name" type="checkbox">&nbsp;Name
@@ -67,7 +70,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Text:&nbsp;&nbsp;</span>
+                        <p>Text</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="query" type="text">
@@ -76,7 +79,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Mana Color:&nbsp;&nbsp;</span>
+                        <p>Mana Color</p>
                     </div>
                     <div class="col-xs-8">
                         <div class="row">
@@ -92,7 +95,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Mana Cost:&nbsp;&nbsp;</span>
+                        <p>Mana Cost</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="cost" type="text">
@@ -101,7 +104,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Card Type:&nbsp;&nbsp;</span>
+                        <p>Card Type</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="type" type="text"><br><br>
@@ -109,7 +112,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Edition:&nbsp;&nbsp;</span>
+                        <p>Edition</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="edition" type="text">
@@ -118,7 +121,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Min Power:&nbsp;&nbsp;</span>
+                        <p>Min Power</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="min power" type="text"><br><br>
@@ -126,7 +129,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Max Power:&nbsp;&nbsp;</span>
+                        <p>Max Power</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="max power" type="text"><br><br>
@@ -134,7 +137,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Min Toughness:&nbsp;&nbsp;</span>
+                        <p>Min Toughness</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="min toughness" type="text"><br><br>
@@ -142,7 +145,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Max Toughness:&nbsp;&nbsp;</span>
+                        <p>Max Toughness</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="max toughness" type="text">
@@ -151,7 +154,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Card Artist:&nbsp;&nbsp;</span>
+                        <p>Card Artist</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="artist" type="text"><br><br>
@@ -159,22 +162,20 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Year:&nbsp;&nbsp;</span>
+                        <p>Year</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="year" type="text">
+                        <input id="input-field" name="year" type="text"><br><br>
                     </div>
-                    <div class="col-xs-12"><hr></div>
                 </div>
                 <br>
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <input id="form-submit" type="submit" value="Search Cards">
+                        <input id="form-submit" type="submit" value="Search Cards"><br><br><br>
                     </div>
                 </div>
             </form>
-            <br>
         </div>
         <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 10px;height: 169%;"></div>
         <div class="col-xs-12 col-md-5">
@@ -184,7 +185,19 @@
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Deck Title:&nbsp;&nbsp;</span>
+                        <p>Order</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="order" type="radio" value="dsc" > Descending
+                    </div>
+                    <div class="col-xs-12"><hr></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Deck Title</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="username" type="text">
@@ -193,7 +206,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Containing:&nbsp;&nbsp;</span>
+                        <p>Containing</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="name" type="text">
@@ -202,12 +215,11 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Creator:&nbsp;&nbsp;</span>
+                        <p>Creator (Username)</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="age" type="text">
+                        <input id="input-field" name="age" type="text"><br><br>
                     </div>
-                    <div class="col-xs-12"><hr></div>
                 </div>
                 <br>
                 <div class="row">
@@ -223,7 +235,19 @@
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Username:&nbsp;&nbsp;</span>
+                        <p>Order</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="order" type="radio" value="dsc" > Descending
+                    </div>
+                    <div class="col-xs-12"><hr></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Username</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="username" type="text">
@@ -232,7 +256,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Name:&nbsp;&nbsp;</span>
+                        <p>Name</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="name" type="text">
@@ -241,7 +265,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <span class="pull-right">Age:&nbsp;&nbsp;</span>
+                        <p>Age</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="age" type="text">
@@ -252,7 +276,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <input id="form-submit" type="submit" value="Search Users">
+                        <input id="form-submit" type="submit" value="Search Users"><br><br>
                     </div>
                 </div>
             </form>
