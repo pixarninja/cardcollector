@@ -10,7 +10,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>DeckBox</title>
+        <title>Card Collector</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -19,23 +19,23 @@
             <input type="hidden" name="action" value="index">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="collectionsForm" action="CardServlet" method="POST">
-            <input type="hidden" name="action" value="collections">
+        <form id="yourCollectionsForm" action="CollectionServlet" method="POST">
+            <input type="hidden" name="action" value="your_collections">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="decksForm" action="CardServlet" method="POST">
-            <input type="hidden" name="action" value="decks">
+        <form id="yourDecksForm" action="DeckServlet" method="POST">
+            <input type="hidden" name="action" value="your_decks">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
         <form id="profileForm" action="UserServlet" method="POST">
             <input type="hidden" name="action" value="profile">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="playmatForm" action="CardServlet" method="POST">
+        <form id="playmatForm" action="PlaymatServlet" method="POST">
             <input type="hidden" name="action" value="playmat">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="selectedForm" action="UserServlet" method="POST">
+        <form id="selectedForm" action="SelectionServlet" method="POST">
             <input type="hidden" name="action" value="selected">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
@@ -63,17 +63,17 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" onclick="document.getElementById('indexForm').submit();">DECKBOX</a>
+                            <a href="#" class="navbar-brand" style="position: relative; top: 2px;font-size: 32px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a title="Your Collections" href="#" onclick="document.getElementById('collectionsForm').submit();">
+                                    <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
                                         <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Your Collections<hr>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Decks" href="#" onclick="document.getElementById('decksForm').submit();">
+                                    <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
                                         <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Your Decks<hr>
                                     </a>
                                 </li>
@@ -82,11 +82,13 @@
                                         <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Your Profile<hr>
                                     </a>
                                 </li>
+                                <!--
                                 <li>
                                     <a title="Playmat" href="#" onclick="document.getElementById('playmatForm').submit();">
                                         <span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Playmat<hr>
                                     </a>
                                 </li>
+                                -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
                                         <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Help<hr>
@@ -99,7 +101,7 @@
                                 </li>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (0)<hr>
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (8)<hr>
                                     </a>
                                 </li>
                                 <li>
@@ -116,50 +118,52 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" onclick="document.getElementById('indexForm').submit();">DECKBOX</a>
+                            <a href="#" class="navbar-brand" style="position: relative; top: 0px;font-size: 22px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="small-icon"></span>Collector</a>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a title="Your Collections" href="#" onclick="document.getElementById('collectionsForm').submit();">
-                                        <span class="glyphicon glyphicon-book"></span>&nbsp;Collections
+                                    <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                        <span class="glyphicon glyphicon-book" id="small-icon"></span>&nbsp;Collections
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Decks" href="#" onclick="document.getElementById('decksForm').submit();">
-                                        <span class="glyphicon glyphicon-inbox"></span>&nbsp;Decks
+                                    <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
+                                        <span class="glyphicon glyphicon-inbox" id="small-icon"></span>&nbsp;Decks
                                     </a>
                                 </li>
                                 <li>
                                     <a title="Your Profile" href="#" onclick="document.getElementById('profileForm').submit();">
-                                        <span class="glyphicon glyphicon-user"></span>&nbsp;Profile
+                                        <span class="glyphicon glyphicon-user" id="small-icon"></span>&nbsp;Profile
                                     </a>
                                 </li>
+                                <!--
                                 <li>
                                     <a title="Playmat" href="#" onclick="document.getElementById('playmatForm').submit();">
-                                        <span class="glyphicon glyphicon-knight"></span>&nbsp;Playmat
+                                        <span class="glyphicon glyphicon-knight" id="small-icon"></span>&nbsp;Playmat
                                     </a>
                                 </li>
+                                -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp;Help
+                                        <span class="glyphicon glyphicon-info-sign" id="small-icon"></span>&nbsp;Help
                                     </a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <a title="Advanced Search" href="#" onclick="document.getElementById('searchForm').submit();">
-                                        <span class="glyphicon glyphicon-search"></span>&nbsp;Search
+                                        <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;Search
                                     </a>
                                 </li>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
+                                        <span class="glyphicon glyphicon-piggy-bank" id="small-icon"></span>&nbsp;&nbsp;(8)
                                     </a>
                                 </li>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
-                                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;Login
+                                        <span class="glyphicon glyphicon-log-in" id="small-icon"></span>&nbsp;Login
                                     </a>
                                 </li>
                             </ul>
@@ -171,17 +175,17 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" onclick="document.getElementById('indexForm').submit();">DECKBOX</a>
+                            <a href="#" class="navbar-brand" style="position: relative; top: 0px;font-size: 26px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="medium-icon"></span>Collector</a>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a title="Your Collections" href="#" onclick="document.getElementById('collectionsForm').submit();">
+                                    <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
                                         <span class="glyphicon glyphicon-book"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Decks" href="#" onclick="document.getElementById('decksForm').submit();">
+                                    <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
                                         <span class="glyphicon glyphicon-inbox"></span>
                                     </a>
                                 </li>
@@ -190,11 +194,13 @@
                                         <span class="glyphicon glyphicon-user"></span>
                                     </a>
                                 </li>
+                                <!--
                                 <li>
                                     <a title="Playmat" href="#" onclick="document.getElementById('playmatForm').submit();">
                                         <span class="glyphicon glyphicon-knight"></span>
                                     </a>
                                 </li>
+                                -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
                                         <span class="glyphicon glyphicon-info-sign"></span>
@@ -209,7 +215,7 @@
                                 </li>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
                                     </a>
                                 </li>
                                 <li>

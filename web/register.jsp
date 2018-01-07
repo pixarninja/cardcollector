@@ -17,8 +17,8 @@
                     <%if(username == null) {%>
                     <p>Fill out the fields below with a chosen username and password in order to register for an account.</p>
                     <br><br><hr>
+                    <%}%>
                 </h4>
-                <%}%>
                 <%if(username != null && buffer.equals("error: password mismatch")) {%>
                 <h2>Registration Error: The passwords you entered don't match</h2>
                 <h4>Please re-enter your information below</h4>
@@ -93,7 +93,6 @@
                                 Choose a password less than 24 characters long.<br><br>
                                 <input id="input-field" name="password" type="text" required><br><br>
                             </div>
-                            <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">

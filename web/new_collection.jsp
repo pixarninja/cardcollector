@@ -31,67 +31,63 @@
 <div class="row">
     <div class="well col-xs-12 col-sm-8">
         <div class="col-xs-12">
-            <h2>Create New Collection</h2><br>
-            <h4>
-                <p>If you would like to create a new collection, fill out the fields below and click the "Create Collection" button. You must give a title to the collection and specify if the collection is a child of another (a child collection can only hold items that are also in its parent).</p>
-                <br><br><hr>
-            </h4>
-        </div>
-        <div class="col-xs-12">
-            <h4>
-                <form id="newCollectionForm" action="UserServlet" method="POST">
-                    <input type="hidden" name="action" value="submit_new_collection">
-                    <input type="hidden" name="username" value="<%=username%>">
-                    <div class="row">
-                        <div class="col-xs-5 col-sm-4">
-                            <p>Collection Title</p>
-                        </div>
-                        <div class="col-xs-7 col-xs-8">
-                            Please enter the title of the collection.<br><br>
-                            <input id="input-field" name="title" type="text" required>
-                        </div>
-                        <div class="col-xs-12"><hr></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-5 col-sm-4">
-                            <p>Collection Description</p>
-                        </div>
-                        <div class="col-xs-7 col-sm-8">
-                            You may enter a description for this collection.<br><br>
-                            <textarea id="input-field" name="description" style="width: 100%;min-height: 60px;"></textarea>
-                        </div>
-                        <div class="col-xs-12"><hr></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4">
-                            <p>Collection Source</p>
-                        </div>
-                        <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                        <div class="col-xs-12 col-sm-8">
-                            Choose a source for the collection. If the collection does not depend on another collection, select "Independent". If the collection must contain items from another collection, select "Child Of" and choose the name of the parent collection from the drop-down list.<br><br>
-                            <div class="col-xs-12">
-                                <input name="source" type="radio" value="independent" checked> Independent
+            <div class="col-xs-12">
+                <h2>Create New Collection</h2><br>
+                <h4>
+                    <p>If you would like to create a new collection, fill out the fields below and click the "Create Collection" button. You must give a title to the collection and specify if the collection is a child of another (a child collection can only hold items that are also in its parent).</p>
+                    <br><br><hr>
+                </h4>
+            </div>
+            <div class="col-xs-12">
+                <h4>
+                    <form id="newCollectionForm" action="CollectionServlet" method="POST">
+                        <input type="hidden" name="action" value="create">
+                        <input type="hidden" name="username" value="<%=username%>">
+                        <div class="row">
+                            <div class="col-xs-5 col-sm-4">
+                                <p>Collection Title</p>
                             </div>
-                            <div class="col-xs-12"><br></div>
-                            <div class="col-xs-6">
-                                <input name="source" type="radio" value="child" > Child Of
+                            <div class="col-xs-7 col-xs-8">
+                                Please enter the title of the collection.<br><br>
+                                <input id="input-field" name="title" type="text" required>
                             </div>
-                            <div class="col-xs-6">
-                                <select id="input-field">
-                                    <option value="wishlist">Wishlist</option>
-                                </select><br><br><br>
+                            <div class="col-xs-12"><hr></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5 col-sm-4">
+                                <p>Collection Description</p>
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                You may enter a description for this collection.<br><br>
+                                <textarea id="input-field" name="description" style="width: 100%;min-height: 60px;"></textarea>
+                            </div>
+                            <div class="col-xs-12"><hr></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4">
+                                <p>Collection Source</p>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8">
+                                Choose a source for the collection. If the collection does not depend on another collection, select "Independent". If the collection must contain items from another collection, select "Child Of" and choose the name of the parent collection from the drop-down list.<br><br>
+                                <div class="col-xs-12">
+                                    <input name="source" type="radio" value="independent" checked> Independent
+                                </div>
+                                <div class="col-xs-12"><br></div>
+                                <div class="col-xs-6">
+                                    <input name="source" type="radio" value="child" > Child Of
+                                </div>
+                                <div class="col-xs-6">
+                                    <select id="input-field">
+                                        <option value="wishlist">Wishlist</option>
+                                    </select><br><br><br>
+                                </div>
+                                <input id="form-submit" type="submit" value="Create Collection"><br><br><br>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="hidden-xs col-md-4"></div>
-                        <div class="col-xs-12 col-md-8">
-                            <input id="form-submit" type="submit" value="Create Collection">
-                        </div>
-                    </div>
-                </form>
-                <div class="col-xs-12"><br></div>
-            </h4>
+                    </form>
+                </h4>
+            </div>
         </div>
     </div>
 </div>

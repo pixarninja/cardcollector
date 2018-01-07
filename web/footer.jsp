@@ -1,31 +1,33 @@
-                        <p id="footer"><a href="#" class="footer-link" onclick="document.getElementById('indexForm').submit();">DeckBox</a>
+                        <p id="footer"><a href="#" class="footer-link" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="mini-icon"></span>Collector</a>
                             &nbsp;&nbsp;|&nbsp;
-                            <a title="Your Collections" href="#" class="footer-link" onclick="document.getElementById('collectionsForm').submit();">
-                                <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Your Collections
+                            <a title="Your Collections" href="#" class="footer-link" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Collections
                             </a>
                             &nbsp;&nbsp;|&nbsp;
-                            <a title="Your Decks" href="#" class="footer-link" onclick="document.getElementById('decksForm').submit();">
-                                <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Your Decks
+                            <a title="Your Decks" href="#" class="footer-link" onclick="document.getElementById('yourDecksForm').submit();">
+                                <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Decks
                             </a>
                             &nbsp;&nbsp;|&nbsp;
                             <a title="Your Profile" href="#" class="footer-link" onclick="document.getElementById('profileForm').submit();">
-                                <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Your Profile
+                                <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Profile
                             </a>
                             &nbsp;&nbsp;|&nbsp;
+                            <!--
                             <a title="Playmat" href="#" class="footer-link" onclick="document.getElementById('playmatForm').submit();">
                                 <span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Playmat
                             </a>
                             &nbsp;&nbsp;|&nbsp;
+                            -->
                             <a title="Help" href="#" class="footer-link" onclick="document.getElementById('helpForm').submit();">
                                 <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Help
                             </a>
                             &nbsp;&nbsp;|&nbsp;
                             <a title="Advanced Search" href="#" class="footer-link" onclick="document.getElementById('searchForm').submit();">
-                                <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Advanced Search
+                                <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search
                             </a>
                             &nbsp;&nbsp;|&nbsp;
                             <a title="Selected Items" href="#" class="footer-link" onclick="document.getElementById('selectedForm').submit();">
-                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
+                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
                             </a>
                             &nbsp;&nbsp;|&nbsp;
                             <a title="Login" href="#" class="footer-link" onclick="document.getElementById('loginForm').submit();">

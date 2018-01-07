@@ -14,8 +14,8 @@
         </div>
         <div class="col-xs-12 col-md-5">
             <h3>Cards<hr></h3>
-            <form id="searchCardsForm" action="Servlet" method="POST">
-                <input type="hidden" name="action" value="games">
+            <form id="searchCardsForm" action="SearchServlet" method="POST">
+                <input type="hidden" name="action" value="cards">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
@@ -70,7 +70,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Text</p>
+                        <p>Search Text</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="query" type="text">
@@ -84,11 +84,11 @@
                     <div class="col-xs-8">
                         <div class="row">
                             <div class="col-xs-1"></div>
-                            <div class="col-xs-2" title="White Mana" id="white-mana" onclick=selectMana(0);></div>
-                            <div class="col-xs-2" title="Blue Mana" id="blue-mana" onclick=selectMana(1);></div>
-                            <div class="col-xs-2" title="Black Mana" id="black-mana" onclick=selectMana(2);></div>
-                            <div class="col-xs-2" title="Red Mana" id="red-mana" onclick=selectMana(3);></div>
-                            <div class="col-xs-2" title="Green Mana" id="green-mana" onclick=selectMana(4);></div>
+                            <div class="col-xs-2" title="White Mana" id="white-mana-1" onclick="selectMana('white-mana-1', 0);"></div>
+                            <div class="col-xs-2" title="Blue Mana" id="blue-mana-1" onclick="selectMana('blue-mana-1', 1);"></div>
+                            <div class="col-xs-2" title="Black Mana" id="black-mana-1" onclick="selectMana('black-mana-1', 2);"></div>
+                            <div class="col-xs-2" title="Red Mana" id="red-mana-1" onclick="selectMana('red-mana-1', 3);"></div>
+                            <div class="col-xs-2" title="Green Mana" id="green-mana-1" onclick="selectMana('green-mana-1', 4);"></div>
                         </div>
                     </div>
                     <div class="col-xs-12"><br></div>
@@ -98,7 +98,7 @@
                         <p>Mana Cost</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="cost" type="text">
+                        <input id="input-field-alt" name="cost" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -177,11 +177,11 @@
                 </div>
             </form>
         </div>
-        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 10px;height: 169%;"></div>
+        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 20px;height: 193%;"></div>
         <div class="col-xs-12 col-md-5">
             <h3>Decks<hr></h3>
             <form id="searchDecksForm" action="SearchServlet" method="POST">
-                <input type="hidden" name="action" value="users">
+                <input type="hidden" name="action" value="decks">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
@@ -215,6 +215,22 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
+                        <p>Mana Color</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-2" title="White Mana" id="white-mana-2" onclick="selectMana('white-mana-2', 0);"></div>
+                            <div class="col-xs-2" title="Blue Mana" id="blue-mana-2" onclick="selectMana('blue-mana-2', 1);"></div>
+                            <div class="col-xs-2" title="Black Mana" id="black-mana-2" onclick="selectMana('black-mana-2', 2);"></div>
+                            <div class="col-xs-2" title="Red Mana" id="red-mana-2" onclick="selectMana('red-mana-2', 3);"></div>
+                            <div class="col-xs-2" title="Green Mana" id="green-mana-2" onclick="selectMana('green-mana-2', 4);"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
                         <p>Creator (Username)</p>
                     </div>
                     <div class="col-xs-8">
@@ -226,6 +242,72 @@
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
                         <input id="form-submit" type="submit" value="Search Decks">
+                    </div>
+                </div>
+            </form><br>
+            <h3>Collections<hr></h3>
+            <form id="searchCollectionsForm" action="SearchServlet" method="POST">
+                <input type="hidden" name="action" value="collections">
+                <input type="hidden" name="username" value="<%=username%>">
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Order</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="order" type="radio" value="dsc" > Descending
+                    </div>
+                    <div class="col-xs-12"><hr></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Collection Title</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="username" type="text">
+                    </div>
+                    <div class="col-xs-12"><hr></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Containing</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="name" type="text">
+                    </div>
+                    <div class="col-xs-12"><hr></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Mana Color</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-xs-1"></div>
+                            <div class="col-xs-2" title="White Mana" id="white-mana-3" onclick="selectMana('white-mana-3', 0);"></div>
+                            <div class="col-xs-2" title="Blue Mana" id="blue-mana-3" onclick="selectMana('blue-mana-3', 1);"></div>
+                            <div class="col-xs-2" title="Black Mana" id="black-mana-3" onclick="selectMana('black-mana-3', 2);"></div>
+                            <div class="col-xs-2" title="Red Mana" id="red-mana-3" onclick="selectMana('red-mana-3', 3);"></div>
+                            <div class="col-xs-2" title="Green Mana" id="green-mana-3" onclick="selectMana('green-mana-3', 4);"></div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Creator (Username)</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="age" type="text"><br><br>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="hidden-xs col-md-4"></div>
+                    <div class="col-xs-12 col-md-8">
+                        <input id="form-submit" type="submit" value="Search Collections">
                     </div>
                 </div>
             </form><br>
@@ -251,24 +333,6 @@
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="username" type="text">
-                    </div>
-                    <div class="col-xs-12"><hr></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <p>Name</p>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="input-field" name="name" type="text">
-                    </div>
-                    <div class="col-xs-12"><hr></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <p>Age</p>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="input-field" name="age" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>

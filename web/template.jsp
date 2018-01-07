@@ -15,7 +15,7 @@
 %>
 <%@include file="header.jsp"%>
 <%
-    UserInfo user = userInfo.getUser(username);;
+    UserInfo user = userInfo.getUser(username);
     String cardImage;
     String picture;
     if(user == null) {
@@ -34,7 +34,7 @@
             <h2>Title</h2><br>
             <h4>
                 <p>Description</p>
-                <br><br><hr><br><br>
+                <br><br><hr>
             </h4>
         </div>
         <div class="col-xs-12">
