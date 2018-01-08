@@ -1,5 +1,16 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%String username = request.getParameter("username");%>
+<%
+    String username;
+    if((String)request.getAttribute("username") == null) {
+        username = request.getParameter("username");
+    }
+    else {
+        username = (String)request.getAttribute("username");
+    }
+    if(username == null || username.equals("null")) {
+        username = "";
+    }
+%>
 <%@include file="header.jsp"%>
 <script src="js/scripts.js"></script>
 <!-- Add code here -->

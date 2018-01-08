@@ -26,13 +26,25 @@
                                 <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search
                             </a>
                             &nbsp;&nbsp;|&nbsp;
+                            <%if(username == null || username.equals("")) {%>
+                            <a title="Selected Items" href="#" class="footer-link" onclick="document.getElementById('selectedForm').submit();">
+                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
+                            </a>
+                            <%} else {%>
                             <a title="Selected Items" href="#" class="footer-link" onclick="document.getElementById('selectedForm').submit();">
                                 <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
                             </a>
+                            <%}%>
                             &nbsp;&nbsp;|&nbsp;
+                            <%if(username == null || username.equals("")) {%>
                             <a title="Login" href="#" class="footer-link" onclick="document.getElementById('loginForm').submit();">
                                 <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
                             </a>
+                            <%} else {%>
+                            <a title="Logout" href="#" class="footer-link" onclick="document.getElementById('logoutForm').submit();">
+                                <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
+                            </a>
+                            <%}%>
                             <span style="float: right;">Copyright 2018</span><p>
                     </div>
                     <!-- Ad Bar -->

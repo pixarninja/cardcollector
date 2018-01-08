@@ -11,8 +11,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Card Collector</title>
-        <link rel="shortcut icon" href="cardcollector.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
-        <link rel="icon" href="cardcollector.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="http://cardcollector.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
+        <link rel="icon" href="http://cardcollector.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -51,7 +51,9 @@
         </form>
         <form id="loginForm" action="UserServlet" method="POST">
             <input type="hidden" name="action" value="login">
-            <input type="hidden" name="username" value="<%=username%>">
+        </form>
+        <form id="logoutForm" action="UserServlet" method="POST">
+            <input type="hidden" name="action" value="logout">
         </form>
     </head>
     <body onload="refresh();">
@@ -101,16 +103,32 @@
                                         <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Advanced Search<hr>
                                     </a>
                                 </li>
+                                <%if(username == null || username.equals("")) {%>
+                                <li>
+                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (0)<hr>
+                                    </a>
+                                </li>
+                                <%} else {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
                                         <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (8)<hr>
                                     </a>
                                 </li>
+                                <%}%>
+                                <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login<hr>
                                     </a>
                                 </li>
+                                <%} else {%>
+                                <li>
+                                    <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+                                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout<hr>
+                                    </a>
+                                </li>
+                                <%}%>
                             </ul>
                         </div>
                     </div>
@@ -126,17 +144,17 @@
                             <ul class="nav navbar-nav">
                                 <li>
                                     <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
-                                        <span class="glyphicon glyphicon-book" id="small-icon"></span>&nbsp;Collections
+                                        <span class="glyphicon glyphicon-book" id="small-icon"></span>&nbsp;&nbsp;Collections
                                     </a>
                                 </li>
                                 <li>
                                     <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
-                                        <span class="glyphicon glyphicon-inbox" id="small-icon"></span>&nbsp;Decks
+                                        <span class="glyphicon glyphicon-inbox" id="small-icon"></span>&nbsp;&nbsp;Decks
                                     </a>
                                 </li>
                                 <li>
                                     <a title="Your Profile" href="#" onclick="document.getElementById('profileForm').submit();">
-                                        <span class="glyphicon glyphicon-user" id="small-icon"></span>&nbsp;Profile
+                                        <span class="glyphicon glyphicon-user" id="small-icon"></span>&nbsp;&nbsp;Profile
                                     </a>
                                 </li>
                                 <!--
@@ -148,14 +166,14 @@
                                 -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-info-sign" id="small-icon"></span>&nbsp;Help
+                                        <span class="glyphicon glyphicon-info-sign" id="small-icon"></span>&nbsp;&nbsp;Help
                                     </a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
                                     <a title="Advanced Search" href="#" onclick="document.getElementById('searchForm').submit();">
-                                        <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;Search
+                                        <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;&nbsp;Search
                                     </a>
                                 </li>
                                 <li>
@@ -163,11 +181,19 @@
                                         <span class="glyphicon glyphicon-piggy-bank" id="small-icon"></span>&nbsp;&nbsp;(8)
                                     </a>
                                 </li>
+                                <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
-                                        <span class="glyphicon glyphicon-log-in" id="small-icon"></span>&nbsp;Login
+                                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
                                     </a>
                                 </li>
+                                <%} else {%>
+                                <li>
+                                    <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+                                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
+                                    </a>
+                                </li>
+                                <%}%>
                             </ul>
                         </div>
                     </div>
@@ -220,11 +246,19 @@
                                         <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
                                     </a>
                                 </li>
+                                <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>
                                     </a>
                                 </li>
+                                <%} else {%>
+                                <li>
+                                    <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+                                        <span class="glyphicon glyphicon-log-out"></span>
+                                    </a>
+                                </li>
+                                <%}%>
                             </ul>
                         </div>
                     </div>

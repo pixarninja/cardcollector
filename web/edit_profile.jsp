@@ -17,16 +17,6 @@
 <%@include file="header.jsp"%>
 <%
     UserInfo user = userInfo.getUser(username);
-    String cardImage;
-    String picture;
-    if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        cardImage = user.getPicture();
-        picture = user.getPicture();
-    }
 %>
 <!-- Content -->
 <div class="row">
@@ -64,7 +54,6 @@
                         <input type="hidden" name="username" value="<%=username%>">
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
                                 <p>Name</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
@@ -75,7 +64,6 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
                                 <p>Email</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
@@ -86,50 +74,35 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
-                                <p>Age</p>
-                            </div>
-                            <div class="col-xs-7 col-xs-8">
-                                Enter your age. This will not be displayed to other users.<br><br>
-                                <input id="input-field" name="age" type="text"><br><br>
-                            </div>
-                            <div class="col-xs-12"><hr></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
                                 <p>Username</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a username less than 16 characters long. This is the name that will be displayed to other users and will be required for when you login.<br><br>
-                                <input id="input-field" name="username" type="text" size="16"><br><br>
+                                <input id="input-field" name="new_user" type="text" size="16"><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
                                 <p>Password</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a password less than 24 characters long.<br><br>
-                                <input id="input-field" name="password" type="text"><br><br>
+                                <input id="input-field" name="password" type="password"><br><br>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
                                 <p>Confirm Password</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Please enter the same password as above.<br><br>
-                                <input id="input-field" name="confirm" type="text"><br><br><br>
+                                <input id="input-field" name="confirm" type="password"><br><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <input type="hidden" name="action" value="validate">
                                 <p>Update Profile Picture</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">

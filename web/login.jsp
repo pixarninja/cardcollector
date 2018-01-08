@@ -1,6 +1,14 @@
+<%@page import="beans.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
-    String username = (String)request.getAttribute("username");
+    String username;
+    if((String)request.getAttribute("username") == null) {
+        username = request.getParameter("username");
+    }
+    else {
+        username = (String)request.getAttribute("username");
+    }
     String buffer = username;
     if(username != null && (username.length() > 16)) {
         username = "";
@@ -22,17 +30,37 @@
             </h4><br>
         </div>
         <%}%>
+        <%if(username != null && buffer.equals("error: propted redirect")) {%>
+        <div class="col-xs-12">
+            <h2>Login</h2> <br>
+            <h4>
+                In order to access the requested page, you must first log into your account. Fill out the fields below with your username and password in order to login and view/update your account information. If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.
+            </h4><br>
+        </div>
+        <%}%>
         <%if(username != null && buffer.equals("error: invalid credentials")) {%>
-        <h1>Login Error: Invalid password combination</h1> <br>
-        <h4>Please re-enter your credentials below</h4> <br>
+        <div class="col-xs-12">
+            <h2>Login Error: Invalid Credentials</h2> <br>
+            <h4>
+                You did not enter the correct password. Please re-enter your credentials below.
+            </h4><br>
+        </div>
         <%}%>
         <%if(username != null && buffer.equals("error: user does not exist")) {%>
-        <h1>Login Error: User does not exist</h1> <br>
-        <h4>Please register as a new user to use that username</h4> <br>
+        <div class="col-xs-12">
+            <h2>Login Error: Unregistered Username</h2> <br>
+            <h4>
+                You entered an unregistered username. Please register as a new user to use that username.
+            </h4><br>
+        </div>
         <%}%>
-        <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: user does not exist")) {%>
-        <h1>Login</h1> <br>
-        <h4>You have been logged out. Fill out the fields below with your username and password in order to login and view/update your account information. If you are a new user, use the "Register" button below to create an account. If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.</h4> <br>
+        <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: propted redirect") && !buffer.equals("error: user does not exist")) {%>
+        <div class="col-xs-12">
+            <h2>Login</h2> <br>
+            <h4>
+                You have been logged out. Fill out the fields below with your username and password in order to login and view/update your account information. If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.
+            </h4><br>
+        </div>
         <%}%>
         <div class="col-xs-12">
             <form id="loginForm" action="UserServlet" method="POST">

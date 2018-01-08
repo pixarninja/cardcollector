@@ -12,7 +12,6 @@
     else {
         username = (String)request.getAttribute("username");
     }
-    username = "abcabc";
 %>
 <%@include file="header.jsp"%>
 <%
@@ -21,10 +20,10 @@
     String picture;
     if(user == null) {
         cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
+        picture = "images/blank_user.jpg";
     }
     else {
-        cardImage = user.getPicture();
+        cardImage = "images/magic_card_back_hd.png";
         picture = user.getPicture();
     }
 %>
@@ -32,7 +31,7 @@
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h2>Username</h2><br>
+            <h2><%=username%></h2><br>
             <h4>
                 <p>Below is your profile information. You may edit your information by selecting the "Edit" button. You may edit any decks or collections you have recorded by selecting the item's title, which will take you to the item's information page. Below you will also find your favorited items, friends, and a log of your site history.</p>
                 <br><br><hr>
@@ -62,7 +61,7 @@
                         </div>
                         <div class="col-xs-8 col-sm-10">
                             <div class="row">
-                                <p>Derp</p>
+                                <p><%=user.getName()%></p>
                             </div>
                         </div>
                         <div class="col-xs-12"><br></div>
@@ -75,20 +74,7 @@
                         </div>
                         <div class="col-xs-8 col-sm-10">
                             <div class="row">
-                                <p>Derp</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-4 col-sm-2">
-                            <div class="row">
-                                <p>Age</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-8 col-sm-10">
-                            <div class="row">
-                                <p>Derp</p>
+                                <p><%=user.getEmail()%></p>
                             </div>
                         </div>
                         <div class="col-xs-12"><br></div>

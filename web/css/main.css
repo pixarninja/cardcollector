@@ -61,7 +61,7 @@
 }
 
 .navbar-default {
-    font-family: "Calibri";
+    font-family: 'Quicksand', sans-serif;
     font-size : 18px;
     background: linear-gradient(#081824, #1a4a77, #758fff);
 }
@@ -69,7 +69,7 @@
 #custom-navbar a, #custom-navbar button {
     color:white;
     font-size : 18px;
-    font-family: "Calibri";
+    font-family: 'Quicksand', sans-serif;
 }
 
 #custom-navbar button:hover, #custom-navbar button:focus {
@@ -104,7 +104,7 @@
 #head-bar {
     background: linear-gradient(#758fff, #1a4a77, #06080c);
     font-weight: normal;
-    font-family: "Calibri";
+    font-family: 'Quicksand', sans-serif;
     color: white;
 }
 
@@ -229,6 +229,10 @@ p {
 .well {
     background: #121314 !important;
     color: white;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
 }
 
 #content {
