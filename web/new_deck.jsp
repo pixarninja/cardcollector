@@ -14,19 +14,6 @@
     }
 %>
 <%@include file="header.jsp"%>
-<%
-    UserInfo user = userInfo.getUser(username);;
-    String cardImage;
-    String picture;
-    if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        cardImage = user.getPicture();
-        picture = user.getPicture();
-    }
-%>
 <!-- Content -->
 <div class="row">
     <div class="well col-xs-12 col-sm-8">
@@ -48,8 +35,8 @@
                                 <p>Deck Title</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
-                                Please enter the title of the deck.<br><br>
-                                <input id="input-field" name="title" type="text" required>
+                                Please enter the title for this deck.<br><br>
+                                <input id="input-field" name="name" type="text" required>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
@@ -75,10 +62,10 @@
                                 </div>
                                 <div class="col-xs-12"><br></div>
                                 <div class="col-xs-6">
-                                    <input name="source" type="radio" value="child" > Child Of
+                                    <input name="source" type="radio" value="parent" > Child Of
                                 </div>
                                 <div class="col-xs-6">
-                                    <select id="input-field">
+                                    <select name="parent" id="input-field">
                                         <option value="wishlist">Wishlist</option>
                                     </select><br><br><br>
                                 </div>

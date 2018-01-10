@@ -67,7 +67,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" style="position: relative; top: 2px;font-size: 32px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
+                            <a href="#" class="navbar-brand" style="position: relative; top: 1px;font-size: 28px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
@@ -176,11 +176,19 @@
                                         <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;&nbsp;Search
                                     </a>
                                 </li>
+                                <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank" id="small-icon"></span>&nbsp;&nbsp;(8)
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
                                     </a>
                                 </li>
+                                <%} else {%>
+                                <li>
+                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
+                                    </a>
+                                </li>
+                                <%}%>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
@@ -241,11 +249,19 @@
                                         <span class="glyphicon glyphicon-search"></span>
                                     </a>
                                 </li>
+                                <%if(username == null || username.equals("")) {%>
+                                <li>
+                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
+                                    </a>
+                                </li>
+                                <%} else {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
                                         <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
                                     </a>
                                 </li>
+                                <%}%>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">

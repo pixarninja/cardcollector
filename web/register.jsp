@@ -12,7 +12,7 @@
     <div class="well col-xs-12 col-sm-8">
         <div class="col-xs-12">
             <div class="col-xs-12">
-                <%if(username == null) {%>
+                <%if(username == null || username.equals("")) {%>
                 <h2>Register</h2><br>
                 <h4>
                     <p>Fill out the fields below with a chosen username and password in order to register for an account.</p>

@@ -34,7 +34,8 @@
         <div class="col-xs-12">
             <h2>Login</h2> <br>
             <h4>
-                In order to access the requested page, you must first log into your account. Fill out the fields below with your username and password in order to login and view/update your account information. If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.
+                In order to access the requested page, you must first log into your account.<br><br>
+                Fill out the fields below with your username and password in order to login and view/update your account information. If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.
             </h4><br>
         </div>
         <%}%>

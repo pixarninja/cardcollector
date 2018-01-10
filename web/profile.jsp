@@ -54,12 +54,12 @@
             <h4>
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-xs-4 col-sm-2">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">
-                                <p>Name</p>
+                                <p id="title">Name</p>
                             </div>
                         </div>
-                        <div class="col-xs-8 col-sm-10">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <div class="row">
                                 <p><%=user.getName()%></p>
                             </div>
@@ -67,12 +67,12 @@
                         <div class="col-xs-12"><br></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-4 col-sm-2">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">
-                                <p>Email</p>
+                                <p id="title">Email</p>
                             </div>
                         </div>
-                        <div class="col-xs-8 col-sm-10">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <div class="row">
                                 <p><%=user.getEmail()%></p>
                             </div>
@@ -85,12 +85,12 @@
             <h4>
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">
-                                <p>Collections</p>
+                                <p id="title">Collections</p>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-9">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <div class="row">
                                 <p>Derp</p>
                             </div>
@@ -98,12 +98,12 @@
                         <div class="col-xs-12"><br></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">
-                                <p>Decks</p>
+                                <p id="title">Decks</p>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-9">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <div class="row">
                                 <p>Derp</p>
                             </div>
@@ -134,7 +134,7 @@
                         <div class="row">
                             <p>Name</p>
                             <p>Date</p>
-                            <div class="hidden-xs">
+                            <div class="black_well hidden-xs">
                                 <hr id="in-line-hr">
                                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
                             </div>

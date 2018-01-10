@@ -24,7 +24,7 @@
 <%
     Exception ex = (Exception)request.getAttribute("error");
     if(ex != null) {
-        %>ERROR! Stacktrace: <%=ex%><%
+        %><h2>Database Error<hr></h2><h4>Stacktrace: <%=ex%></h4><br><%
     }
     int rank;
     int cap = 50;

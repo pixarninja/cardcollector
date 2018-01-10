@@ -4,47 +4,26 @@ function refresh() {
     selectMana("", -1);
 }
 
-function reveal(imageId, detailsId, textId, arrowId, containerId, capsuleId) {
+function reveal(imageId, containerId, capsuleId) {
     var image = document.getElementById(imageId);
-    var details = document.getElementById(detailsId)
-    var text = document.getElementById(textId);
-    var arrow = document.getElementById(arrowId);
     var container = document.getElementById(containerId);
     var capsule = document.getElementById(capsuleId);
     
     var rect = container.getBoundingClientRect();
-    var textRect = text.getBoundingClientRect();
     var cap = capsule.getBoundingClientRect();
     var xpos = rect.left - cap.left - container.clientWidth + 10;
-    var ypos = rect.top - cap.top - container.clientHeight;
-    var ycoor = textRect.bottom - cap.top - container.clientHeight;
+    var ypos = rect.bottom - cap.top - container.clientHeight;
     
     image.style.position = "absolute";
     image.style.left = (xpos) + "px";
     image.style.top = (ypos) + "px";
     image.style.display = "block";
     image.style.width = (container.clientWidth + 1) + "px";
-    
-    details.style.position = "absolute";
-    details.style.left = (xpos) + "px";
-    details.style.top = (ypos + container.clientWidth * 1.4) + "px";
-    details.style.display = "block";
-    details.style.width = (container.clientWidth + 1) + "px";
-    
-    arrow.style.position = "absolute";
-    arrow.style.left = (xpos + container.clientWidth) + "px";
-    arrow.style.top = (ycoor + 85) + "px";
-    arrow.style.display = "block";
 }
 
-function conceal(imageId, detailsId, arrowId) {
+function conceal(imageId) {
     var image = document.getElementById(imageId);
-    var details = document.getElementById(detailsId);
-    var arrow = document.getElementById(arrowId);
-    
     image.style.display = "none";
-    details.style.display = "none";
-    arrow.style.display = "none";
 }
 
 function  selectMana(id, num) {
