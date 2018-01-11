@@ -196,7 +196,7 @@
 #in-line-hr-big {
     position: relative;
     left: -15px;
-    width: 100%;
+    width: 105%;
 }
 
 img {
@@ -231,7 +231,7 @@ p {
 }
 
 .well {
-    background: #121314 !important;
+    background: #0d0e0f !important;
     color: white;
 }
 
@@ -263,16 +263,16 @@ body {
 
 #input-field {
     width: 100%;
-    background-color: #4c4c57;
+    background-color: #24282c;
     color: white;
-    border: 2px solid #4c4c57;
+    border: 2px solid #24282c;
     font-size: 14px !important;
 }
 
 #input-field-alt {
-    background-color: #4c4c57;
+    background-color: #24282c;
     color: white;
-    border: 2px solid #4c4c57;
+    border: 2px solid #24282c;
     font-size: 14px !important;
 }
 

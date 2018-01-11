@@ -8,16 +8,29 @@
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <jsp:useBean id="cardCommentInfo" class="beans.CardCommentInfo" scope="request"/>
+<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
+    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
+    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
+    }
+    int selectionEntries = 0;
+    int selectionId = 1;
+    SelectionInfo selection;
+    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
+        String user = selection.getUser();
+        if(user.equals(username)) {
+            selectionEntries++;
+        }
+        selectionId++;
     }
 %>
 <%@include file="header.jsp"%>
@@ -121,17 +134,27 @@
         if(card.getLoyalty() != null && card.getLoyalty() != "") {
             loyalty = card.getLoyalty();
         }
+        boolean selected = false;
+        selectionId = 1;
+        while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
+            if(selection.getCardId().equals(id)) {
+                selected = true;
+                break;
+            }
+            selectionId++;
+        }
+        boolean favorited = false;
 %>
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Card Information</h2><br>
             <h4>
-                <p>Below is the selected card's information. You may add this card to your selected items by clicking the "Add" button. Cards in your selected items can be placed into collections. You may write a comment by clicking the "Comment" button.</p>
-                <br><br>
+                <p>Below is the selected card's information. You may add this card to your selected items by clicking the "Add" button. Cards in your selected items can be placed into collections. You may write a comment by submitting one at the bottom of the page.</p>
+                <br><br><hr>
             </h4>
         </div>
-        <div class="well col-xs-12" id="black-well">
+        <div class="col-xs-12">
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="deck-image">
@@ -139,31 +162,40 @@
                         <img class="cover" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img"></img>
                     </div>
                     <div class="col-xs-12"><br><br><br></div>
+                    <%if(!selected) {%>
                     <form id="addToSelectionForm" action="SelectionServlet" method="POST">
                         <input type="hidden" name="action" value="add_card_to_selection">
+                        <input type="hidden" name="id" value="<%=id%>">
                         <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Add To Selection" id="form-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
+                        <button title="Add To Selection" id="form-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Select</button>
                     </form>
-                    <!--<form id="removeFromSelectionForm" action="SelectionServlet" method="POST">
+                    <%} else {%>
+                    <form id="removeFromSelectionForm" action="SelectionServlet" method="POST">
                         <input type="hidden" name="action" value="remove_card_from_selection">
+                        <input type="hidden" name="id" value="<%=id%>">
                         <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Remove From Selection" id="form-submit" type="submit"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Remove</button>
-                    </form>-->
+                        <button title="Remove From Selection" id="form-submit" type="submit"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deselect</button>
+                    </form>
+                    <%} if(!favorited) {%>
                     <form id="addFavoriteForm" action="UserServlet" method="POST">
                         <input type="hidden" name="action" value="add_favorite">
+                        <input type="hidden" name="id" value="<%=id%>">
                         <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Add To Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Favorite</button>
+                        <button title="Add To Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-star-empty"></span>&nbsp;&nbsp;Favorite</button>
                     </form>
-                    <form id="commentForm" action="DeckServlet" method="POST">
-                        <input type="hidden" name="action" value="comment">
+                    <%} else {%>
+                    <form id="removeFavoriteForm" action="UserServlet" method="POST">
+                        <input type="hidden" name="action" value="remove_favorite">
+                        <input type="hidden" name="id" value="<%=id%>">
                         <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Write A Comment" id="form-submit" type="submit"><span class="glyphicon glyphicon-comment"></span>&nbsp;&nbsp;Comment</button>
+                        <button title="Remove From Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;Unfavorite</button>
                     </form>
+                    <%}%>
                     <br>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
-                <h3><%=name%>: <%=edition%><hr></h3>
+                <h2><%=name%>: <%=edition%><hr></h2>
                 <h4>
                     <div class="col-xs-12">
                         <div class="row">
@@ -204,7 +236,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-xs-12"><hr></div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-lg-3">
@@ -430,7 +462,7 @@
                                 </div>
                             </div>
                             <div align="right">
-                                <%=likes%> out of <%=total%> people found this review helpful<br>
+                                <%=likes%> out of <%=total%> people found this comment helpful<br>
                                 <br><br>
                             </div>
                         </h4>
@@ -438,15 +470,17 @@
                 </div>
                 <form id="upvoteForm" action="CardServlet" method="post">
                     <input type="hidden" name="action" value="upvote">
-                    <input type="hidden" name="title" value="<%=card.getId()%>">
-                    <input type="hidden" name="id" value="<%=commentId%>">
+                    <input type="hidden" name="id" value="<%=id%>">
+                    <input type="hidden" name="comment_id" value="<%=commentId%>">
                     <input type="hidden" name="likes" value="<%=likes%>">
+                    <input type="hidden" name="dislikes" value="<%=dislikes%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
-                <form id="downvoteForm" action="GameServlet" method="post">
+                <form id="downvoteForm" action="CardServlet" method="post">
                     <input type="hidden" name="action" value="downvote">
-                    <input type="hidden" name="title" value="<%=card.getId()%>">
-                    <input type="hidden" name="reviewid" value="<%=commentId%>">
+                    <input type="hidden" name="id" value="<%=id%>">
+                    <input type="hidden" name="comment_id" value="<%=commentId%>">
+                    <input type="hidden" name="likes" value="<%=likes%>">
                     <input type="hidden" name="dislikes" value="<%=dislikes%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>

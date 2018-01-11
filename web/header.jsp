@@ -95,7 +95,7 @@
                                 -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Help<hr>
+                                        <span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help<hr>
                                     </a>
                                 </li>
                                 <li>
@@ -106,7 +106,7 @@
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (0)<hr>
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (<%=selectionEntries%>)<hr>
                                     </a>
                                 </li>
                                 <%} else {%>
@@ -166,7 +166,7 @@
                                 -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-info-sign" id="small-icon"></span>&nbsp;&nbsp;Help
+                                        <span class="glyphicon glyphicon-question-sign" id="small-icon"></span>&nbsp;&nbsp;Help
                                     </a>
                                 </li>
                             </ul>
@@ -185,7 +185,7 @@
                                 <%} else {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(<%=selectionEntries%>)
                                     </a>
                                 </li>
                                 <%}%>
@@ -239,7 +239,7 @@
                                 -->
                                 <li>
                                     <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-info-sign"></span>
+                                        <span class="glyphicon glyphicon-question-sign"></span>
                                     </a>
                                 </li>
                             </ul>
@@ -258,7 +258,7 @@
                                 <%} else {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(<%=selectionEntries%>)
                                     </a>
                                 </li>
                                 <%}%>
@@ -285,6 +285,6 @@
     <div class="container-fluid">
         <div class="row" align="left">
             <!-- Ad Bar -->
-            <div class="col-xs-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
-            <div class="col-xs-1"></div>
-            <div id="content" class="col-xs-10" style="background-color: #06080c;background-repeat: repeat;min-height: 100%;">
+            <div class="hidden-xs col-sm-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
+            <div class="hidden-xs col-sm-1"></div>
+            <div id="content" class="col-xs-12 col-sm-10" style="background-color: black;background-repeat: repeat;min-height: 100%;">

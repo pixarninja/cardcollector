@@ -1,5 +1,32 @@
+<%@page import="java.net.HttpURLConnection"%>
+<%@page import="java.net.URL"%>
+<%@page import="beans.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%String username = request.getParameter("username");%>
+<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
+<%
+    String username;
+    String buffer;
+    if((String)request.getAttribute("username") == null) {
+        username = request.getParameter("username");
+    }
+    else {
+        username = (String)request.getAttribute("username");
+    }
+    buffer = username;
+    if(username == null || username.equals("null")) {
+        username = "";
+    }
+    int selectionEntries = 0;
+    int selectionId = 1;
+    SelectionInfo selection;
+    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
+        String user = selection.getUser();
+        if(user.equals(username)) {
+            selectionEntries++;
+        }
+        selectionId++;
+    }
+%>
 <%@include file="header.jsp"%>
 <!-- Content -->
 <div class="well row">

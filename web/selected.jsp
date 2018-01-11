@@ -3,7 +3,10 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
+<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
     if((String)request.getAttribute("username") == null) {
@@ -12,21 +15,23 @@
     else {
         username = (String)request.getAttribute("username");
     }
+    boolean found = false;
+    int selectionEntries = 0;
+    int selectionId = 1;
+    SelectionInfo selection;
+    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
+        String user = selection.getUser();
+        if(user.equals(username)) {
+            found = true;
+            selectionEntries++;
+        }
+        selectionId++;
+    }
 %>
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <%
-    UserInfo user = userInfo.getUser(username);;
-    String cardImage;
-    String picture;
-    if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        cardImage = user.getPicture();
-        picture = user.getPicture();
-    }
+    if(found) {
 %>
 <!-- Content -->
 <div class="row">
@@ -34,149 +39,156 @@
         <div class="col-xs-12">
             <h2>Selected Items</h2><br>
             <h4>
-                <p>Below are your selected items. You may add items to a collection or remove them from your selected items.</p>
+                <p>Below are your selected cards. You may add cards to a collection/deck or remove them from your selected items using the options below.</p>
                 <br><br><hr>
             </h4>
         </div>
         <div class="col-xs-12">
-            <h4 id="capsule-1">
+            <h4 id="capsule">
                 <div class="row">
-                    <form id="newCollectionForm" action="UserServlet" method="POST">
-                        <input type="hidden" name="action" value="add_to_collection">
+                    <form id="newCollectionForm" action="SelectionServlet" method="POST">
+                        <input type="hidden" name="action" value="submit_edits">
                         <input type="hidden" name="username" value="<%=username%>">
                         <div class="col-xs-12">
-                            <div class="col-xs-2">
-                                <p>Cards</p>
-                            </div>
-                            <div class="col-xs-10">
-                                <div id="container-1" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-1', 'arrow-right', 'container-1', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-1" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
+                            <div class="well col-xs-12" id="black-well">
+                                <%
+                                    int count = 1;
+                                    int stored = 1;
+                                    int printed = 1;
+                                    String spacer = "";
+                                    while((selection = selectionInfo.getSelectionById(count)) != null) {
+                                        if((selection.getUser()).equals(username)) {
+                                            CardInfo card = cardInfo.getCardById(selection.getCardId());
+                                            if((printed % 3) == 0 && printed != selectionEntries) {
+                                                spacer = " col-sm-12";
+                                            }
+                                            else {
+                                                spacer = " hidden-sm hidden-md hidden-lg";
+                                            }
+                                %>
+                                <div class="col-xs-3 hidden-sm hidden-md hidden-lg"></div>
+                                <div id="container<%=selection.getCardId()%>" class="col-xs-9 col-sm-4">
+                                    <input type="checkbox" name="<%=stored%>" value="<%=selection.getCardId()%>">&nbsp;
+                                        <a href="#" onclick="document.getElementById('cardForm<%=selection.getCardId()%>').submit();">
+                                            <span onmouseover="reveal('image<%=selection.getCardId()%>', 'container<%=selection.getCardId()%>', 'capsule')" onmouseout="conceal('image<%=selection.getCardId()%>')">
+                                                <%=card.getName()%>
+                                            </span>
                                         </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
+                                            , Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="total<%=selection.getCardId()%>" style="width: 40px;font-size: 16px;" placeholder="0">
+                                    <br><br>
                                 </div>
-                                <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                                <div id="container-2" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-2', 'arrow-right', 'container-2', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-2" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12 hidden-lg"><br><br></div>
-                                <div id="container-3" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-3', 'arrow-right', 'container-3', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-3" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br><br></div>
-                                <div id="container-4" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-4', 'arrow-right', 'container-4', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-4" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12"><br><br></div>
-                                <div id="container-5" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-5', 'arrow-right', 'container-5', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-5" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br><br></div>
-                                <div id="container-6" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-6', 'arrow-right', 'container-6', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-6" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12 hidden-lg"><br><br></div>
-                                <div id="container-7" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-7', 'arrow-right', 'container-7', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-7" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br><br></div>
-                                <div id="container-8" class="col-xs-12 col-sm-6 col-lg-3">
-                                    <input type="checkbox" name="selected" value="card_id">&nbsp;
-                                    <span onmouseover="reveal('imageId', 'detailsId', 'text-8', 'arrow-right', 'container-8', 'capsule-1')" onmouseout="conceal('imageId', 'detailsId', 'arrow-right')">
-                                        <a id="text-8" href="#" onclick="document.getElementById('cardForm').submit();">
-                                            Derp card x 2
-                                        </a>
-                                    </span>
-                                    <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="quantity_card_id" style="width: 40px;font-size: 16px;" placeholder="0">
-                                </div>
-                                <div class="col-xs-12"><br><br></div>
+                                <div class="col-xs-12<%=spacer%>"><br></div>
+                                <%
+                                            stored++;
+                                        }
+                                        printed++;
+                                        count++;
+                                    }
+                                %>
                             </div>
                         </div>
                         <div class="col-xs-12">
-                            <hr>
-                            <div class="col-xs-12 col-sm-2">
-                                <p>Destination</p>
+                            <h3>Destination<hr></h3>
+                            <p>
+                                Choose a destination for the items. If you would like to remove them from your selected items, select "Delete". If you would like to add them to a collection or deck, select "Add To Collection" or "Add To Deck" and choose the item(s) from the drop-down list.
+                                <br><br>
+                            </p>
+                            <div class="col-xs-6">
+                                <span style="float: right;">
+                                    <input name="delete" type="checkbox" value="delete_selected"> Delete
+                                </span>
                             </div>
-                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                            <div class="col-xs-12 col-sm-10">
-                                Choose a destination for the items. If you would like to remove them from your selected items, select "Delete". If you would like to add them to a collection, select "Add To" and choose the collection from the drop-down list.<br><br>
-                                <div class="col-xs-6">
-                                    <span style="float: right;">
-                                        <input name="source" type="radio" value="delete_selected" checked> Delete
-                                    </span>
-                                </div>
-                                <div class="col-xs-12"><br></div>
-                                <div class="col-xs-6">
-                                    <span style="float: right;">
-                                        <input name="source" type="radio" value="add_selected" >Add To
-                                    </span>
-                                </div>
-                                <div class="col-xs-6">
-                                    <select id="input-field">
-                                        <option value="wishlist">Wishlist</option>
-                                    </select><br><br><br>
-                                </div>
+                            <div class="col-xs-6"></div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-6">
+                                <span style="float: right;">
+                                    <input name="collection_check" type="checkbox" value="add_to_collection" > Add To Collection
+                                </span>
                             </div>
+                            <div class="col-xs-6">
+                                <select name="collection" id="input-field">
+                                    <%
+                                        CollectionInfo collection;
+                                        int num = 1;
+                                        String id = username + num;
+                                        while((collection = collectionInfo.getCollectionById(id)) != null) {
+                                    %>
+                                    <option value="<%=id%>"><%=collection.getName()%></option>
+                                    <%
+                                            num++;
+                                            id = username + num;
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-6">
+                                <span style="float: right;">
+                                    <input name="deck_check" type="checkbox" value="add_to_deck" > Add To Deck
+                                </span>
+                            </div>
+                            <div class="col-xs-6">
+                                <select name="deck" id="input-field">
+                                    <%
+                                        DeckInfo deck;
+                                        num = 1;
+                                        id = username + num;
+                                        while((deck = deckInfo.getDeckById(id)) != null) {
+                                    %>
+                                    <option value="<%=id%>"><%=deck.getName()%></option>
+                                    <%
+                                            num++;
+                                            id = username + num;
+                                        }
+                                    %>
+                                </select>
+                            </div>
+                            <div class="col-xs-12"><br></div>
                         </div>
                         <div class="col-xs-12">
                             <div class="hidden-xs col-sm-7"></div>
                             <div class="col-xs-12 col-sm-5">
-                                <input id="form-submit" type="submit" value="Update Selected Items">
+                                <button title="Updated Selected Items" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Update Items</button>
                             </div>
                         </div>
                         <div class="col-xs-12"><br></div>
                     </form>
                 </div>
-                <form id="cardForm" action="CardServlet" method="POST">
+                <%
+                    count = 1;
+                    while((selection = selectionInfo.getSelectionById(count)) != null) {
+                        if((selection.getUser()).equals(username)) {
+                            CardInfo card = cardInfo.getCardById(selection.getCardId());
+                %>
+                <form id="cardForm<%=selection.getCardId()%>" action="CardServlet" method="POST">
                     <input type="hidden" name="action" value="card">
+                    <input type="hidden" name="id" value="<%=selection.getCardId()%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
-                <img id="imageId" src="images/magic_card_back_hd.png" href="#" style="display: none;"/>
-                <img id="arrow-right" class="img-noborder" src="" href="#" style="display: none;"/>
-                <p align="center" id="detailsId" style="display: none;">
-                    <br>Card Name<br><br>
-                </p>
+                <img class="img-noborder" id="image<%=selection.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                <%
+                        }
+                        count++;
+                    }
+                %>
             </h4>
         </div>
     </div>
 </div>
+<%
+    } else {
+%>
+<!-- Error -->
+<div class="well row">
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <h2>Selection Information</h2><br>
+            <h4>
+                <p>There is no selection information to display. Search for cards and add them to your selection in order to add them to collections or decks!</p>
+                <br><br><hr>
+            </h4>
+        </div>
+    </div>
+</div>
+<%}%>
 <%@include file="footer.jsp"%>

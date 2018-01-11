@@ -11,14 +11,18 @@ function reveal(imageId, containerId, capsuleId) {
     
     var rect = container.getBoundingClientRect();
     var cap = capsule.getBoundingClientRect();
-    var xpos = rect.left - cap.left - container.clientWidth + 10;
-    var ypos = rect.bottom - cap.top - container.clientHeight;
+    var width = container.clientWidth;
+    if(width > 250) {
+        width = 250;
+    }
+    var xpos = rect.left - cap.left - width + 15;
+    var ypos = rect.bottom - cap.top - (width * 0.5);
     
     image.style.position = "absolute";
     image.style.left = (xpos) + "px";
     image.style.top = (ypos) + "px";
     image.style.display = "block";
-    image.style.width = (container.clientWidth + 1) + "px";
+    image.style.width = (width) + "px";
 }
 
 function conceal(imageId) {

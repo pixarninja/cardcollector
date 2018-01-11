@@ -7,13 +7,29 @@
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="deckContentsInfo" class="beans.DeckContentsInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
+    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
+    }
+    buffer = username;
+    if(username == null || username.equals("null")) {
+        username = "";
+    }
+    int selectionEntries = 0;
+    int selectionId = 1;
+    SelectionInfo selection;
+    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
+        String user = selection.getUser();
+        if(user.equals(username)) {
+            selectionEntries++;
+        }
+        selectionId++;
     }
 %>
 <script src="js/scripts.js"></script>
@@ -150,7 +166,7 @@
                 <h4 id="capsule">
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="well col-xs-12" id="black_well">
+                            <div class="well col-xs-12" id="black-well">
                                 <%
                                     int count = 1;
                                     int printed = 1;

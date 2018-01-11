@@ -7,13 +7,29 @@
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="deckContentsInfo" class="beans.DeckContentsInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
+    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
+    }
+    buffer = username;
+    if(username == null || username.equals("null")) {
+        username = "";
+    }
+    int selectionEntries = 0;
+    int selectionId = 1;
+    SelectionInfo selection;
+    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
+        String user = selection.getUser();
+        if(user.equals(username)) {
+            selectionEntries++;
+        }
+        selectionId++;
     }
 %>
 <script src="js/scripts.js"></script>
@@ -163,7 +179,7 @@
                 <h4 id="capsule">
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="well col-xs-12" id="black_well">
+                            <div class="well col-xs-12" id="black-well">
                                 <%
                                     int count = 1;
                                     int printed = 1;
@@ -199,48 +215,10 @@
                         <div class="col-xs-12"><br></div>
                     </div>
                     <%
-                        }
-                    %>
-                </h4>
-                <h3>Comments<hr></h3>
-                <h4>
-                    <div class="row">
-                        <div class="col-xs-7 col-sm-4 col-md-3">
-                            <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img><br>
-                            <form id="newForm" action="DeckServlet" method="POST">
-                                <input type="hidden" name="action" value="edit_comment">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Edit Comment" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                            </form>
-                            <form id="newForm" action="DeckServlet" method="POST">
-                                <input type="hidden" name="action" value="delete_comment">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Delete Comment" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-5 col-sm-8 col-md-9">
-                            <div class="row">
-                                <p>Name</p>
-                                <p>Date</p>
-                                <div class="hidden-xs">
-                                    <hr id="in-line-hr">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                        <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <%
-                        if(total != 0) {
-                            int count = 1;
-                            DeckContentsInfo deckContents;
-                            while((deckContents = deckContentsInfo.getContentsById(count)) != null) {
-                                if((deckContents.getDeckId()).equals(id)) {
-                                    CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                        count = 1;
+                        while((deckContents = deckContentsInfo.getContentsById(count)) != null) {
+                            if((deckContents.getDeckId()).equals(id)) {
+                                CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                     %>
                     <form id="cardForm<%=deckContents.getCardId()%>" action="CardServlet" method="POST">
                         <input type="hidden" name="action" value="card">
