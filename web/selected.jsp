@@ -110,13 +110,11 @@
                                     <%
                                         CollectionInfo collection;
                                         int num = 1;
-                                        String id = username + num;
-                                        while((collection = collectionInfo.getCollectionById(id)) != null) {
+                                        while((collection = collectionInfo.getCollectionByNum(num)) != null) {
                                     %>
-                                    <option value="<%=id%>"><%=collection.getName()%></option>
+                                    <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                     <%
                                             num++;
-                                            id = username + num;
                                         }
                                     %>
                                 </select>
@@ -132,13 +130,11 @@
                                     <%
                                         DeckInfo deck;
                                         num = 1;
-                                        id = username + num;
-                                        while((deck = deckInfo.getDeckById(id)) != null) {
+                                        while((deck = deckInfo.getDeckByNum(num)) != null) {
                                     %>
-                                    <option value="<%=id%>"><%=deck.getName()%></option>
+                                    <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
                                     <%
                                             num++;
-                                            id = username + num;
                                         }
                                     %>
                                 </select>

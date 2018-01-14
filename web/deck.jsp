@@ -59,7 +59,6 @@
         </div>
         <div class="col-xs-12">
             <%
-                int num = 1;
                 String name = deck.getName();
                 String top = deck.getTop();
                 if(top == null) {

@@ -500,6 +500,7 @@
                     if(username == null || username.equals("")) {
                 %>
                 <h4>If you want to write a comment, first login or sign up for an account.</h4>
+                <div class="col-xs-12"><br></div>
                 <%} else {%>
                 <h4>Use the following space to write your comment. Please use constructive rhetoric and avoid the use of profanity. We reserve the right to take down comments we find to be inappropriate.<br><br>
                 <hr>
@@ -507,7 +508,7 @@
                     <input type="hidden" name="action" value="comment">
                     <input type="hidden" name="id" value="<%=id%>">
                     <input type="hidden" name="username" value="<%=username%>">
-                    <textarea id="input-field" name="comment" form="writeCommentForm" style="min-width: 100%;max-width: 100%;min-height: 100px;" required></textarea><br><br>
+                    <textarea id="input-field" name="comment" form="writeCommentForm" required></textarea><br><br>
                     <input id="form-submit" style="width: 50%;" type="submit" value="Submit Comment">
                 </form>
                 <%}%>

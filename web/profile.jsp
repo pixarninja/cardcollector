@@ -47,7 +47,7 @@
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h2><%=username%></h2><br>
+            <h2>Profile</h2><br>
             <h4>
                 <p>Below is your profile information. You may edit your information by selecting the "Edit" button. You may edit any decks or collections you have recorded by selecting the item's title, which will take you to the item's information page. Below you will also find your favorited items, friends, and a log of your site history.</p>
                 <br><br><hr>
@@ -69,6 +69,19 @@
             <h3>Personal Information<hr></h3>
             <h4>
                 <div class="col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <div class="row">
+                                <p id="title">Username</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <div class="row">
+                                <p><%=user.getUsername()%></p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">

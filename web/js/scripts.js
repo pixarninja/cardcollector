@@ -23,6 +23,7 @@ function reveal(imageId, containerId, capsuleId) {
     image.style.top = (ypos) + "px";
     image.style.display = "block";
     image.style.width = (width) + "px";
+    image.style.zIndex = "99 !important";
 }
 
 function conceal(imageId) {

@@ -19,7 +19,7 @@
                             &nbsp;&nbsp;|&nbsp;
                             -->
                             <a title="Help" href="#" class="footer-link" onclick="document.getElementById('helpForm').submit();">
-                                <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Help
+                                <span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help
                             </a>
                             &nbsp;&nbsp;|&nbsp;
                             <a title="Advanced Search" href="#" class="footer-link" onclick="document.getElementById('searchForm').submit();">

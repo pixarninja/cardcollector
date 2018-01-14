@@ -35,14 +35,6 @@
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <%
-    UserInfo user = userInfo.getUser(username);
-    String picture;
-    if(user == null) {
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        picture = user.getPicture();
-    }
     DeckInfo deck = (DeckInfo) deckInfo.getDeckById(username + "1");
     if(deck != null) {
 %>

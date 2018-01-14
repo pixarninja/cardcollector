@@ -55,6 +55,40 @@
                     <div class="col-xs-4">
                         <input name="order" type="radio" value="dsc" > Descending
                     </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Order By</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <select name="order_by" id="input-field">
+                            <option value="name">Name</option>
+                            <option value="type">Type</option>
+                            <option value="text">Text</option>
+                            <option value="colors">Mana Color</option>
+                            <option value="mc">Mana Cost</option>
+                            <option value="set_name">Edition</option>
+                            <option value="rarity">Rarity</option>
+                            <option value="power">Power</option>
+                            <option value="toughness">Toughness</option>
+                            <option value="loyalty">Loyalty</option>
+                            <option value="artist">Artist</option>
+                            <option value="year">Year</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Inclusion</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="inclusion" type="radio" value="inc" checked> Inclusive ("OR")&nbsp;&nbsp;
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="inclusion" type="radio" value="exc" > Exclusive ("AND")
+                    </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
@@ -62,19 +96,19 @@
                         <p>Rarity</p>
                     </div>
                     <div class="col-xs-4">
-                        <input name="common" type="checkbox">&nbsp;Common
+                        <input name="common" type="checkbox" value="rarity">&nbsp;Common
                     </div>
                     <div class="col-xs-4">
-                        <input name="uncommon" type="checkbox">&nbsp;Uncommon
+                        <input name="uncommon" type="checkbox" value="rarity">&nbsp;Uncommon
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4"></div>
                     <div class="col-xs-4">
-                        <input name="rare" type="checkbox">&nbsp;Rare
+                        <input name="rare" type="checkbox" value="rarity">&nbsp;Rare
                     </div>
                     <div class="col-xs-4">
-                        <input name="mythic rare" type="checkbox">&nbsp;Mythic Rare
+                        <input name="mythic" type="checkbox" value="rarity">&nbsp;Mythic
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -83,16 +117,16 @@
                         <p>Search</p>
                     </div>
                     <div class="col-xs-4">
-                        <input name="name" type="checkbox">&nbsp;Name
+                        <input name="inc_name" type="checkbox" value="name">&nbsp;Name
                     </div>
                     <div class="col-xs-4">
-                        <input name="type" type="checkbox">&nbsp;Type
+                        <input name="inc_type" type="checkbox" value="type">&nbsp;Type
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4"></div>
                     <div class="col-xs-4">
-                        <input name="text" type="checkbox">&nbsp;Text
+                        <input name="inc_text" type="checkbox" value="text">&nbsp;Text
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
@@ -123,10 +157,19 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Mana Cost</p>
+                        <p>Minimum Converted Mana Cost</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field-alt" name="cost" type="number">
+                        <input id="input-field-alt" name="min_cmc" type="text">
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Maximum Converted Mana Cost</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field-alt" name="max_cmc" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -143,40 +186,40 @@
                         <p>Edition</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="edition" type="text">
+                        <input id="input-field" name="set_name" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Min Power</p>
+                        <p>Minimum Power</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="min power" type="text"><br><br>
+                        <input id="input-field-alt" name="min_power" type="number"><br><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Max Power</p>
+                        <p>Maximum Power</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="max power" type="text"><br><br>
+                        <input id="input-field-alt" name="max_power" type="number"><br><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Min Toughness</p>
+                        <p>Minimum Toughness</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="min toughness" type="text"><br><br>
+                        <input id="input-field-alt" name="min_toughness" type="number"><br><br>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Max Toughness</p>
+                        <p>Maximum Toughness</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="max toughness" type="text">
+                        <input id="input-field-alt" name="max_toughness" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>

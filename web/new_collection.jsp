@@ -3,7 +3,7 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
+<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
@@ -30,19 +30,6 @@
     }
 %>
 <%@include file="header.jsp"%>
-<%
-    UserInfo user = userInfo.getUser(username);;
-    String cardImage;
-    String picture;
-    if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        cardImage = user.getPicture();
-        picture = user.getPicture();
-    }
-%>
 <!-- Content -->
 <div class="row">
     <div class="well col-xs-12 col-sm-8">
@@ -95,7 +82,16 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <select name="parent" id="input-field">
-                                        <option value="wishlist">Wishlist</option>
+                                        <%
+                                            CollectionInfo collection;
+                                            int num = 1;
+                                            while((collection = collectionInfo.getCollectionByNum(num)) != null) {
+                                        %>
+                                        <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
+                                        <%
+                                                num++;
+                                            }
+                                        %>
                                     </select><br><br><br>
                                 </div>
                                 <input id="form-submit" type="submit" value="Create Collection"><br><br><br>

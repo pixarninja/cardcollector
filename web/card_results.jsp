@@ -3,7 +3,7 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
@@ -31,19 +31,6 @@
 %>
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
-<%
-    UserInfo user = userInfo.getUser(username);
-    String cardImage;
-    String picture;
-    if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        cardImage = user.getPicture();
-        picture = user.getPicture();
-    }
-%>
 <!-- Content -->
 <div class="well row">
     <div class="col-xs-12">
@@ -57,20 +44,18 @@
         <div class="col-xs-12">
             <h4>
                 <%
+                    int max = 48;
                     int count = 1;
-                    if(request.getParameter("start") != null && request.getParameter("start") != "") {
+                    if(request.getParameter("start") != null && !request.getParameter("start").equals("")) {
                         count = Integer.parseInt(request.getParameter("start"));
                     }
-                    int total = 8;
-                    if(request.getParameter("total") != null && request.getParameter("total") != "") {
-                        total = Integer.parseInt(request.getParameter("total"));
-                    }
-                    else if(request.getAttribute("total") != null && request.getAttribute("total") != ""){
-                        total = Integer.parseInt((String)request.getAttribute("total"));
+                    int total = 0;
+                    if(request.getAttribute("total") != null){
+                        total = (Integer)request.getAttribute("total");
                     }
                     int end = 0;
-                    if((count + 99) < total) {
-                        end = count + 99;
+                    if((count + max - 1) < total) {
+                        end = count + max - 1;
                     }
                     else {
                         end = total;
@@ -81,155 +66,88 @@
                     if(count != 1) {
                 %>
                 <div class="col-xs-6">
+                    <div class="col-xs-12"><br></div>
                     <form id="requestLessForm" action="SearchServlet" method="POST">
                         <input type="hidden" name="action" value="cards">
-                        <input type="hidden" name="start" value="<%=count - 100%>">
-                        <input type="hidden" name="total" value="<%=total%>">
+                        <input type="hidden" name="start" value="<%=count - max%>">
                         <input type="hidden" name="username" value="<%=username%>">
-                        <input type="hidden" name="title" value="<%=request.getParameter("title")%>">
-                        <input type="hidden" name="publisher" value="<%=request.getParameter("publisher")%>">
-                        <input type="hidden" name="studio" value="<%=request.getParameter("studio")%>">
-                        <input type="hidden" name="platform" value="<%=request.getParameter("platform")%>">
-                        <input type="hidden" name="min-score" value="<%=request.getParameter("min-score")%>">
-                        <input type="hidden" name="max-score" value="<%=request.getParameter("max-score")%>">
-                        <input id="form-submit" type="submit" value="Previous 100 Cards">
-                      </form>
+                        <button title="Previous <%=max%> Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
+                    </form>
+                    <div class="col-xs-12"><br></div>
                 </div>
                 <%}%>
                 <%
                     if(end < total) {
                 %>
                 <div class="col-xs-6">
+                    <div class="col-xs-12"><br></div>
                     <form id="requestMoreForm" action="SearchServlet" method="POST">
                         <input type="hidden" name="action" value="cards">
-                        <input type="hidden" name="start" value="<%=count + 100%>">
-                        <input type="hidden" name="total" value="<%=total%>">
+                        <input type="hidden" name="start" value="<%=count + max%>">
                         <input type="hidden" name="username" value="<%=username%>">
-                        <input type="hidden" name="title" value="<%=request.getParameter("title")%>">
-                        <input type="hidden" name="publisher" value="<%=request.getParameter("publisher")%>">
-                        <input type="hidden" name="studio" value="<%=request.getParameter("studio")%>">
-                        <input type="hidden" name="platform" value="<%=request.getParameter("platform")%>">
-                        <input type="hidden" name="min-score" value="<%=request.getParameter("min-score")%>">
-                        <input type="hidden" name="max-score" value="<%=request.getParameter("max-score")%>">
-                        <input id="form-submit" type="submit" value="Next 100 Cards">
+                        <button title="Next <%=max%> Cards" id="form-submit" type="submit">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
                     </form>
+                    <div class="col-xs-12"><br></div>
                 </div>
                 <%}%>
+                <div class="col-xs-12"></div>
                 <h4>
                     <div class="row">
+                        <%
+                            CardInfo card;
+                            int printed = 1;
+                            int tracker = 1;
+                            String id = (String) request.getAttribute(Integer.toString(count));
+                            while((card = cardInfo.getCardById(id)) != null) {
+                        %>
                         <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
+                            <img width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img"></img><br>
+                            <a href="#" onclick="document.getElementById('cardForm<%=id%>').submit();">
+                                <%=card.getName()%>
+                            </a>
                         </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-6 col-sm-3 col-md-2">
-                            <p align="center">Card Name</p>
-                            <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                            <form id="cardForm" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="View Card Information" id="alt-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;View</button>
-                            </form>
-                            <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                                <input type="hidden" name="action" value="add_to_selection">
-                                <input type="hidden" name="username" value="<%=username%>">
-                                <button title="Add To Selection" id="alt-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Add</button>
-                            </form>
-                        </div>
-                        <div class="col-xs-12"><br></div>
+                        <%
+                            String spacer = "";
+                            if((printed % 2) == 0) {
+                                spacer += "col-xs-12";
+                            }
+                            else {
+                                spacer += "hidden-xs";
+                            }
+                            if((printed % 4) == 0) {
+                                spacer += " col-sm-12";
+                            }
+                            else {
+                                spacer += " hidden-sm";
+                            }
+                            if((printed % 6) == 0) {
+                                spacer += " col-md-12";
+                            }
+                            else {
+                                spacer += " hidden-md hidden-lg";
+                            }
+                        %>
+                        <div class="<%=spacer%>"><hr></div>
+                        <form id="cardForm<%=id%>" action="CardServlet" method="POST">
+                            <input type="hidden" name="action" value="card">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <%
+                                if(tracker >= max) {
+                                    break;
+                                }
+                                tracker++;
+                                printed++;
+                                count++;
+                                id = (String) request.getAttribute(Integer.toString(count));
+                                try {
+                                    Thread.sleep(750);
+                                } catch(InterruptedException ex) {
+                                    System.out.println("ERROR: sleep was interrupted!");
+                                }
+                            }
+                        %>
                     </div>
                 </h4>
                 <div class="col-xs-12"><br></div>
