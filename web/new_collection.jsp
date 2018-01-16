@@ -32,7 +32,7 @@
 <%@include file="header.jsp"%>
 <!-- Content -->
 <div class="row">
-    <div class="well col-xs-12 col-sm-8">
+    <div class="well col-xs-12">
         <div class="col-xs-12">
             <div class="col-xs-12">
                 <h2>Create New Collection</h2><br>
@@ -48,7 +48,7 @@
                         <input type="hidden" name="username" value="<%=username%>">
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Collection Title</p>
+                                <p id="title">Collection Title</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Please enter the title of the collection.<br><br>
@@ -58,7 +58,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Collection Description</p>
+                                <p id="title">Collection Description</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
                                 You may enter a description for this collection.<br><br>
@@ -68,7 +68,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4">
-                                <p>Collection Source</p>
+                                <p id="title">Collection Source</p>
                             </div>
                             <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                             <div class="col-xs-12 col-sm-8">

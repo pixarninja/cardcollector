@@ -85,9 +85,9 @@
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="collection-image">
-                        <img class="collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
-                        <img class="collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>" id="center-img"></img>
-                        <img class="collect-fore" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
+                        <img class="img-special collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
+                        <img class="img-special collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>" id="center-img"></img>
+                        <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
                     </div>
                     <div class="col-xs-12"><br><br><br></div>
                     <form id="viewForm" action="UserServlet" method="POST">
@@ -170,7 +170,7 @@
                 <h4 id="capsule">
                     <div class="row">
                         <div class="col-xs-12">
-                            <div class="well col-xs-12" id="black-well">
+                            <div class="col-xs-12">
                                 <%
                                     int count = 1;
                                     int printed = 1;
@@ -186,8 +186,8 @@
                                                 spacer = " hidden-sm hidden-md hidden-lg";
                                             }
                                 %>
-                                <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
-                                <div id="container<%=collectionContents.getCardId()%>" class="col-xs-8 col-sm-6">
+                                <div class="col-xs-3 hidden-sm hidden-md hidden-lg"></div>
+                                <div id="container<%=collectionContents.getCardId()%>" class="col-xs-9 col-sm-6">
                                     <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
                                         <a href="#" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
                                             <%=card.getName()%>
@@ -196,8 +196,8 @@
                                 </div>
                                 <div class="col-xs-12<%=spacer%>"><br></div>
                                 <%
+                                            printed++;
                                         }
-                                        printed++;
                                         count++;
                                     }
                                 %>
@@ -216,7 +216,7 @@
                         <input type="hidden" name="id" value="<%=collectionContents.getCardId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
-                    <img class="img-noborder" id="image<%=collectionContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                    <img class="img-special" id="image<%=collectionContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
                     <%
                             }
                             count++;

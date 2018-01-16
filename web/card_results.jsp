@@ -44,7 +44,7 @@
         <div class="col-xs-12">
             <h4>
                 <%
-                    int max = 48;
+                    int max = 24;
                     int count = 1;
                     if(request.getParameter("start") != null && !request.getParameter("start").equals("")) {
                         count = Integer.parseInt(request.getParameter("start"));
@@ -60,9 +60,12 @@
                     else {
                         end = total;
                     }
-                %>
-                <h3>Showing: <%=end%> out of <%=total%></h3><hr>
-                <%
+                    if(end < max) {
+                        %><h3>Showing: 1 through <%=end%> out of <%=total%></h3><hr><%
+                    }
+                    else {
+                        %><h3>Showing: <%=end - max + 1%> through <%=end%> out of <%=total%></h3><hr><%
+                    }
                     if(count != 1) {
                 %>
                 <div class="col-xs-6">
@@ -90,7 +93,7 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <%}%>
-                <div class="col-xs-12"></div>
+                <div class="col-xs-12"><br></div>
                 <h4>
                     <div class="row">
                         <%
@@ -101,10 +104,15 @@
                             while((card = cardInfo.getCardById(id)) != null) {
                         %>
                         <div class="col-xs-6 col-sm-3 col-md-2">
-                            <img width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img"></img><br>
+                            <img class="img-special" width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img"></img><br>
                             <a href="#" onclick="document.getElementById('cardForm<%=id%>').submit();">
                                 <%=card.getName()%>
                             </a>
+                            <form id="cardForm<%=id%>" action="CardServlet" method="POST">
+                                <input type="hidden" name="action" value="card">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
                         </div>
                         <%
                             String spacer = "";
@@ -128,11 +136,6 @@
                             }
                         %>
                         <div class="<%=spacer%>"><hr></div>
-                        <form id="cardForm<%=id%>" action="CardServlet" method="POST">
-                            <input type="hidden" name="action" value="card">
-                            <input type="hidden" name="id" value="<%=id%>">
-                            <input type="hidden" name="username" value="<%=username%>">
-                        </form>
                         <%
                                 if(tracker >= max) {
                                     break;

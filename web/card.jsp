@@ -56,11 +56,12 @@
             icons.add("images/" + symbol + ".png");
         }
         String type = card.getType();
+        String[] parsedColors = card.getColors().split(", ");
         String colors;
         if(card.getColors() != null && card.getColors() != "") {
             colors = "";
-            for(i = 0; i < parsedCost.length; i++) {
-                String symbol = parsedCost[i].substring(1);
+            for(i = 0; i < parsedColors.length; i++) {
+                String symbol = parsedColors[i];
                 if(symbol.contains("W")) {
                     if(colors.equals("")) {
                         colors = "White";
@@ -158,8 +159,8 @@
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="deck-image">
-                        <img class="sleeves" width="100%" src="<%=back%>" alt="<%=back%>" id="center-img"></img>
-                        <img class="cover" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img"></img>
+                        <img class="img-special sleeves" width="100%" src="<%=back%>" alt="<%=back%>" id="center-img"></img>
+                        <img class="img-special cover" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img"></img>
                     </div>
                     <div class="col-xs-12"><br><br><br></div>
                     <%if(!selected) {%>
@@ -260,9 +261,18 @@
                             <div class="col-xs-12 col-sm-8 col-lg-9">
                                 <div class="row">
                                     <p>
-                                        <%for(String s : icons) {%>
+                                        <%
+                                            for(String s : icons) {
+                                                if(icons.equals("images/}.png")) {
+                                                    %>None<%
+                                                }
+                                                else {
+                                        %>
                                         <img class="img-noborder" src="<%=s%>" alt="<%=s%>">
-                                        <%}%>
+                                        <%
+                                                }
+                                            }
+                                        %>
                                     </p>
                                 </div>
                             </div>
@@ -456,10 +466,14 @@
                                 <p>
                                     <%=content%>
                                 </p>
+                                <%
+                                    if(!owner.getUsername().equals(username)) {
+                                %>
                                 <hr id="in-line-hr">
                                 <div>
                                     <a class="footer-link" href="#" onclick="document.getElementById('upvoteForm').submit();"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Like</a>&nbsp;&nbsp;<a class="footer-link" href="#" onclick="document.getElementById('downvoteForm').submit();"><span class="glyphicon glyphicon-thumbs-down"></span>&nbsp;&nbsp;Dislike</a>
                                 </div>
+                                <%}%>
                             </div>
                             <div align="right">
                                 <%=likes%> out of <%=total%> people found this comment helpful<br>
@@ -508,8 +522,11 @@
                     <input type="hidden" name="action" value="comment">
                     <input type="hidden" name="id" value="<%=id%>">
                     <input type="hidden" name="username" value="<%=username%>">
-                    <textarea id="input-field" name="comment" form="writeCommentForm" required></textarea><br><br>
-                    <input id="form-submit" style="width: 50%;" type="submit" value="Submit Comment">
+                    <textarea id="input-field" name="comment" form="writeCommentForm" required></textarea><br><br><br>
+                    <div class="col-xs-6"></div>
+                    <div class="col-xs-6">
+                        <input id="form-submit" style="width: 100%;" type="submit" value="Submit Comment"><br><br><br>
+                    </div>
                 </form>
                 <%}%>
             </div>

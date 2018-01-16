@@ -32,7 +32,7 @@
                             </a>
                             <%} else {%>
                             <a title="Selected Items" href="#" class="footer-link" onclick="document.getElementById('selectedForm').submit();">
-                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(8)
+                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(<%=selectionEntries%>)
                             </a>
                             <%}%>
                             &nbsp;&nbsp;|&nbsp;
@@ -45,7 +45,7 @@
                                 <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
                             </a>
                             <%}%>
-                            <span style="float: right;">Copyright 2018</span><p>
+                            <span style="float: right;">© 2018</span><p>
                     </div>
                     <!-- Ad Bar -->
                     <div class="col-xs-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>

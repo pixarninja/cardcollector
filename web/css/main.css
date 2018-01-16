@@ -189,8 +189,9 @@
 /* BODY */
 textarea {
     min-width: 100%;
-    max-width: 100%;
+    max-width: 101%;
     min-height: 100px;
+    overflow: hidden;
 }
 
 #in-line-hr {
@@ -206,6 +207,11 @@ textarea {
 }
 
 img {
+    border: 1px solid white !important;
+}
+
+.img-special {
+    border-radius: 5%;
     border: 1px solid white !important;
 }
 
@@ -307,7 +313,7 @@ body {
 
 .sleeves {
     position: relative;
-    top: 15px;
+    top: 17px;
     left: 7px;
     width: 85%;
 }
@@ -321,7 +327,7 @@ body {
 
 .cover {
     position: absolute;
-    top: -12px;
+    top: -7px;
     left: 0px;
     width: 85%;
 }

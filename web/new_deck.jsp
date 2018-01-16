@@ -33,7 +33,7 @@
 <%@include file="header.jsp"%>
 <!-- Content -->
 <div class="row">
-    <div class="well col-xs-12 col-sm-8">
+    <div class="well col-xs-12">
         <div class="col-xs-12">
             <div class="col-xs-12">
                 <h2>Create New Deck</h2><br>
@@ -49,7 +49,7 @@
                         <input type="hidden" name="username" value="<%=username%>">
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Deck Title</p>
+                                <p id="title">Deck Title</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Please enter the title for this deck.<br><br>
@@ -59,7 +59,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Deck Description</p>
+                                <p id="title">Deck Description</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
                                 You may enter a description for this deck.<br><br>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4">
-                                <p>Deck Source</p>
+                                <p id="title">Deck Source</p>
                             </div>
                             <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                             <div class="col-xs-12 col-sm-8">

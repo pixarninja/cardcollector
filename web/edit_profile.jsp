@@ -35,31 +35,43 @@
 %>
 <!-- Content -->
 <div class="row">
-    <div class="well col-xs-12 col-sm-8">
+    <div class="well col-xs-12">
         <div class="col-xs-12">
             <div class="col-xs-12">
+                <%if(username != null && !username.equals("")) {%>
                 <h2>Edit Profile Information</h2><br>
                 <h4>
-                    <%if(username != null && (buffer == null || buffer.equals(""))) {%>
                     <p>Fill out any of the fields below to replace the fields of your profile information. Click "Submit Changes" once you are done editing your information.</p>
                     <br><br><hr>
-                    <%}%>
                 </h4>
-                <%if(buffer != null && buffer.equals("error: password mismatch")) {%>
-                <h2>Edit Profile Error: The passwords you entered don't match</h2>
-                <h4>Please re-enter your information below</h4>
                 <%}%>
-                <%if(buffer != null && buffer.equals("error: username already in use")) {%>
-                <h2>Edit Profile Error: The username you entered is already taken. Please select a different username</h2>
-                <h4>Please re-enter your information below</h4>
+                <%if(buffer != null && buffer.equals("error: password mismatch")) {%>
+                <h2>Edit Profile Error: Password Mismatch</h2><br>
+                <h4>
+                    <p>The passwords you entered don't match. Please re-enter your information below.</p>
+                    <br><br><hr>
+                </h4>
+                <%}%>
+                <%if(buffer != null && buffer.equals("error: username already in use")) {%>              
+                <h2>Edit Profile Error: Taken Username</h2><br>
+                <h4>
+                    <p>The username you entered is already taken. Please select a different username. Please re-enter your information below.</p>
+                    <br><br><hr>
+                </h4>
                 <%}%>
                 <%if(buffer != null && buffer.equals("error: username is too long")) {%>
-                <h1>Edit Profile Error: The username you entered is too long</h1> <br>
-                <h4>Please select a username shorter than 16 characters long</h4> <br>
+                <h2>Edit Profile Error: Username Length</h2><br>
+                <h4>
+                    <p>The username you entered is too long. Please select a username shorter than 16 characters long. Please re-enter your information below.</p>
+                    <br><br><hr>
+                </h4>
                 <%}%>
                 <%if(buffer != null && buffer.equals("error: password is too long")) {%>
-                <h1>Edit Profile Error: The password you entered is too long</h1> <br>
-                <h4>Please select a password shorter than 24 characters long</h4> <br>
+                <h2>Edit Profile Error: Password Length</h2><br>
+                <h4>
+                    <p>The password you entered is too long. Please select a password shorter than 24 characters long. Please re-enter your information below.</p>
+                    <br><br><hr>
+                </h4>
                 <%}%>
             </div>
             <div class="col-xs-12">
@@ -69,7 +81,7 @@
                         <input type="hidden" name="username" value="<%=username%>">
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Name</p>
+                                <p id="title">Name</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter your real name. This will not be displayed to other users.<br><br>
@@ -79,7 +91,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Email</p>
+                                <p id="title">Email</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter your email. This will not be displayed to other users.<br><br>
@@ -89,7 +101,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Username</p>
+                                <p id="title">Username</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a username less than 16 characters long. This is the name that will be displayed to other users and will be required for when you login.<br><br>
@@ -99,7 +111,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Password</p>
+                                <p id="title">Password</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a password less than 24 characters long.<br><br>
@@ -108,7 +120,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Confirm Password</p>
+                                <p id="title">Confirm Password</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Please enter the same password as above.<br><br>
@@ -118,11 +130,11 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p>Update Profile Picture</p>
+                                <p id="title">Update Profile Picture</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 <input type="checkbox" name="pic" value="update"> Get a new random profile picture<br><br><br>
-                                <input id="form-submit" type="submit" value="Submit Changes"><br><br><br>
+                                <button title="Submit Updates" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Submit Updates</button><br><br><br>
                             </div>
                         </div>
                     </form>

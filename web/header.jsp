@@ -67,7 +67,7 @@
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" style="position: relative; top: 1px;font-size: 28px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
+                            <a href="#" class="navbar-brand" style="position: relative; top: 1px;font-size: 24px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
@@ -106,13 +106,13 @@
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (<%=selectionEntries%>)<hr>
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (0)<hr>
                                     </a>
                                 </li>
                                 <%} else {%>
                                 <li>
                                     <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (8)<hr>
+                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (<%=selectionEntries%>)<hr>
                                     </a>
                                 </li>
                                 <%}%>

@@ -53,7 +53,6 @@
                             <div class="well col-xs-12" id="black-well">
                                 <%
                                     int count = 1;
-                                    int stored = 1;
                                     int printed = 1;
                                     String spacer = "";
                                     while((selection = selectionInfo.getSelectionById(count)) != null) {
@@ -62,26 +61,28 @@
                                             if((printed % 3) == 0 && printed != selectionEntries) {
                                                 spacer = " col-sm-12";
                                             }
+                                            else if((printed % 3) == 1) {
+                                                %><div class="col-xs-3 col-sm-1"></div><%
+                                                spacer = " hidden-sm hidden-md hidden-lg";
+                                            }
                                             else {
                                                 spacer = " hidden-sm hidden-md hidden-lg";
                                             }
                                 %>
                                 <div class="col-xs-3 hidden-sm hidden-md hidden-lg"></div>
-                                <div id="container<%=selection.getCardId()%>" class="col-xs-9 col-sm-4">
-                                    <input type="checkbox" name="<%=stored%>" value="<%=selection.getCardId()%>">&nbsp;
+                                <div id="container<%=selection.getCardId()%>" class="col-xs-9 col-sm-3">
+                                    <input type="checkbox" name="<%=printed%>" value="<%=selection.getCardId()%>">&nbsp;
                                         <a href="#" onclick="document.getElementById('cardForm<%=selection.getCardId()%>').submit();">
                                             <span onmouseover="reveal('image<%=selection.getCardId()%>', 'container<%=selection.getCardId()%>', 'capsule')" onmouseout="conceal('image<%=selection.getCardId()%>')">
                                                 <%=card.getName()%>
                                             </span>
                                         </a>
                                             , Quantity:&nbsp;&nbsp;<input id="input-field" type="number" name="total<%=selection.getCardId()%>" style="width: 40px;font-size: 16px;" placeholder="0">
-                                    <br><br>
                                 </div>
                                 <div class="col-xs-12<%=spacer%>"><br></div>
                                 <%
-                                            stored++;
+                                            printed++;
                                         }
-                                        printed++;
                                         count++;
                                     }
                                 %>
@@ -111,9 +112,11 @@
                                         CollectionInfo collection;
                                         int num = 1;
                                         while((collection = collectionInfo.getCollectionByNum(num)) != null) {
+                                            if(collection.getUser().equals(username)) {
                                     %>
                                     <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                     <%
+                                            }
                                             num++;
                                         }
                                     %>
@@ -131,20 +134,22 @@
                                         DeckInfo deck;
                                         num = 1;
                                         while((deck = deckInfo.getDeckByNum(num)) != null) {
+                                            if(deck.getUser().equals(username)) {
                                     %>
                                     <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
                                     <%
+                                            }
                                             num++;
                                         }
                                     %>
                                 </select>
                             </div>
-                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-12"><br><br></div>
                         </div>
                         <div class="col-xs-12">
-                            <div class="hidden-xs col-sm-7"></div>
-                            <div class="col-xs-12 col-sm-5">
-                                <button title="Updated Selected Items" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Update Items</button>
+                            <div class="hidden-xs col-sm-6"></div>
+                            <div class="col-xs-12 col-sm-6">
+                                <button title="Submit Changes" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Submit</button><br><br><br>
                             </div>
                         </div>
                         <div class="col-xs-12"><br></div>
@@ -161,7 +166,7 @@
                     <input type="hidden" name="id" value="<%=selection.getCardId()%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
-                <img class="img-noborder" id="image<%=selection.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                <img class="img-special" id="image<%=selection.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
                 <%
                         }
                         count++;

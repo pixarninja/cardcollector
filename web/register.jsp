@@ -34,7 +34,7 @@
 <%@include file="header.jsp"%>
 <!-- Content -->
 <div class="row">
-    <div class="well col-xs-12 col-sm-8">
+    <div class="well col-xs-12">
         <div class="col-xs-12">
             <div class="col-xs-12">
                 <%if(username == null || username.equals("")) {%>
@@ -97,7 +97,7 @@
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <input type="hidden" name="action" value="validate">
-                                <p>Name</p>
+                                <p id="title">Name</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter your real name. This will not be displayed to other users.<br><br>
@@ -108,7 +108,7 @@
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <input type="hidden" name="action" value="validate">
-                                <p>Email</p>
+                                <p id="title">Email</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter your email. This will not be displayed to other users.<br><br>
@@ -119,7 +119,7 @@
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <input type="hidden" name="action" value="validate">
-                                <p>Username</p>
+                                <p id="title">Username</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a username less than 16 characters long. This is the name that will be displayed to other users and will be required for when you login.<br><br>
@@ -130,7 +130,7 @@
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <input type="hidden" name="action" value="validate">
-                                <p>Password</p>
+                                <p id="title">Password</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a password less than 24 characters long.<br><br>
@@ -140,7 +140,7 @@
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <input type="hidden" name="action" value="validate">
-                                <p>Confirm Password</p>
+                                <p id="title">Confirm Password</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Please enter the same password as above.<br><br>
