@@ -7,7 +7,6 @@
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
-<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
     String buffer;
@@ -20,16 +19,6 @@
     buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
-    }
-    int selectionEntries = 0;
-    int selectionId = 1;
-    SelectionInfo selection;
-    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
-        String user = selection.getUser();
-        if(user.equals(username)) {
-            selectionEntries++;
-        }
-        selectionId++;
     }
 %>
 <script src="js/scripts.js"></script>

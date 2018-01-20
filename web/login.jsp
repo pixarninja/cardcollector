@@ -1,7 +1,6 @@
 <%@page import="beans.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
-<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
     String buffer;
@@ -17,16 +16,6 @@
     }
     if(username != null && username.equals("null")) {
         username = "";
-    }
-    int selectionEntries = 0;
-    int selectionId = 1;
-    SelectionInfo selection;
-    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
-        String user = selection.getUser();
-        if(user.equals(username)) {
-            selectionEntries++;
-        }
-        selectionId++;
     }
 %>
 <%@include file="header.jsp"%>
@@ -101,7 +90,7 @@
                     <div class="row">
                         <div class="hidden-xs col-md-4"></div>
                         <div class="col-xs-12 col-md-8">
-                            <input id="form-submit" type="submit" value="Login"><br><br>
+                            <button title="Login" id="form-submit" type="submit">Login</button><br><br>
                             <a href="#" onclick="document.getElementById('forgotForm').submit();">Forgot your password?</a>
                         </div>
                     </div>
@@ -121,6 +110,7 @@
                 <div class="col-xs-12 col-md-8">
                     <h4>
                         <input type="hidden" name="action" value="register">
+                        <button title="Register" id="form-submit" type="submit">Register</button>
                         <input id="form-submit" style="position: relative; right: 15px;" type="submit" value="Register">
                     </h4>
                 </div>

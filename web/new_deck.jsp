@@ -5,7 +5,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
-<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
     String buffer;
@@ -18,16 +17,6 @@
     buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
-    }
-    int selectionEntries = 0;
-    int selectionId = 1;
-    SelectionInfo selection;
-    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
-        String user = selection.getUser();
-        if(user.equals(username)) {
-            selectionEntries++;
-        }
-        selectionId++;
     }
 %>
 <%@include file="header.jsp"%>

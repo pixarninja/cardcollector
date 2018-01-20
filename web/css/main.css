@@ -233,7 +233,7 @@ button:focus {
 }
 
 /* BODY */
-#add-popup {
+#addCardForm {
     margin-left: 25px;
     margin-right: 25px;
     position: fixed;

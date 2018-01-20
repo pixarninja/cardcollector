@@ -3,7 +3,6 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
     String buffer;
@@ -16,16 +15,6 @@
     buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
-    }
-    int selectionEntries = 0;
-    int selectionId = 1;
-    SelectionInfo selection;
-    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
-        String user = selection.getUser();
-        if(user.equals(username)) {
-            selectionEntries++;
-        }
-        selectionId++;
     }
 %>
 <%@include file="header.jsp"%>
@@ -250,7 +239,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <input id="form-submit" type="submit" value="Search Cards"><br><br><br>
+                        <button title="Search Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Cards</button><br><br><br>
                     </div>
                 </div>
             </form>
@@ -319,7 +308,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <input id="form-submit" type="submit" value="Search Decks">
+                        <button title="Search Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Decks</button>
                     </div>
                 </div>
             </form><br>
@@ -385,7 +374,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <input id="form-submit" type="submit" value="Search Collections">
+                        <button title="Search Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Collections</button>
                     </div>
                 </div>
             </form><br>
@@ -418,7 +407,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <input id="form-submit" type="submit" value="Search Users"><br><br>
+                        <button title="Search Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Search Users</button><br><br>
                     </div>
                 </div>
             </form>

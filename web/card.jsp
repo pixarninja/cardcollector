@@ -8,7 +8,6 @@
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <jsp:useBean id="cardCommentInfo" class="beans.CardCommentInfo" scope="request"/>
-<jsp:useBean id="selectionInfo" class="beans.SelectionInfo" scope="request"/>
 <%
     String username;
     String buffer;
@@ -21,16 +20,6 @@
     buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
-    }
-    int selectionEntries = 0;
-    int selectionId = 1;
-    SelectionInfo selection;
-    while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
-        String user = selection.getUser();
-        if(user.equals(username)) {
-            selectionEntries++;
-        }
-        selectionId++;
     }
 %>
 <%@include file="header.jsp"%>
@@ -136,14 +125,6 @@
             loyalty = card.getLoyalty();
         }
         boolean selected = false;
-        selectionId = 1;
-        while((selection = (SelectionInfo) selectionInfo.getSelectionById(selectionId)) != null) {
-            if(selection.getCardId().equals(id)) {
-                selected = true;
-                break;
-            }
-            selectionId++;
-        }
         boolean favorited = false;
 %>
 <div class="well row">

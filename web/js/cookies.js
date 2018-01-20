@@ -49,7 +49,7 @@ function addToDeck() {
 function revealForm(formId, imageId, imagePath) {
     document.getElementById(formId).style.display = "block";
     document.getElementById("insert-id").innerHTML = "<input type='hidden' name='id' value='" + imageId + "'>";
-    document.getElementById("insert-image").innerHTML = "<img class='img-special' width='85%' src='" + imagePath + "' alt='" + imagePath + "' id='center-img' style='position: relative;left: 10px;'></img>"
+    document.getElementById("insert-image").innerHTML = "<img class='img-special' width='85%' src='" + imagePath + "' alt='" + imagePath + "' id='center-img' style='position: relative;left: 5px;'></img>"
 }
 
 function hideForm(formId) {

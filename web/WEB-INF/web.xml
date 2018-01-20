@@ -42,12 +42,12 @@
         <url-pattern>/SearchServlet</url-pattern>
     </servlet-mapping>
     <servlet>
-        <servlet-name>SelectionServlet</servlet-name>
-        <servlet-class>SelectionServlet</servlet-class>
+        <servlet-name>UpdateServlet</servlet-name>
+        <servlet-class>UpdateServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>SelectionServlet</servlet-name>
-        <url-pattern>/SelectionServlet</url-pattern>
+        <servlet-name>UpdateServlet</servlet-name>
+        <url-pattern>/UpdateServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
