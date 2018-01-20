@@ -27,16 +27,6 @@
                             </a>
                             &nbsp;&nbsp;|&nbsp;
                             <%if(username == null || username.equals("")) {%>
-                            <a title="Selected Items" href="#" class="footer-link" onclick="document.getElementById('selectedForm').submit();">
-                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
-                            </a>
-                            <%} else {%>
-                            <a title="Selected Items" href="#" class="footer-link" onclick="document.getElementById('selectedForm').submit();">
-                                <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(<%=selectionEntries%>)
-                            </a>
-                            <%}%>
-                            &nbsp;&nbsp;|&nbsp;
-                            <%if(username == null || username.equals("")) {%>
                             <a title="Login" href="#" class="footer-link" onclick="document.getElementById('loginForm').submit();">
                                 <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
                             </a>

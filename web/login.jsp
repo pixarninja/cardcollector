@@ -115,7 +115,7 @@
             <h2>Register</h2><br>
             <form id="registerForm" action="UserServlet" method="POST">
                 <h4>
-                    Don't have an account with us yet? Click below to register! Registration is free, and only requires a name, email, age, username, and password.
+                    Don't have an account with us yet? Click below to register! Registration is free, and only requires a name, email, username, and password.
                     After you have registered, you will be able to make collections and decks, and write reviews!<br><br>
                 </h4>
                 <div class="col-xs-12 col-md-8">

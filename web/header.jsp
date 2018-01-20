@@ -37,10 +37,6 @@
             <input type="hidden" name="action" value="playmat">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="selectedForm" action="SelectionServlet" method="POST">
-            <input type="hidden" name="action" value="selected">
-            <input type="hidden" name="username" value="<%=username%>">
-        </form>
         <form id="searchForm" action="SearchServlet" method="POST">
             <input type="hidden" name="action" value="search">
             <input type="hidden" name="username" value="<%=username%>">
@@ -105,19 +101,6 @@
                                 </li>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
-                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (0)<hr>
-                                    </a>
-                                </li>
-                                <%} else {%>
-                                <li>
-                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;Selected Items (<%=selectionEntries%>)<hr>
-                                    </a>
-                                </li>
-                                <%}%>
-                                <%if(username == null || username.equals("")) {%>
-                                <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login<hr>
                                     </a>
@@ -178,19 +161,6 @@
                                 </li>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
-                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
-                                    </a>
-                                </li>
-                                <%} else {%>
-                                <li>
-                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(<%=selectionEntries%>)
-                                    </a>
-                                </li>
-                                <%}%>
-                                <%if(username == null || username.equals("")) {%>
-                                <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
                                     </a>
@@ -249,19 +219,6 @@
                                         <span class="glyphicon glyphicon-search"></span>
                                     </a>
                                 </li>
-                                <%if(username == null || username.equals("")) {%>
-                                <li>
-                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(0)
-                                    </a>
-                                </li>
-                                <%} else {%>
-                                <li>
-                                    <a title="Selected Items" href="#" onclick="document.getElementById('selectedForm').submit();">
-                                        <span class="glyphicon glyphicon-piggy-bank"></span>&nbsp;&nbsp;(<%=selectionEntries%>)
-                                    </a>
-                                </li>
-                                <%}%>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
                                     <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">

@@ -31,7 +31,7 @@
 %>
 <%@include file="header.jsp"%>
 <%
-    UserInfo user = userInfo.getUser(username);;
+    UserInfo user = userInfo.getUser(username);
     String cardImage;
     String picture;
     if(user == null) {

@@ -80,7 +80,7 @@
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="well deck-image" id="black-well">
-                        <img class="img-special sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
+                        <img class="sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
                         <img class="img-special cover" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
                     </div>
                     <div class="col-xs-12"><br><br><br></div>
@@ -107,7 +107,7 @@
             </div>
             <div class="col-xs-12 col-sm-8">
                 <h2>Deck: <%=name%><hr></h2>
-                <h4 id="capsule">
+                <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Card Total</p>

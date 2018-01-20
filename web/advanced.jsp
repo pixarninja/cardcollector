@@ -35,6 +35,13 @@
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Advanced Search</h2><br>
+            <%
+                if((Integer)request.getAttribute("total") == 0) {
+            %>
+                <h4>
+                    No results were queried. Try checking your spelling or selecting to search inclusively (using "OR" rather than "AND").
+                </h4><br><br>
+            <%}%>
             <h4>
                 Fill in the fields below in order to search our database for cards, decks, or users. In order to search for multiple keywords of a single category, separate each query parameter with a '|' (vertical pipe) character.
                 <br><br><br><hr>
@@ -160,7 +167,7 @@
                         <p>Minimum Converted Mana Cost</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field-alt" name="min_cmc" type="text">
+                        <input id="input-field" name="min_cmc" type="text">
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
@@ -169,7 +176,7 @@
                         <p>Maximum Converted Mana Cost</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field-alt" name="max_cmc" type="text">
+                        <input id="input-field" name="max_cmc" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>

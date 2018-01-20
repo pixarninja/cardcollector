@@ -1,4 +1,8 @@
 /* SUBMISSION */
+button:focus {
+    outline: 0 !important;;
+}
+
 #info-submit {
     width: 100px;
     height: 100%;
@@ -17,6 +21,48 @@
     color: white;
     border: none;
     border-radius: 10px;
+}
+
+#left-button {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100% !important;
+    position: relative;
+    top: -5px;
+    height: 3em;
+    font-size : 16px;
+    background: linear-gradient(#758fff, #0d324e);
+    color: white;
+    border: none;
+    border-radius: 10px 0px 0px 10px;
+}
+
+#middle-button {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100% !important;
+    position: relative;
+    top: -5px;
+    height: 3em;
+    font-size : 16px;
+    background: linear-gradient(#758fff, #0d324e);
+    color: white;
+    border: none;
+    border-radius: 0px;
+}
+
+#right-button {
+    padding-left: 0;
+    padding-right: 0;
+    width: 100% !important;
+    position: relative;
+    top: -5px;
+    height: 3em;
+    font-size : 16px;
+    background: linear-gradient(#758fff, #0d324e);
+    color: white;
+    border: none;
+    border-radius: 0px 10px 10px 0px;
 }
 
 #alt-submit {
@@ -38,7 +84,7 @@
     border: none;
 }
 
-#menu-submit:hover, #form-submit:hover, #info-submit:hover, #alt-submit:hover {
+#menu-submit:hover, #form-submit:hover, #info-submit:hover, #alt-submit:hover, #right-button:hover, #left-button:hover, #middle-button:hover {
     background: #758fff;
     color: white;
 }
@@ -187,6 +233,28 @@
 }
 
 /* BODY */
+#add-popup {
+    margin-left: 25px;
+    margin-right: 25px;
+    position: fixed;
+    top: 80px;
+    left: 18%;
+    background-color: black;
+    display: none;
+    width: 60%;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+#close {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    font-size: 32px;
+    color: white;
+    cursor: pointer;
+}
+
 textarea {
     min-width: 100%;
     max-width: 101%;
@@ -263,12 +331,12 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
-#content a {
+#content a, p a {
     color: #587bd7;
     text-decoration: underline;
 }
 
-#content a:hover {
+#content a:hover, p a:hover {
     color: #758fff;
     text-decoration: underline;
 }

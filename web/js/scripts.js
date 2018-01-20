@@ -12,18 +12,18 @@ function reveal(imageId, containerId, capsuleId) {
     var rect = container.getBoundingClientRect();
     var cap = capsule.getBoundingClientRect();
     var width = container.clientWidth;
+    var height = width * 1.4;
     if(width > 250) {
         width = 250;
     }
     var xpos = rect.left - cap.left - width + 15;
-    var ypos = rect.bottom - cap.top - (width * 0.5);
+    var ypos = rect.top - cap.top - (2 * height / 3);
     
     image.style.position = "absolute";
     image.style.left = (xpos) + "px";
     image.style.top = (ypos) + "px";
     image.style.display = "block";
     image.style.width = (width) + "px";
-    image.style.zIndex = "99 !important";
 }
 
 function conceal(imageId) {
@@ -31,7 +31,7 @@ function conceal(imageId) {
     image.style.display = "none";
 }
 
-function  selectMana(id, num) {
+function selectMana(id, num) {
     if(id !== "") {
         if(mana[0]) {
             document.getElementById(id).style.background = "url(images/white_on.png)";

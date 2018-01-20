@@ -163,35 +163,30 @@
                         <img class="img-special cover" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img"></img>
                     </div>
                     <div class="col-xs-12"><br><br><br></div>
-                    <%if(!selected) {%>
-                    <form id="addToSelectionForm" action="SelectionServlet" method="POST">
-                        <input type="hidden" name="action" value="add_card_to_selection">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Add To Selection" id="form-submit" type="submit"><span class="glyphicon glyphicon-download-alt"></span>&nbsp;&nbsp;Select</button>
-                    </form>
-                    <%} else {%>
-                    <form id="removeFromSelectionForm" action="SelectionServlet" method="POST">
-                        <input type="hidden" name="action" value="remove_card_from_selection">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Remove From Selection" id="form-submit" type="submit"><span class="glyphicon glyphicon-remove"></span>&nbsp;&nbsp;Deselect</button>
-                    </form>
-                    <%} if(!favorited) {%>
-                    <form id="addFavoriteForm" action="UserServlet" method="POST">
-                        <input type="hidden" name="action" value="add_favorite">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Add To Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-star-empty"></span>&nbsp;&nbsp;Favorite</button>
-                    </form>
-                    <%} else {%>
-                    <form id="removeFavoriteForm" action="UserServlet" method="POST">
-                        <input type="hidden" name="action" value="remove_favorite">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Remove From Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-star"></span>&nbsp;&nbsp;Unfavorite</button>
-                    </form>
-                    <%}%>
+                    <div class="col-xs-4">
+                        <button class="btn-block" title="Add To Collection" id="left-button" onClick="addTo();"><span class="glyphicon glyphicon-book"></span></button>
+                    </div>
+                    <div class="col-xs-4">
+                        <%if(!favorited) {%>
+                        <form id="addFavoriteForm" action="UserServlet" method="POST">
+                            <input type="hidden" name="action" value="add_favorite">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                            <button class="btn-block" title="Add To Favorite List" id="middle-button" type="submit"><span class="glyphicon glyphicon-star-empty"></span>Favorite</button>
+                        </form>
+                        <%} else {%>
+                        <form id="removeFavoriteForm" action="UserServlet" method="POST">
+                            <input type="hidden" name="action" value="remove_favorite">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                            <button class="btn-block" title="Remove From Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-star"></span>Unfavorite</button>
+                        </form>
+                        <%}%>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn-block" title="Add To Deck" id="right-button" onClick="addTo();"><span class="glyphicon glyphicon-inbox"></span></button>
+                    </div>
+                    <div class="col-xs-12"><br></div>
                     <br>
                 </h4>
             </div>
@@ -237,7 +232,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xs-12"><hr></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-lg-3">
@@ -354,7 +349,9 @@
                             <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                             <div class="col-xs-12 col-lg-9">
                                 <div class="row">
-                                    <p><%=text%></p>
+                                    <p>
+                                        <%=text%>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -369,7 +366,7 @@
                             <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                             <div class="col-xs-12 col-lg-9">
                                 <div class="row">
-                                    <p><%=flavor%></p>
+                                    <p><em><%=flavor%></em></p>
                                 </div>
                             </div>
                         </div>
@@ -503,7 +500,7 @@
                         commentId++;
                     }
                     if(commentCount == 0) {
-                        %><h4>There are no comments for this card. Be the first to write one!</h4><%
+                        %><h4>There are no comments for this card. Be the first to write one!</h4><br><br><%
                     }
                 %>
             </div>
@@ -529,6 +526,7 @@
                     </div>
                 </form>
                 <%}%>
+                <br><br>
             </div>
         </div>
     </div>

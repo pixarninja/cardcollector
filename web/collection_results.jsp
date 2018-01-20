@@ -72,7 +72,7 @@
                         total = Integer.parseInt(request.getParameter("total"));
                     }
                     else if(request.getAttribute("total") != null && request.getAttribute("total") != ""){
-                        total = (int)request.getAttribute("total");
+                        total = (Integer)request.getAttribute("total");
                     }
                     int end = 0;
                     if((count + 99) < total) {

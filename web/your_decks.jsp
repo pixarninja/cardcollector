@@ -86,7 +86,7 @@
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="deck-image">
-                        <img class="img-special sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
+                        <img class="sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
                         <img class="img-special cover" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
                     </div>
                     <div class="col-xs-12"><br><br><br></div>
@@ -112,8 +112,8 @@
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
-                <h2>Deck: <%=name%><hr></h2>
-                <h4 id="capsule">
+                <h2 id="capsule<%=num%>">Deck: <%=name%><hr></h2>
+                <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Card Total</p>
@@ -168,7 +168,7 @@
                 %>
                 <div class="col-xs-12"><br></div>
                 <h3>Contents</h3>
-                <h4 id="capsule<%=num%>">
+                <h4>
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="well col-xs-12" id="black-well">
@@ -188,9 +188,9 @@
                                             }
                                 %>
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
-                                <div id="container<%=deckContents.getCardId()%>" class="col-xs-8 col-sm-6">
-                                    <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule<%=num%>')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
-                                        <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
+                                <div id="container<%=deckContents.getCardId()%><%=num%>" class="col-xs-8 col-sm-6">
+                                    <span onmouseover="reveal('image<%=deckContents.getCardId()%><%=num%>', 'container<%=deckContents.getCardId()%><%=num%>', 'capsule<%=num%>')" onmouseout="conceal('image<%=deckContents.getCardId()%><%=num%>')">
+                                        <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%><%=num%>').submit();">
                                             <%=card.getName()%>
                                         </a>&nbsp;x&nbsp;<%=deckContents.getCardTotal()%>
                                     </span>
@@ -212,12 +212,12 @@
                             if((deckContents.getDeckId()).equals(id)) {
                                 CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                     %>
-                    <form id="cardForm<%=deckContents.getCardId()%>" action="CardServlet" method="POST">
+                    <form id="cardForm<%=deckContents.getCardId()%><%=num%>" action="CardServlet" method="POST">
                         <input type="hidden" name="action" value="card">
                         <input type="hidden" name="id" value="<%=deckContents.getCardId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
-                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                    <img class="img-special" id="image<%=deckContents.getCardId()%><%=num%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
                     <%
                                 }
                                 count++;

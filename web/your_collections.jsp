@@ -126,7 +126,7 @@
             </div>
             <div class="col-xs-12 col-sm-8">
                 <h2>Collection: <%=name%><hr></h2>
-                <h4 id="capsule">
+                <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Card Total</p>
