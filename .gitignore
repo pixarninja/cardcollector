@@ -3,4 +3,4 @@ build*
 dist*
 nbproject*
 web/images/icons*
-src/java/beans*
+src/java*
