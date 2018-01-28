@@ -45,13 +45,3 @@ function addToDeck() {
         alert("Set name: " + name2);
     }
 }
-
-function revealForm(formId, imageId, imagePath) {
-    document.getElementById(formId).style.display = "block";
-    document.getElementById("insert-id").innerHTML = "<input type='hidden' name='id' value='" + imageId + "'>";
-    document.getElementById("insert-image").innerHTML = "<img class='img-special' width='85%' src='" + imagePath + "' alt='" + imagePath + "' id='center-img' style='position: relative;left: 5px;'></img>"
-}
-
-function hideForm(formId) {
-    document.getElementById(formId).style.display = "none";
-}

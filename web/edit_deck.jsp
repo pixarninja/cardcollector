@@ -27,6 +27,7 @@
 <%
     String id = request.getParameter("id");
     DeckInfo deck = deckInfo.getDeckById(id);
+    if(deck != null) {
 %>
 <!-- Content -->
 <div class="row">
@@ -52,7 +53,7 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter the title for this deck.<br><br>
-                                <input id="input-field" name="name" type="text"><br><br>
+                                <input id="input-field" name="name" type="text" placeholder="<%=deck.getName()%>"><br><br>
                             </div>
                              <div class="col-xs-12"><hr></div>
                         </div>
@@ -62,7 +63,13 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 You may enter a description for this deck.<br><br>
+                                <%
+                                    if(deck.getDescription() == null || deck.getDescription().equals("")) {
+                                %>
                                 <textarea id="input-field" name="description"></textarea>
+                                <%} else {%>
+                                <textarea id="input-field" name="description" placeholder="<%=deck.getDescription()%>"></textarea>
+                                <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
@@ -82,13 +89,16 @@
                                 </div>
                                 <div class="col-xs-6">
                                     <select name="parent" id="input-field">
+                                        <option value=""></option>
                                         <%
                                             CollectionInfo collection;
                                             int num = 1;
                                             while((collection = collectionInfo.getCollectionByNum(num)) != null) {
+                                                if(collection.getUser().equals(username)) {
                                         %>
                                         <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                         <%
+                                                }
                                                 num++;
                                             }
                                         %>
@@ -104,32 +114,72 @@
                                     DeckContentsInfo deckContents;
                                     String top = deck.getTop();
                                     if(top == null) {
-                                        top = "images/magic_card_back.png";
+                                        top = "images/magic_card_back.jpg";
                                     }
                                     String bottom = deck.getBottom();
                                     if(bottom == null) {
-                                        bottom = "images/magic_card_sleeves_default.png";
+                                        bottom = "images/magic_card_sleeves_default.jpg";
                                     }
                                     int entries = deck.getEntries();
-                                    int total = deck.getTotal();
                                 %>
                                 <h4>
                                     <div class="deck-image">
-                                        <img class="img-special sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
+                                        <img class="sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
                                         <img class="img-special cover" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
                                     </div>
                                 </h4>
                             </div>
                             <div class="col-xs-12 col-sm-8">
+                                <div class="col-xs-4">
+                                    <span style="float: right;">
+                                        Change Cover
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select name="cover" id="input-field">
+                                        <option value=""></option>
+                                        <%
+                                            num = 1;
+                                            while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
+                                                if((deckContents.getDeckId()).equals(id)) {
+                                                    CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                        %>
+                                        <option value="<%=card.getFront()%>"><%=card.getName()%></option>
+                                        <%
+                                                }
+                                                num++;
+                                            }
+                                        %>
+                                    </select><br><br><br>
+                                </div>
+                                <div class="col-xs-4">
+                                    <span style="float: right;">
+                                        Change Sleeves
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select name="sleeves" id="input-field">
+                                        <option value=""></option>
+                                        <option value="images/magic_card_sleeves_default.jpg">Blue (default)</option>
+                                        <option value="images/magic_card_sleeves_purple.jpg">Purple</option>
+                                        <option value="images/magic_card_sleeves_black.jpg">Black</option>
+                                        <option value="images/magic_card_sleeves_white.jpg">White</option>
+                                        <option value="images/magic_card_sleeves_pink.jpg">Pink</option>
+                                        <option value="images/magic_card_sleeves_red.jpg">Red</option>
+                                        <option value="images/magic_card_sleeves_brown.jpg">Brown</option>
+                                        <option value="images/magic_card_sleeves_orange.jpg">Orange</option>
+                                        <option value="images/magic_card_sleeves_yellow.jpg">Yellow</option>
+                                        <option value="images/magic_card_sleeves_green.jpg">Green</option>
+                                        <option value="images/magic_card_sleeves_cyan.jpg">Cyan</option>
+                                    </select><br><br><br>
+                                </div>
                                 <p>You may copy cards to a different deck, update the number of cards in this deck, or remove them from this deck by using the options below.</p><br>
                                 <div class="col-xs-12 hidden-md hidden-lg"><br></div>
-                                <h4 id="capsule">
+                                <h4>
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="well col-xs-12" id="black-well">
-                                                <div class="col-xs-1">
-                                                    <span title="Delete" class="glyphicon glyphicon-trash" style="position: relative;left: -3px;"></span>
-                                                </div>
+                                                <div class="col-xs-1"></div>
                                                 <div class="col-xs-7">
                                                     Card Name
                                                 </div>
@@ -137,40 +187,73 @@
                                                     Card Number
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
-                                                <%
-                                                    num = 1;
-                                                    int printed = 1;
-                                                    String spacer;
-                                                    while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                                        if((deckContents.getDeckId()).equals(id)) {
-                                                            CardInfo card = cardInfo.getCardById(deckContents.getCardId());
-                                                            if(printed == entries) {
-                                                                spacer = "hidden-xs hidden-sm hidden-md hidden-lg";
+                                                <div id="capsule">
+                                                    <%
+                                                        num = 1;
+                                                        int printed = 1;
+                                                        String spacer;
+                                                        while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
+                                                            if((deckContents.getDeckId()).equals(id)) {
+                                                                CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                                                if(printed == entries) {
+                                                                    spacer = "hidden-xs hidden-sm hidden-md hidden-lg";
+                                                                }
+                                                                else {
+                                                                    spacer = "col-xs-12";
+                                                                }
+                                                    %>
+                                                    <div class="col-xs-1">
+                                                        <input type="checkbox" name="<%=printed%>" value="<%=deckContents.getCardId()%>">
+                                                    </div>
+                                                    <div id="container<%=deckContents.getCardId()%>" class="col-xs-7">
+                                                        <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
+                                                            <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
+                                                                <%=card.getName()%>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="col-xs-4">
+                                                        <input id="input-field" type="number" name="total<%=deckContents.getCardId()%>" style="width: 40px;font-size: 16px;" placeholder="<%=deckContents.getCardTotal()%>">
+                                                    </div>
+                                                    <div class="<%=spacer%>"><br></div>
+                                                    <%
+                                                                printed++;
                                                             }
-                                                            else {
-                                                                spacer = "col-xs-12";
-                                                            }
-                                                %>
-                                                <div class="col-xs-1">
-                                                    <input type="checkbox" name="<%=printed%>" value="<%=deckContents.getCardId()%>">
-                                                </div>
-                                                <div id="container<%=deckContents.getCardId()%>" class="col-xs-7">
-                                                    <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
-                                                        <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
-                                                            <%=card.getName()%>
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                                <div class="col-xs-4">
-                                                    <input id="input-field" type="number" name="total<%=deckContents.getCardId()%>" style="width: 40px;font-size: 16px;" placeholder="<%=deckContents.getCardTotal()%>">
-                                                </div>
-                                                <div class="<%=spacer%>"><br></div>
-                                                <%
-                                                            printed++;
+                                                            num++;
                                                         }
-                                                        num++;
-                                                    }
-                                                %>
+                                                    %>
+                                                    <input type="hidden" name="<%=printed%>" value="ENDTOKEN">
+                                                </div>
+                                                <div class="col-xs-12"><hr></div>
+                                                <div class="col-xs-6">
+                                                    <span style="float: right;">
+                                                        Copy Selected To:
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <select name="copy" id="input-field">
+                                                        <option value=""></option>
+                                                        <%
+                                                            num = 1;
+                                                            while((deck = deckInfo.getDeckByNum(num)) != null) {
+                                                                if(!deck.getId().equals(id) && deck.getUser().equals(username)) {
+                                                        %>
+                                                        <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
+                                                        <%
+                                                                }
+                                                                num++;
+                                                            }
+                                                        %>
+                                                    </select><br><br>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <span style="float: right;">
+                                                        Delete Selected
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <input type="checkbox" name="delete" value="delete_selected"><br>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-xs-12"><br></div>
@@ -186,7 +269,7 @@
                                         <input type="hidden" name="id" value="<%=deckContents.getCardId()%>">
                                         <input type="hidden" name="username" value="<%=username%>">
                                     </form>
-                                    <img class="img-noborder" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
                                     <%
                                             }
                                             num++;
@@ -194,45 +277,8 @@
                                     %>
                                 </h4>
                             </div>
-                            <div class="col-xs-12"><br></div>
-                            <hr>
+                            <div class="col-xs-6"></div>
                             <div class="col-xs-6">
-                                <span style="float: right;">
-                                    <input type="checkbox" name="update_cover" value="update_cover" > Change Cover
-                                </span>
-                            </div>
-                            <div class="col-xs-6">
-                                <select name="cover" id="input-field">
-                                    <%
-                                        num = 1;
-                                        while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                            if((deckContents.getDeckId()).equals(id)) {
-                                                CardInfo card = cardInfo.getCardById(deckContents.getCardId());
-                                    %>
-                                    <option value="<%=card.getFront()%>"><%=card.getName()%></option>
-                                    <%
-                                            }
-                                            num++;
-                                        }
-                                    %>
-                                </select><br><br><br>
-                            </div>
-                            <div class="col-xs-6">
-                                <span style="float: right;">
-                                    <input type="checkbox" name="update_sleeves" value="update_sleeves" > Change Sleeves
-                                </span>
-                            </div>
-                            <div class="col-xs-6">
-                                <select name="sleeves" id="input-field">
-                                    <option value="images/magic_card_sleeves_default.png">Blue (default)</option>
-                                    <option value="images/magic_card_sleeves_purple.png">Purple</option>
-                                    <option value="images/magic_card_sleeves_black.png">Black</option>
-                                    <option value="images/magic_card_sleeves_white.png">White</option>
-                                    <option value="images/magic_card_sleeves_red.png">Red</option>
-                                    <option value="images/magic_card_sleeves_orange.png">Orange</option>
-                                    <option value="images/magic_card_sleeves_yellow.png">Yellow</option>
-                                    <option value="images/magic_card_sleeves_green.png">Green</option>
-                                </select><br><br><br>
                                 <button title="Submit Updates" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Submit Updates</button><br><br><br>
                             </div>
                         </div>
@@ -242,4 +288,20 @@
         </div>
     </div>
 </div>
+<%
+    } else {
+%>
+<!-- Error -->
+<div class="well row">
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <h2>Edit Deck Information</h2><br>
+            <h4>
+                <p>The deck you selected has no information to edit.</p>
+                <br>
+            </h4>
+        </div>
+    </div>
+</div>
+<%}%>
 <%@include file="footer.jsp"%>

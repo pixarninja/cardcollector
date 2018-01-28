@@ -90,7 +90,7 @@
                     <div class="row">
                         <div class="hidden-xs col-md-4"></div>
                         <div class="col-xs-12 col-md-8">
-                            <button title="Login" id="form-submit" type="submit">Login</button><br><br>
+                            <button title="Login" id="form-submit" type="submit"><span class='glyphicon glyphicon-log-in'></span>&nbsp;&nbsp;Login</button><br><br>
                             <a href="#" onclick="document.getElementById('forgotForm').submit();">Forgot your password?</a>
                         </div>
                     </div>
@@ -110,8 +110,7 @@
                 <div class="col-xs-12 col-md-8">
                     <h4>
                         <input type="hidden" name="action" value="register">
-                        <button title="Register" id="form-submit" type="submit">Register</button>
-                        <input id="form-submit" style="position: relative; right: 15px;" type="submit" value="Register">
+                        <button title="Register" id="form-submit" style="position: relative; right: 15px;" type="submit"><span class='glyphicon glyphicon-grain'></span>&nbsp;&nbsp;Register</button>
                     </h4>
                 </div>
                 <div class="hidden-xs col-md-4"></div>

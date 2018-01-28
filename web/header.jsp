@@ -68,46 +68,46 @@
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                    <a id="menu-item" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
                                         <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Your Collections<hr>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
+                                    <a id="menu-item" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
                                         <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Your Decks<hr>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Profile" href="#" onclick="document.getElementById('profileForm').submit();">
+                                    <a id="menu-item" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
                                         <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Your Profile<hr>
                                     </a>
                                 </li>
                                 <!--
                                 <li>
-                                    <a title="Playmat" href="#" onclick="document.getElementById('playmatForm').submit();">
+                                    <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
                                         <span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Playmat<hr>
                                     </a>
                                 </li>
                                 -->
                                 <li>
-                                    <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
+                                    <a id="menu-item" title="Help" onclick="document.getElementById('helpForm').submit();">
                                         <span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help<hr>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Advanced Search" href="#" onclick="document.getElementById('searchForm').submit();">
+                                    <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Advanced Search<hr>
                                     </a>
                                 </li>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
-                                    <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
+                                    <a id="menu-item" title="Login" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login<hr>
                                     </a>
                                 </li>
                                 <%} else {%>
                                 <li>
-                                    <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+                                    <a id="menu-item" title="Logout" onclick="document.getElementById('logoutForm').submit();">
                                         <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout<hr>
                                     </a>
                                 </li>
@@ -126,48 +126,48 @@
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                    <a id="menu-item" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
                                         <span class="glyphicon glyphicon-book" id="small-icon"></span>&nbsp;&nbsp;Collections
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
+                                    <a id="menu-item" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
                                         <span class="glyphicon glyphicon-inbox" id="small-icon"></span>&nbsp;&nbsp;Decks
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Profile" href="#" onclick="document.getElementById('profileForm').submit();">
+                                    <a id="menu-item" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
                                         <span class="glyphicon glyphicon-user" id="small-icon"></span>&nbsp;&nbsp;Profile
                                     </a>
                                 </li>
                                 <!--
                                 <li>
-                                    <a title="Playmat" href="#" onclick="document.getElementById('playmatForm').submit();">
+                                    <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
                                         <span class="glyphicon glyphicon-knight" id="small-icon"></span>&nbsp;Playmat
                                     </a>
                                 </li>
                                 -->
                                 <li>
-                                    <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
+                                    <a id="menu-item" title="Help" onclick="document.getElementById('helpForm').submit();">
                                         <span class="glyphicon glyphicon-question-sign" id="small-icon"></span>&nbsp;&nbsp;Help
                                     </a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a title="Advanced Search" href="#" onclick="document.getElementById('searchForm').submit();">
+                                    <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;&nbsp;Search
                                     </a>
                                 </li>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
-                                    <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
+                                    <a id="menu-item" title="Login" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
                                     </a>
                                 </li>
                                 <%} else {%>
                                 <li>
-                                    <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+                                    <a id="menu-item" title="Logout" onclick="document.getElementById('logoutForm').submit();">
                                         <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
                                     </a>
                                 </li>
@@ -186,48 +186,48 @@
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
                                 <li>
-                                    <a title="Your Collections" href="#" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                    <a id="menu-item" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
                                         <span class="glyphicon glyphicon-book"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Decks" href="#" onclick="document.getElementById('yourDecksForm').submit();">
+                                    <a id="menu-item" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
                                         <span class="glyphicon glyphicon-inbox"></span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a title="Your Profile" href="#" onclick="document.getElementById('profileForm').submit();">
+                                    <a id="menu-item" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
                                         <span class="glyphicon glyphicon-user"></span>
                                     </a>
                                 </li>
                                 <!--
                                 <li>
-                                    <a title="Playmat" href="#" onclick="document.getElementById('playmatForm').submit();">
+                                    <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
                                         <span class="glyphicon glyphicon-knight"></span>
                                     </a>
                                 </li>
                                 -->
                                 <li>
-                                    <a title="Help" href="#" onclick="document.getElementById('helpForm').submit();">
+                                    <a id="menu-item" title="Help" onclick="document.getElementById('helpForm').submit();">
                                         <span class="glyphicon glyphicon-question-sign"></span>
                                     </a>
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <a title="Advanced Search" href="#" onclick="document.getElementById('searchForm').submit();">
+                                    <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search"></span>
                                     </a>
                                 </li>
                                 <%if(username == null || username.equals("")) {%>
                                 <li>
-                                    <a title="Login" href="#" onclick="document.getElementById('loginForm').submit();">
+                                    <a id="menu-item" title="Login" onclick="document.getElementById('loginForm').submit();">
                                         <span class="glyphicon glyphicon-log-in"></span>
                                     </a>
                                 </li>
                                 <%} else {%>
                                 <li>
-                                    <a title="Logout" href="#" onclick="document.getElementById('logoutForm').submit();">
+                                    <a id="menu-item" title="Logout" onclick="document.getElementById('logoutForm').submit();">
                                         <span class="glyphicon glyphicon-log-out"></span>
                                     </a>
                                 </li>

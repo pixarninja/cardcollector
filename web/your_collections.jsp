@@ -24,16 +24,17 @@
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <%
-    UserInfo user = userInfo.getUser(username);
-    String picture;
-    if(user == null) {
-        picture = "images/icons/battered-axe.png";
+    boolean error = true;
+    int count = 1;
+    CollectionInfo collection;
+    while((collection = (CollectionInfo) collectionInfo.getCollectionByNum(count)) != null) {
+        if(collection.getUser().equals(username)) {
+            error = false;
+            break;
+        }
+        count++;
     }
-    else {
-        picture = user.getPicture();
-    }
-    CollectionInfo collection = (CollectionInfo) collectionInfo.getCollectionById(username + "1");
-    if(collection != null) {
+    if(!error) {
 %>
 <!-- Content -->
 <div class="well row">
@@ -61,25 +62,33 @@
             <%
                 int num = 1;
                 String id = username + num;
-                while((collection = (CollectionInfo) collectionInfo.getCollectionById(id)) != null) {
+                while((collection = (CollectionInfo) collectionInfo.getCollectionByNum(num)) != null) {
+                    if(!collection.getUser().equals(username)) {
+                        num++;
+                        id = username + num;
+                        continue;
+                    }
                     String name = collection.getName();
                     String top = collection.getTop();
                     if(top == null) {
-                        top = "images/magic_card_back.png";
+                        top = "images/magic_card_back.jpg";
                     }
                     String middle = collection.getMiddle();
                     if(middle == null) {
-                        middle = "images/magic_card_back.png";
+                        middle = "images/magic_card_back.jpg";
                     }
                     String bottom = collection.getBottom();
                     if(bottom == null) {
-                        bottom = "images/magic_card_back.png";
+                        bottom = "images/magic_card_back.jpg";
                     }
                     int entries = collection.getEntries();
                     int total = collection.getTotal();
                     String parent = collection.getParent();
-                    if(parent == null) {
-                        parent = "None";
+                    if(parent == null || parent.equals("")) {
+                    parent = "None";
+                    }
+                    else {
+                        parent = (collectionInfo.getCollectionById(parent)).getName();
                     }
                     java.util.Date dateUpdated = collection.getDateUpdated();
                     String description = collection.getDescription();
@@ -114,7 +123,7 @@
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
-                <h2>Collection: <%=name%><hr></h2>
+                <h2 id="capsule<%=num%>">Collection: <%=name%><hr></h2>
                 <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
@@ -170,12 +179,12 @@
                 %>
                 <div class="col-xs-12"><br></div>
                 <h3>Contents</h3>
-                <h4 id="capsule<%=num%>">
+                <h4>
                     <div class="row">
                         <div class="col-xs-12">
                             <div class="well col-xs-12" id="black-well">
                                 <%
-                                    int count = 1;
+                                    count = 1;
                                     int printed = 1;
                                     String spacer = "";
                                     CollectionContentsInfo collectionContents;
@@ -190,9 +199,9 @@
                                             }
                                 %>
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
-                                <div id="container<%=collectionContents.getCardId()%>" class="col-xs-8 col-sm-6">
-                                    <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule<%=num%>')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
-                                        <a href="#" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
+                                <div id="container<%=collectionContents.getCardId()%><%=num%>" class="col-xs-8 col-sm-6">
+                                    <span onmouseover="reveal('image<%=collectionContents.getCardId()%><%=num%>', 'container<%=collectionContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%><%=num%>')">
+                                        <a href="#" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%><%=num%>').submit();">
                                             <%=card.getName()%>
                                         </a>&nbsp;x&nbsp;<%=collectionContents.getCardTotal()%>
                                     </span>
@@ -214,12 +223,12 @@
                             if((collectionContents.getCollectionId()).equals(id)) {
                                 CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
                     %>
-                    <form id="cardForm<%=collectionContents.getCardId()%>" action="CardServlet" method="POST">
+                    <form id="cardForm<%=collectionContents.getCardId()%><%=num%>" action="CardServlet" method="POST">
                         <input type="hidden" name="action" value="card">
                         <input type="hidden" name="id" value="<%=collectionContents.getCardId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
-                    <img class="img-special" id="image<%=collectionContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                    <img class="img-special" id="image<%=collectionContents.getCardId()%><%=num%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
                     <%
                                 }
                                 count++;

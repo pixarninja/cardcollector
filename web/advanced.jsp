@@ -89,6 +89,144 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
+                        <p>Edition</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <select name="set_id" id="input-field">
+                            <option></option>
+                            <option value="rix">Rivals of Ixalan (2018)</option>
+                            <option value="ima">Iconic Masters (2017)</option>
+                            <option value="xln">Ixalan (2017)</option>
+                            <option value="hou">Hour of Devastation (2017)</option>
+                            <option value="akh">Amonkhet (2017)</option>
+                            <option value="w17">Welcome Deck 2017 (2017)</option>
+                            <option value="mm3">Modern Masters 2017 (2017)</option>
+                            <option value="aer">Aether Revolt (2017)</option>
+                            <option value="pz2">You Make the Cube (2016)</option>
+                            <option value="kld">Kaladesh (2016)</option>
+                            <option value="v16">From the Vault: Lore (2016)</option>
+                            <option value="emn">Eldritch Moon (2016)</option>
+                            <option value="ema">Eternal Masters (2016)</option>
+                            <option value="soi">Shadows over Innistrad (2016)</option>
+                            <option value="w16">Welcome Deck 2016 (2016)</option>
+                            <option value="ogw">Oath of the Gatewatch (2016)</option>
+                            <option value="pz1">Legendary Cube (2015)</option>
+                            <option value="bfz">Battle for Zendikar (2015)</option>
+                            <option value="v15">From the Vault: Angels (2015)</option>
+                            <option value="ori">Magic Origins (2015)</option>
+                            <option value="mm2">Modern Masters 2015 (2015)</option>
+                            <option value="tpr">Tempest Remastered (2015)</option>
+                            <option value="dtk">Dragons of Tarkir (2015)</option>
+                            <option value="frf">Fate Reforged (2015)</option>
+                            <option value="c14">Commander 2014 (2014)</option>
+                            <option value="ktk">Khans of Tarkir (2014)</option>
+                            <option value="v14">From the Vault: Annihilation (2014)</option>
+                            <option value="m15">Magic 2015 (2014)</option>
+                            <option value="vma">Vintage Masters (2014)</option>
+                            <option value="jou">Journey into Nyx (2014)</option>
+                            <option value="ddm">Duel Decks: Jace vs. Vraska (2014)</option>
+                            <option value="bng">Born of the Gods (2014)</option>
+                            <option value="c13">Commander 2013 (2013)</option>
+                            <option value="ths">Theros (2013)</option>
+                            <option value="ddl">Duel Decks: Heroes vs. Monsters (2013)</option>
+                            <option value="v13">From the Vault: Twenty (2013)</option>
+                            <option value="m14">Magic 2014 (2013)</option>
+                            <option value="mma">Modern Masters (2013)</option>
+                            <option value="dgm">Dragon's Maze (2013)</option>
+                            <option value="ddk">Duel Decks: Sorin vs. Tibalt (2013)</option>
+                            <option value="gtc">Gatecrash (2013)</option>
+                            <option value="rtr">Return to Ravnica (2012)</option>
+                            <option value="ddj">Duel Decks: Izzet vs. Golgari (2012)</option>
+                            <option value="v12">From the Vault: Realms (2012)</option>
+                            <option value="m13">Magic 2013 (2012)</option>
+                            <option value="pc2">Planechase 2012 (2012)</option>
+                            <option value="avr">Avacyn Restored (2012)</option>
+                            <option value="ddi">Duel Decks: Venser vs. Koth (2012)</option>
+                            <option value="dka">Dark Ascension (2012)</option>
+                            <option value="pd3">Premium Deck Series: Graveborn (2011)</option>
+                            <option value="isd">Innistrad (2011)</option>
+                            <option value="ddh">Duel Decks: Ajani vs. Nicol Bolas (2011)</option>
+                            <option value="v11">From the Vault: Legends (2011)</option>
+                            <option value="m12">Magic 2012 (2011)</option>
+                            <option value="cmd">Commander 2011 (2011)</option>
+                            <option value="td2">Duel Decks: Mirrodin Pure vs. New Phyrexia (2011)</option>
+                            <option value="nph">New Phyrexia (2011)</option>
+                            <option value="ddg">Duel Decks: Knights vs. Dragons (2011)</option>
+                            <option value="mbs">Mirrodin Besieged (2011)</option>
+                            <option value="me4">Masters Edition IV (2011)</option>
+                            <option value="pd2">Premium Deck Series: Fire and Lightning (2010)</option>
+                            <option value="td0">Magic Online Theme Decks (2010)</option>
+                            <option value="som">Scars of Mirrodin (2010)</option>
+                            <option value="ddf">Duel Decks: Elspeth vs. Tezzeret (2010)</option>
+                            <option value="v10">From the Vault: Relics (2010)</option>
+                            <option value="m11">Magic 2011 (2010)</option>
+                            <option value="roe">Rise of the Eldrazi (2010)</option>
+                            <option value="dde">Duel Decks: Phyrexia vs. the Coalition (2010)</option>
+                            <option value="wwk">Worldwake (2010)</option>
+                            <option value="h09">Premium Deck Series: Slivers (2009)</option>
+                            <option value="ddd">Duel Decks: Garruk vs. Liliana (2009)</option>
+                            <option value="zen">Zendikar (2009)</option>
+                            <option value="me3">Masters Edition III (2009)</option>
+                            <option value="pc1">Planechase (2009)</option>
+                            <option value="v09">From the Vault: Exiled (2009)</option>
+                            <option value="m10">Magic 2010 (2009)</option>
+                            <option value="arb">Alara Reborn (2009)</option>
+                            <option value="ddc">Duel Decks: Divine vs. Demonic (2009)</option>
+                            <option value="con">Conflux (2009)</option>
+                            <option value="dd2">Duel Decks: Jace vs. Chandra (2008)</option>
+                            <option value="ala">Shards of Alara (2008)</option>
+                            <option value="me2">Masters Edition II (2008)</option>
+                            <option value="drb">From the Vault: Dragons (2008)</option>
+                            <option value="eve">Eventide (2008)</option>
+                            <option value="shm">Shadowmoor (2008)</option>
+                            <option value="mor">Morningtide (2008)</option>
+                            <option value="evg">Duel Decks: Elves vs. Goblins (2007)</option>
+                            <option value="lrw">Lorwyn (2007)</option>
+                            <option value="med">Masters Edition (2007)</option>
+                            <option value="10e">Tenth Edition (2007)</option>
+                            <option value="fut">Future Sight (2007)</option>
+                            <option value="plc">Planar Chaos (2007)</option>
+                            <option value="tsp">Time Spiral (2006)</option>
+                            <option value="csp">Coldsnap (2006)</option>
+                            <option value="dis">Dissension (2006)</option>
+                            <option value="gpt">Guildpact (2006)</option>
+                            <option value="rav">Ravnica: City of Guilds (2005)</option>
+                            <option value="9ed">Ninth Edition (2005)</option>
+                            <option value="sok">Saviors of Kamigawa (2005)</option>
+                            <option value="bok">Betrayers of Kamigawa (2005)</option>
+                            <option value="chk">Champions of Kamigawa (2004)</option>
+                            <option value="5dn">Fifth Dawn (2004)</option>
+                            <option value="dst">Darksteel (2004)</option>
+                            <option value="mrd">Mirrodin (2003)</option>
+                            <option value="8ed">Eighth Edition (2003)</option>
+                            <option value="scg">Scourge (2003)</option>
+                            <option value="lgn">Legions (2003)</option>
+                            <option value="ons">Onslaught (2002)</option>
+                            <option value="jud">Judgment (2002)</option>
+                            <option value="tor">Torment (2002)</option>
+                            <option value="od">Odyssey (2001)</option>
+                            <option value="ap">Apocalypse (2001)</option>
+                            <option value="7e">Seventh Edition (2001)</option>
+                            <option value="ps">Planeshift (2001)</option>
+                            <option value="in">Invasion (2000)</option>
+                            <option value="pr">Prophecy (2000)</option>
+                            <option value="ne">Nemesis (2000)</option>
+                            <option value="mm">Mercadian Masques (1999)</option>
+                            <option value="ud">Urza's Destiny (1999)</option>
+                            <option value="ul">Urza's Legacy (1999)</option>
+                            <option value="uz">Urza's Saga (1998)</option>
+                            <option value="ex">Exodus (1998)</option>
+                            <option value="st">Stronghold (1998)</option>
+                            <option value="te">Tempest (1997)</option>
+                            <option value="wl">Weatherlight (1997)</option>
+                            <option value="vi">Visions (1997)</option>
+                            <option value="mi">Mirage (1996)</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
                         <p>Rarity</p>
                     </div>
                     <div class="col-xs-4">
@@ -176,14 +314,6 @@
                     <div class="col-xs-8">
                         <input id="input-field" name="type" type="text"><br><br>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <p>Edition</p>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="input-field" name="set_name" type="text">
-                    </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
@@ -239,7 +369,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <button title="Search Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Cards</button><br><br><br>
+                        <button title="Search Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Cards</button><br><br><br>
                     </div>
                 </div>
             </form>
@@ -308,7 +438,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <button title="Search Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Decks</button>
+                        <button title="Search Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Decks</button>
                     </div>
                 </div>
             </form><br>
@@ -374,7 +504,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <button title="Search Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Collections</button>
+                        <button title="Search Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Collections</button>
                     </div>
                 </div>
             </form><br>
@@ -407,7 +537,7 @@
                 <div class="row">
                     <div class="hidden-xs col-md-4"></div>
                     <div class="col-xs-12 col-md-8">
-                        <button title="Search Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span> Search Users</button><br><br>
+                        <button title="Search Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Users</button><br><br>
                     </div>
                 </div>
             </form>

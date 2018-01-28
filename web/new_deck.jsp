@@ -76,15 +76,17 @@
                                         CollectionInfo collection;
                                         int num = 1;
                                         while((collection = collectionInfo.getCollectionByNum(num)) != null) {
+                                            if(collection.getUser().equals(username)) {
                                         %>
                                         <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                         <%
+                                                }
                                                 num++;
                                             }
                                         %>
                                     </select><br><br><br>
                                 </div>
-                                <input id="form-submit" type="submit" value="Create Deck"><br><br><br>
+                                <button id="form-submit" type="submit">Create Deck</button><br><br><br>
                             </div>
                         </div>
                     </form>

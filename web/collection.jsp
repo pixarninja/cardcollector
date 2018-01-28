@@ -65,8 +65,11 @@
                 int entries = collection.getEntries();
                 int total = collection.getTotal();
                 String parent = collection.getParent();
-                if(parent == null) {
+                if(parent == null || parent.equals("")) {
                     parent = "None";
+                }
+                else {
+                    parent = (collectionInfo.getCollectionById(parent)).getName();
                 }
                 java.util.Date dateUpdated = collection.getDateUpdated();
                 String description = collection.getDescription();

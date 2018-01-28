@@ -3,6 +3,11 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
+<jsp:useBean id="deckContentsInfo" class="beans.DeckContentsInfo" scope="request"/>
+<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
     String username;
@@ -24,11 +29,11 @@
     String cardImage;
     String picture;
     if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
+        cardImage = "images/magic_card_back.jpg";
         picture = "images/blank_user.jpg";
     }
     else {
-        cardImage = "images/magic_card_back_hd.png";
+        cardImage = "images/magic_card_back.jpg";
         picture = user.getPicture();
     }
 %>
@@ -45,11 +50,25 @@
         <div class="col-xs-12 col-sm-4">
             <h4>
                 <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
-                <br><br>
+                <div class="col-xs-12"><br><br></div>
+                <div class="row" style="margin: auto;display: table">
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Refresh Profile Picture" onclick="document.getElementById('pictureForm').submit();">
+                        <span id="button-symbol" class="glyphicon glyphicon-refresh"></span>
+                    </div>
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Edit Profile Information" onclick="document.getElementById('editForm').submit();">
+                        <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                    </div>
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete User" onclick="deleteUserPopup('<%=username%>');">
+                        <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                    </div>
+                </div>
+                <form id="pictureForm" action="UserServlet" method="POST">
+                    <input type="hidden" name="action" value="refresh_picture">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
                 <form id="editForm" action="UserServlet" method="POST">
                     <input type="hidden" name="action" value="edit_profile">
                     <input type="hidden" name="username" value="<%=username%>">
-                    <button title="Edit Profile Information" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
                 </form>
                 <br>
             </h4>
@@ -99,139 +118,9 @@
                     </div>
                 </div>
             </h4>
-            <h3>Site Information<hr></h3>
-            <h4>
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <div class="row">
-                                <p id="title">Collections</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <div class="row">
-                                <p>Derp</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <div class="row">
-                                <p id="title">Decks</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <div class="row">
-                                <p>Derp</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                </div>
-            </h4>
         </div>
-        <div class="col-xs-12">
-            <h3>Favorites<hr></h3>
-            <h4>
-                <div class="row">
-                    <div class="col-xs-7 col-sm-3 col-md-2">
-                        <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="edit_favorite">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Edit Favorite" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                        </form>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="delete_favorite">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Delete Favorite" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                        </form>
-                    </div>
-                    <div class="col-xs-5 col-sm-9 col-md-10">
-                        <div class="row">
-                            <p>Name</p>
-                            <p>Date</p>
-                            <div class="black_well hidden-xs">
-                                <hr id="in-line-hr">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                    </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-            </h4>
-            <h3>Friends<hr></h3>
-            <h4>
-                <div class="row">
-                    <div class="col-xs-7 col-sm-3 col-md-2">
-                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img><br>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="edit_friend">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Edit Friend" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                        </form>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="delete_friend">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Delete Friend" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                        </form>
-                    </div>
-                    <div class="col-xs-5 col-sm-9 col-md-10">
-                        <div class="row">
-                            <p>Name</p>
-                            <p>Date</p>
-                            <div class="hidden-xs">
-                                <hr id="in-line-hr">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                    </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-            </h4>
-            <h3>History<hr></h3>
-            <h4>
-                <div class="row">
-                    <div class="col-xs-7 col-sm-3 col-md-2">
-                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img><br>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="edit_history">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Edit History" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                        </form>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="delete_history">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Delete History" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                        </form>
-                    </div>
-                    <div class="col-xs-5 col-sm-9 col-md-10">
-                        <div class="row">
-                            <p>Name</p>
-                            <p>Date</p>
-                            <div class="hidden-xs">
-                                <hr id="in-line-hr">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                    </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-            </h4>
-        </div>
+        <form id="popupForm" action="PopupServlet" method="POST"></form>
     </div>
 </div>
+<script src="js/scripts.js"></script>
 <%@include file="footer.jsp"%>

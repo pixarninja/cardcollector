@@ -19,9 +19,43 @@
     if(username == null || username.equals("null")) {
         username = "";
     }
+    int count = 1;
+    String collectionIdList = "";
+    String collectionNameList = "";
+    int collectionNum = 0;
+    CollectionInfo collection;
+    while((collection = collectionInfo.getCollectionByNum(count)) != null) {
+        if(collection.getUser().equals(username)) {
+            collectionNum++;
+            collectionIdList += collection.getId();
+            collectionNameList += collection.getName();
+            CollectionInfo tmp = collectionInfo.getCollectionByNum(count + 1);
+            if(tmp != null && tmp.getUser().equals(username)) {
+                collectionIdList += "`";
+                collectionNameList += "`";
+            }
+        }
+        count++;
+    }
+    String deckIdList = "";
+    String deckNameList = "";
+    int deckNum = 0;
+    DeckInfo deck;
+    count = 1;
+    while((deck = deckInfo.getDeckByNum(count)) != null) {
+        if(deck.getUser().equals(username)) {
+            deckNum++;
+            deckIdList += deck.getId();
+            deckNameList += deck.getName();
+            DeckInfo tmp = deckInfo.getDeckByNum(count + 1);
+            if(tmp != null && tmp.getUser().equals(username)) {
+                deckIdList += "`";
+                deckNameList += "`";
+            }
+        }
+        count++;
+    }
 %>
-<script src="js/scripts.js"></script>
-<script src="js/cookies.js"></script>
 <%@include file="header.jsp"%>
 <!-- Content -->
 <div class="well row">
@@ -37,7 +71,7 @@
             <h4>
                 <%
                     int max = 12;
-                    int count = 1;
+                    count = 1;
                     if(request.getParameter("start") != null && !request.getParameter("start").equals("")) {
                         count = Integer.parseInt(request.getParameter("start"));
                     }
@@ -139,15 +173,16 @@
                         %>
                         <div class="col-xs-6 col-sm-3 col-md-2">
                             <img class="img-special" width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img"><br>
-                            <div class="row btn-group btn-block">
-                                <div class="col-xs-6">
-                                    <button class="btn" type="button" title="Add To Collection/Deck" id="left-button" style="width: 120% !important" onclick="revealForm('addCardForm', '<%=card.getId()%>', '<%=card.getFront()%>');"><span class="glyphicon glyphicon-plus"></span></button>
+                            <div class="row" style="margin: auto;display: table">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                                    <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
                                 </div>
-                                <div class="col-xs-6">
-                                    <button class="btn" type="button" title="Add To Favorite List" id="right-button" style="width: 120% !important" onclick="revealForm('addCardForm', '<%=card.getId()%>', '<%=card.getFront()%>');"><span class="glyphicon glyphicon-star-empty"></span></button>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Card To Favorites List" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                                    <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                 </div>
                             </div>
-                            <p align="center">
+                            <br>
+                            <p align="center" style="position: relative;top: -5px;">
                                 <a href="#" onclick="document.getElementById('cardForm<%=id%>').submit();">
                                     <%=card.getName()%>
                                 </a>
@@ -197,120 +232,10 @@
                         %>
                     </div>
                 </h4>
-                <form id="addCardForm" action="UpdateServlet" method="POST">
-                    <input type="hidden" name="action" value="add_card">
-                    <input type="hidden" name="username" value="<%=username%>">
-                    <div id="insert-id"></div>
-                    <a onclick="hideForm('addCardForm')"><span id="close" class="glyphicon glyphicon-remove-circle"></span></a>
-                    <h2 style="margin-left: 35px;margin-right: 35px;">Add Card To Collection Or Deck</h2>
-                    <div class="hidden-xs hidden-sm col-md-6">
-                        <div id="insert-image" style="width: 85% !important"></div>
-                        <br><br>
-                    </div>
-                    <div class="hidden-xs hidden-sm col-md-6" style="position: relative;left: -22px;">
-                        <%
-                            if(username == null || username.equals("")) {
-                        %>
-                        <h4>
-                            In order to add this card to a collection or deck, you must first login or sign up for an account.
-                        </h4>
-                        <%
-                            } else {
-                        %>
-                        <h4>
-                            Select the collection and/or deck you would like to add the card to from the drop-down list(s) and then click the button below.
-                        </h4><br><hr>
-                        <h4 id="title">
-                            Add <input id="input-field" name="collection_total" type="number" style="width: 40px;" placeholder="0"> To Collection:<br><br>
-                            <select name="collection" id="input-field">
-                                <%
-                                    CollectionInfo collection;
-                                    int num = 1;
-                                    while((collection = collectionInfo.getCollectionByNum(num)) != null) {
-                                        if(collection.getUser().equals(username)) {
-                                %>
-                                <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
-                                <%
-                                        }
-                                        num++;
-                                    }
-                                %>
-                            </select><br><br>
-                            Add <input id="input-field" name="deck_total" type="number" style="width: 40px;" placeholder="0"> To Deck:<br><br>
-                            <select name="deck" id="input-field">
-                                <%
-                                    DeckInfo deck;
-                                    num = 1;
-                                    while((deck = deckInfo.getDeckByNum(num)) != null) {
-                                        if(deck.getUser().equals(username)) {
-                                %>
-                                <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
-                                <%
-                                        }
-                                        num++;
-                                    }
-                                %>
-                            </select>
-                            <br><br>
-                            <button title="Add Card To Collection/Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span></button>
-                            <br>
-                        </h4>
-                        <%}%>
-                    </div>
-                    <div class="col-xs-12 hidden-md hidden-lg">
-                        <%
-                            if(username == null || username.equals("")) {
-                        %>
-                        <h4>
-                            In order to add this card to a collection or deck, you must first login or sign up for an account.
-                        </h4>
-                        <%
-                            } else {
-                        %>
-                        <h4>
-                            Select the collection and/or deck you would like to add the card to from the drop-down list(s) and then click the button below.
-                        </h4><br><hr>
-                        <h4 id="title">
-                            Add <input id="input-field" name="collection_total" type="number" style="width: 40px;" placeholder="0"> To Collection:<br><br>
-                            <select name="collection" id="input-field">
-                                <%
-                                    CollectionInfo collection;
-                                    int num = 1;
-                                    while((collection = collectionInfo.getCollectionByNum(num)) != null) {
-                                        if(collection.getUser().equals(username)) {
-                                %>
-                                <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
-                                <%
-                                        }
-                                        num++;
-                                    }
-                                %>
-                            </select><br><br>
-                            Add <input id="input-field" name="deck_total" type="number" style="width: 40px;" placeholder="0"> To Deck:<br><br>
-                            <select name="deck" id="input-field">
-                                <%
-                                    DeckInfo deck;
-                                    num = 1;
-                                    while((deck = deckInfo.getDeckByNum(num)) != null) {
-                                        if(deck.getUser().equals(username)) {
-                                %>
-                                <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
-                                <%
-                                        }
-                                        num++;
-                                    }
-                                %>
-                            </select>
-                            <br><br>
-                            <button title="Add Card To Collection/Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span></button>
-                            <br>
-                        </h4>
-                        <%}%>
-                    </div>
-                    <div class="col-xs-12"><br></div>
-                </form>
             </h4>
         </div>
+        <form id="popupForm" action="PopupServlet" method="POST"></form>
     </div>
 </div>
+<script src="js/scripts.js"></script>
 <%@include file="footer.jsp"%>

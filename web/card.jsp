@@ -8,6 +8,8 @@
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <jsp:useBean id="cardCommentInfo" class="beans.CardCommentInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
+<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <%
     String username;
     String buffer;
@@ -124,8 +126,42 @@
         if(card.getLoyalty() != null && card.getLoyalty() != "") {
             loyalty = card.getLoyalty();
         }
-        boolean selected = false;
-        boolean favorited = false;
+        int count = 1;
+        String collectionIdList = "";
+        String collectionNameList = "";
+        int collectionNum = 0;
+        CollectionInfo collection;
+        while((collection = collectionInfo.getCollectionByNum(count)) != null) {
+            if(collection.getUser().equals(username)) {
+                collectionNum++;
+                collectionIdList += collection.getId();
+                collectionNameList += collection.getName();
+                CollectionInfo tmp = collectionInfo.getCollectionByNum(count + 1);
+                if(tmp != null && tmp.getUser().equals(username)) {
+                    collectionIdList += "`";
+                    collectionNameList += "`";
+                }
+            }
+            count++;
+        }
+        String deckIdList = "";
+        String deckNameList = "";
+        int deckNum = 0;
+        DeckInfo deck;
+        count = 1;
+        while((deck = deckInfo.getDeckByNum(count)) != null) {
+            if(deck.getUser().equals(username)) {
+                deckNum++;
+                deckIdList += deck.getId();
+                deckNameList += deck.getName();
+                DeckInfo tmp = deckInfo.getDeckByNum(count + 1);
+                if(tmp != null && tmp.getUser().equals(username)) {
+                    deckIdList += "`";
+                    deckNameList += "`";
+                }
+            }
+            count++;
+        }
 %>
 <div class="well row">
     <div class="col-xs-12">
@@ -140,39 +176,24 @@
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="deck-image">
-                        <img class="img-special sleeves" width="100%" src="<%=back%>" alt="<%=back%>" id="center-img"></img>
-                        <img class="img-special cover" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img"></img>
+                        <img class="img-special back" width="100%" src="<%=back%>" alt="<%=back%>">
+                        <img class="img-special front" width="100%" src="<%=front%>" alt="<%=front%>">
                     </div>
-                    <div class="col-xs-12"><br><br><br></div>
-                    <div class="col-xs-4">
-                        <button class="btn-block" title="Add To Collection" id="left-button" onClick="addTo();"><span class="glyphicon glyphicon-book"></span></button>
-                    </div>
-                    <div class="col-xs-4">
-                        <%if(!favorited) {%>
-                        <form id="addFavoriteForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="add_favorite">
-                            <input type="hidden" name="id" value="<%=id%>">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button class="btn-block" title="Add To Favorite List" id="middle-button" type="submit"><span class="glyphicon glyphicon-star-empty"></span>Favorite</button>
-                        </form>
-                        <%} else {%>
-                        <form id="removeFavoriteForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="remove_favorite">
-                            <input type="hidden" name="id" value="<%=id%>">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button class="btn-block" title="Remove From Favorite List" id="form-submit" type="submit"><span class="glyphicon glyphicon-star"></span>Unfavorite</button>
-                        </form>
-                        <%}%>
-                    </div>
-                    <div class="col-xs-4">
-                        <button class="btn-block" title="Add To Deck" id="right-button" onClick="addTo();"><span class="glyphicon glyphicon-inbox"></span></button>
+                    <div class="col-xs-12"><br><br></div>
+                    <div class="row" style="margin: auto;display: table">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                            <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
+                        </div>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Card To Favorites List" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '0', '0', '0', '0', '0', '0');">
+                            <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                        </div>
                     </div>
                     <div class="col-xs-12"><br></div>
                     <br>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
-                <h2><%=name%>: <%=edition%><hr></h2>
+                <h2><%=name%> | <%=edition%><hr></h2>
                 <h4>
                     <div class="col-xs-12">
                         <div class="row">
@@ -387,13 +408,13 @@
             <div class="col-xs-12">
                 <h3>Comments<hr></h3>
                 <%
-                    int commentId = 1;
+                    int num = 1;
                     int commentCount = 0;
                     String picture;
                     CardCommentInfo comment;
-                    while((comment = (CardCommentInfo) cardCommentInfo.getCommentById(commentId)) != null) {
+                    while((comment = (CardCommentInfo) cardCommentInfo.getCommentByNum(num)) != null) {
                         if(!comment.getCardId().equals(card.getId())) {
-                            commentId++;
+                            num++;
                             continue;
                         }
                         java.util.Date dateAdded = comment.getDateAdded();
@@ -403,39 +424,76 @@
                         int total = likes + dislikes;
                         UserInfo owner = (UserInfo) userInfo.getUser(comment.getOwner());
                         if(owner == null) {
-                            commentId++;
+                            num++;
                             continue;
                         }
                         picture = owner.getPicture();
+                        int commentId = comment.getId();
                 %>
                 <div class="row">
                     <div class="col-xs-12">
                         <h4>
                             <div class="col-xs-7 col-sm-3 col-md-2">
                                 <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img><br>
-                                <form id="newForm" action="CardServlet" method="POST">
-                                    <input type="hidden" name="action" value="edit_comment">
-                                    <input type="hidden" name="username" value="<%=username%>">
-                                    <button title="Edit Comment" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                                </form>
-                                <form id="newForm" action="CardServlet" method="POST">
-                                    <input type="hidden" name="action" value="delete_comment">
-                                    <input type="hidden" name="username" value="<%=username%>">
-                                    <button title="Delete Comment" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                                </form>
+                                <%
+                                    if(username == null || username.equals("")) {
+                                %>
+                                <%
+                                    } else if(owner.getUsername().equals(username)) {
+                                %>
+                                <div class="row" style="margin: auto;display: table">
+                                    <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-left" title="Edit Comment" onclick="editCardCommentPopup('<%=card.getId()%>', '<%=commentId%>', '<%=username%>', '<%=content%>');">
+                                        <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                                    </div>
+                                    <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-right" title="Delete Comment" onclick="deleteCardCommentPopup('<%=card.getId()%>', '<%=commentId%>', '<%=username%>');">
+                                        <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                                    </div>
+                                </div>
+                                <%} else {%>
+                                <div class="row" style="margin: auto;display: table">
+                                    <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-left" title="Like Comment" onclick="document.getElementById('upvoteForm<%=num%>').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-thumbs-up"></span>
+                                    </div>
+                                    <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-right" title="Dislike Comment" onclick="document.getElementById('downvoteForm<%=num%>').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-thumbs-down"></span>
+                                    </div>
+                                </div>
+                                <%}%>
                             </div>
                             <div class="col-xs-5 col-sm-9 col-md-10">
                                 <div class="row">
-                                    <p><%=owner.getUsername()%></p>
-                                    <p><%=dateAdded%></p>
-                                    <div class="well hidden-xs" id="black-well">
+                                    <p><span id="title">Username: </span><%=owner.getUsername()%></p>
+                                    <p><span id="title">Date Added: </span><%=dateAdded%></p>
+                                    <%
+                                        if(username == null || username.equals("")) {
+                                    %>
+                                    <%
+                                        } else if(owner.getUsername().equals(username)) {
+                                    %>
+                                    <div class="row" style="margin: auto;display: table">
+                                        <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-left" title="Edit Comment" onclick="editCardCommentPopup('<%=card.getId()%>', '<%=commentId%>', '<%=username%>', '<%=content%>');">
+                                            <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                                        </div>
+                                        <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-right" title="Delete Comment" onclick="deleteCardCommentPopup('<%=card.getId()%>', '<%=commentId%>', '<%=username%>');">
+                                            <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                                        </div>
+                                    </div>
+                                    <%} else {%>
+                                    <div class="row" style="margin: auto;display: table">
+                                        <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-left" title="Like Comment" onclick="document.getElementById('upvoteForm<%=num%>').submit();">
+                                            <span id="button-symbol" class="glyphicon glyphicon-thumbs-up"></span>
+                                        </div>
+                                        <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-right" title="Dislike Comment" onclick="document.getElementById('downvoteForm<%=num%>').submit();">
+                                            <span id="button-symbol" class="glyphicon glyphicon-thumbs-down"></span>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                    <div class="well hidden-xs col-sm-12" id="black-well">
                                         <p>
                                             <%=content%>
-                                        </p>
-                                        <hr id="in-line-hr">
-                                        <div>
-                                            <a class="footer-link" href="#" onclick="document.getElementById('upvoteForm').submit();"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Like</a>&nbsp;&nbsp;<a class="footer-link" href="#" onclick="document.getElementById('downvoteForm').submit();"><span class="glyphicon glyphicon-thumbs-down"></span>&nbsp;&nbsp;Dislike</a>
-                                        </div>
+                                        </p><hr>
+                                        <%=likes%> out of <%=total%> people found this comment helpful
+                                        <br>
                                     </div>
                                 </div>
                             </div>
@@ -443,24 +501,14 @@
                             <div class="well col-xs-12 hidden-sm hidden-md hidden-lg" id="black-well">
                                 <p>
                                     <%=content%>
-                                </p>
-                                <%
-                                    if(!owner.getUsername().equals(username)) {
-                                %>
-                                <hr id="in-line-hr">
-                                <div>
-                                    <a class="footer-link" href="#" onclick="document.getElementById('upvoteForm').submit();"><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Like</a>&nbsp;&nbsp;<a class="footer-link" href="#" onclick="document.getElementById('downvoteForm').submit();"><span class="glyphicon glyphicon-thumbs-down"></span>&nbsp;&nbsp;Dislike</a>
-                                </div>
-                                <%}%>
-                            </div>
-                            <div align="right">
-                                <%=likes%> out of <%=total%> people found this comment helpful<br>
-                                <br><br>
+                                </p><hr>
+                                <%=likes%> out of <%=total%> people found this comment helpful
+                                <br>
                             </div>
                         </h4>
                     </div>
                 </div>
-                <form id="upvoteForm" action="CardServlet" method="post">
+                <form id="upvoteForm<%=num%>" action="CardServlet" method="post">
                     <input type="hidden" name="action" value="upvote">
                     <input type="hidden" name="id" value="<%=id%>">
                     <input type="hidden" name="comment_id" value="<%=commentId%>">
@@ -468,7 +516,7 @@
                     <input type="hidden" name="dislikes" value="<%=dislikes%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
-                <form id="downvoteForm" action="CardServlet" method="post">
+                <form id="downvoteForm<%=num%>" action="CardServlet" method="post">
                     <input type="hidden" name="action" value="downvote">
                     <input type="hidden" name="id" value="<%=id%>">
                     <input type="hidden" name="comment_id" value="<%=commentId%>">
@@ -478,7 +526,7 @@
                 </form>
                 <%
                         commentCount++;
-                        commentId++;
+                        num++;
                     }
                     if(commentCount == 0) {
                         %><h4>There are no comments for this card. Be the first to write one!</h4><br><br><%
@@ -503,15 +551,17 @@
                     <textarea id="input-field" name="comment" form="writeCommentForm" required></textarea><br><br><br>
                     <div class="col-xs-6"></div>
                     <div class="col-xs-6">
-                        <input id="form-submit" style="width: 100%;" type="submit" value="Submit Comment"><br><br><br>
+                        <button id="form-submit" style="width: 100%;" type="submit">Submit Comment</button><br><br><br>
                     </div>
                 </form>
                 <%}%>
                 <br><br>
             </div>
         </div>
+        <form id="popupForm" action="PopupServlet" method="POST"></form>
     </div>
 </div>
+<script src="js/scripts.js"></script>
 <%
     } else {
 %>
