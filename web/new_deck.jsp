@@ -7,14 +7,12 @@
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
@@ -40,7 +38,7 @@
                             <div class="col-xs-5 col-sm-4">
                                 <p id="title">Deck Title</p>
                             </div>
-                            <div class="col-xs-7 col-xs-8">
+                            <div class="col-xs-7 col-sm-8">
                                 Please enter the title for this deck.<br><br>
                                 <input id="input-field" name="name" type="text" required>
                             </div>
@@ -54,39 +52,13 @@
                                 You may enter a description for this deck.<br><br>
                                 <textarea id="input-field" name="description"></textarea>
                             </div>
-                            <div class="col-xs-12"><hr></div>
                         </div>
+                        <div class="col-xs-12"><br><br></div>
                         <div class="row">
+                            <div class="hidden-xs col-sm-4"></div>
+                            <div class="hidden-xs col-sm-4"></div>
                             <div class="col-xs-12 col-sm-4">
-                                <p id="title">Deck Source</p>
-                            </div>
-                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                            <div class="col-xs-12 col-sm-8">
-                                Choose a source for the deck. If the deck does not depend on a collection, select "Independent". If the deck must contain items from a specific collection, select "Child Of" and choose the name of the parent collection from the drop-down list.<br><br>
-                                <div class="col-xs-12">
-                                    <input name="source" type="radio" value="independent" checked> Independent
-                                </div>
-                                <div class="col-xs-12"><br></div>
-                                <div class="col-xs-6">
-                                    <input name="source" type="radio" value="parent" > Child Of
-                                </div>
-                                <div class="col-xs-6">
-                                    <select name="parent" id="input-field">
-                                        <%
-                                        CollectionInfo collection;
-                                        int num = 1;
-                                        while((collection = collectionInfo.getCollectionByNum(num)) != null) {
-                                            if(collection.getUser().equals(username)) {
-                                        %>
-                                        <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
-                                        <%
-                                                }
-                                                num++;
-                                            }
-                                        %>
-                                    </select><br><br><br>
-                                </div>
-                                <button id="form-submit" type="submit">Create Deck</button><br><br><br>
+                                <button id="form-submit" title="Create Deck" style="width: 100%;" type="submit">Create</button><br><br><br>
                             </div>
                         </div>
                     </form>

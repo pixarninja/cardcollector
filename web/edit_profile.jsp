@@ -19,9 +19,6 @@
     }
 %>
 <%@include file="header.jsp"%>
-<%
-    UserInfo user = userInfo.getUser(username);
-%>
 <!-- Content -->
 <div class="row">
     <div class="well col-xs-12">
@@ -123,7 +120,13 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 <input type="checkbox" name="pic" value="update"> Get a new random profile picture<br><br><br>
-                                <button title="Submit Updates" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Submit Updates</button><br><br><br>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="hidden-xs col-sm-4"></div>
+                            <div class="hidden-xs col-sm-4"></div>
+                            <div class="col-xs-12 col-sm-4">
+                                <button title="Update Profile" id="form-submit" type="submit">Submit</button><br><br><br>
                             </div>
                         </div>
                     </form>

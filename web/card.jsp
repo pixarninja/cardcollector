@@ -10,16 +10,15 @@
 <jsp:useBean id="cardCommentInfo" class="beans.CardCommentInfo" scope="request"/>
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="favoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
@@ -38,7 +37,6 @@
         String captital = ("" + lowercase).toUpperCase();
         rarity = captital + rarity.substring(1);
         String front = card.getFront();
-        String back = card.getBack();
         String[] parsedCost = card.getManaCost().split("}");
         int i;
         for(i = 0; i < parsedCost.length; i++) {
@@ -97,14 +95,20 @@
         else {
             colors = "Devoid";
         }
+        String artist = card.getArtist();
+        String year;
+        if(card.getYear().equals("future")) {
+            year = "Future";
+        }
+        else {
+            year = card.getYear();
+        }
         /* Optional Parameters */
         String text = null;
         String flavor = null;
         String power = null;
         String toughness = null;
         String loyalty = null;
-        String artist = card.getArtist();
-        String year;
         if(card.getYear().equals("future")) {
             year = "Future";
         }
@@ -125,6 +129,94 @@
         }
         if(card.getLoyalty() != null && card.getLoyalty() != "") {
             loyalty = card.getLoyalty();
+        }
+        String back = card.getBack();
+        String revName = null;
+        String revType = null;
+        String revText = null;
+        String revFlavor = null;
+        String revPower = null;
+        String revToughness = null;
+        String revLoyalty = null;
+        ArrayList<String> revIcons = new ArrayList();
+        String revColors = null;
+        if(back != null) {
+            String[] revParsedCost = card.getRevManaCost().split("}");
+            for(i = 0; i < revParsedCost.length; i++) {
+                String symbol = parsedCost[i] + "}";
+                symbol = symbol.replaceAll(Pattern.quote("/"),"-");
+                revIcons.add("images/" + symbol + ".png");
+            }
+            String[] revParsedColors = card.getColors().split(", ");
+            if(card.getRevColors() != null && card.getRevColors() != "") {
+                revColors = "";
+                for(i = 0; i < revParsedColors.length; i++) {
+                    String symbol = revParsedColors[i];
+                    if(symbol.contains("W")) {
+                        if(revColors.equals("")) {
+                            revColors = "White";
+                        }
+                        else {
+                            revColors = revColors + ", White";
+                        }
+                    } else if (symbol.contains("U")) {
+                        if(revColors.equals("")) {
+                            revColors = "Blue";
+                        }
+                        else {
+                            revColors = revColors + ", Blue";
+                        }
+                    } else if (symbol.contains("B")) {
+                        if(revColors.equals("")) {
+                            revColors = "Black";
+                        }
+                        else {
+                            revColors = revColors + ", Black";
+                        }
+                    } else if (symbol.contains("R")) {
+                        if(revColors.equals("")) {
+                            revColors = "Red";
+                        }
+                        else {
+                            revColors = revColors + ", Red";
+                        }
+                    } else if (symbol.contains("G")) {
+                        if(revColors.equals("")) {
+                            revColors = "Green";
+                        }
+                        else {
+                            revColors = revColors + ", Green";
+                        }
+                    }
+                }
+                if(revColors.equals("") || (card.getRevText() != null && card.getRevText().contains("Devoid"))) {
+                    revColors = "Devoid";
+                }
+            }
+            else {
+                revColors = "Devoid";
+            }
+            if(card.getRevName() != null && card.getRevName() != "") {
+                revName = card.getRevName();
+            }
+            if(card.getRevType() != null && card.getRevType() != "") {
+                revType = card.getRevType();
+            }
+            if(card.getRevText() != null && card.getRevText() != "") {
+                revText = card.getRevText();
+            }
+            if(card.getRevFlavor() != null && card.getRevFlavor() != "") {
+                revFlavor = card.getRevFlavor();
+            }
+            if(card.getRevPower() != null && card.getRevPower() != "") {
+                revPower = card.getRevPower();
+            }
+            if(card.getRevToughness() != null && card.getRevToughness() != "") {
+                revToughness = card.getRevToughness();
+            }
+            if(card.getRevLoyalty() != null && card.getRevLoyalty() != "") {
+                revLoyalty = card.getRevLoyalty();
+            }
         }
         int count = 1;
         String collectionIdList = "";
@@ -162,31 +254,60 @@
             }
             count++;
         }
+        CardFavoriteInfo favorite;
+        boolean favorited = false;
+        int num = 1;
+        while((favorite = favoriteInfo.getFavoriteByNum(num)) != null) {
+            if(favorite.getUser().equals(username) && favorite.getCardId().equals(id)) {
+                favorited = true;
+                break;
+            }
+            num++;
+        }
 %>
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Card Information</h2><br>
             <h4>
-                <p>Below is the selected card's information. You may add this card to your selected items by clicking the "Add" button. Cards in your selected items can be placed into collections. You may write a comment by submitting one at the bottom of the page.</p>
+                <p>Below is the selected card's information. You may add this card to your collections or decks, and you may add or remove this card from your favorites list by using the buttons beneath the card image. You may write a comment by submitting one at the bottom of the page.</p>
                 <br><br><hr>
             </h4>
         </div>
         <div class="col-xs-12">
             <div class="col-xs-12 col-sm-4">
                 <h4>
-                    <div class="deck-image">
-                        <img class="img-special back" width="100%" src="<%=back%>" alt="<%=back%>">
-                        <img class="img-special front" width="100%" src="<%=front%>" alt="<%=front%>">
-                    </div>
+                    <img class="img-special" width="100%" src="<%=front%>" alt="<%=front%>">
+                    <%
+                        if(back != null && !back.equals("")) {
+                    %>
+                    <br><br><img class="img-special" width="100%" src="<%=back%>" alt="<%=back%>">
+                    <%}%>
                     <div class="col-xs-12"><br><br></div>
                     <div class="row" style="margin: auto;display: table">
+                        <%
+                            if(username != null && !username.equals("")) {
+                        %>
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
                             <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
                         </div>
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Card To Favorites List" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '0', '0', '0', '0', '0', '0');">
+                        <%
+                            if(favorited) {
+                        %>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Remove Card From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                        </div>
+                        <%} else {%>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Card To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                         </div>
+                        <%}%>
+                        <form id="favoriteForm" action="CardServlet" method="POST">
+                            <input type="hidden" name="action" value="favorite">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <%}%>
                     </div>
                     <div class="col-xs-12"><br></div>
                     <br>
@@ -234,6 +355,40 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Artist</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=artist%></p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Year</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=year%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                        if(back != null && !back.equals("")) {
+                    %>
+                    <div class="col-xs-12"><br><br></div>
+                    </h4><h3>Side 1</h3><h4>
+                    <%}%>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-xs-12">
                         <div class="row">
@@ -292,8 +447,12 @@
                                 </div>
                             </div>
                         </div>
-                        <%} if(toughness != null) {%>
+                        <%
+                            } if(toughness != null) {
+                                if(power != null) {
+                        %>
                         <div class="col-xs-12"><br></div>
+                        <%}%>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-lg-3">
                                 <div class="row">
@@ -307,8 +466,12 @@
                                 </div>
                             </div>
                         </div>
-                        <%} if(loyalty != null) {%>
+                        <%
+                            } if(loyalty != null) {
+                                if(toughness != null) {
+                        %>
                         <div class="col-xs-12"><br></div>
+                        <%}%>
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-lg-3">
                                 <div class="row">
@@ -374,41 +537,134 @@
                         </div>
                         <%}%>
                     </div>
+                    <%
+                        if(back != null && !back.equals("")) {
+                    %>
+                    <div class="col-xs-12"><br><br></div>
+                    </h4><h3>Side 2</h3><h4>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-xs-12">
                         <div class="row">
                             <div class="col-xs-12 col-sm-4 col-lg-3">
                                 <div class="row">
-                                    <p id="title">Artist</p>
+                                    <p id="title">Name</p>
                                 </div>
                             </div>
                             <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                             <div class="col-xs-12 col-sm-8 col-lg-9">
                                 <div class="row">
-                                    <p><%=artist%></p>
+                                    <p><%=revName%></p>
                                 </div>
                             </div>
-                            <div class="col-xs-12"><br></div>
-                            <div class="col-xs-12 col-sm-4 col-lg-3">
-                                <div class="row">
-                                    <p id="title">Year</p>
-                                </div>
-                            </div>
-                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                            <div class="col-xs-12 col-sm-8 col-lg-9">
-                                <div class="row">
-                                    <p><%=year%></p>
-                                </div>
-                            </div>
-                            <div class="col-xs-12"><br></div>
                         </div>
                     </div>
+                    <%if(revPower != null || revToughness != null || revLoyalty != null) {%>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-xs-12">
+                        <%if(revPower != null) {%>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Power</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=revPower%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <%} if(revToughness != null) {%>
+                        <div class="col-xs-12"><br></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Toughness</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=revToughness%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <%} if(revLoyalty != null) {%>
+                        <div class="col-xs-12"><br></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Loyalty</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=revLoyalty%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                    <%}%>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Type</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=revType%></p>
+                                </div>
+                            </div>
+                        </div>
+                        <% if(revText != null) {%>
+                        <div class="col-xs-12"><br></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Text</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-lg-9">
+                                <div class="row">
+                                    <p>
+                                        <%=revText%>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <%} if(revFlavor != null) {%>
+                        <div class="col-xs-12"><br></div>
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Flavor Text</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-lg-9">
+                                <div class="row">
+                                    <p><em><%=revFlavor%></em></p>
+                                </div>
+                            </div>
+                        </div>
+                        <%}%>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <%}%>
                 </h4>
             </div>
             <div class="col-xs-12">
                 <h3>Comments<hr></h3>
                 <%
-                    int num = 1;
+                    num = 1;
                     int commentCount = 0;
                     String picture;
                     CardCommentInfo comment;
@@ -549,18 +805,20 @@
                     <input type="hidden" name="id" value="<%=id%>">
                     <input type="hidden" name="username" value="<%=username%>">
                     <textarea id="input-field" name="comment" form="writeCommentForm" required></textarea><br><br><br>
-                    <div class="col-xs-6"></div>
-                    <div class="col-xs-6">
-                        <button id="form-submit" style="width: 100%;" type="submit">Submit Comment</button><br><br><br>
+                    <div class="row">
+                        <div class="hidden-xs col-sm-4"></div>
+                        <div class="hidden-xs col-sm-4"></div>
+                        <div class="col-xs-12 col-sm-4">
+                            <button id="form-submit" title="Submit Comment" style="width: 100%;" type="submit">Submit</button><br><br><br>
+                        </div>
                     </div>
                 </form>
                 <%}%>
-                <br><br>
             </div>
         </div>
-        <form id="popupForm" action="PopupServlet" method="POST"></form>
     </div>
 </div>
+<form id="popupForm" action="PopupServlet" method="POST"></form>
 <script src="js/scripts.js"></script>
 <%
     } else {

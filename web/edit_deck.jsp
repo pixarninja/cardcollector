@@ -10,14 +10,12 @@
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
@@ -25,7 +23,7 @@
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <%
-    String id = request.getParameter("id");
+    int id = Integer.parseInt(request.getParameter("id"));
     DeckInfo deck = deckInfo.getDeckById(id);
     if(deck != null) {
 %>
@@ -51,17 +49,17 @@
                             <div class="col-xs-5 col-sm-4">
                                 <p id="title">Deck Title</p>
                             </div>
-                            <div class="col-xs-7 col-xs-8">
+                            <div class="col-xs-7 col-sm-8">
                                 Enter the title for this deck.<br><br>
                                 <input id="input-field" name="name" type="text" placeholder="<%=deck.getName()%>"><br><br>
                             </div>
-                             <div class="col-xs-12"><hr></div>
+                            <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <p id="title">Deck Description</p>
                             </div>
-                            <div class="col-xs-7 col-xs-8">
+                            <div class="col-xs-7 col-sm-8">
                                 You may enter a description for this deck.<br><br>
                                 <%
                                     if(deck.getDescription() == null || deck.getDescription().equals("")) {
@@ -74,41 +72,7 @@
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12 col-sm-4">
-                                <p id="title">Deck Source</p>
-                            </div>
-                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                            <div class="col-xs-12 col-sm-8">
-                                Choose a source for the deck. If the deck does not depend on a collection, select "Independent". If the deck must contain items from a specific collection, select "Child Of" and choose the name of the parent collection from the drop-down list.<br><br>
-                                <div class="col-xs-12">
-                                    <input name="source" type="radio" value="independent"> Independent
-                                </div>
-                                <div class="col-xs-12"><br></div>
-                                <div class="col-xs-6">
-                                    <input name="source" type="radio" value="parent" > Child Of
-                                </div>
-                                <div class="col-xs-6">
-                                    <select name="parent" id="input-field">
-                                        <option value=""></option>
-                                        <%
-                                            CollectionInfo collection;
-                                            int num = 1;
-                                            while((collection = collectionInfo.getCollectionByNum(num)) != null) {
-                                                if(collection.getUser().equals(username)) {
-                                        %>
-                                        <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
-                                        <%
-                                                }
-                                                num++;
-                                            }
-                                        %>
-                                    </select><br><br><br>
-                                </div>
-                            </div>
-                            <div class="col-xs-12"><hr></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-lg-4">
                                 <p id="title">Deck Contents and Appearance</p><br>
                                 <%
                                     DeckContentsInfo deckContents;
@@ -129,7 +93,8 @@
                                     </div>
                                 </h4>
                             </div>
-                            <div class="col-xs-12 col-sm-8">
+                            <div class="col-xs-12 hidden-lg"><br></div>
+                            <div class="col-xs-12 col-lg-8">
                                 <div class="col-xs-4">
                                     <span style="float: right;">
                                         Change Cover
@@ -139,9 +104,9 @@
                                     <select name="cover" id="input-field">
                                         <option value=""></option>
                                         <%
-                                            num = 1;
+                                            int num = 1;
                                             while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                                if((deckContents.getDeckId()).equals(id)) {
+                                                if(deckContents.getDeckId() == id) {
                                                     CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                                         %>
                                         <option value="<%=card.getFront()%>"><%=card.getName()%></option>
@@ -174,16 +139,16 @@
                                     </select><br><br><br>
                                 </div>
                                 <p>You may copy cards to a different deck, update the number of cards in this deck, or remove them from this deck by using the options below.</p><br>
-                                <div class="col-xs-12 hidden-md hidden-lg"><br></div>
+                                <div class="col-xs-12 hidden-lg"><br></div>
                                 <h4>
                                     <div class="row">
                                         <div class="col-xs-12">
                                             <div class="well col-xs-12" id="black-well">
                                                 <div class="col-xs-1"></div>
-                                                <div class="col-xs-7">
+                                                <div class="col-xs-5">
                                                     Card Name
                                                 </div>
-                                                <div class="col-xs-4">
+                                                <div class="col-xs-6">
                                                     Card Number
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
@@ -193,7 +158,7 @@
                                                         int printed = 1;
                                                         String spacer;
                                                         while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                                            if((deckContents.getDeckId()).equals(id)) {
+                                                            if(deckContents.getDeckId() == id) {
                                                                 CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                                                                 if(printed == entries) {
                                                                     spacer = "hidden-xs hidden-sm hidden-md hidden-lg";
@@ -205,15 +170,15 @@
                                                     <div class="col-xs-1">
                                                         <input type="checkbox" name="<%=printed%>" value="<%=deckContents.getCardId()%>">
                                                     </div>
-                                                    <div id="container<%=deckContents.getCardId()%>" class="col-xs-7">
+                                                    <div id="container<%=deckContents.getCardId()%>" class="col-xs-5">
                                                         <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
                                                             <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
                                                                 <%=card.getName()%>
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="col-xs-4">
-                                                        <input id="input-field" type="number" name="total<%=deckContents.getCardId()%>" style="width: 40px;font-size: 16px;" placeholder="<%=deckContents.getCardTotal()%>">
+                                                    <div class="col-xs-6">
+                                                        <input id="input-field" class="input-number" type="number" name="total<%=deckContents.getCardId()%>" placeholder="<%=deckContents.getCardTotal()%>">
                                                     </div>
                                                     <div class="<%=spacer%>"><br></div>
                                                     <%
@@ -236,7 +201,7 @@
                                                         <%
                                                             num = 1;
                                                             while((deck = deckInfo.getDeckByNum(num)) != null) {
-                                                                if(!deck.getId().equals(id) && deck.getUser().equals(username)) {
+                                                                if(deck.getId() != id && deck.getUser().equals(username)) {
                                                         %>
                                                         <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
                                                         <%
@@ -246,6 +211,7 @@
                                                         %>
                                                     </select><br><br>
                                                 </div>
+                                                <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                                                 <div class="col-xs-6">
                                                     <span style="float: right;">
                                                         Delete Selected
@@ -261,7 +227,7 @@
                                     <%
                                         num = 1;
                                         while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                            if((deckContents.getDeckId()).equals(id)) {
+                                            if(deckContents.getDeckId() == id) {
                                                 CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                                     %>
                                     <form id="cardForm<%=deckContents.getCardId()%>" action="CardServlet" method="POST">
@@ -276,10 +242,12 @@
                                         }
                                     %>
                                 </h4>
-                            </div>
-                            <div class="col-xs-6"></div>
-                            <div class="col-xs-6">
-                                <button title="Submit Updates" id="form-submit" type="submit"><span class="glyphicon glyphicon-refresh"></span>&nbsp;&nbsp;Submit Updates</button><br><br><br>
+                                <div class="row">
+                                    <div class="hidden-xs col-sm-6"></div>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <button title="Submit Deck Edit" id="form-submit" type="submit">Submit</button><br><br><br>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

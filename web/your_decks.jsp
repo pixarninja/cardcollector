@@ -10,14 +10,12 @@
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
@@ -43,14 +41,14 @@
             <h2>Your Decks</h2><br>
             <h4>
                 <p>Below are your decks, organized by title. You may edit a deck by selecting the "Edit" button. You may delete a deck by selecting the "Delete" button. Be warned, deleting a deck is irreversible, so don't delete one you would want to keep later!<p>
-                <br><p>If you would like to add a new deck, click the "New" button below:</p>
+                <br><p>If you would like to add a new deck, click the button below:</p>
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         <form id="addForm" action="DeckServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
+                            <button title="New Deck" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
@@ -61,7 +59,7 @@
         <div class="col-xs-12">
             <%
                 int num = 1;
-                String id;
+                int id;
                 while((deck = (DeckInfo) deckInfo.getDeckByNum(num)) != null) {
                     if(!deck.getUser().equals(username)) {
                         num++;
@@ -79,13 +77,6 @@
                     }
                     int entries = deck.getEntries();
                     int total = deck.getTotal();
-                    String parent = deck.getParent();
-                    if(parent == null || parent.equals("")) {
-                    parent = "None";
-                    }
-                    else {
-                        parent = (collectionInfo.getCollectionById(parent)).getName();
-                    }
                     java.util.Date dateUpdated = deck.getDateUpdated();
                     String description = deck.getDescription();
             %>
@@ -142,15 +133,6 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
-                            <p id="title">Child Of</p>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <p><%=parent%></p>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Date Updated</p>
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
@@ -186,7 +168,7 @@
                                     String spacer = "";
                                     DeckContentsInfo deckContents;
                                     while((deckContents = deckContentsInfo.getContentsByNum(count)) != null) {
-                                        if((deckContents.getDeckId()).equals(id)) {
+                                        if(deckContents.getDeckId() == id) {
                                             CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                                             if((printed % 2) == 0 && printed != entries) {
                                                 spacer = " col-sm-12";
@@ -217,7 +199,7 @@
                     <%
                         count = 1;
                         while((deckContents = deckContentsInfo.getContentsByNum(count)) != null) {
-                            if((deckContents.getDeckId()).equals(id)) {
+                            if(deckContents.getDeckId() == id) {
                                 CardInfo card = cardInfo.getCardById(deckContents.getCardId());
                     %>
                     <form id="cardForm<%=deckContents.getCardId()%><%=num%>" action="CardServlet" method="POST">
@@ -230,8 +212,11 @@
                                 }
                                 count++;
                             }
-                        }
+                        } else {
                     %>
+                    <div class="col-xs-12"><br></div>
+                    <h4><p>There are no cards in this deck.</p></h4>
+                    <%}%>
                 </h4>
             </div>
             <div class="col-xs-12"><br></div>
@@ -239,10 +224,10 @@
                     num++;
                 }
             %>
-            <form id="popupForm" action="PopupServlet" method="POST"></form>
         </div>
     </div>
 </div>
+<form id="popupForm" action="PopupServlet" method="POST"></form>
 <script src="js/scripts.js"></script>
 <%
     } else {
@@ -260,7 +245,7 @@
                         <form id="addForm" action="DeckServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
+                            <button title="New Deck" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br><br></div>

@@ -9,14 +9,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }

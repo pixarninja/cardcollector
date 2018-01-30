@@ -3,176 +3,705 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
+<jsp:useBean id="deckContentsInfo" class="beans.DeckContentsInfo" scope="request"/>
+<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
+<jsp:useBean id="cardFavoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
+<jsp:useBean id="deckFavoriteInfo" class="beans.DeckFavoriteInfo" scope="request"/>
+<jsp:useBean id="userFavoriteInfo" class="beans.UserFavoriteInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
 %>
 <%@include file="header.jsp"%>
 <%
-    UserInfo user = userInfo.getUser(username);
-    String cardImage;
-    String picture;
-    if(user == null) {
-        cardImage = "images/magic_card_back_hd.png";
-        picture = "images/icons/battered-axe.png";
-    }
-    else {
-        cardImage = user.getPicture();
-        picture = user.getPicture();
-    }
+    UserInfo user = userInfo.getUser(request.getParameter("id"));
+    if(user != null) {
+        String owner = user.getUsername();
+        String picture = user.getPicture();
+        String collectionIdList = "";
+        String collectionNameList = "";
+        int count = 1;
+        int collectionNum = 0;
+        CollectionInfo collection;
+        while((collection = collectionInfo.getCollectionByNum(count)) != null) {
+            if(collection.getUser().equals(username)) {
+                collectionNum++;
+                collectionIdList += collection.getId();
+                collectionNameList += collection.getName();
+                CollectionInfo tmp = collectionInfo.getCollectionByNum(count + 1);
+                if(tmp != null && tmp.getUser().equals(username)) {
+                    collectionIdList += "`";
+                    collectionNameList += "`";
+                }
+            }
+            count++;
+        }
+        String deckIdList = "";
+        String deckNameList = "";
+        int deckNum = 0;
+        DeckInfo deck;
+        count = 1;
+        while((deck = deckInfo.getDeckByNum(count)) != null) {
+            if(deck.getUser().equals(username)) {
+                deckNum++;
+                deckIdList += deck.getId();
+                deckNameList += deck.getName();
+                DeckInfo tmp = deckInfo.getDeckByNum(count + 1);
+                if(tmp != null && tmp.getUser().equals(username)) {
+                    deckIdList += "`";
+                    deckNameList += "`";
+                }
+            }
+            count++;
+        }
 %>
 <!-- Content -->
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h2>Username</h2><br>
+            <h2>User Information</h2><br>
             <h4>
-                <p>Below is the selected user's profile information. You may add them to your friend list by clicking the "Add" button. An added friend can play with you in the playmat. Below is also displayed this user's favorites and friends.</p>
+                <p>Below is the selected user's information. You can add or remove this user from your favorites list, or interact with their favorited items.</p>
                 <br><br><hr>
             </h4>
         </div>
         <div class="col-xs-12 col-sm-4">
             <h4>
+                <%
+                    UserFavoriteInfo favorite;
+                    boolean favorited = false;
+                    int num = 1;
+                    while((favorite = userFavoriteInfo.getFavoriteByNum(num)) != null) {
+                        if(favorite.getUser().equals(username) && favorite.getUserId() == owner) {
+                            favorited = true;
+                            break;
+                        }
+                        num++;
+                    }
+                %>
                 <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
-                <br><br>
-                <form id="addFriendForm" action="UserServlet" method="POST">
-                    <input type="hidden" name="action" value="add_friend">
-                    <input type="hidden" name="username" value="<%=username%>">
-                    <button title="Add To Friend List" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;Friend</button>
-                </form>
+                <%if(user.getUsername().equals(username)) {%>
                 <br>
+                <div class="row" style="margin: auto;display: table">
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Profile Picture" onclick="document.getElementById('pictureForm').submit();">
+                        <span id="button-symbol" class="glyphicon glyphicon-picture"></span>
+                    </div>
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Edit Profile Information" onclick="document.getElementById('editForm').submit();">
+                        <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                    </div>
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete User" onclick="deleteUserPopup('<%=username%>');">
+                        <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                    </div>
+                </div>
+                <form id="pictureForm" action="UserServlet" method="POST">
+                    <input type="hidden" name="action" value="edit_picture">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <form id="editForm" action="UserServlet" method="POST">
+                    <input type="hidden" name="action" value="edit_profile">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <%
+                    } else {
+                        if(username != null && !username.equals("")) {
+                %>
+                <br>
+                <div class="row" style="margin: auto;display: table">
+                    <%
+                        if(favorited) {
+                    %>
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove User From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                        <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                    </div>
+                    <%} else {%>
+                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add User To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                        <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                    </div>
+                    <%}%>
+                </div>
+                <form id="favoriteForm" action="UserServlet" method="POST">
+                    <input type="hidden" name="action" value="favorite">
+                    <input type="hidden" name="id" value="<%=owner%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <%} else {%>
+                <br>
+                <%}}%>
             </h4>
         </div>
         <div class="col-xs-12 col-sm-8">
-            <h3>Personal Information<hr></h3>
+            <h2>Personal Information<hr></h2>
             <h4>
                 <div class="col-xs-12">
                     <div class="row">
-                        <div class="col-xs-4 col-sm-2">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">
-                                <p>Name</p>
+                                <p id="title">Username</p>
                             </div>
                         </div>
-                        <div class="col-xs-8 col-sm-10">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <div class="row">
-                                <p>Derp</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                </div>
-            </h4>
-            <h3>Site Information<hr></h3>
-            <h4>
-                <div class="col-xs-12">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-3">
-                            <div class="row">
-                                <p>Collections</p>
-                            </div>
-                        </div>
-                        <div class="col-xs-12 col-sm-9">
-                            <div class="row">
-                                <p>Derp</p>
+                                <p><%=user.getUsername()%></p>
                             </div>
                         </div>
                         <div class="col-xs-12"><br></div>
                     </div>
                     <div class="row">
-                        <div class="col-xs-12 col-sm-3">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <div class="row">
-                                <p>Decks</p>
+                                <p id="title">Name</p>
                             </div>
                         </div>
-                        <div class="col-xs-12 col-sm-9">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <div class="row">
-                                <p>Derp</p>
+                                <p><%=user.getName()%></p>
                             </div>
                         </div>
                         <div class="col-xs-12"><br></div>
                     </div>
+                    <%
+                        if(user.getBio() != null && !user.getBio().equals("")) {
+                    %>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <div class="row">
+                                <p id="title">Bio</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <div class="row">
+                                <p><%=user.getBio()%></p>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <%}%>
                 </div>
             </h4>
         </div>
         <div class="col-xs-12">
-            <h3>Favorites<hr></h3>
+            <h2>Decks<hr></h2>
             <h4>
-                <div class="row">
-                    <div class="col-xs-7 col-sm-3 col-md-2">
-                        <img width="100%" src="<%=cardImage%>" alt="<%=cardImage%>" id="center-img"></img><br>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="edit_favorite">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Edit Favorite" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                        </form>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="delete_favorite">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Delete Favorite" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                        </form>
-                    </div>
-                    <div class="col-xs-5 col-sm-9 col-md-10">
-                        <div class="row">
-                            <p>Name</p>
-                            <p>Date</p>
-                            <div class="hidden-xs">
-                                <hr id="in-line-hr">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                            </div>
+                <p>
+                    Below are this user's decks. You may view the deck's information by clicking on the link.
+                </p>
+            </h4><br><br>
+            <%
+                count = 1;
+                int printed = 1;
+                DeckInfo myDeck;
+                while((myDeck = deckInfo.getDeckByNum(count)) != null) {
+                    if(!myDeck.getUser().equals(owner)) {
+                        count++;
+                        continue;
+                    }
+                    int id = myDeck.getId();
+                    num = 1;
+                    DeckFavoriteInfo deckFavorite;
+                    while((deckFavorite = deckFavoriteInfo.getFavoriteByNum(num)) != null) {
+                        if(deckFavorite.getUser().equals(owner) && deckFavorite.getId() == id) {
+                            favorited = true;
+                            break;
+                        }
+                        num++;
+                    }
+                    String top = myDeck.getTop();
+                    if(top == null) {
+                        top = "images/magic_card_back.jpg";
+                    }
+                    String bottom = myDeck.getBottom();
+                    if(bottom == null) {
+                        bottom = "images/magic_card_sleeves_default.jpg";
+                    }
+            %>
+            <div class="col-xs-6 col-sm-4 col-md-3">
+                <div class="deck-image">
+                    <img class="sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
+                    <img class="img-special cover" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
+                </div>
+                <%if(deck.getUser().equals(username)) {%>
+                    <br>
+                    <div class="row" style="margin: auto;display: table">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm<%=id%>').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                        </div>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
+                            <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                         </div>
                     </div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
+                    <form id="editForm<%=id%>" action="DeckServlet" method="POST">
+                        <input type="hidden" name="action" value="edit">
+                        <input type="hidden" name="id" value="<%=id%>">
+                        <input type="hidden" name="username" value="<%=username%>">
+                    </form>
+                    <%
+                        } else {
+                            if(username != null && !username.equals("")) {
+                    %>
+                    <br>
+                    <div class="row" style="margin: auto;display: table">
+                        <%
+                            if(favorited) {
+                        %>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                        </div>
+                        <%} else {%>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                        </div>
+                        <%}%>
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-            </h4>
-            <h3>Friends<hr></h3>
+                    <form id="favoriteForm<%=id%>" action="DeckServlet" method="POST">
+                        <input type="hidden" name="action" value="favorite">
+                        <input type="hidden" name="id" value="<%=id%>">
+                        <input type="hidden" name="username" value="<%=username%>">
+                    </form>
+                    <%} else {%>
+                    <br>
+                    <%}}%>
+                <p align="center" style="position: relative;top: -5px;">
+                    <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                        <%=myDeck.getName()%> (<%=myDeck.getUser()%>)
+                    </a>
+                </p>
+                <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="deck">
+                    <input type="hidden" name="id" value="<%=id%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+            </div>
+            <%
+                String spacer = "";
+                if((printed % 2) == 0) {
+                    spacer += "col-xs-12";
+                }
+                else {
+                    spacer += "hidden-xs";
+                }
+                if((printed % 3) == 0) {
+                    spacer += " col-sm-12";
+                }
+                else {
+                    spacer += " hidden-sm";
+                }
+                if((printed % 4) == 0) {
+                    spacer += " col-md-12";
+                }
+                else {
+                    spacer += " hidden-md hidden-lg";
+                }
+            %>
+            <div class="<%=spacer%>"><br></div>
+            <%
+                    printed++;
+                    count++;
+                    try {
+                        Thread.sleep(250);
+                    } catch(InterruptedException ex) {
+                        System.out.println("ERROR: sleep was interrupted!");
+                    }
+                }
+            %>
+            <div class="col-xs-12"><br></div>
+        </div>
+        <div class="col-xs-12">
+            <h2>Favorites<hr></h2>
             <h4>
-                <div class="row">
-                    <div class="col-xs-7 col-sm-3 col-md-2">
-                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img><br>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="edit_friend">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Edit Friend" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                        </form>
-                        <form id="newForm" action="UserServlet" method="POST">
-                            <input type="hidden" name="action" value="delete_friend">
-                            <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Delete Friend" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                        </form>
-                    </div>
-                    <div class="col-xs-5 col-sm-9 col-md-10">
-                        <div class="row">
-                            <p>Name</p>
-                            <p>Date</p>
-                            <div class="hidden-xs">
-                                <hr id="in-line-hr">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
+                <p>
+                    Below are this user's favorite cards, decks, collections, and users.
+                </p>
+            </h4><br><br>
+            <%
+                CardFavoriteInfo cardFavorite;
+                num = 1;
+                boolean foundCard = false;
+                while((cardFavorite = cardFavoriteInfo.getFavoriteByNum(num)) != null) {
+                    if(cardFavorite.getUser().equals(owner)) {
+                        foundCard = true;
+                        break;
+                    }
+                    num++;
+                }
+                if(foundCard) {
+            %>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Favorite Cards<hr></h3>
+                    <h4>
+                        <%
+                            num = 1;
+                            printed = 1;
+                            while((cardFavorite = cardFavoriteInfo.getFavoriteByNum(num)) != null) {
+                                if(cardFavorite.getUser().equals(owner)) {
+                                    CardInfo card = cardInfo.getCardById(cardFavorite.getCardId());
+                                    String id = card.getId();
+                                    favorited = false;
+                                    count = 1;
+                                    while((cardFavorite = cardFavoriteInfo.getFavoriteByNum(count)) != null) {
+                                        if(cardFavorite.getUser().equals(username) && cardFavorite.getCardId().equals(id)) {
+                                            favorited = true;
+                                            break;
+                                        }
+                                        count++;
+                                    }
+                        %>
+                        <div class="col-xs-6 col-sm-4 col-md-3">
+                            <img class="img-special" width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img">
+                            <br>
+                            <div class="row" style="margin: auto;display: table">
+                                <%
+                                    if(username != null && !username.equals("")) {
+                                %>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                                    <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
+                                </div>
+                                <%
+                                    if(favorited) {
+                                %>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Remove Card From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                                    <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                                </div>
+                                <%} else {%>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Card To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                                    <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                                </div>
+                                <%}%>
+                                <form id="favoriteForm" action="CardServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <%}%>
+                            </div>
+                            <p align="center" style="position: relative;top: -5px;">
+                                <a href="#" onclick="document.getElementById('cardForm<%=id%>').submit();">
+                                    <%=card.getName()%>
+                                </a>
+                            </p>
+                            <form id="cardForm<%=id%>" action="CardServlet" method="POST">
+                                <input type="hidden" name="action" value="card">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
+                            <form id="favoriteForm<%=id%>" action="CardServlet" method="POST">
+                                <input type="hidden" name="action" value="favorite">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
+                        </div>
+                        <%
+                            String spacer = "";
+                            if((printed % 2) == 0) {
+                                spacer += "col-xs-12";
+                            }
+                            else {
+                                spacer += "hidden-xs";
+                            }
+                            if((printed % 3) == 0) {
+                                spacer += " col-sm-12";
+                            }
+                            else {
+                                spacer += " hidden-sm";
+                            }
+                            if((printed % 4) == 0) {
+                                spacer += " col-md-12";
+                            }
+                            else {
+                                spacer += " hidden-md hidden-lg";
+                            }
+                        %>
+                        <div class="<%=spacer%>"><br></div>
+                        <%
+                                    printed++;
+                                }
+                                num++;
+                            }
+                        %>
+                    </h4>
+                </div>
+            </div>
+            <div class="col-xs-12"><br></div>
+            <%}%>
+            <%
+                DeckFavoriteInfo deckFavorite;
+                num = 1;
+                boolean foundDeck = false;
+                while((deckFavorite = deckFavoriteInfo.getFavoriteByNum(num)) != null) {
+                    if(deckFavorite.getUser().equals(owner)) {
+                        foundDeck = true;
+                        break;
+                    }
+                    num++;
+                }
+                if(foundDeck) {
+            %>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Favorite Decks<hr></h3>
+                    <h4>
+                        <%
+                            num = 1;
+                            printed = 1;
+                            while((deckFavorite = deckFavoriteInfo.getFavoriteByNum(num)) != null) {
+                                if(deckFavorite.getUser().equals(owner)) {
+                                    deck = deckInfo.getDeckById(deckFavorite.getDeckId());
+                                    int id = deck.getId();
+                                    String top = deck.getTop();
+                                    if(top == null) {
+                                        top = "images/magic_card_back.jpg";
+                                    }
+                                    String bottom = deck.getBottom();
+                                    if(bottom == null) {
+                                        bottom = "images/magic_card_sleeves_default.jpg";
+                                    }
+                                    favorited = false;
+                                    count = 1;
+                                    while((deckFavorite = deckFavoriteInfo.getFavoriteByNum(count)) != null) {
+                                        if(deckFavorite.getUser().equals(username) && deckFavorite.getDeckId() == id) {
+                                            favorited = true;
+                                            break;
+                                        }
+                                        count++;
+                                    }
+                        %>
+                        <div class="col-xs-6 col-sm-4 col-md-3">
+                            <div class="deck-image">
+                                <img class="sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
+                                <img class="img-special cover" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
+                            </div>
+                            <br>
+                            <div class="row" style="margin: auto;display: table">
+                                <%if(deck.getUser().equals(owner)) {%>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm').submit();">
+                                    <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                                </div>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
+                                    <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                                </div>
+                                <form id="editForm" action="DeckServlet" method="POST">
+                                    <input type="hidden" name="action" value="edit">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <%
+                                    } else {
+                                        if(username != null && !username.equals("")) {
+                                            if(favorited) {
+                                %>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                                    <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                                </div>
+                                <%} else {%>
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                                    <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                                </div>
+                                <%}%>
+                                <form id="favoriteForm" action="DeckServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <%}}%>
+                                <p align="center" style="position: relative;top: -5px;">
+                                    <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                                        <%=deck.getName()%> by <%=deck.getUser()%>
+                                    </a>
+                                </p>
+                                <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
+                                    <input type="hidden" name="action" value="deck">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sit amet quam pretium lacus convallis ultricies eu sed metus. Vestibulum a molestie quam. Praesent in scelerisque tortor. Etiam vulputate orci et erat imperdiet feugiat. Praesent bibendum non purus vel consequat. Quisque a venenatis ex. Pellentesque consequat neque dui, eget commodo ipsum fermentum vel. Donec lacinia feugiat elementum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis quis diam augue. Vivamus accumsan consectetur nibh vel sodales. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed nec tellus eget est rutrum tempus et at dui.</p>
-                    </div>
-                    <div class="col-xs-12"><br></div>
+                        <%
+                            String spacer = "";
+                            if((printed % 2) == 0) {
+                                spacer += "col-xs-12";
+                            }
+                            else {
+                                spacer += "hidden-xs";
+                            }
+                            if((printed % 3) == 0) {
+                                spacer += " col-sm-12";
+                            }
+                            else {
+                                spacer += " hidden-sm";
+                            }
+                            if((printed % 4) == 0) {
+                                spacer += " col-md-12";
+                            }
+                            else {
+                                spacer += " hidden-md hidden-lg";
+                            }
+                        %>
+                        <div class="<%=spacer%>"><br></div>
+                        <%
+                                    printed++;
+                                }
+                                num++;
+                            }
+                        %>
+                    </h4>
                 </div>
+            </div>
+            <div class="col-xs-12"><br></div>
+            <%}%>
+            <%
+                UserFavoriteInfo userFavorite;
+                num = 1;
+                boolean foundUser = false;
+                while((userFavorite = userFavoriteInfo.getFavoriteByNum(num)) != null) {
+                    if(userFavorite.getUser().equals(owner)) {
+                        foundUser = true;
+                        break;
+                    }
+                    num++;
+                }
+                if(foundUser) {
+            %>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Favorite Users<hr></h3>
+                    <h4>
+                        <%
+                            num = 1;
+                            printed = 1;
+                            while((userFavorite = userFavoriteInfo.getFavoriteByNum(num)) != null) {
+                                if(userFavorite.getUser().equals(username)) {
+                                    user = userInfo.getUser(userFavorite.getUserId());
+                                    String id = user.getUsername();
+                                    picture = user.getPicture();
+                                    favorited = false;
+                                    count = 1;
+                                    while((userFavorite = userFavoriteInfo.getFavoriteByNum(count)) != null) {
+                                        if(userFavorite.getUser().equals(username) && userFavorite.getUserId().equals(id)) {
+                                            favorited = true;
+                                            break;
+                                        }
+                                        count++;
+                                    }
+                        %>
+                        <div class="col-xs-6 col-sm-4 col-md-3">
+                            <img class="img-special" width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img">
+                            <br>
+                            <%if(user.getUsername().equals(username)) {%>
+                                <br>
+                                <div class="row" style="margin: auto;display: table">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Refresh Profile Picture" onclick="document.getElementById('pictureForm').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-refresh"></span>
+                                    </div>
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Edit Profile Information" onclick="document.getElementById('editForm').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                                    </div>
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete User" onclick="deleteUserPopup('<%=username%>');">
+                                        <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                                    </div>
+                                </div>
+                                <form id="pictureForm" action="UserServlet" method="POST">
+                                    <input type="hidden" name="action" value="refresh_picture">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <form id="editForm" action="UserServlet" method="POST">
+                                    <input type="hidden" name="action" value="edit_profile">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <%
+                                    } else {
+                                        if(username != null && !username.equals("")) {
+                                %>
+                                <br>
+                                <div class="row" style="margin: auto;display: table">
+                                    <%
+                                        if(favorited) {
+                                    %>
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                                    </div>
+                                    <%} else {%>
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                                    </div>
+                                    <%}%>
+                                </div>
+                                <form id="favoriteForm<%=id%>" action="UserServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <%} else {%>
+                                <br>
+                                <%}}%>
+                            <p align="center" style="position: relative;top: -5px;">
+                                <a href="#" onclick="document.getElementById('userForm<%=id%>').submit();">
+                                    <%=user.getUsername()%> (<%=user.getName()%>)
+                                </a>
+                            </p>
+                            <form id="userForm<%=id%>" action="UserServlet" method="POST">
+                                <input type="hidden" name="action" value="user">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
+                        </div>
+                        <%
+                            String spacer = "";
+                            if((printed % 3) == 0) {
+                                spacer += "col-xs-12";
+                            }
+                            else {
+                                spacer += "hidden-xs";
+                            }
+                            if((printed % 4) == 0) {
+                                spacer += " col-sm-12";
+                            }
+                            else {
+                                spacer += " hidden-sm hidden-md hidden-lg";
+                            }
+                        %>
+                        <div class="<%=spacer%>"><br></div>
+                        <%
+                                    printed++;
+                                }
+                                num++;
+                            }
+                        %>
+                    </h4>
+                </div>
+            </div>
+            <div class="col-xs-12"><br></div>
+            <%}%>
+        </div>
+    </div>
+</div>
+<form id="popupForm" action="PopupServlet" method="POST"></form>
+<script src="js/scripts.js"></script>
+<%
+    } else {
+%>
+<!-- Error -->
+<div class="well row">
+    <div class="col-xs-12">
+        <div class="col-xs-12">
+            <h2>User Information</h2><br>
+            <h4>
+                <p>The user you selected has no information to display.</p>
+                <br>
             </h4>
         </div>
     </div>
 </div>
+<%}%>
 <%@include file="footer.jsp"%>

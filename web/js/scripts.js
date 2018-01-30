@@ -22,8 +22,10 @@ function reveal(imageId, containerId, capsuleId, target) {
         ypos = rect.top - cap.top - (2 * height / 3);
     } else if(target === "your_collections") {
         ypos = rect.top - cap.top - (2 * height / 3);
-    } else if(target === "edit_deck" || target === "edit_collection") {
-        ypos = rect.top - cap.top + (height / 5) + (height / 3);
+    } else if(target === "edit_deck") {
+        ypos = rect.top - cap.top - (height / 3);
+    } else if(target === "edit_collection") {
+        ypos = rect.top - cap.top - (height / 3);
     }
     else {
         ypos = rect.top - cap.top;
@@ -127,21 +129,11 @@ function selectMana(id, num) {
         break;
     default:
         mana = [false, false, false, false, false];
-        document.getElementById("white-mana-1").style.background = "url(images/white_off.png)";
-        document.getElementById("white-mana-2").style.background = "url(images/white_off.png)";
-        document.getElementById("white-mana-3").style.background = "url(images/white_off.png)";
-        document.getElementById("blue-mana-1").style.background = "url(images/blue_off.png)";
-        document.getElementById("blue-mana-2").style.background = "url(images/blue_off.png)";
-        document.getElementById("blue-mana-3").style.background = "url(images/blue_off.png)";
-        document.getElementById("black-mana-1").style.background = "url(images/black_off.png)";
-        document.getElementById("black-mana-2").style.background = "url(images/black_off.png)";
-        document.getElementById("black-mana-3").style.background = "url(images/black_off.png)";
-        document.getElementById("red-mana-1").style.background = "url(images/red_off.png)";
-        document.getElementById("red-mana-2").style.background = "url(images/red_off.png)";
-        document.getElementById("red-mana-3").style.background = "url(images/red_off.png)";
-        document.getElementById("green-mana-1").style.background = "url(images/green_off.png)";
-        document.getElementById("green-mana-2").style.background = "url(images/green_off.png)";
-        document.getElementById("green-mana-3").style.background = "url(images/green_off.png)";
+        document.getElementById("white-mana").style.background = "url(images/white_off.png)";
+        document.getElementById("blue-mana").style.background = "url(images/blue_off.png)";
+        document.getElementById("black-mana").style.background = "url(images/black_off.png)";
+        document.getElementById("red-mana").style.background = "url(images/red_off.png)";
+        document.getElementById("green-mana").style.background = "url(images/green_off.png)";
     }
 }
 
@@ -164,7 +156,6 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
     <input type='hidden' name='username' value='" + username + "'>\
     <input type='hidden' name='id' value='" + id + "'>\
     <div class='col-xs-12'>\
-        <a onclick='hideForm(\"popupForm\");'><span id='close' class='glyphicon glyphicon-remove-circle'></span></a>\
         <h2>\
             <p align='center'>\
                 Add Card To Collection Or Deck\
@@ -185,14 +176,14 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
                 Select the collection and/or deck you would like to add the card to from the drop-down list(s) and then click the button below.\
             </h4><hr>\
             <h4 id='title'>\
-                Add <input id='input-field' name='collection_total' type='number' style='width: 40px;' placeholder='0'> To Collection:<br><br>\
+                Add <input id='input-field' class='input-number' name='collection_total' type='number' placeholder='0'> To Collection:<br><br>\
                 <select name='collection' id='input-field'>\
                     <option value=''></option>";
             for (i = 0; i < collectionNum; i++) {
                 view += "<option value='" + collectionIds[i] + "'>" + collectionNames[i] + "</option>";
             }
             view += "</select><br><br>\
-                    Add <input id='input-field' name='deck_total' type='number' style='width: 40px;' placeholder='0'> To Deck:<br><br>\
+                    Add <input id='input-field' class='input-number' name='deck_total' type='number' placeholder='0'> To Deck:<br><br>\
                     <select name='deck' id='input-field'>\
                         <option value=''></option>";
             for (i = 0; i < deckNum; i++) {
@@ -245,7 +236,6 @@ function editCardCommentPopup(id, commentId, username, content) {
     <input type='hidden' name='id' value='" + id + "'>\
     <input type='hidden' name='comment_id' value='" + commentId + "'>\
     <div class='col-xs-12'>\
-        <a onclick='hideForm(\"popupForm\");'><span id='close' class='glyphicon glyphicon-remove-circle'></span></a>\
         <h2>\
             <p align='center'>\
                 Edit Comment\
@@ -258,7 +248,7 @@ function editCardCommentPopup(id, commentId, username, content) {
         </h4><br><hr>\
         <div class='col-xs-12'><br></div>\
         <div class='col-xs-12'>\
-            <button title='Submit Edit' id='form-submit' type='submit'><span class='glyphicon glyphicon-refresh'></span>&nbsp;&nbsp;Submit Update</button>\
+            <button title='Submit Edit Comment' id='form-submit' type='submit'>Submit</button>\
         </div>\
         <div class='col-xs-12'><br></div>\
     </div>";
@@ -273,7 +263,6 @@ function deleteCardCommentPopup(id, commentId, username) {
     <input type='hidden' name='id' value='" + id + "'>\
     <input type='hidden' name='comment_id' value='" + commentId + "'>\
     <div class='col-xs-12'>\
-        <a onclick='hideForm(\"popupForm\");'><span id='close' class='glyphicon glyphicon-remove-circle'></span></a>\
         <h2>\
             <p align='center'>\
                 <span class='glyphicon glyphicon-alert'></span>&nbsp;&nbsp;Confirmation Needed&nbsp;&nbsp;<span class='glyphicon glyphicon-alert'></span>\
@@ -286,10 +275,67 @@ function deleteCardCommentPopup(id, commentId, username) {
         </h4><br><hr>\
         <div class='col-xs-12'><br></div>\
         <div class='col-xs-6'>\
-            <button title='Confirm' id='form-submit' type='submit'><span class='glyphicon glyphicon-ok' style='font-size: 20px;'></span>&nbsp;&nbsp;Yes, Delete</button>\
+            <button title='Confirm' id='form-submit' type='submit'>Yes, Delete</button>\
         </div>\
         <div class='col-xs-6'>\
-            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'><span class='glyphicon glyphicon-remove' style='font-size: 20px;'></span>&nbsp;&nbsp;No, Cancel</button>\
+            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
+        </div>\
+        <div class='col-xs-12'><br></div>\
+    </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
+function editDeckCommentPopup(id, commentId, username, content) {
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='edit_deck_comment'>\
+    <input type='hidden' name='username' value='" + username + "'>\
+    <input type='hidden' name='id' value='" + id + "'>\
+    <input type='hidden' name='comment_id' value='" + commentId + "'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                Edit Comment\
+            </p>\
+        </h2><br>\
+        <h4>\
+            You may edit your comment using the textbox provided and then by clicking the submit button below.\
+            <br><br>\
+            <textarea id='input-field' name='comment'>" + content + "</textarea>\
+        </h4><br><hr>\
+        <div class='col-xs-12'><br></div>\
+        <div class='col-xs-12'>\
+            <button title='Submit Edit Comment' id='form-submit' type='submit'>Submit</button>\
+        </div>\
+        <div class='col-xs-12'><br></div>\
+    </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
+function deleteDeckCommentPopup(id, commentId, username) {
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='delete_deck_comment'>\
+    <input type='hidden' name='username' value='" + username + "'>\
+    <input type='hidden' name='id' value='" + id + "'>\
+    <input type='hidden' name='comment_id' value='" + commentId + "'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                <span class='glyphicon glyphicon-alert'></span>&nbsp;&nbsp;Confirmation Needed&nbsp;&nbsp;<span class='glyphicon glyphicon-alert'></span>\
+            </p>\
+        </h2><br>\
+        <h4>\
+            <p align='center'>\
+                Do you really want to delete this comment? This action cannot be undone.\
+            </p>\
+        </h4><br><hr>\
+        <div class='col-xs-12'><br></div>\
+        <div class='col-xs-6'>\
+            <button title='Confirm' id='form-submit' type='submit'>Yes, Delete</button>\
+        </div>\
+        <div class='col-xs-6'>\
+            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
         </div>\
         <div class='col-xs-12'><br></div>\
     </div>";
@@ -302,7 +348,6 @@ function deleteUserPopup(username) {
     <input type='hidden' name='action' value='delete_user'>\
     <input type='hidden' name='username' value='" + username + "'>\
     <div class='col-xs-12'>\
-        <a onclick='hideForm(\"popupForm\");'><span id='close' class='glyphicon glyphicon-remove-circle'></span></a>\
         <h2>\
             <p align='center'>\
                 <span class='glyphicon glyphicon-alert'></span>&nbsp;&nbsp;Confirmation Needed&nbsp;&nbsp;<span class='glyphicon glyphicon-alert'></span>\
@@ -315,10 +360,10 @@ function deleteUserPopup(username) {
         </h4><br><hr>\
         <div class='col-xs-12'><br></div>\
         <div class='col-xs-6'>\
-            <button title='Confirm' id='form-submit' type='submit'><span class='glyphicon glyphicon-ok' style='font-size: 20px;'></span>&nbsp;&nbsp;Yes, Delete</button>\
+            <button title='Confirm' id='form-submit' type='submit'>Yes, Delete</button>\
         </div>\
         <div class='col-xs-6'>\
-            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'><span class='glyphicon glyphicon-remove' style='font-size: 20px;'></span>&nbsp;&nbsp;No, Cancel</button>\
+            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
         </div>\
         <div class='col-xs-12'><br></div>\
     </div>";
@@ -332,7 +377,6 @@ function deleteDeckPopup(id, username) {
     <input type='hidden' name='id' value='" + id + "'>\
     <input type='hidden' name='username' value='" + username + "'>\
     <div class='col-xs-12'>\
-        <a onclick='hideForm(\"popupForm\");'><span id='close' class='glyphicon glyphicon-remove-circle'></span></a>\
         <h2>\
             <p align='center'>\
                 <span class='glyphicon glyphicon-alert'></span>&nbsp;&nbsp;Confirmation Needed&nbsp;&nbsp;<span class='glyphicon glyphicon-alert'></span>\
@@ -345,10 +389,10 @@ function deleteDeckPopup(id, username) {
         </h4><br><hr>\
         <div class='col-xs-12'><br></div>\
         <div class='col-xs-6'>\
-            <button title='Confirm' id='form-submit' type='submit'><span class='glyphicon glyphicon-ok' style='font-size: 20px;'></span>&nbsp;&nbsp;Yes, Delete</button>\
+            <button title='Confirm' id='form-submit' type='submit'>Yes, Delete</button>\
         </div>\
         <div class='col-xs-6'>\
-            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'><span class='glyphicon glyphicon-remove' style='font-size: 20px;'></span>&nbsp;&nbsp;No, Cancel</button>\
+            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
         </div>\
         <div class='col-xs-12'><br></div>\
     </div>";

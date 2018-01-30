@@ -190,31 +190,31 @@ button:focus {
 }
 
 /* MANA BUTTONS */
-#white-mana-1, #white-mana-2, #white-mana-3 {
+#white-mana {
     background-image: url(images/white_off.png);
     width: 28px;
     height: 28px;
 }
 
-#blue-mana-1, #blue-mana-2, #blue-mana-3 {
+#blue-mana {
     background-image: url(images/blue_off.png);
     width: 28px;
     height: 28px;
 }
 
-#black-mana-1, #black-mana-2, #black-mana-3 {
+#black-mana {
     background-image: url(images/black_off.png);
     width: 28px;
     height: 28px;
 }
 
-#red-mana-1, #red-mana-2, #red-mana-3 {
+#red-mana {
     background-image: url(images/red_off.png);
     width: 28px;
     height: 28px;
 }
 
-#green-mana-1, #green-mana-2, #green-mana-3 {
+#green-mana {
     background-image: url(images/green_off.png);
     width: 28px;
     height: 28px;
@@ -238,14 +238,12 @@ button:focus {
 
 /* POPUP */
 #popupForm {
-    margin-left: 25px;
-    margin-right: 25px;
     position: fixed;
     top: 80px;
-    left: 21%;
+    left: 22%;
     background-color: black;
     display: none;
-    width: 55%;
+    width: 56%;
     border: 1px solid white;
     border-radius: 15px;
 }
@@ -279,7 +277,7 @@ button:focus {
     border-radius: 10px 0px 0px 10px;
     background: linear-gradient(#758fff, #0d324e);
     margin: auto;
-    display: table
+    display: table;
 }
 
 #button-back-middle {
@@ -289,7 +287,7 @@ button:focus {
     border-radius: 0px 0px 0px 0px;
     background: linear-gradient(#758fff, #0d324e);
     margin: auto;
-    display: table
+    display: table;
 }
 
 #button-back-right {
@@ -299,7 +297,17 @@ button:focus {
     border-radius: 0px 10px 10px 0px;
     background: linear-gradient(#758fff, #0d324e);
     margin: auto;
-    display: table
+    display: table;
+}
+
+#button-back-pill {
+    height: 35px !important;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px 10px 10px 10px;
+    background: linear-gradient(#758fff, #0d324e);
+    margin: auto;
+    display: table;
 }
 
 #button-symbol {
@@ -312,7 +320,7 @@ button:focus {
     background: none;
 }
 
-#button-back-left:hover, #button-back-middle:hover, #button-back-right:hover {
+#button-back-left:hover, #button-back-middle:hover, #button-back-right:hover, #button-back-pill:hover {
     background: #758fff;
 }
 
@@ -413,6 +421,11 @@ body {
     color: white;
     border: 2px solid #24282c;
     font-size: 14px !important;
+}
+
+.input-number {
+    width: 50px !important;
+    font-size: 16px;
 }
 
 #input-field-alt {
