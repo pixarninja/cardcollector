@@ -19,6 +19,9 @@
     }
 %>
 <%@include file="header.jsp"%>
+<%
+    UserInfo user = userInfo.getUser(username);
+%>
 <!-- Content -->
 <div class="row">
     <div class="well col-xs-12">
@@ -71,7 +74,13 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter your real name. This will not be displayed to other users.<br><br>
+                                <%
+                                    if(user.getUsername() == null || user.getUsername().equals("")) {
+                                %>
                                 <input id="input-field" name="name" type="text"><br><br>
+                                <%} else {%>
+                                <input id="input-field" name="name" type="text" placeholder="<%=user.getName()%>"><br><br>
+                                <%}%>
                             </div>
                              <div class="col-xs-12"><hr></div>
                         </div>
@@ -82,6 +91,13 @@
                             <div class="col-xs-7 col-xs-8">
                                 Enter your email. This will not be displayed to other users.<br><br>
                                 <input id="input-field" name="email" type="text"><br><br>
+                                <%
+                                    if(user.getUsername() == null || user.getUsername().equals("")) {
+                                %>
+                                <input id="input-field" name="email" type="text"><br><br>
+                                <%} else {%>
+                                <input id="input-field" name="email" type="text" placeholder="<%=user.getEmail()%>"><br><br>
+                                <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
@@ -91,7 +107,13 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Choose a username less than 16 characters long. This is the name that will be displayed to other users and will be required for when you login.<br><br>
+                                <%
+                                    if(user.getUsername() == null || user.getUsername().equals("")) {
+                                %>
                                 <input id="input-field" name="new_user" type="text" size="16"><br><br>
+                                <%} else {%>
+                                <input id="input-field" name="new_user" type="text" size="16" placeholder="<%=user.getUsername()%>"><br><br>
+                                <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
@@ -110,9 +132,24 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Please enter the same password as above.<br><br>
-                                <input id="input-field" name="confirm" type="password"><br><br><br>
+                                <input id="input-field" name="confirm" type="password"><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-5 col-sm-4">
+                                <p id="title">Bio</p>
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                You may write biographical information about yourself.<br><br>
+                                <%
+                                    if(user.getBio() == null || user.getBio().equals("")) {
+                                %>
+                                <textarea id="input-field" name="bio" form="editProfileForm"></textarea><br><br><br>
+                                <%} else {%>
+                                <textarea id="input-field" name="bio" form="editProfileForm" placeholder="<%=user.getBio()%>"></textarea><br><br><br>
+                                <%}%>
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">

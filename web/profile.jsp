@@ -10,6 +10,7 @@
 <jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
 <jsp:useBean id="cardFavoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <jsp:useBean id="deckFavoriteInfo" class="beans.DeckFavoriteInfo" scope="request"/>
+<jsp:useBean id="collectionFavoriteInfo" class="beans.CollectionFavoriteInfo" scope="request"/>
 <jsp:useBean id="userFavoriteInfo" class="beans.UserFavoriteInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
@@ -180,16 +181,28 @@
             </h4>
         </div>
         <div class="col-xs-12">
-            <h2>Decks<hr></h2>
+            <h2>Your Decks<hr></h2>
+            <%
+                boolean found = false;
+                count = 1;
+                DeckInfo myDeck;
+                while((myDeck = deckInfo.getDeckByNum(count)) != null) {
+                    if(!myDeck.getUser().equals(username)) {
+                        found = true;
+                        break;
+                    }
+                    count++;
+                }
+                if(found) {
+            %>
             <h4>
                 <p>
-                    Below are your decks. You may view the deck's information by clicking on the link.
+                    Below are your decks. You may view the deck's information by clicking on the link. You can edit or delete the deck by clicking on the buttons.
                 </p>
                 <br><br>
                 <%
                     count = 1;
                     int printed = 1;
-                    DeckInfo myDeck;
                     while((myDeck = deckInfo.getDeckByNum(count)) != null) {
                         if(!myDeck.getUser().equals(username)) {
                             count++;
@@ -269,12 +282,153 @@
                 %>
                 <div class="col-xs-12"><br></div>
             </h4>
+            <%} else {%>
+            <h4>
+                <p>It looks like you haven't made any decks yet. If you would like to add a new deck, click the button below:</p>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <form id="addForm" action="DeckServlet" method="POST">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="username" value="<%=username%>">
+                            <button title="New Deck" id="form-submit" type="submit">New</button>
+                        </form>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+            </h4><br>
+            <%}%>
         </div>
         <div class="col-xs-12">
-            <h2>Favorites<hr></h2>
+            <h2>Your Collections<hr></h2>
+            <%
+                found = false;
+                count = 1;
+                CollectionInfo myCollection;
+                while((myCollection = collectionInfo.getCollectionByNum(count)) != null) {
+                    if(myCollection.getUser().equals(username)) {
+                        found = true;
+                        break;
+                    }
+                    count++;
+                }
+                if(found) {
+            %>
             <h4>
                 <p>
-                    Below are your favorite cards, decks, collections, and users. If you choose to unfavorite any of your favorited items, they will be removed from this list. This action cannot be undone.
+                    Below are your collections. You may view the collection's information by clicking on the link. You can edit or delete the collection by clicking on the buttons.
+                </p>
+                <br><br>
+                <%
+                    count = 1;
+                    int printed = 1;
+                    while((myCollection = collectionInfo.getCollectionByNum(count)) != null) {
+                        if(!myCollection.getUser().equals(username)) {
+                            count++;
+                            continue;
+                        }
+                        int id = myCollection.getId();
+                        String top = myCollection.getTop();
+                        if(top == null) {
+                            top = "images/magic_card_back.jpg";
+                        }
+                        String middle = myCollection.getMiddle();
+                        if(middle == null) {
+                            middle = "images/magic_card_back.jpg";
+                        }
+                        String bottom = myCollection.getBottom();
+                        if(bottom == null) {
+                            bottom = "images/magic_card_sleeves_default.jpg";
+                        }
+                %>
+                <div class="col-xs-6 col-sm-4 col-md-3">
+                    <div class="collection-image">
+                        <img class="buffer" width="100%" src="images/buffer.png" id="center-img">
+                        <img class="img-special collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>">
+                        <img class="img-special collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>">
+                        <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>">
+                        <br>
+                        <div class="row" style="margin: auto;display: table">
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editForm<%=id%>').submit();">
+                                <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                            </div>
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Collection" onclick="deleteCollectionPopup('<%=id%>', '<%=username%>');">
+                                <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                            </div>
+                        </div>
+                        <form id="editForm<%=id%>" action="CollectionServlet" method="POST">
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <p align="center" style="position: relative;top: -5px;">
+                            <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                <%=myCollection.getName()%> (<%=myCollection.getUser()%>)
+                            </a>
+                        </p>
+                        <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
+                            <input type="hidden" name="action" value="collection">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                    </div>
+                </div>
+                <%
+                    String spacer = "";
+                    if((printed % 2) == 0) {
+                        spacer += "col-xs-12";
+                    }
+                    else {
+                        spacer += "hidden-xs";
+                    }
+                    if((printed % 3) == 0) {
+                        spacer += " col-sm-12";
+                    }
+                    else {
+                        spacer += " hidden-sm";
+                    }
+                    if((printed % 4) == 0) {
+                        spacer += " col-md-12";
+                    }
+                    else {
+                        spacer += " hidden-md hidden-lg";
+                    }
+                %>
+                <div class="<%=spacer%>"><br></div>
+                <%
+                        printed++;
+                        count++;
+                        try {
+                            Thread.sleep(250);
+                        } catch(InterruptedException ex) {
+                            System.out.println("ERROR: sleep was interrupted!");
+                        }
+                    }
+                %>
+                <div class="col-xs-12"><br><br><br><br><br></div>
+            </h4>
+            <%} else {%>
+            <h4>
+                <p>It looks like you haven't made any collections yet. If you would like to add a new collection, click the button below:</p>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-3">
+                        <form id="addForm" action="CollectionServlet" method="POST">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="username" value="<%=username%>">
+                            <button title="New Deck" id="form-submit" type="submit">New</button>
+                        </form>
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+            </h4><br>
+            <%}%>
+        </div>
+        <div class="col-xs-12">
+            <h2>Your Favorites<hr></h2>
+            <h4>
+                <p>
+                    Below are your favorited cards, decks, collections, and users. If you choose to unfavorite any of your favorited items, they will be removed from this list. This action cannot be undone.
                 </p>
             </h4><br><br>
             <%
@@ -296,7 +450,7 @@
                     <h4>
                         <%
                             num = 1;
-                            printed = 1;
+                            int printed = 1;
                             while((cardFavorite = cardFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(cardFavorite.getUser().equals(username)) {
                                     CardInfo card = cardInfo.getCardById(cardFavorite.getCardId());
@@ -382,7 +536,7 @@
                     <h4>
                         <%
                             num = 1;
-                            printed = 1;
+                            int printed = 1;
                             while((deckFavorite = deckFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(deckFavorite.getUser().equals(username)) {
                                     deck = deckInfo.getDeckById(deckFavorite.getDeckId());
@@ -458,6 +612,106 @@
             <div class="col-xs-12"><br></div>
             <%}%>
             <%
+                CollectionFavoriteInfo collectionFavorite;
+                num = 1;
+                boolean foundCollection = false;
+                while((collectionFavorite = collectionFavoriteInfo.getFavoriteByNum(num)) != null) {
+                    if(collectionFavorite.getUser().equals(username)) {
+                        foundCollection = true;
+                        break;
+                    }
+                    num++;
+                }
+                if(foundCollection) {
+            %>
+            <div class="row">
+                <div class="col-xs-12">
+                    <h3>Favorite Collections<hr></h3>
+                    <h4>
+                        <%
+                            num = 1;
+                            int printed = 1;
+                            while((collectionFavorite = collectionFavoriteInfo.getFavoriteByNum(num)) != null) {
+                                if(collectionFavorite.getUser().equals(username)) {
+                                    collection = collectionInfo.getCollectionById(collectionFavorite.getCollectionId());
+                                    int id = collection.getId();
+                                    String top = collection.getTop();
+                                    if(top == null) {
+                                        top = "images/magic_card_back.jpg";
+                                    }
+                                    String middle = collection.getMiddle();
+                                    if(middle == null) {
+                                        middle = "images/magic_card_back.jpg";
+                                    }
+                                    String bottom = collection.getBottom();
+                                    if(bottom == null) {
+                                        bottom = "images/magic_card_back.jpg";
+                                    }
+                        %>
+                        <div class="col-xs-6 col-sm-4 col-md-3">
+                            <div class="collection-image">
+                                <img class="buffer" width="100%" src="images/buffer.png" id="center-img">
+                                <img class="img-special collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>">
+                                <img class="img-special collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>">
+                                <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>">
+                                <br>
+                                <div class="row" style="margin: auto;display: table">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                        <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                                    </div>
+                                </div>
+                                <br>
+                                <p align="center" style="position: relative;top: -5px;">
+                                    <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                        <%=collection.getName()%> (<%=collection.getUser()%>)
+                                    </a>
+                                </p>
+                                <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
+                                    <input type="hidden" name="action" value="collection">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <form id="favoriteForm<%=id%>" action="CollectionServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                            </div>
+                        </div>
+                        <%
+                            String spacer = "";
+                            if((printed % 2) == 0) {
+                                spacer += "col-xs-12";
+                            }
+                            else {
+                                spacer += "hidden-xs";
+                            }
+                            if((printed % 3) == 0) {
+                                spacer += " col-sm-12";
+                            }
+                            else {
+                                spacer += " hidden-sm";
+                            }
+                            if((printed % 4) == 0) {
+                                spacer += " col-md-12";
+                            }
+                            else {
+                                spacer += " hidden-md hidden-lg";
+                            }
+                        %>
+                        <div class="<%=spacer%>"><br></div>
+                        <%
+                                    printed++;
+                                }
+                                num++;
+                            }
+                        %>
+                    </h4>
+                </div>
+            </div>
+            <div class="col-xs-12"><br></div>
+            <%}%>
+            <%
                 UserFavoriteInfo userFavorite;
                 num = 1;
                 boolean foundUser = false;
@@ -476,14 +730,14 @@
                     <h4>
                         <%
                             num = 1;
-                            printed = 1;
+                            int printed = 1;
                             while((userFavorite = userFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(userFavorite.getUser().equals(username)) {
                                     user = userInfo.getUser(userFavorite.getUserId());
                                     String id = user.getUsername();
                                     picture = user.getPicture();
                         %>
-                        <div class="col-xs-6 col-sm-4 col-md-3">
+                        <div class="col-xs-4 col-sm-3 col-md-2">
                             <img class="img-special" width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img">
                             <br>
                             <div class="row" style="margin: auto;display: table">
@@ -519,7 +773,13 @@
                                 spacer += " col-sm-12";
                             }
                             else {
-                                spacer += " hidden-sm hidden-md hidden-lg";
+                                spacer += " hidden-sm";
+                            }
+                            if((printed % 6) == 0) {
+                                spacer += " col-md-12";
+                            }
+                            else {
+                                spacer += " hidden-md hidden-lg";
                             }
                         %>
                         <div class="<%=spacer%>"><br></div>

@@ -538,7 +538,7 @@
                         <p>Collection Title</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="username" type="text">
+                        <input id="input-field" name="name" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -547,7 +547,7 @@
                         <p>Creator (Username)</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="age" type="text"><br><br>
+                        <input id="input-field" name="user" type="text"><br><br>
                     </div>
                 </div>
                 <br>

@@ -3,11 +3,10 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
-<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
-<jsp:useBean id="deckContentsInfo" class="beans.DeckContentsInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
+<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
     String username;
     if((String)request.getAttribute("username") == null) {
@@ -24,72 +23,78 @@
 <%@include file="header.jsp"%>
 <%
     int id = Integer.parseInt(request.getParameter("id"));
-    DeckInfo deck = deckInfo.getDeckById(id);
-    if(deck != null) {
+    CollectionInfo collection = collectionInfo.getCollectionById(id);
+    if(collection != null) {
 %>
 <!-- Content -->
 <div class="row">
     <div class="well col-xs-12">
         <div class="col-xs-12">
             <div class="col-xs-12">
-                <h2>Edit Deck Information</h2><br>
+                <h2>Edit Collection Information</h2><br>
                 <h4>
-                    <p>Fill out any of the fields below to replace the fields of the selected deck's information. Click the "Submit" button once you are done editing the information.</p>
+                    <p>Fill out any of the fields below to replace the fields of the selected collection's information. Click the "Submit" button once you are done editing the information.</p>
                     <br><br>
                 </h4>
             </div>
             <div class="col-xs-12">
                 <h4>
-                    <form id="editProfileForm" action="DeckServlet" method="POST">
+                    <form id="editProfileForm" action="CollectionServlet" method="POST">
                         <input type="hidden" name="action" value="submit_edit">
-                        <input type="hidden" name="id" value="<%=deck.getId()%>">
+                        <input type="hidden" name="id" value="<%=collection.getId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                         <hr>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p id="title">Deck Title</p>
+                                <p id="title">Collection Title</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
-                                Enter the title for this deck.<br><br>
-                                <input id="input-field" name="name" type="text" placeholder="<%=deck.getName()%>"><br><br>
+                                Enter the title for this collection.<br><br>
+                                <input id="input-field" name="name" type="text" placeholder="<%=collection.getName()%>"><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p id="title">Deck Description</p>
+                                <p id="title">Collection Description</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
-                                You may enter a description for this deck.<br><br>
+                                You may enter a description for this collection.<br><br>
                                 <%
-                                    if(deck.getDescription() == null || deck.getDescription().equals("")) {
+                                    if(collection.getDescription() == null || collection.getDescription().equals("")) {
                                 %>
                                 <textarea id="input-field" name="description"></textarea>
                                 <%} else {%>
-                                <textarea id="input-field" name="description" placeholder="<%=deck.getDescription()%>"></textarea>
+                                <textarea id="input-field" name="description" placeholder="<%=collection.getDescription()%>"></textarea>
                                 <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-12 col-lg-4">
-                                <p id="title">Deck Contents and Appearance</p><br>
+                                <p id="title">Collection Contents and Appearance</p><br>
                                 <%
-                                    DeckContentsInfo deckContents;
-                                    String top = deck.getTop();
+                                    CollectionContentsInfo collectionContents;
+                                    String top = collection.getTop();
                                     if(top == null) {
                                         top = "images/magic_card_back.jpg";
                                     }
-                                    String bottom = deck.getBottom();
-                                    if(bottom == null) {
-                                        bottom = "images/magic_card_sleeves_default.jpg";
+                                    String middle = collection.getMiddle();
+                                    if(middle == null) {
+                                        middle = "images/magic_card_back.jpg";
                                     }
-                                    int entries = deck.getEntries();
+                                    String bottom = collection.getBottom();
+                                    if(bottom == null) {
+                                        bottom = "images/magic_card_back.jpg";
+                                    }
+                                    int entries = collection.getEntries();
                                 %>
                                 <h4>
-                                    <div class="deck-image">
-                                        <img class="sleeves" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
-                                        <img class="img-special cover" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
+                                    <div class="collection-image">
+                                        <img class="buffer" width="100%" src="images/buffer.png" id="center-img">
+                                        <img class="img-special collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>"></img>
+                                        <img class="img-special collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>"></img>
+                                        <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>"></img>
                                     </div>
                                 </h4>
                             </div>
@@ -97,17 +102,17 @@
                             <div class="col-xs-12 col-lg-8">
                                 <div class="col-xs-4">
                                     <span style="float: right;">
-                                        Change Cover
+                                        Change Top
                                     </span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <select name="cover" id="input-field">
+                                    <select name="top" id="input-field">
                                         <option value=""></option>
                                         <%
                                             int num = 1;
-                                            while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                                if(deckContents.getDeckId() == id) {
-                                                    CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                            while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
+                                                if(collectionContents.getCollectionId() == id) {
+                                                    CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
                                         %>
                                         <option value="<%=card.getFront()%>"><%=card.getName()%></option>
                                         <%
@@ -119,26 +124,49 @@
                                 </div>
                                 <div class="col-xs-4">
                                     <span style="float: right;">
-                                        Change Sleeves
+                                        Change Middle
                                     </span>
                                 </div>
                                 <div class="col-xs-8">
-                                    <select name="sleeves" id="input-field">
+                                    <select name="middle" id="input-field">
                                         <option value=""></option>
-                                        <option value="images/magic_card_sleeves_default.jpg">Blue (default)</option>
-                                        <option value="images/magic_card_sleeves_purple.jpg">Purple</option>
-                                        <option value="images/magic_card_sleeves_black.jpg">Black</option>
-                                        <option value="images/magic_card_sleeves_white.jpg">White</option>
-                                        <option value="images/magic_card_sleeves_pink.jpg">Pink</option>
-                                        <option value="images/magic_card_sleeves_red.jpg">Red</option>
-                                        <option value="images/magic_card_sleeves_brown.jpg">Brown</option>
-                                        <option value="images/magic_card_sleeves_orange.jpg">Orange</option>
-                                        <option value="images/magic_card_sleeves_yellow.jpg">Yellow</option>
-                                        <option value="images/magic_card_sleeves_green.jpg">Green</option>
-                                        <option value="images/magic_card_sleeves_cyan.jpg">Cyan</option>
+                                        <%
+                                            num = 1;
+                                            while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
+                                                if(collectionContents.getCollectionId() == id) {
+                                                    CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                        %>
+                                        <option value="<%=card.getFront()%>"><%=card.getName()%></option>
+                                        <%
+                                                }
+                                                num++;
+                                            }
+                                        %>
                                     </select><br><br><br>
                                 </div>
-                                <p>You may copy cards to a different deck, update the number of cards in this deck, or remove them from this deck by using the options below.</p><br>
+                                <div class="col-xs-4">
+                                    <span style="float: right;">
+                                        Change Bottom
+                                    </span>
+                                </div>
+                                <div class="col-xs-8">
+                                    <select name="bottom" id="input-field">
+                                        <option value=""></option>
+                                        <%
+                                            num = 1;
+                                            while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
+                                                if(collectionContents.getCollectionId() == id) {
+                                                    CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                        %>
+                                        <option value="<%=card.getFront()%>"><%=card.getName()%></option>
+                                        <%
+                                                }
+                                                num++;
+                                            }
+                                        %>
+                                    </select><br><br><br>
+                                </div>
+                                <p>You may copy cards to a different collection, update the number of cards in this collection, or remove them from this collection by using the options below.</p><br>
                                 <div class="col-xs-12 hidden-lg"><br></div>
                                 <h4>
                                     <div class="row">
@@ -157,9 +185,9 @@
                                                         num = 1;
                                                         int printed = 1;
                                                         String spacer;
-                                                        while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                                            if(deckContents.getDeckId() == id) {
-                                                                CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                                        while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
+                                                            if(collectionContents.getCollectionId() == id) {
+                                                                CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
                                                                 if(printed == entries) {
                                                                     spacer = "hidden-xs hidden-sm hidden-md hidden-lg";
                                                                 }
@@ -168,17 +196,17 @@
                                                                 }
                                                     %>
                                                     <div class="col-xs-1">
-                                                        <input type="checkbox" name="<%=printed%>" value="<%=deckContents.getCardId()%>">
+                                                        <input type="checkbox" name="<%=printed%>" value="<%=collectionContents.getCardId()%>">
                                                     </div>
-                                                    <div id="container<%=deckContents.getCardId()%>" class="col-xs-5">
-                                                        <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
-                                                            <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
+                                                    <div id="container<%=collectionContents.getCardId()%>" class="col-xs-5">
+                                                        <a href="#" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
+                                                            <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
                                                                 <%=card.getName()%>
                                                             </span>
                                                         </a>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input id="input-field" class="input-number" type="number" name="total<%=deckContents.getCardId()%>" placeholder="<%=deckContents.getCardTotal()%>">
+                                                        <input id="input-field" class="input-number" type="number" name="total<%=collectionContents.getCardId()%>" placeholder="<%=collectionContents.getCardTotal()%>">
                                                     </div>
                                                     <div class="<%=spacer%>"><br></div>
                                                     <%
@@ -200,10 +228,10 @@
                                                         <option value=""></option>
                                                         <%
                                                             num = 1;
-                                                            while((deck = deckInfo.getDeckByNum(num)) != null) {
-                                                                if(deck.getId() != id && deck.getUser().equals(username)) {
+                                                            while((collection = collectionInfo.getCollectionByNum(num)) != null) {
+                                                                if(collection.getId() != id && collection.getUser().equals(username)) {
                                                         %>
-                                                        <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
+                                                        <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                                         <%
                                                                 }
                                                                 num++;
@@ -226,16 +254,16 @@
                                     </div>
                                     <%
                                         num = 1;
-                                        while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
-                                            if(deckContents.getDeckId() == id) {
-                                                CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                        while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
+                                            if(collectionContents.getCollectionId() == id) {
+                                                CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
                                     %>
-                                    <form id="cardForm<%=deckContents.getCardId()%>" action="CardServlet" method="POST">
+                                    <form id="cardForm<%=collectionContents.getCardId()%>" action="CardServlet" method="POST">
                                         <input type="hidden" name="action" value="card">
-                                        <input type="hidden" name="id" value="<%=deckContents.getCardId()%>">
+                                        <input type="hidden" name="id" value="<%=collectionContents.getCardId()%>">
                                         <input type="hidden" name="username" value="<%=username%>">
                                     </form>
-                                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                                    <img class="img-special" id="image<%=collectionContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
                                     <%
                                             }
                                             num++;
@@ -245,7 +273,7 @@
                                 <div class="row">
                                     <div class="hidden-xs col-sm-6"></div>
                                     <div class="col-xs-12 col-sm-6">
-                                        <button title="Submit Deck Edit" id="form-submit" type="submit">Submit</button><br><br><br>
+                                        <button title="Submit Collection Edit" id="form-submit" type="submit">Submit</button><br><br><br>
                                     </div>
                                 </div>
                             </div>
@@ -263,9 +291,9 @@
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h2>Edit Deck Information</h2><br>
+            <h2>Edit Collection Information</h2><br>
             <h4>
-                <p>The deck you selected has no information to edit.</p>
+                <p>The collection you selected has no information to edit.</p>
                 <br>
             </h4>
         </div>

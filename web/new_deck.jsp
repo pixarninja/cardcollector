@@ -3,8 +3,6 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
-<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <%
     String username;
     if((String)request.getAttribute("username") == null) {
@@ -25,7 +23,7 @@
             <div class="col-xs-12">
                 <h2>Create New Deck</h2><br>
                 <h4>
-                    <p>If you would like to create a new deck, fill out the fields below and click the "Create Deck" button. You must give a title to the deck and specify if the deck is dependent upon items of a collection (i.e. the deck can only be made with items of the a specific collection).</p>
+                    <p>If you would like to create a new deck, fill out the fields below and click the "Create" button.</p>
                     <br><br><hr>
                 </h4>
             </div>

@@ -343,6 +343,63 @@ function deleteDeckCommentPopup(id, commentId, username) {
     revealForm("popupForm");
 }
 
+function editCollectionCommentPopup(id, commentId, username, content) {
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='edit_collection_comment'>\
+    <input type='hidden' name='username' value='" + username + "'>\
+    <input type='hidden' name='id' value='" + id + "'>\
+    <input type='hidden' name='comment_id' value='" + commentId + "'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                Edit Comment\
+            </p>\
+        </h2><br>\
+        <h4>\
+            You may edit your comment using the textbox provided and then by clicking the submit button below.\
+            <br><br>\
+            <textarea id='input-field' name='comment'>" + content + "</textarea>\
+        </h4><br><hr>\
+        <div class='col-xs-12'><br></div>\
+        <div class='col-xs-12'>\
+            <button title='Submit Edit Comment' id='form-submit' type='submit'>Submit</button>\
+        </div>\
+        <div class='col-xs-12'><br></div>\
+    </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
+function deleteCollectionCommentPopup(id, commentId, username) {
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='delete_collection_comment'>\
+    <input type='hidden' name='username' value='" + username + "'>\
+    <input type='hidden' name='id' value='" + id + "'>\
+    <input type='hidden' name='comment_id' value='" + commentId + "'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                <span class='glyphicon glyphicon-alert'></span>&nbsp;&nbsp;Confirmation Needed&nbsp;&nbsp;<span class='glyphicon glyphicon-alert'></span>\
+            </p>\
+        </h2><br>\
+        <h4>\
+            <p align='center'>\
+                Do you really want to delete this comment? This action cannot be undone.\
+            </p>\
+        </h4><br><hr>\
+        <div class='col-xs-12'><br></div>\
+        <div class='col-xs-6'>\
+            <button title='Confirm' id='form-submit' type='submit'>Yes, Delete</button>\
+        </div>\
+        <div class='col-xs-6'>\
+            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
+        </div>\
+        <div class='col-xs-12'><br></div>\
+    </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
 function deleteUserPopup(username) {
     var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
     <input type='hidden' name='action' value='delete_user'>\
@@ -374,6 +431,35 @@ function deleteUserPopup(username) {
 function deleteDeckPopup(id, username) {
     var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
     <input type='hidden' name='action' value='delete_deck'>\
+    <input type='hidden' name='id' value='" + id + "'>\
+    <input type='hidden' name='username' value='" + username + "'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                <span class='glyphicon glyphicon-alert'></span>&nbsp;&nbsp;Confirmation Needed&nbsp;&nbsp;<span class='glyphicon glyphicon-alert'></span>\
+            </p>\
+        </h2><br>\
+        <h4>\
+            <p align='center'>\
+                Do you really want to delete this deck? This action cannot be undone.\
+            </p>\
+        </h4><br><hr>\
+        <div class='col-xs-12'><br></div>\
+        <div class='col-xs-6'>\
+            <button title='Confirm' id='form-submit' type='submit'>Yes, Delete</button>\
+        </div>\
+        <div class='col-xs-6'>\
+            <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
+        </div>\
+        <div class='col-xs-12'><br></div>\
+    </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
+function deleteCollectionPopup(id, username) {
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='delete_collection'>\
     <input type='hidden' name='id' value='" + id + "'>\
     <input type='hidden' name='username' value='" + username + "'>\
     <div class='col-xs-12'>\

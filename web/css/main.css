@@ -476,18 +476,16 @@ body {
     width: 100%;
 }
 
-.sleeves-alt {
-    position: relative;
-    top: 7px;
-    left: 7px;
-    width: 85%;
-}
-
 .cover {
     position: absolute;
     top: 5%;
     left: 5%;
     width: 90%;
+}
+
+.buffer {
+    width: 100%;
+    border: none !important;
 }
 
 .collection-image {
@@ -497,37 +495,28 @@ body {
 }
 
 .collect-back {
-    position: relative;
-    top: 40px;
-    left: 32px;
-    width: 70%;
-    opacity: 0.33;
-    filter: alpha(opacity=33);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 81%;
+    opacity: 0.40;
+    filter: alpha(opacity=40);
 }
 
 .collect-mid {
     position: absolute;
-    top: 15px;
-    left: 37px;
-    width: 70%;
-    opacity: 0.67;
-    filter: alpha(opacity=67);
-}
-
-.collect-mid-alt {
-    position: absolute;
-    top: 15px;
-    left: 28px;
-    width: 70%;
-    opacity: 0.67;
-    filter: alpha(opacity=67);
+    top: 8.25%;
+    left: 9%;
+    width: 81%;
+    opacity: 0.75;
+    filter: alpha(opacity=75);
 }
 
 .collect-fore {
     position: absolute;
-    top: -12px;
-    left: 0px;
-    width: 70%;
+    top: 17%;
+    left: 19%;
+    width: 81%;
 }
 
 .details {

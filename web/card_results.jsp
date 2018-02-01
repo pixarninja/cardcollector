@@ -103,110 +103,110 @@
                 <form id="requestLessForm" action="SearchServlet" method="POST">
                     <input type="hidden" name="action" value="cards">
                     <input type="hidden" name="start" value="<%=count - max%>">
-                    <%if(request.getParameter("order") == null) {%>
+                    <%if(request.getAttribute("order") == null) {%>
                     <input type="hidden" name="order" value="">
                     <%} else {%>
-                    <input type="hidden" name="order" value="<%=request.getParameter("order")%>">
+                    <input type="hidden" name="order" value="<%=(String) request.getAttribute("order")%>">
                     <%}%>
-                    <%if(request.getParameter("order_by") == null) {%>
+                    <%if(request.getAttribute("order_by") == null) {%>
                     <input type="hidden" name="order_by" value="">
                     <%} else {%>
-                    <input type="hidden" name="order_by" value="<%=request.getParameter("order_by")%>">
+                    <input type="hidden" name="order_by" value="<%=(String) request.getAttribute("order_by")%>">
                     <%}%>
-                    <%if(request.getParameter("inclusion") == null) {%>
+                    <%if(request.getAttribute("inclusion") == null) {%>
                     <input type="hidden" name="inclusion" value="">
                     <%} else {%>
-                    <input type="hidden" name="inclusion" value="<%=request.getParameter("inclusion")%>">
+                    <input type="hidden" name="inclusion" value="<%=(String) request.getAttribute("inclusion")%>">
                     <%}%>
-                    <%if(request.getParameter("common") == null) {%>
+                    <%if(request.getAttribute("common") == null) {%>
                     <input type="hidden" name="common" value="">
                     <%} else {%>
-                    <input type="hidden" name="common" value="<%=request.getParameter("common")%>">
+                    <input type="hidden" name="common" value="<%=(String) request.getAttribute("common")%>">
                     <%}%>
-                    <%if(request.getParameter("uncommon") == null) {%>
+                    <%if(request.getAttribute("uncommon") == null) {%>
                     <input type="hidden" name="uncommon" value="">
                     <%} else {%>
-                    <input type="hidden" name="uncommon" value="<%=request.getParameter("uncommon")%>">
+                    <input type="hidden" name="uncommon" value="<%=(String) request.getAttribute("uncommon")%>">
                     <%}%>
-                    <%if(request.getParameter("rare") == null) {%>
+                    <%if(request.getAttribute("rare") == null) {%>
                     <input type="hidden" name="rare" value="">
                     <%} else {%>
-                    <input type="hidden" name="rare" value="<%=request.getParameter("rare")%>">
+                    <input type="hidden" name="rare" value="<%=(String) request.getAttribute("rare")%>">
                     <%}%>
-                    <%if(request.getParameter("mythic") == null) {%>
+                    <%if(request.getAttribute("mythic") == null) {%>
                     <input type="hidden" name="mythic" value="">
                     <%} else {%>
-                    <input type="hidden" name="mythic" value="<%=request.getParameter("mythic")%>">
+                    <input type="hidden" name="mythic" value="<%=(String) request.getAttribute("mythic")%>">
                     <%}%>
-                    <%if(request.getParameter("inc_name") == null) {%>
+                    <%if(request.getAttribute("inc_name") == null) {%>
                     <input type="hidden" name="inc_name" value="">
                     <%} else {%>
-                    <input type="hidden" name="inc_name" value="<%=request.getParameter("inc_name")%>">
+                    <input type="hidden" name="inc_name" value="<%=(String) request.getAttribute("inc_name")%>">
                     <%}%>
-                    <%if(request.getParameter("inc_type") == null) {%>
+                    <%if(request.getAttribute("inc_type") == null) {%>
                     <input type="hidden" name="inc_type" value="">
                     <%} else {%>
-                    <input type="hidden" name="inc_type" value="<%=request.getParameter("inc_type")%>">
+                    <input type="hidden" name="inc_type" value="<%=(String) request.getAttribute("inc_type")%>">
                     <%}%>
-                    <%if(request.getParameter("inc_text") == null) {%>
+                    <%if(request.getAttribute("inc_text") == null) {%>
                     <input type="hidden" name="inc_text" value="">
                     <%} else {%>
-                    <input type="hidden" name="inc_text" value="<%=request.getParameter("inc_text")%>">
+                    <input type="hidden" name="inc_text" value="<%=(String) request.getAttribute("inc_text")%>">
                     <%}%>
-                    <%if(request.getParameter("query") == null) {%>
+                    <%if(request.getAttribute("query") == null) {%>
                     <input type="hidden" name="query" value="">
                     <%} else {%>
-                    <input type="hidden" name="query" value="<%=request.getParameter("query")%>">
+                    <input type="hidden" name="query" value="<%=(String) request.getAttribute("query")%>">
                     <%}%>
-                    <%if(request.getParameter("min_cmc") == null) {%>
+                    <%if(request.getAttribute("min_cmc") == null) {%>
                     <input type="hidden" name="min_cmc" value="">
                     <%} else {%>
-                    <input type="hidden" name="min_cmc" value="<%=request.getParameter("min_cmc")%>">
+                    <input type="hidden" name="min_cmc" value="<%=(String) request.getAttribute("min_cmc")%>">
                     <%}%>
-                    <%if(request.getParameter("max_cmc") == null) {%>
+                    <%if(request.getAttribute("max_cmc") == null) {%>
                     <input type="hidden" name="max_cmc" value="">
                     <%} else {%>
-                    <input type="hidden" name="max_cmc" value="<%=request.getParameter("max_cmc")%>">
+                    <input type="hidden" name="max_cmc" value="<%=(String) request.getAttribute("max_cmc")%>">
                     <%}%>
-                    <%if(request.getParameter("type") == null) {%>
+                    <%if(request.getAttribute("type") == null) {%>
                     <input type="hidden" name="type" value="">
                     <%} else {%>
-                    <input type="hidden" name="type" value="<%=request.getParameter("type")%>">
+                    <input type="hidden" name="type" value="<%=(String) request.getAttribute("type")%>">
                     <%}%>
-                    <%if(request.getParameter("set_name") == null) {%>
+                    <%if(request.getAttribute("set_name") == null) {%>
                     <input type="hidden" name="set_name" value="">
                     <%} else {%>
-                    <input type="hidden" name="set_name" value="<%=request.getParameter("set_name")%>">
+                    <input type="hidden" name="set_name" value="<%=(String) request.getAttribute("set_name")%>">
                     <%}%>
-                    <%if(request.getParameter("min_power") == null) {%>
+                    <%if(request.getAttribute("min_power") == null) {%>
                     <input type="hidden" name="min_power" value="">
                     <%} else {%>
-                    <input type="hidden" name="min_power" value="<%=request.getParameter("min_power")%>">
+                    <input type="hidden" name="min_power" value="<%=(String) request.getAttribute("min_power")%>">
                     <%}%>
-                    <%if(request.getParameter("max_power") == null) {%>
+                    <%if(request.getAttribute("max_power") == null) {%>
                     <input type="hidden" name="max_power" value="">
                     <%} else {%>
-                    <input type="hidden" name="max_power" value="<%=request.getParameter("max_power")%>">
+                    <input type="hidden" name="max_power" value="<%=(String) request.getAttribute("max_power")%>">
                     <%}%>
-                    <%if(request.getParameter("min_toughness") == null) {%>
+                    <%if(request.getAttribute("min_toughness") == null) {%>
                     <input type="hidden" name="min_toughness" value="">
                     <%} else {%>
-                    <input type="hidden" name="min_toughness" value="<%=request.getParameter("min_toughness")%>">
+                    <input type="hidden" name="min_toughness" value="<%=(String) request.getAttribute("min_toughness")%>">
                     <%}%>
-                    <%if(request.getParameter("max_toughness") == null) {%>
+                    <%if(request.getAttribute("max_toughness") == null) {%>
                     <input type="hidden" name="max_toughness" value="">
                     <%} else {%>
-                    <input type="hidden" name="max_toughness" value="<%=request.getParameter("max_toughness")%>">
+                    <input type="hidden" name="max_toughness" value="<%=(String) request.getAttribute("max_toughness")%>">
                     <%}%>
-                    <%if(request.getParameter("artist") == null) {%>
+                    <%if(request.getAttribute("artist") == null) {%>
                     <input type="hidden" name="artist" value="">
                     <%} else {%>
-                    <input type="hidden" name="artist" value="<%=request.getParameter("artist")%>">
+                    <input type="hidden" name="artist" value="<%=(String) request.getAttribute("artist")%>">
                     <%}%>
-                    <%if(request.getParameter("year") == null) {%>
+                    <%if(request.getAttribute("year") == null) {%>
                     <input type="hidden" name="year" value="">
                     <%} else {%>
-                    <input type="hidden" name="year" value="<%=request.getParameter("year")%>">
+                    <input type="hidden" name="year" value="<%=(String) request.getAttribute("year")%>">
                     <%}%>
                     <input type="hidden" name="username" value="<%=username%>">
                     <button title="Previous <%=max%> Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
@@ -232,110 +232,110 @@
                 <form id="requestMoreForm" action="SearchServlet" method="POST">
                     <input type="hidden" name="action" value="cards">
                     <input type="hidden" name="start" value="<%=count + max%>">
-                    <%if(request.getParameter("order") == null) {%>
+                    <%if(request.getAttribute("order") == null) {%>
                     <input type="hidden" name="order" value="">
                     <%} else {%>
-                    <input type="hidden" name="order" value="<%=request.getParameter("order")%>">
+                    <input type="hidden" name="order" value="<%=(String) request.getAttribute("order")%>">
                     <%}%>
-                    <%if(request.getParameter("order_by") == null) {%>
+                    <%if(request.getAttribute("order_by") == null) {%>
                     <input type="hidden" name="order_by" value="">
                     <%} else {%>
-                    <input type="hidden" name="order_by" value="<%=request.getParameter("order_by")%>">
+                    <input type="hidden" name="order_by" value="<%=(String) request.getAttribute("order_by")%>">
                     <%}%>
-                    <%if(request.getParameter("inclusion") == null) {%>
+                    <%if(request.getAttribute("inclusion") == null) {%>
                     <input type="hidden" name="inclusion" value="">
                     <%} else {%>
-                    <input type="hidden" name="inclusion" value="<%=request.getParameter("inclusion")%>">
+                    <input type="hidden" name="inclusion" value="<%=(String) request.getAttribute("inclusion")%>">
                     <%}%>
-                    <%if(request.getParameter("common") == null) {%>
+                    <%if(request.getAttribute("common") == null) {%>
                     <input type="hidden" name="common" value="">
                     <%} else {%>
-                    <input type="hidden" name="common" value="<%=request.getParameter("common")%>">
+                    <input type="hidden" name="common" value="<%=(String) request.getAttribute("common")%>">
                     <%}%>
-                    <%if(request.getParameter("uncommon") == null) {%>
+                    <%if(request.getAttribute("uncommon") == null) {%>
                     <input type="hidden" name="uncommon" value="">
                     <%} else {%>
-                    <input type="hidden" name="uncommon" value="<%=request.getParameter("uncommon")%>">
+                    <input type="hidden" name="uncommon" value="<%=(String) request.getAttribute("uncommon")%>">
                     <%}%>
-                    <%if(request.getParameter("rare") == null) {%>
+                    <%if(request.getAttribute("rare") == null) {%>
                     <input type="hidden" name="rare" value="">
                     <%} else {%>
-                    <input type="hidden" name="rare" value="<%=request.getParameter("rare")%>">
+                    <input type="hidden" name="rare" value="<%=(String) request.getAttribute("rare")%>">
                     <%}%>
-                    <%if(request.getParameter("mythic") == null) {%>
+                    <%if(request.getAttribute("mythic") == null) {%>
                     <input type="hidden" name="mythic" value="">
                     <%} else {%>
-                    <input type="hidden" name="mythic" value="<%=request.getParameter("mythic")%>">
+                    <input type="hidden" name="mythic" value="<%=(String) request.getAttribute("mythic")%>">
                     <%}%>
-                    <%if(request.getParameter("inc_name") == null) {%>
+                    <%if(request.getAttribute("inc_name") == null) {%>
                     <input type="hidden" name="inc_name" value="">
                     <%} else {%>
-                    <input type="hidden" name="inc_name" value="<%=request.getParameter("inc_name")%>">
+                    <input type="hidden" name="inc_name" value="<%=(String) request.getAttribute("inc_name")%>">
                     <%}%>
-                    <%if(request.getParameter("inc_type") == null) {%>
+                    <%if(request.getAttribute("inc_type") == null) {%>
                     <input type="hidden" name="inc_type" value="">
                     <%} else {%>
-                    <input type="hidden" name="inc_type" value="<%=request.getParameter("inc_type")%>">
+                    <input type="hidden" name="inc_type" value="<%=(String) request.getAttribute("inc_type")%>">
                     <%}%>
-                    <%if(request.getParameter("inc_text") == null) {%>
+                    <%if(request.getAttribute("inc_text") == null) {%>
                     <input type="hidden" name="inc_text" value="">
                     <%} else {%>
-                    <input type="hidden" name="inc_text" value="<%=request.getParameter("inc_text")%>">
+                    <input type="hidden" name="inc_text" value="<%=(String) request.getAttribute("inc_text")%>">
                     <%}%>
-                    <%if(request.getParameter("query") == null) {%>
+                    <%if(request.getAttribute("query") == null) {%>
                     <input type="hidden" name="query" value="">
                     <%} else {%>
-                    <input type="hidden" name="query" value="<%=request.getParameter("query")%>">
+                    <input type="hidden" name="query" value="<%=(String) request.getAttribute("query")%>">
                     <%}%>
-                    <%if(request.getParameter("min_cmc") == null) {%>
+                    <%if(request.getAttribute("min_cmc") == null) {%>
                     <input type="hidden" name="min_cmc" value="">
                     <%} else {%>
-                    <input type="hidden" name="min_cmc" value="<%=request.getParameter("min_cmc")%>">
+                    <input type="hidden" name="min_cmc" value="<%=(String) request.getAttribute("min_cmc")%>">
                     <%}%>
-                    <%if(request.getParameter("max_cmc") == null) {%>
+                    <%if(request.getAttribute("max_cmc") == null) {%>
                     <input type="hidden" name="max_cmc" value="">
                     <%} else {%>
-                    <input type="hidden" name="max_cmc" value="<%=request.getParameter("max_cmc")%>">
+                    <input type="hidden" name="max_cmc" value="<%=(String) request.getAttribute("max_cmc")%>">
                     <%}%>
-                    <%if(request.getParameter("type") == null) {%>
+                    <%if(request.getAttribute("type") == null) {%>
                     <input type="hidden" name="type" value="">
                     <%} else {%>
-                    <input type="hidden" name="type" value="<%=request.getParameter("type")%>">
+                    <input type="hidden" name="type" value="<%=(String) request.getAttribute("type")%>">
                     <%}%>
-                    <%if(request.getParameter("set_name") == null) {%>
+                    <%if(request.getAttribute("set_name") == null) {%>
                     <input type="hidden" name="set_name" value="">
                     <%} else {%>
-                    <input type="hidden" name="set_name" value="<%=request.getParameter("set_name")%>">
+                    <input type="hidden" name="set_name" value="<%=(String) request.getAttribute("set_name")%>">
                     <%}%>
-                    <%if(request.getParameter("min_power") == null) {%>
+                    <%if(request.getAttribute("min_power") == null) {%>
                     <input type="hidden" name="min_power" value="">
                     <%} else {%>
-                    <input type="hidden" name="min_power" value="<%=request.getParameter("min_power")%>">
+                    <input type="hidden" name="min_power" value="<%=(String) request.getAttribute("min_power")%>">
                     <%}%>
-                    <%if(request.getParameter("max_power") == null) {%>
+                    <%if(request.getAttribute("max_power") == null) {%>
                     <input type="hidden" name="max_power" value="">
                     <%} else {%>
-                    <input type="hidden" name="max_power" value="<%=request.getParameter("max_power")%>">
+                    <input type="hidden" name="max_power" value="<%=(String) request.getAttribute("max_power")%>">
                     <%}%>
-                    <%if(request.getParameter("min_toughness") == null) {%>
+                    <%if(request.getAttribute("min_toughness") == null) {%>
                     <input type="hidden" name="min_toughness" value="">
                     <%} else {%>
-                    <input type="hidden" name="min_toughness" value="<%=request.getParameter("min_toughness")%>">
+                    <input type="hidden" name="min_toughness" value="<%=(String) request.getAttribute("min_toughness")%>">
                     <%}%>
-                    <%if(request.getParameter("max_toughness") == null) {%>
+                    <%if(request.getAttribute("max_toughness") == null) {%>
                     <input type="hidden" name="max_toughness" value="">
                     <%} else {%>
-                    <input type="hidden" name="max_toughness" value="<%=request.getParameter("max_toughness")%>">
+                    <input type="hidden" name="max_toughness" value="<%=(String) request.getAttribute("max_toughness")%>">
                     <%}%>
-                    <%if(request.getParameter("artist") == null) {%>
+                    <%if(request.getAttribute("artist") == null) {%>
                     <input type="hidden" name="artist" value="">
                     <%} else {%>
-                    <input type="hidden" name="artist" value="<%=request.getParameter("artist")%>">
+                    <input type="hidden" name="artist" value="<%=(String) request.getAttribute("artist")%>">
                     <%}%>
-                    <%if(request.getParameter("year") == null) {%>
+                    <%if(request.getAttribute("year") == null) {%>
                     <input type="hidden" name="year" value="">
                     <%} else {%>
-                    <input type="hidden" name="year" value="<%=request.getParameter("year")%>">
+                    <input type="hidden" name="year" value="<%=(String) request.getAttribute("year")%>">
                     <%}%>
                     <input type="hidden" name="username" value="<%=username%>">
                     <button title="Next <%=max%> Cards" id="form-submit" type="submit">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>

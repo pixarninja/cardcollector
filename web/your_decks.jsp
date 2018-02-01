@@ -40,7 +40,7 @@
         <div class="col-xs-12">
             <h2>Your Decks</h2><br>
             <h4>
-                <p>Below are your decks, organized by title. You may edit a deck by selecting the "Edit" button. You may delete a deck by selecting the "Delete" button. Be warned, deleting a deck is irreversible, so don't delete one you would want to keep later!<p>
+                <p>Below are your decks, organized by title. You may view a deck's information (including comments) by clicking the eye button. You may edit a deck by selecting the "Edit" button. You may delete a deck by selecting the "Delete" button. Be warned, deleting a deck is irreversible, so don't delete one you would want to keep later!<p>
                 <br><p>If you would like to add a new deck, click the button below:</p>
                 <br>
                 <div class="row">
@@ -48,7 +48,7 @@
                         <form id="addForm" action="DeckServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Deck" id="form-submit" type="submit">New</button>
+                            <button title="Create New Deck" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
@@ -238,7 +238,7 @@
         <div class="col-xs-12">
             <h2>Your Decks</h2><br>
             <h4>
-                <p>It looks like you haven't made any decks yet. If you would like to add a new deck, click the "New" button below:</p>
+                <p>It looks like you haven't made any decks yet. If you would like to add a new deck, click the button below:</p>
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-3">
@@ -248,7 +248,7 @@
                             <button title="New Deck" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
-                    <div class="col-xs-12"><br><br></div>
+                    <div class="col-xs-12"><br></div>
                 </div>
             </h4>
         </div>

@@ -4,24 +4,22 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
-<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
+<jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
     String username;
-    String buffer;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
 %>
-<script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <%
     boolean error = true;
@@ -42,15 +40,15 @@
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>
             <h4>
-                <p>Below are your collections, organized by title. You may edit a collection by selecting the "Edit" button. You may delete a collection by selecting the "Delete" button. Be warned, deleting a collection is irreversible, so don't delete one you would want to keep later!<p>
-                <br><p>If you would like to add a new collection, click the "New" button below:</p>
+                <p>Below are your collections, organized by title. You may view a collection's information (including comments) by clicking the eye button. You may edit a collection by selecting the edit button. You may delete a collection by selecting the trashcan button. Be warned, deleting a collection is irreversible, so don't delete one you would want to keep later!<p>
+                <br><p>If you would like to add a new collection, click the button below:</p>
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-3">
-                        <form id="newForm" action="CollectionServlet" method="POST">
+                        <form id="addForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
+                            <button title="Create New Collection" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
@@ -61,13 +59,13 @@
         <div class="col-xs-12">
             <%
                 int num = 1;
-                String id = username + num;
+                int id;
                 while((collection = (CollectionInfo) collectionInfo.getCollectionByNum(num)) != null) {
                     if(!collection.getUser().equals(username)) {
                         num++;
-                        id = username + num;
                         continue;
                     }
+                    id = collection.getId();
                     String name = collection.getName();
                     String top = collection.getTop();
                     if(top == null) {
@@ -83,43 +81,39 @@
                     }
                     int entries = collection.getEntries();
                     int total = collection.getTotal();
-                    String parent = collection.getParent();
-                    if(parent == null || parent.equals("")) {
-                    parent = "None";
-                    }
-                    else {
-                        parent = (collectionInfo.getCollectionById(parent)).getName();
-                    }
                     java.util.Date dateUpdated = collection.getDateUpdated();
                     String description = collection.getDescription();
             %>
             <div class="col-xs-12 col-sm-4">
                 <h4>
                     <div class="collection-image">
-                        <img class="img-special collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>" id="center-img"></img>
-                        <img class="img-special collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>" id="center-img"></img>
-                        <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>" id="center-img"></img>
+                        <img class="buffer" width="100%" src="images/buffer.png" id="center-img">
+                        <img class="img-special collect-back" width="100%" src="<%=bottom%>" alt="<%=bottom%>">
+                        <img class="img-special collect-mid" width="100%" src="<%=middle%>" alt="<%=middle%>">
+                        <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>">
+                        <br><br>
+                        <div class="row" style="margin: auto;display: table">
+                            <div class="col-xs-4" style="margin: auto;display: table" id="button-back-left" title="View Collection Information" onclick="document.getElementById('viewForm<%=num%>').submit();">
+                                <span id="button-symbol" class="glyphicon glyphicon-eye-open"></span>
+                            </div>
+                            <div class="col-xs-4" style="margin: auto;display: table" id="button-back-middle" title="Edit Collection" onclick="document.getElementById('editForm<%=num%>').submit();">
+                                <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
+                            </div>
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Collection" onclick="deleteCollectionPopup('<%=id%>', '<%=username%>');">
+                                <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
+                            </div>
+                        </div>
+                        <form id="viewForm<%=num%>" action="CollectionServlet" method="POST">
+                            <input type="hidden" name="action" value="collection">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <form id="editForm<%=num%>" action="CollectionServlet" method="POST">
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
                     </div>
-                    <div class="col-xs-12"><br><br><br></div>
-                    <form id="viewForm" action="CollectionServlet" method="POST">
-                        <input type="hidden" name="action" value="collection">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="View Collection Information" id="form-submit" type="submit"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;&nbsp;Collection</button>
-                    </form>
-                    <form id="editForm" action="CollectionServlet" method="POST">
-                        <input type="hidden" name="action" value="edit">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Edit Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit</button>
-                    </form>
-                    <form id="deleteForm" action="CollectionServlet" method="POST">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                        <button title="Delete Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;Delete</button>
-                    </form>
-                    <br>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
@@ -145,18 +139,9 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
-                            <p id="title">Child Of</p>
-                        </div>
-                        <div class="col-xs-6 col-md-9">
-                            <p><%=parent%></p>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-8 col-md-3">
                             <p id="title">Date Updated</p>
                         </div>
-                        <div class="col-xs-6 col-md-9">
+                        <div class="col-xs-12 col-sm-8 col-md-9">
                             <p><%=dateUpdated%></p>
                         </div>
                     </div>
@@ -188,8 +173,8 @@
                                     int printed = 1;
                                     String spacer = "";
                                     CollectionContentsInfo collectionContents;
-                                    while((collectionContents = collectionContentsInfo.getContentsById(count)) != null) {
-                                        if((collectionContents.getCollectionId()).equals(id)) {
+                                    while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
+                                        if(collectionContents.getCollectionId() == id) {
                                             CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
                                             if((printed % 2) == 0 && printed != entries) {
                                                 spacer = " col-sm-12";
@@ -219,8 +204,8 @@
                     </div>
                     <%
                         count = 1;
-                        while((collectionContents = collectionContentsInfo.getContentsById(count)) != null) {
-                            if((collectionContents.getCollectionId()).equals(id)) {
+                        while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
+                            if(collectionContents.getCollectionId() == id) {
                                 CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
                     %>
                     <form id="cardForm<%=collectionContents.getCardId()%><%=num%>" action="CardServlet" method="POST">
@@ -233,18 +218,23 @@
                                 }
                                 count++;
                             }
-                        }
+                        } else {
                     %>
+                    <div class="col-xs-12"><br></div>
+                    <h4><p>There are no cards in this collection.</p></h4>
+                    <%}%>
                 </h4>
             </div>
+            <div class="col-xs-12"><br></div>
             <%
                     num++;
-                    id = username + num;
                 }
             %>
         </div>
     </div>
 </div>
+<form id="popupForm" action="PopupServlet" method="POST"></form>
+<script src="js/scripts.js"></script>
 <%
     } else {
 %>
@@ -254,19 +244,18 @@
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>
             <h4>
-                <p>It looks like you haven't made any collections yet. If you would like to add a new collection, click the "New" button below:</p>
+                <p>It looks like you haven't made any collections yet. If you would like to add a new collection, click the button below:</p>
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-3">
-                        <form id="newForm" action="CollectionServlet" method="POST">
+                        <form id="addForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
+                            <button title="New Deck" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
-                <hr>
             </h4>
         </div>
     </div>
