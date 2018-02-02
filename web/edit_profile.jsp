@@ -92,7 +92,7 @@
                                 Enter your email. This will not be displayed to other users.<br><br>
                                 <input id="input-field" name="email" type="text"><br><br>
                                 <%
-                                    if(user.getUsername() == null || user.getUsername().equals("")) {
+                                    if(user.getEmail() == null || user.getEmail().equals("")) {
                                 %>
                                 <input id="input-field" name="email" type="text"><br><br>
                                 <%} else {%>

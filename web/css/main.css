@@ -505,7 +505,7 @@ body {
 
 .collect-mid {
     position: absolute;
-    top: 8.25%;
+    top: 7.5%;
     left: 9%;
     width: 81%;
     opacity: 0.75;
@@ -514,7 +514,7 @@ body {
 
 .collect-fore {
     position: absolute;
-    top: 17%;
+    top: 14.5%;
     left: 19%;
     width: 81%;
 }

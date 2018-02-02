@@ -83,7 +83,7 @@
                                 <p id="title">Name</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
-                                Enter your real name. This will not be displayed to other users.<br><br>
+                                Enter your real name.<br><br>
                                 <input id="input-field" name="name" type="text" required><br><br>
                             </div>
                              <div class="col-xs-12"><hr></div>

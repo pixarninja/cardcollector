@@ -85,7 +85,7 @@
                     boolean favorited = false;
                     int num = 1;
                     while((favorite = userFavoriteInfo.getFavoriteByNum(num)) != null) {
-                        if(favorite.getUser().equals(username) && favorite.getUserId() == owner) {
+                        if(favorite.getUser().equals(username) && favorite.getUserId().equals(owner)) {
                             favorited = true;
                             break;
                         }
@@ -93,8 +93,8 @@
                     }
                 %>
                 <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"></img>
-                <%if(user.getUsername().equals(username)) {%>
                 <br>
+                <%if(user.getUsername().equals(username)) {%>
                 <div class="row" style="margin: auto;display: table">
                     <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Profile Picture" onclick="document.getElementById('pictureForm').submit();">
                         <span id="button-symbol" class="glyphicon glyphicon-picture"></span>
@@ -118,7 +118,6 @@
                     } else {
                         if(username != null && !username.equals("")) {
                 %>
-                <br>
                 <div class="row" style="margin: auto;display: table">
                     <%
                         if(favorited) {
@@ -137,8 +136,6 @@
                     <input type="hidden" name="id" value="<%=owner%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
-                <%} else {%>
-                <br>
                 <%}}%>
             </h4>
         </div>
@@ -193,13 +190,13 @@
             </h4>
         </div>
         <div class="col-xs-12">
-            <h2>Your Decks<hr></h2>
+            <h2>Decks<hr></h2>
             <%
                 boolean found = false;
                 count = 1;
                 DeckInfo myDeck;
                 while((myDeck = deckInfo.getDeckByNum(count)) != null) {
-                    if(!myDeck.getUser().equals(username)) {
+                    if(myDeck.getUser().equals(owner)) {
                         found = true;
                         break;
                     }
@@ -209,7 +206,7 @@
             %>
             <h4>
                 <p>
-                    Below are your decks. You may view the deck's information by clicking on the link.
+                    Below are this user's decks. You may view the deck's information by clicking on the link.
                 </p>
                 <br><br>
                 <%
@@ -237,18 +234,38 @@
                     </div>
                     <br>
                     <div class="row" style="margin: auto;display: table">
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm<%=id%>').submit();">
+                        <%if(myDeck.getUser().equals(username)) {%>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                         </div>
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
                             <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                         </div>
+                        <form id="editForm" action="DeckServlet" method="POST">
+                            <input type="hidden" name="action" value="edit">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <%
+                            } else {
+                                if(username != null && !username.equals("")) {
+                                    if(favorited) {
+                        %>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                        </div>
+                        <%} else {%>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                        </div>
+                        <%}%>
+                        <form id="favoriteForm" action="DeckServlet" method="POST">
+                            <input type="hidden" name="action" value="favorite">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <%}}%>
                     </div>
-                    <form id="editForm<%=id%>" action="DeckServlet" method="POST">
-                        <input type="hidden" name="action" value="edit">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                    </form>
                     <p align="center" style="position: relative;top: -5px;">
                         <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
                             <%=myDeck.getName()%> (<%=myDeck.getUser()%>)
@@ -302,7 +319,7 @@
             <%}%>
         </div>
         <div class="col-xs-12">
-            <h2>Your Collections<hr></h2>
+            <h2>Collections<hr></h2>
             <%
                 found = false;
                 count = 1;
@@ -351,18 +368,38 @@
                         <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>">
                         <br>
                         <div class="row" style="margin: auto;display: table">
-                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editForm<%=id%>').submit();">
+                            <%if(collection.getUser().equals(username)) {%>
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editForm').submit();">
                                 <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                             </div>
                             <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Collection" onclick="deleteCollectionPopup('<%=id%>', '<%=username%>');">
                                 <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                             </div>
+                            <form id="editForm" action="CollectionServlet" method="POST">
+                                <input type="hidden" name="action" value="edit">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
+                            <%
+                                } else {
+                                    if(username != null && !username.equals("")) {
+                                        if(favorited) {
+                            %>
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                                <span id="button-symbol" class="glyphicon glyphicon-star"></span>
+                            </div>
+                            <%} else {%>
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                                <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
+                            </div>
+                            <%}%>
+                            <form id="favoriteForm" action="CollectionServlet" method="POST">
+                                <input type="hidden" name="action" value="favorite">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
+                            <%}}%>
                         </div>
-                        <form id="editForm<%=id%>" action="CollectionServlet" method="POST">
-                            <input type="hidden" name="action" value="edit">
-                            <input type="hidden" name="id" value="<%=id%>">
-                            <input type="hidden" name="username" value="<%=username%>">
-                        </form>
                         <p align="center" style="position: relative;top: -5px;">
                             <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
                                 <%=myCollection.getName()%> (<%=myCollection.getUser()%>)

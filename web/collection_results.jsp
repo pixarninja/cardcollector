@@ -35,7 +35,10 @@
                 int max = 12;
                 int count = 0;
                 int total = 0;
-                if(request.getAttribute("total") != null){
+                if(request.getParameter("total") != null) {
+                    total = Integer.parseInt(request.getParameter("total"));
+                }
+                else if(request.getAttribute("total") != null) {
                     total = (Integer)request.getAttribute("total");
                 }
                 if(total > 0) {
@@ -57,6 +60,7 @@
                 else {
                     %><h3>Showing: <%=end - max + 1%> through <%=end%> out of <%=total%></h3><hr><%
                 }
+                int i;
                 if(count > 1) {
                     if(end >= total) {
             %>
@@ -65,35 +69,20 @@
             <div class="col-xs-4">
                 <div class="col-xs-12"><br></div>
                 <form id="requestLessForm" action="SearchServlet" method="POST">
-                    <input type="hidden" name="action" value="cards">
+                    <input type="hidden" name="action" value="less_collections">
                     <input type="hidden" name="start" value="<%=count - max%>">
-                    <%if(request.getParameter("order") == null) {%>
-                    <input type="hidden" name="order" value="">
-                    <%} else {%>
-                    <input type="hidden" name="order" value="<%=request.getParameter("order")%>">
-                    <%}%>
-                    <%if(request.getParameter("order_by") == null) {%>
-                    <input type="hidden" name="order_by" value="">
-                    <%} else {%>
-                    <input type="hidden" name="order_by" value="<%=request.getParameter("order_by")%>">
-                    <%}%>
-                    <%if(request.getParameter("inclusion") == null) {%>
-                    <input type="hidden" name="inclusion" value="">
-                    <%} else {%>
-                    <input type="hidden" name="inclusion" value="<%=request.getParameter("inclusion")%>">
-                    <%}%>
-                    <%if(request.getParameter("user") == null) {%>
-                    <input type="hidden" name="user" value="">
-                    <%} else {%>
-                    <input type="hidden" name="user" value="<%=request.getParameter("user")%>">
-                    <%}%>
-                    <%if(request.getParameter("name") == null) {%>
-                    <input type="hidden" name="name" value="">
-                    <%} else {%>
-                    <input type="hidden" name="name" value="<%=request.getParameter("name")%>">
-                    <%}%>
+                    <input type="hidden" name="total" value="<%=total%>">
+                    <%
+                        for(i = 1; i <= total; i++) {
+                            if(request.getAttribute(Integer.toString(i)) != null) {
+                                %><input type="hidden" name="<%=i%>" value="<%=(String) request.getAttribute(Integer.toString(i))%>"><%
+                            } else {
+                                %><input type="hidden" name="<%=i%>" value="<%=request.getParameter(Integer.toString(i))%>"><%
+                            }
+                        }
+                    %>
                     <input type="hidden" name="username" value="<%=username%>">
-                    <button title="Previous <%=max%> Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
+                    <button title="Previous <%=max%> Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
                 </form>
                 <div class="col-xs-12"><br></div>
             </div>
@@ -114,35 +103,20 @@
             <div class="col-xs-4">
                 <div class="col-xs-12"><br></div>
                 <form id="requestMoreForm" action="SearchServlet" method="POST">
-                    <input type="hidden" name="action" value="cards">
+                    <input type="hidden" name="action" value="more_collections">
                     <input type="hidden" name="start" value="<%=count + max%>">
-                    <%if(request.getParameter("order") == null) {%>
-                    <input type="hidden" name="order" value="">
-                    <%} else {%>
-                    <input type="hidden" name="order" value="<%=request.getParameter("order")%>">
-                    <%}%>
-                    <%if(request.getParameter("order_by") == null) {%>
-                    <input type="hidden" name="order_by" value="">
-                    <%} else {%>
-                    <input type="hidden" name="order_by" value="<%=request.getParameter("order_by")%>">
-                    <%}%>
-                    <%if(request.getParameter("inclusion") == null) {%>
-                    <input type="hidden" name="inclusion" value="">
-                    <%} else {%>
-                    <input type="hidden" name="inclusion" value="<%=request.getParameter("inclusion")%>">
-                    <%}%>
-                    <%if(request.getParameter("user") == null) {%>
-                    <input type="hidden" name="user" value="">
-                    <%} else {%>
-                    <input type="hidden" name="user" value="<%=request.getParameter("user")%>">
-                    <%}%>
-                    <%if(request.getParameter("name") == null) {%>
-                    <input type="hidden" name="name" value="">
-                    <%} else {%>
-                    <input type="hidden" name="name" value="<%=request.getParameter("name")%>">
-                    <%}%>
+                    <input type="hidden" name="total" value="<%=total%>">
+                    <%
+                        for(i = 1; i <= total; i++) {
+                            if(request.getAttribute(Integer.toString(i)) != null) {
+                                %><input type="hidden" name="<%=i%>" value="<%=(String) request.getAttribute(Integer.toString(i))%>"><%
+                            } else {
+                                %><input type="hidden" name="<%=i%>" value="<%=request.getParameter(Integer.toString(i))%>"><%
+                            }
+                        }
+                    %>
                     <input type="hidden" name="username" value="<%=username%>">
-                    <button title="Next <%=max%> Cards" id="form-submit" type="submit">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
+                    <button title="Next <%=max%> Collections" id="form-submit" type="submit">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
                 </form>
                 <div class="col-xs-12"><br></div>
             </div>
@@ -165,6 +139,9 @@
                         count = 1;
                         if(request.getAttribute(Integer.toString(count)) != null) {
                             id = Integer.parseInt((String) request.getAttribute(Integer.toString(count)));
+                        }
+                        else if(request.getParameter(Integer.toString(count)) != null) {
+                            id = Integer.parseInt(request.getParameter(Integer.toString(count)));
                         }
                         else {
                             id = 0;
@@ -278,10 +255,15 @@
                             tracker++;
                             printed++;
                             count++;
-                            if((String) request.getAttribute(Integer.toString(count)) == null) {
-                                break;
+                            if(request.getAttribute(Integer.toString(count)) != null) {
+                                id = Integer.parseInt((String) request.getAttribute(Integer.toString(count)));
                             }
-                            id = Integer.parseInt((String) request.getAttribute(Integer.toString(count)));
+                            else if(request.getParameter(Integer.toString(count)) != null) {
+                                id = Integer.parseInt(request.getParameter(Integer.toString(count)));
+                            }
+                            else {
+                                id = 0;
+                            }
                             try {
                                 Thread.sleep(250);
                             } catch(InterruptedException ex) {

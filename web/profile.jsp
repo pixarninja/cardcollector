@@ -405,7 +405,7 @@
                         }
                     }
                 %>
-                <div class="col-xs-12"><br><br><br><br><br></div>
+                <div class="col-xs-12"><br></div>
             </h4>
             <%} else {%>
             <h4>
