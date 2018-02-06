@@ -4,12 +4,29 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -77,10 +94,10 @@
                         <p>Inclusion</p>
                     </div>
                     <div class="col-xs-4">
-                        <input name="inclusion" type="radio" value="exc" checked> Exclusive ("AND")
+                        <input name="inclusion" type="radio" value="exc" checked> Match Exactly ("AND")
                     </div>
                     <div class="col-xs-4">
-                        <input name="inclusion" type="radio" value="inc"> Inclusive ("OR")
+                        <input name="inclusion" type="radio" value="inc"> Match Any ("OR")
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -276,9 +293,9 @@
                             <option value="leg">Legends (1994)</option>
                             <option value="3ed">Revised Edition (1994)</option>
                             <option value="atq">Antiquities (1994)</option>
-                            <option value="cei">Intl. Collectorâ€™s Edition (1993)</option>
+                            <option value="cei">Intl. Collector's Edition (1993)</option>
                             <option value="2ed">Unlimited Edition (1993)</option>
-                            <option value="ced">Collectorâ€™s Edition (1993)</option>
+                            <option value="ced">Collector's Edition (1993)</option>
                             <option value="arn">Arabian Nights (1993)</option>
                             <option value="leb">Limited Edition Beta (1993)</option>
                             <option value="lea">Limited Edition Alpha (1993)</option>
@@ -309,19 +326,19 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Search</p>
+                        <p>Search Name</p>
                     </div>
-                    <div class="col-xs-4">
-                        <input name="inc_name" type="checkbox" value="name">&nbsp;Name
+                    <div class="col-xs-8">
+                        <input id="input-field" name="name" type="text">
                     </div>
-                    <div class="col-xs-4">
-                        <input name="inc_type" type="checkbox" value="type">&nbsp;Type
-                    </div>
+                    <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4"></div>
                     <div class="col-xs-4">
-                        <input name="inc_text" type="checkbox" value="text">&nbsp;Text
+                        <p>Search Type</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="type" type="text">
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
@@ -330,7 +347,16 @@
                         <p>Search Text</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" name="query" type="text">
+                        <input id="input-field" name="text" type="text">
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Search Flavor Text</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="flavor" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -339,32 +365,53 @@
                         <p>Mana Color</p>
                     </div>
                     <div class="col-xs-8">
-                        <div class="row">
-                            <div class="col-xs-1"></div>
-                            <div class="col-xs-2" title="White Mana" id="white-mana" onclick="selectMana('white-mana', 0);"></div>
-                            <div class="col-xs-2" title="Blue Mana" id="blue-mana" onclick="selectMana('blue-mana', 1);"></div>
-                            <div class="col-xs-2" title="Black Mana" id="black-mana" onclick="selectMana('black-mana', 2);"></div>
-                            <div class="col-xs-2" title="Red Mana" id="red-mana" onclick="selectMana('red-mana', 3);"></div>
-                            <div class="col-xs-2" title="Green Mana" id="green-mana" onclick="selectMana('green-mana', 4);"></div>
-                        </div>
+                        <div class="col-xs-2" title="White Mana" id="white-mana" onclick="selectMana('white-mana', 0);"></div>
+                        <div class="col-xs-2" title="Blue Mana" id="blue-mana" onclick="selectMana('blue-mana', 1);"></div>
+                        <div class="col-xs-2" title="Black Mana" id="black-mana" onclick="selectMana('black-mana', 2);"></div>
+                        <div class="col-xs-2" title="Red Mana" id="red-mana" onclick="selectMana('red-mana', 3);"></div>
+                        <div class="col-xs-2" title="Green Mana" id="green-mana" onclick="selectMana('green-mana', 4);"></div>
+                        <div class="col-xs-2" title="Colorless Mana" id="colorless-mana" onclick="selectMana('colorless-mana', 5);"></div>
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Minimum Converted Mana Cost</p>
                     </div>
-                    <div class="col-xs-8">
-                        <input id="input-field" class="input-number" name="min_cmc" type="number">
+                    <div class="col-xs-4">
+                        <input name="mana_inclusion" type="radio" value="exc" checked> Match All Selected Colors
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="mana_inclusion" type="radio" value="inc"> Match Any Combination
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Maximum Converted Mana Cost</p>
+                        <p>Also Match Unselected Colors</p>
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="selective" type="radio" value="inc" checked> Yes
+                    </div>
+                    <div class="col-xs-4">
+                        <input name="selective" type="radio" value="exc"> No
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Minimum Mana Cost</p>
                     </div>
                     <div class="col-xs-8">
-                        <input id="input-field" class="input-number" name="max_cmc" type="number">
+                        <input id="input-field-alt" class="input-number" name="min_cmc" type="number">
+                    </div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Maximum Mana Cost</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field-alt" class="input-number" name="max_cmc" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -426,7 +473,7 @@
                 </div>
             </form><br>
         </div>
-        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 20px;height: 200%;"></div>
+        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 20px;height: 220%;"></div>
         <div class="col-xs-12 col-md-5">
             <h3>Decks<hr></h3>
             <form id="searchDecksForm" action="SearchServlet" method="POST">
@@ -588,21 +635,21 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Username</p>
-                    </div>
-                    <div class="col-xs-8">
-                        <input id="input-field" name="username" type="text">
-                    </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
                         <p>Name</p>
                     </div>
                     <div class="col-xs-8">
                         <input id="input-field" name="name" type="text">
                     </div>
-                    <div class="col-xs-12"><hr></div>
+                    <div class="col-xs-12"><br></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <p>Username</p>
+                    </div>
+                    <div class="col-xs-8">
+                        <input id="input-field" name="user" type="text">
+                    </div>
+                    <div class="col-xs-12"><br></div>
                 </div>
                 <br>
                 <div class="row">

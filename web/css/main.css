@@ -194,30 +194,48 @@ button:focus {
     background-image: url(images/white_off.png);
     width: 28px;
     height: 28px;
+    display: block;
+    margin: 0 auto;
 }
 
 #blue-mana {
     background-image: url(images/blue_off.png);
     width: 28px;
     height: 28px;
+    display: block;
+    margin: 0 auto;
 }
 
 #black-mana {
     background-image: url(images/black_off.png);
     width: 28px;
     height: 28px;
+    display: block;
+    margin: 0 auto;
 }
 
 #red-mana {
     background-image: url(images/red_off.png);
     width: 28px;
     height: 28px;
+    display: block;
+    margin: 0 auto;
 }
 
 #green-mana {
     background-image: url(images/green_off.png);
     width: 28px;
     height: 28px;
+    display: block;
+    margin: 0 auto;
+}
+
+#colorless-mana {
+    background-image: url(images/colorless_off.png);
+    width: 28px;
+    height: 28px;
+    display: block;
+    margin: 0 auto;
 }
 
 #fill {
@@ -505,7 +523,7 @@ body {
 
 .collect-mid {
     position: absolute;
-    top: 7.5%;
+    top: 7.25%;
     left: 9%;
     width: 81%;
     opacity: 0.75;

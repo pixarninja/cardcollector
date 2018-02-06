@@ -9,12 +9,29 @@
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -186,7 +203,7 @@
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
                                 <div id="container<%=collectionContents.getCardId()%><%=num%>" class="col-xs-8 col-sm-6">
                                     <span onmouseover="reveal('image<%=collectionContents.getCardId()%><%=num%>', 'container<%=collectionContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%><%=num%>')">
-                                        <a href="#" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%><%=num%>').submit();">
+                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%><%=num%>').submit();">
                                             <%=card.getName()%>
                                         </a>&nbsp;x&nbsp;<%=collectionContents.getCardTotal()%>
                                     </span>
@@ -213,7 +230,7 @@
                         <input type="hidden" name="id" value="<%=collectionContents.getCardId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
-                    <img class="img-special" id="image<%=collectionContents.getCardId()%><%=num%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                    <img class="img-special" id="image<%=collectionContents.getCardId()%><%=num%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" style="display: none;"/>
                     <%
                                 }
                                 count++;
@@ -251,7 +268,7 @@
                         <form id="addForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Deck" id="form-submit" type="submit">New</button>
+                            <button title="New Collection" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>

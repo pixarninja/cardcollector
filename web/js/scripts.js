@@ -1,4 +1,4 @@
-var mana = [false, false, false, false, false];
+var mana = [false, false, false, false, false, false];
 
 function refresh() {
     selectMana("", -1);
@@ -23,9 +23,11 @@ function reveal(imageId, containerId, capsuleId, target) {
     } else if(target === "your_collections") {
         ypos = rect.top - cap.top - (2 * height / 3);
     } else if(target === "edit_deck") {
-        ypos = rect.top - cap.top - (height / 3);
+        ypos = rect.top - cap.top - (4 * height / 5);
+        xpos = xpos - 20;
     } else if(target === "edit_collection") {
-        ypos = rect.top - cap.top - (height / 3);
+        ypos = rect.top - cap.top - (4 * height / 5);
+        xpos = xpos - 20;
     }
     else {
         ypos = rect.top - cap.top;
@@ -79,6 +81,13 @@ function selectMana(id, num) {
         }
         else {
             document.getElementById(id).style.background = "url(images/green_off.png)";
+        }
+        if(mana[5]) {
+            document.getElementById(id).style.background = "url(images/colorless_on.png)";
+            document.getElementById(id).innerHTML = "<input name='colorless' type='hidden' value='on'>";
+        }
+        else {
+            document.getElementById(id).style.background = "url(images/colorless_off.png)";
         }
     }
     switch(num) {
@@ -142,8 +151,20 @@ function selectMana(id, num) {
             document.getElementById(id).innerHTML = "<input name='green' type='hidden' value='on'>";
         }
         break;
+    case 5:
+        if(mana[num]) {
+            document.getElementById(id).style.background = "url(images/colorless_off.png)";
+            mana[num] = false;
+            document.getElementById(id).innerHTML = "<input name='colorless' type='hidden' value='off'>";
+        }
+        else {
+            document.getElementById(id).style.background = "url(images/colorless_on.png)";
+            mana[num] = true;
+            document.getElementById(id).innerHTML = "<input name='colorless' type='hidden' value='on'>";
+        }
+        break;
     default:
-        mana = [false, false, false, false, false];
+        mana = [false, false, false, false, false, false];
         document.getElementById("white-mana").style.background = "url(images/white_off.png)";
         document.getElementById("white-mana").innerHTML = "<input name='white' type='hidden' value='off'>";
         document.getElementById("blue-mana").style.background = "url(images/blue_off.png)";
@@ -154,6 +175,8 @@ function selectMana(id, num) {
         document.getElementById("red-mana").innerHTML = "<input name='red' type='hidden' value='off'>";
         document.getElementById("green-mana").style.background = "url(images/green_off.png)";
         document.getElementById("green-mana").innerHTML = "<input name='green' type='hidden' value='off'>";
+        document.getElementById("colorless-mana").style.background = "url(images/colorless_off.png)";
+        document.getElementById("colorless-mana").innerHTML = "<input name='colorless' type='hidden' value='off'>";
     }
 }
 
@@ -182,7 +205,7 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
             </p>\
         </h2><br>\
         <div class='hidden-xs hidden-sm col-md-6'>\
-            <img class='img-special' style='width: 90%;position: relative;left: -5%' src='" + imagePath + "' alt='" + imagePath + "' id='center-img'>\
+            <img class='img-special' style='width: 90%;' src='" + imagePath + "' alt='" + imagePath + "' id='center-img'>\
             <br>\
         </div>\
         <div class='hidden-xs hidden-sm col-md-6' style='position: relative;left: -22px;'>";
@@ -423,7 +446,8 @@ function deleteCollectionCommentPopup(id, commentId, username) {
 function deleteUserPopup(username) {
     var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
     <input type='hidden' name='action' value='delete_user'>\
-    <input type='hidden' name='username' value='" + username + "'>\
+    <input type='hidden' name='id' value='" + username + "'>\\n\
+    <input type='hidden' name='username' value=''>\
     <div class='col-xs-12'>\
         <h2>\
             <p align='center'>\

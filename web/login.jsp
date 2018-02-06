@@ -2,15 +2,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
-    String username;
-    String buffer;
+    String username = null;
     if((String)request.getAttribute("username") == null) {
         username = request.getParameter("username");
     }
     else {
         username = (String)request.getAttribute("username");
     }
-    buffer = username;
+    String buffer = username;
     if(username != null && (username.length() > 16)) {
         username = "";
     }
@@ -39,7 +38,8 @@
             <h2>Login</h2> <br>
             <h4>
                 In order to access the requested page, you must first log into your account.<br><br>
-                Fill out the fields below with your username and password in order to login and view/update your account information. If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.
+                Fill out the fields below with your username and password in order to login and view/update your account information.
+                <!--If you forgot your password, use the link beneath the "Login" button below to be send an email with instructions on how to recover your password.-->
             </h4><br>
         </div>
         <%}%>
@@ -91,7 +91,7 @@
                         <div class="hidden-xs col-md-4"></div>
                         <div class="col-xs-12 col-md-8">
                             <button title="Login" id="form-submit" type="submit">Login</button><br><br>
-                            <a href="#" onclick="document.getElementById('forgotForm').submit();">Forgot your password?</a>
+                            <!--<a href="#" onclick="document.getElementById('forgotForm').submit();">Forgot your password?</a>-->
                         </div>
                     </div>
                 </h4>

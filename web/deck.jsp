@@ -10,12 +10,29 @@
 <jsp:useBean id="deckFavoriteInfo" class="beans.DeckFavoriteInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -185,7 +202,7 @@
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
                                 <div id="container<%=deckContents.getCardId()%>" class="col-xs-8 col-sm-6">
                                     <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'your_decks')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
-                                        <a href="#" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
+                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
                                             <%=card.getName()%>
                                         </a>&nbsp;x&nbsp;<%=deckContents.getCardTotal()%>
                                     </span>
@@ -212,7 +229,7 @@
                         <input type="hidden" name="id" value="<%=deckContents.getCardId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
-                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" style="display: none;"/>
                     <%
                                 }
                                 count++;

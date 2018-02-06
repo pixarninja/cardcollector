@@ -12,12 +12,29 @@
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="favoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -226,13 +243,12 @@
         while((collection = collectionInfo.getCollectionByNum(count)) != null) {
             if(collection.getUser().equals(username)) {
                 collectionNum++;
-                collectionIdList += collection.getId();
-                collectionNameList += collection.getName();
-                CollectionInfo tmp = collectionInfo.getCollectionByNum(count + 1);
-                if(tmp != null && tmp.getUser().equals(username)) {
+                if(collectionNum > 1) {
                     collectionIdList += "`";
                     collectionNameList += "`";
                 }
+                collectionIdList += collection.getId();
+                collectionNameList += collection.getName();
             }
             count++;
         }
@@ -244,13 +260,12 @@
         while((deck = deckInfo.getDeckByNum(count)) != null) {
             if(deck.getUser().equals(username)) {
                 deckNum++;
-                deckIdList += deck.getId();
-                deckNameList += deck.getName();
-                DeckInfo tmp = deckInfo.getDeckByNum(count + 1);
-                if(tmp != null && tmp.getUser().equals(username)) {
+                if(deckNum > 1) {
                     deckIdList += "`";
                     deckNameList += "`";
                 }
+                deckIdList += deck.getId();
+                deckNameList += deck.getName();
             }
             count++;
         }
@@ -404,6 +419,9 @@
                                 </div>
                             </div>
                             <div class="col-xs-12"><br></div>
+                            <%
+                                if(card.getConvertedManaCost() != 0) {
+                            %>
                             <div class="col-xs-12 col-sm-4 col-lg-3">
                                 <div class="row">
                                     <p id="title">Mana Cost</p>
@@ -420,7 +438,7 @@
                                                 }
                                                 else {
                                         %>
-                                        <img class="img-noborder" src="<%=s%>" alt="<%=s%>">
+                                        <img class="img-noborder" style="height: 16px;position: relative;top: -1px;" src="<%=s%>" alt="<%=s%>">
                                         <%
                                                 }
                                             }
@@ -428,6 +446,7 @@
                                     </p>
                                 </div>
                             </div>
+                            <%}%>
                         </div>
                     </div>
                     <%if(power != null || toughness != null || loyalty != null) {%>
@@ -515,6 +534,12 @@
                             <div class="col-xs-12 col-lg-9">
                                 <div class="row">
                                     <p>
+                                        <%
+                                            String[] params = {"{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", "{7}", "{8}", "{9}", "{1000000}", "{100}", "{10}", "{11}", "{12}", "{13}", "{14}", "{15}", "{16}", "{17}", "{18}", "{19}", "{20}", "{2/W}", "{2/U}", "{2/B}", "{2/R}", "{2/G}", "{W/U}", "{W/B}", "{W/P}", "{U/B}", "{U/R}", "{U/P}", "{B/G}", "{B/R}", "{B/P}", "{R/G}", "{R/W}", "{R/P}", "{G/U}", "{G/W}", "{G/P}", "{W}", "{U}", "{B}", "{R}", "{G}", "{C}", "{E}", "{HR}", "{HW}", "{PW}", "{P}", "{Q}", "{T}", "{S}", "{X}", "{Y}", "{Z}", "{CHAOS}", "{½}", "{∞}"};
+                                            for(String p : params) {
+                                                text = text.replace(p, "<img src='images/" + p.replace("/", "-") + ".png' alt='images/" + p.replace("/", "-") + ".png' style='border: none !important;height: 16px;position: relative;top: -1px;'> ");
+                                            }
+                                        %>
                                         <%=text%>
                                     </p>
                                 </div>
@@ -635,6 +660,12 @@
                             <div class="col-xs-12 col-lg-9">
                                 <div class="row">
                                     <p>
+                                        <%
+                                            String[] params = {"{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", "{7}", "{8}", "{9}", "{1000000}", "{100}", "{10}", "{11}", "{12}", "{13}", "{14}", "{15}", "{16}", "{17}", "{18}", "{19}", "{20}", "{2/W}", "{2/U}", "{2/B}", "{2/R}", "{2/G}", "{W/U}", "{W/B}", "{W/P}", "{U/B}", "{U/R}", "{U/P}", "{B/G}", "{B/R}", "{B/P}", "{R/G}", "{R/W}", "{R/P}", "{G/U}", "{G/W}", "{G/P}", "{W}", "{U}", "{B}", "{R}", "{G}", "{C}", "{E}", "{HR}", "{HW}", "{PW}", "{P}", "{Q}", "{T}", "{S}", "{X}", "{Y}", "{Z}", "{CHAOS}", "{½}", "{∞}"};
+                                            for(String p : params) {
+                                                revText = revText.replace(p, "<img src='images/" + p.replace("/", "-") + ".png' alt='images/" + p.replace("/", "-") + ".png' style='border: none !important;height: 16px;position: relative;top: -1px;'> ");
+                                            }
+                                        %>
                                         <%=revText%>
                                     </p>
                                 </div>

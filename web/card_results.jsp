@@ -8,12 +8,29 @@
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="cardFavoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -26,13 +43,12 @@
     while((collection = collectionInfo.getCollectionByNum(count)) != null) {
         if(collection.getUser().equals(username)) {
             collectionNum++;
-            collectionIdList += collection.getId();
-            collectionNameList += collection.getName();
-            CollectionInfo tmp = collectionInfo.getCollectionByNum(count + 1);
-            if(tmp != null && tmp.getUser().equals(username)) {
+            if(collectionNum > 1) {
                 collectionIdList += "`";
                 collectionNameList += "`";
             }
+            collectionIdList += collection.getId();
+            collectionNameList += collection.getName();
         }
         count++;
     }
@@ -44,13 +60,12 @@
     while((deck = deckInfo.getDeckByNum(count)) != null) {
         if(deck.getUser().equals(username)) {
             deckNum++;
-            deckIdList += deck.getId();
-            deckNameList += deck.getName();
-            DeckInfo tmp = deckInfo.getDeckByNum(count + 1);
-            if(tmp != null && tmp.getUser().equals(username)) {
+            if(deckNum > 1) {
                 deckIdList += "`";
                 deckNameList += "`";
             }
+            deckIdList += deck.getId();
+            deckNameList += deck.getName();
         }
         count++;
     }
@@ -62,7 +77,7 @@
         <div class="col-xs-12">
             <h2>Search Results: Cards</h2><br>
             <h4>
-                <p>Below are the results of your search. You may choose to view a card's information page by clicking the "View" link. You may add the card to your selection by clicking the "Add" link.</p>
+                <p>Below are the results of your search. You may choose to view a card's information page by clicking the link below it. You may add the card to a deck or collection by clicking the plus button, and you can add the card to your favorites list by clicking the star button.</p>
                 <br>
             </h4>
         </div>
@@ -216,7 +231,7 @@
                         <br>
                         <%}%>
                         <p align="center" style="position: relative;top: -5px;">
-                            <a href="#" onclick="document.getElementById('cardForm<%=id%>').submit();">
+                            <a id="menu-item" onclick="document.getElementById('cardForm<%=id%>').submit();">
                                 <%=card.getName()%> (<%=card.getSetName()%>)
                             </a>
                         </p>

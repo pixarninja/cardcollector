@@ -11,12 +11,29 @@
 <jsp:useBean id="collectionFavoriteInfo" class="beans.CollectionFavoriteInfo" scope="request"/>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -40,7 +57,7 @@
                     We invite you to use this website to log your collections and decks of Magic The Gathering Cards. By creating content on this website, you are leaving it publicly available for other users to look at, favorite, and comment on.
                 <p><br>
                 <p>
-                    Below are recently created decks and collections.
+                    Below are recently updated decks and collections.
                 </p>
                 <br>
             </h4>
@@ -48,10 +65,10 @@
         <div class="col-xs-12">
             <div class="row">
                 <div class="col-xs-6">
-                    <h3>Recently Created Decks<hr></h3>
+                    <h3>Recent Decks<hr></h3>
                 </div>
                 <div class="col-xs-6">
-                    <h3>Recently Created Collections<hr></h3>
+                    <h3>Recent Collections<hr></h3>
                 </div>
             </div>
             <h4>
@@ -134,7 +151,7 @@
                             <br>
                             <%}}%>
                             <p align="center" style="position: relative;top: -5px;">
-                                <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                                <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
                                     <%=deck.getName()%> by <%=deck.getUser()%>
                                 </a>
                             </p>
@@ -224,7 +241,7 @@
                             <br>
                             <%}}%>
                             <p align="center" style="position: relative;top: -5px;">
-                                <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                                <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
                                     <%=deck.getName()%> by <%=deck.getUser()%>
                                 </a>
                             </p>
@@ -309,7 +326,7 @@
                                 </form>
                                 <%}}%>
                                 <p align="center" style="position: relative;top: -5px;">
-                                    <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                    <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
                                         <%=collection.getName()%> by <%=collection.getUser()%>
                                     </a>
                                 </p>
@@ -401,7 +418,7 @@
                                 </form>
                                 <%}}%>
                                 <p align="center" style="position: relative;top: -5px;">
-                                    <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                    <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
                                         <%=collection.getName()%> by <%=collection.getUser()%>
                                     </a>
                                 </p>

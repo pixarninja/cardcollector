@@ -5,15 +5,31 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
-    String username;
-    String buffer;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
-    buffer = username;
+    String buffer = username;
     if(username == null || username.equals("null")) {
         username = "";
     }
@@ -90,7 +106,6 @@
                             </div>
                             <div class="col-xs-7 col-xs-8">
                                 Enter your email. This will not be displayed to other users.<br><br>
-                                <input id="input-field" name="email" type="text"><br><br>
                                 <%
                                     if(user.getEmail() == null || user.getEmail().equals("")) {
                                 %>
@@ -145,11 +160,12 @@
                                 <%
                                     if(user.getBio() == null || user.getBio().equals("")) {
                                 %>
-                                <textarea id="input-field" name="bio" form="editProfileForm"></textarea><br><br><br>
+                                <textarea id="input-field" name="bio" form="editProfileForm"></textarea><br><br>
                                 <%} else {%>
-                                <textarea id="input-field" name="bio" form="editProfileForm" placeholder="<%=user.getBio()%>"></textarea><br><br><br>
+                                <textarea id="input-field" name="bio" form="editProfileForm" placeholder="<%=user.getBio()%>"></textarea><br><br>
                                 <%}%>
                             </div>
+                            <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">

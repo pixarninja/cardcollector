@@ -6,12 +6,29 @@
 <jsp:useBean id="userFavoriteInfo" class="beans.UserFavoriteInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -194,7 +211,7 @@
                         <br>
                         <%}}%>
                         <p align="center" style="position: relative;top: -5px;">
-                            <a href="#" onclick="document.getElementById('userForm<%=id%>').submit();">
+                            <a id="menu-item" onclick="document.getElementById('userForm<%=id%>').submit();">
                                 <%=user.getUsername()%> (<%=user.getName()%>)
                             </a>
                         </p>

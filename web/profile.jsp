@@ -14,12 +14,29 @@
 <jsp:useBean id="userFavoriteInfo" class="beans.UserFavoriteInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -38,13 +55,12 @@
         while((collection = collectionInfo.getCollectionByNum(count)) != null) {
             if(collection.getUser().equals(username)) {
                 collectionNum++;
-                collectionIdList += collection.getId();
-                collectionNameList += collection.getName();
-                CollectionInfo tmp = collectionInfo.getCollectionByNum(count + 1);
-                if(tmp != null && tmp.getUser().equals(username)) {
+                if(collectionNum > 1) {
                     collectionIdList += "`";
                     collectionNameList += "`";
                 }
+                collectionIdList += collection.getId();
+                collectionNameList += collection.getName();
             }
             count++;
         }
@@ -56,13 +72,12 @@
         while((deck = deckInfo.getDeckByNum(count)) != null) {
             if(deck.getUser().equals(username)) {
                 deckNum++;
-                deckIdList += deck.getId();
-                deckNameList += deck.getName();
-                DeckInfo tmp = deckInfo.getDeckByNum(count + 1);
-                if(tmp != null && tmp.getUser().equals(username)) {
+                if(deckNum > 1) {
                     deckIdList += "`";
                     deckNameList += "`";
                 }
+                deckIdList += deck.getId();
+                deckNameList += deck.getName();
             }
             count++;
         }
@@ -183,7 +198,7 @@
         <div class="col-xs-12">
             <h2>Your Decks<hr></h2>
             <%
-                boolean found = false;
+                found = false;
                 count = 1;
                 DeckInfo myDeck;
                 while((myDeck = deckInfo.getDeckByNum(count)) != null) {
@@ -238,8 +253,8 @@
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
                     <p align="center" style="position: relative;top: -5px;">
-                        <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
-                            <%=myDeck.getName()%> (<%=myDeck.getUser()%>)
+                        <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                            <%=myDeck.getName()%> by <%=myDeck.getUser()%>
                         </a>
                     </p>
                     <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
@@ -288,7 +303,7 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-3">
-                        <form id="addForm" action="DeckServlet" method="POST">
+                        <form id="addDeckForm" action="DeckServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
                             <button title="New Deck" id="form-submit" type="submit">New</button>
@@ -338,7 +353,7 @@
                         }
                         String bottom = myCollection.getBottom();
                         if(bottom == null) {
-                            bottom = "images/magic_card_sleeves_default.jpg";
+                            bottom = "images/magic_card_back.jpg";
                         }
                 %>
                 <div class="col-xs-6 col-sm-4 col-md-3">
@@ -362,8 +377,8 @@
                             <input type="hidden" name="username" value="<%=username%>">
                         </form>
                         <p align="center" style="position: relative;top: -5px;">
-                            <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
-                                <%=myCollection.getName()%> (<%=myCollection.getUser()%>)
+                            <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                <%=myCollection.getName()%> by <%=myCollection.getUser()%>
                             </a>
                         </p>
                         <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
@@ -413,10 +428,10 @@
                 <br>
                 <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-3">
-                        <form id="addForm" action="CollectionServlet" method="POST">
+                        <form id="addCollectionForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Deck" id="form-submit" type="submit">New</button>
+                            <button title="New Collection" id="form-submit" type="submit">New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
@@ -463,23 +478,22 @@
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
                                     <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
                                 </div>
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Remove Card From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Remove Card From Favorites List" onclick="document.getElementById('favoriteCardForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                 </div>
                             </div>
-                            <br>
+                            <form id="favoriteCardForm<%=id%>" action="CardServlet" method="POST">
+                                <input type="hidden" name="action" value="favorite">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
                             <p align="center" style="position: relative;top: -5px;">
-                                <a href="#" onclick="document.getElementById('cardForm<%=id%>').submit();">
+                                <a id="menu-item" onclick="document.getElementById('cardForm<%=id%>').submit();">
                                     <%=card.getName()%> (<%=card.getSetName()%>)
                                 </a>
                             </p>
                             <form id="cardForm<%=id%>" action="CardServlet" method="POST">
                                 <input type="hidden" name="action" value="card">
-                                <input type="hidden" name="id" value="<%=id%>">
-                                <input type="hidden" name="username" value="<%=username%>">
-                            </form>
-                            <form id="favoriteForm<%=id%>" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="favorite">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
                             </form>
@@ -557,23 +571,22 @@
                             </div>
                             <br>
                             <div class="row" style="margin: auto;display: table">
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteDeckForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                 </div>
                             </div>
-                            <br>
+                            <form id="favoriteDeckForm<%=id%>" action="DeckServlet" method="POST">
+                                <input type="hidden" name="action" value="favorite">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
                             <p align="center" style="position: relative;top: -5px;">
-                                <a href="#" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                                <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
                                     <%=deck.getName()%> (<%=deck.getUser()%>)
                                 </a>
                             </p>
                             <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
                                 <input type="hidden" name="action" value="deck">
-                                <input type="hidden" name="id" value="<%=id%>">
-                                <input type="hidden" name="username" value="<%=username%>">
-                            </form>
-                            <form id="favoriteForm<%=id%>" action="DeckServlet" method="POST">
-                                <input type="hidden" name="action" value="favorite">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
                             </form>
@@ -656,23 +669,22 @@
                                 <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>">
                                 <br>
                                 <div class="row" style="margin: auto;display: table">
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteCollectionForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                     </div>
                                 </div>
-                                <br>
+                                <form id="favoriteCollectionForm<%=id%>" action="CollectionServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
                                 <p align="center" style="position: relative;top: -5px;">
-                                    <a href="#" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                    <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
                                         <%=collection.getName()%> (<%=collection.getUser()%>)
                                     </a>
                                 </p>
                                 <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
                                     <input type="hidden" name="action" value="collection">
-                                    <input type="hidden" name="id" value="<%=id%>">
-                                    <input type="hidden" name="username" value="<%=username%>">
-                                </form>
-                                <form id="favoriteForm<%=id%>" action="CollectionServlet" method="POST">
-                                    <input type="hidden" name="action" value="favorite">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
                                 </form>
@@ -741,17 +753,17 @@
                             <img class="img-special" width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img">
                             <br>
                             <div class="row" style="margin: auto;display: table">
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove User From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove User From Favorites List" onclick="document.getElementById('favoriteUserForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                 </div>
                             </div>
-                            <form id="favoriteForm<%=id%>" action="UserServlet" method="POST">
+                            <form id="favoriteUserForm<%=id%>" action="UserServlet" method="POST">
                                 <input type="hidden" name="action" value="favorite">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
                             </form>
                             <p align="center" style="position: relative;top: -5px;">
-                                <a href="#" onclick="document.getElementById('userForm<%=id%>').submit();">
+                                <a id="menu-item" onclick="document.getElementById('userForm<%=id%>').submit();">
                                     <%=user.getUsername()%> (<%=user.getName()%>)
                                 </a>
                             </p>

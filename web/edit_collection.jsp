@@ -6,14 +6,32 @@
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <%
-    String username;
-    if((String)request.getAttribute("username") == null) {
-        username = request.getParameter("username");
+    String username = null;
+    Cookie cookie = null;
+    Cookie[] cookies = null;
+    cookies = request.getCookies();
+    boolean found = false;
+
+    if( cookies != null ) {
+       for (int i = 0; i < cookies.length; i++) {
+          cookie = cookies[i];
+          if(cookie.getName().equals("username")) {
+              username = cookie.getValue();
+              found = true;
+              break;
+          }
+       }
     }
-    else {
-        username = (String)request.getAttribute("username");
+    if(!found) {
+        if((String)request.getAttribute("username") == null) {
+            username = request.getParameter("username");
+        }
+        else {
+            username = (String)request.getAttribute("username");
+        }
     }
     if(username == null || username.equals("null")) {
         username = "";
@@ -99,7 +117,7 @@
                                 </h4>
                             </div>
                             <div class="col-xs-12 hidden-lg"><br></div>
-                            <div class="col-xs-12 col-lg-8">
+                            <div class="col-xs-12 col-lg-8" id="capsule">
                                 <div class="col-xs-4">
                                     <span style="float: right;">
                                         Change Top
@@ -180,7 +198,7 @@
                                                     Card Number
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
-                                                <div id="capsule">
+                                                <div>
                                                     <%
                                                         num = 1;
                                                         int printed = 1;
@@ -199,7 +217,7 @@
                                                         <input type="checkbox" name="<%=printed%>" value="<%=collectionContents.getCardId()%>">
                                                     </div>
                                                     <div id="container<%=collectionContents.getCardId()%>" class="col-xs-5">
-                                                        <a href="#" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
+                                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
                                                             <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
                                                                 <%=card.getName()%>
                                                             </span>
@@ -220,11 +238,11 @@
                                                 <div class="col-xs-12"><hr></div>
                                                 <div class="col-xs-6">
                                                     <span style="float: right;">
-                                                        Copy Selected To:
+                                                        Copy Selected To Collection:
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-6">
-                                                    <select name="copy" id="input-field">
+                                                    <select name="copy_collection" id="input-field">
                                                         <option value=""></option>
                                                         <%
                                                             num = 1;
@@ -232,6 +250,29 @@
                                                                 if(collection.getId() != id && collection.getUser().equals(username)) {
                                                         %>
                                                         <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
+                                                        <%
+                                                                }
+                                                                num++;
+                                                            }
+                                                        %>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-12"><br></div>
+                                                <div class="col-xs-6">
+                                                    <span style="float: right;">
+                                                        Copy Selected To Deck:
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <select name="copy_deck" id="input-field">
+                                                        <option value=""></option>
+                                                        <%
+                                                            num = 1;
+                                                            DeckInfo deck;
+                                                            while((deck = deckInfo.getDeckByNum(num)) != null) {
+                                                                if(deck.getUser().equals(username)) {
+                                                        %>
+                                                        <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
                                                         <%
                                                                 }
                                                                 num++;
@@ -263,7 +304,7 @@
                                         <input type="hidden" name="id" value="<%=collectionContents.getCardId()%>">
                                         <input type="hidden" name="username" value="<%=username%>">
                                     </form>
-                                    <img class="img-special" id="image<%=collectionContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" href="#" style="display: none;"/>
+                                    <img class="img-special" id="image<%=collectionContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" style="display: none;"/>
                                     <%
                                             }
                                             num++;
