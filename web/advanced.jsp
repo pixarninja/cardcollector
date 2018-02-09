@@ -473,7 +473,7 @@
                 </div>
             </form><br>
         </div>
-        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 20px;height: 220%;"></div>
+        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 20px;height: 235%;"></div>
         <div class="col-xs-12 col-md-5">
             <h3>Decks<hr></h3>
             <form id="searchDecksForm" action="SearchServlet" method="POST">

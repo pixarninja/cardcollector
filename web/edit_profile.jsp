@@ -95,7 +95,7 @@
                                 %>
                                 <input id="input-field" name="name" type="text"><br><br>
                                 <%} else {%>
-                                <input id="input-field" name="name" type="text" placeholder="<%=user.getName()%>"><br><br>
+                                <input id="input-field" name="name" type="text" value="<%=user.getName()%>"><br><br>
                                 <%}%>
                             </div>
                              <div class="col-xs-12"><hr></div>
@@ -111,7 +111,7 @@
                                 %>
                                 <input id="input-field" name="email" type="text"><br><br>
                                 <%} else {%>
-                                <input id="input-field" name="email" type="text" placeholder="<%=user.getEmail()%>"><br><br>
+                                <input id="input-field" name="email" type="text" value="<%=user.getEmail()%>"><br><br>
                                 <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
@@ -127,7 +127,7 @@
                                 %>
                                 <input id="input-field" name="new_user" type="text" size="16"><br><br>
                                 <%} else {%>
-                                <input id="input-field" name="new_user" type="text" size="16" placeholder="<%=user.getUsername()%>"><br><br>
+                                <input id="input-field" name="new_user" type="text" size="16" value="<%=user.getUsername()%>"><br><br>
                                 <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
@@ -162,17 +162,17 @@
                                 %>
                                 <textarea id="input-field" name="bio" form="editProfileForm"></textarea><br><br>
                                 <%} else {%>
-                                <textarea id="input-field" name="bio" form="editProfileForm" placeholder="<%=user.getBio()%>"></textarea><br><br>
+                                <textarea id="input-field" name="bio" form="editProfileForm"><%=user.getBio()%></textarea><br><br>
                                 <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
-                                <p id="title">Update Profile Picture</p>
+                                <p id="title">Randomize Profile Picture</p>
                             </div>
                             <div class="col-xs-7 col-xs-8">
-                                <input type="checkbox" name="pic" value="update"> Get a new random profile picture<br><br><br>
+                                <input type="checkbox" name="pic" value="update"> Get a new random profile picture.<br><br><br>
                             </div>
                         </div>
                         <div class="row">

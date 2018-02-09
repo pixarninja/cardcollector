@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-xs-7 col-sm-8">
                                 Enter the title for this deck.<br><br>
-                                <input id="input-field" name="name" type="text" placeholder="<%=deck.getName()%>"><br><br>
+                                <input id="input-field" name="name" type="text" value="<%=deck.getName()%>"><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
@@ -83,7 +83,7 @@
                                 %>
                                 <textarea id="input-field" name="description"></textarea>
                                 <%} else {%>
-                                <textarea id="input-field" name="description" placeholder="<%=deck.getDescription()%>"></textarea>
+                                <textarea id="input-field" name="description"><%=deck.getDescription()%></textarea>
                                 <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>

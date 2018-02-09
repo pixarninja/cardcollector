@@ -68,7 +68,7 @@
                             </div>
                             <div class="col-xs-7 col-sm-8">
                                 Enter the title for this collection.<br><br>
-                                <input id="input-field" name="name" type="text" placeholder="<%=collection.getName()%>"><br><br>
+                                <input id="input-field" name="name" type="text" value="<%=collection.getName()%>"><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
@@ -83,7 +83,7 @@
                                 %>
                                 <textarea id="input-field" name="description"></textarea>
                                 <%} else {%>
-                                <textarea id="input-field" name="description" placeholder="<%=collection.getDescription()%>"></textarea>
+                                <textarea id="input-field" name="description"><%=collection.getDescription()%></textarea>
                                 <%}%>
                             </div>
                             <div class="col-xs-12"><hr></div>

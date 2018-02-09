@@ -78,13 +78,22 @@
                     %><h3>Showing: <%=end - max + 1%> through <%=end%> out of <%=total%></h3><hr><%
                 }
                 int i;
-                if(count > 1) {
-                    if(end >= total) {
-            %>
-            <div class="col-xs-4"></div>
-            <%}%>
-            <div class="col-xs-4">
-                <div class="col-xs-12"><br></div>
+                %>
+                <form id="requestMoreForm" action="SearchServlet" method="POST">
+                    <input type="hidden" name="action" value="more_collections">
+                    <input type="hidden" name="start" value="<%=count + max%>">
+                    <input type="hidden" name="total" value="<%=total%>">
+                    <%
+                        for(i = 1; i <= total; i++) {
+                            if(request.getAttribute(Integer.toString(i)) != null) {
+                                %><input type="hidden" name="<%=i%>" value="<%=(String) request.getAttribute(Integer.toString(i))%>"><%
+                            } else {
+                                %><input type="hidden" name="<%=i%>" value="<%=request.getParameter(Integer.toString(i))%>"><%
+                            }
+                        }
+                    %>
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
                 <form id="requestLessForm" action="SearchServlet" method="POST">
                     <input type="hidden" name="action" value="less_collections">
                     <input type="hidden" name="start" value="<%=count - max%>">
@@ -99,8 +108,16 @@
                         }
                     %>
                     <input type="hidden" name="username" value="<%=username%>">
-                    <button title="Previous <%=max%> Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
                 </form>
+                <%
+                if(count > 1) {
+                    if(end >= total) {
+            %>
+            <div class="col-xs-4"></div>
+            <%}%>
+            <div class="col-xs-4">
+                <div class="col-xs-12"><br></div>
+                <button title="Previous <%=max%> Collections" id="form-submit" type="button" onclick="document.getElementById('requestLessForm').submit();"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
                 <div class="col-xs-12"><br></div>
             </div>
             <%
@@ -119,22 +136,7 @@
             <%}%>
             <div class="col-xs-4">
                 <div class="col-xs-12"><br></div>
-                <form id="requestMoreForm" action="SearchServlet" method="POST">
-                    <input type="hidden" name="action" value="more_collections">
-                    <input type="hidden" name="start" value="<%=count + max%>">
-                    <input type="hidden" name="total" value="<%=total%>">
-                    <%
-                        for(i = 1; i <= total; i++) {
-                            if(request.getAttribute(Integer.toString(i)) != null) {
-                                %><input type="hidden" name="<%=i%>" value="<%=(String) request.getAttribute(Integer.toString(i))%>"><%
-                            } else {
-                                %><input type="hidden" name="<%=i%>" value="<%=request.getParameter(Integer.toString(i))%>"><%
-                            }
-                        }
-                    %>
-                    <input type="hidden" name="username" value="<%=username%>">
-                    <button title="Next <%=max%> Collections" id="form-submit" type="submit">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
-                </form>
+                <button title="Next <%=max%> Collections" id="form-submit" type="button" onclick="document.getElementById('requestMoreForm').submit();">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
                 <div class="col-xs-12"><br></div>
             </div>
             <%
@@ -285,6 +287,61 @@
                                 Thread.sleep(250);
                             } catch(InterruptedException ex) {
                                 System.out.println("ERROR: sleep was interrupted!");
+                            }
+                        }
+                        count = 0;
+                        total = 0;
+                        if(request.getParameter("total") != null) {
+                            total = Integer.parseInt(request.getParameter("total"));
+                        }
+                        else if(request.getAttribute("total") != null) {
+                            total = (Integer)request.getAttribute("total");
+                        }
+                        if(total > 0) {
+                            count = 1;
+                        }
+                        if(request.getParameter("start") != null && !request.getParameter("start").equals("")) {
+                            count = Integer.parseInt(request.getParameter("start"));
+                        }
+                        end = 0;
+                        if((count + max - 1) < total) {
+                            end = count + max - 1;
+                        }
+                        else {
+                            end = total;
+                        }
+                        if(count > 1) {
+                        if(end >= total) {
+                    %>
+                    <div class="col-xs-4"></div>
+                    <%}%>
+                    <div class="col-xs-4">
+                        <button title="Previous <%=max%> Collections" id="form-submit" type="button" onclick="document.getElementById('requestLessForm').submit();"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <%
+                        if(end >= total) {
+                    %>
+                    <div class="col-xs-4"></div>
+                    <%
+                            }
+                        }
+                    %>
+                    <%
+                        if(end < total && count != 0) {
+                            if(count >= 1) {
+                    %>
+                    <div class="col-xs-4"></div>
+                    <%}%>
+                    <div class="col-xs-4">
+                        <button title="Next <%=max%> Collections" id="form-submit" type="button" onclick="document.getElementById('requestMoreForm').submit();">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <%
+                        if(count == 1) {
+                    %>
+                    <div class="col-xs-4"></div>
+                    <%
                             }
                         }
                     %>

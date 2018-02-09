@@ -89,8 +89,14 @@
                     </div>
                     <br><br>
                     <div class="row" style="margin: auto;display: table">
+                        <%
+                            if(username != null && !username.equals("")) {
+                        %>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Print Deck" onclick="document.getElementById('printForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-print"></span>
+                        </div>
                         <%if(deck.getUser().equals(username)) {%>
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm').submit();">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Edit Deck" onclick="document.getElementById('editForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                         </div>
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
@@ -103,14 +109,13 @@
                         </form>
                         <%
                             } else {
-                                if(username != null && !username.equals("")) {
-                                    if(favorited) {
+                                if(favorited) {
                         %>
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                         </div>
                         <%} else {%>
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                         </div>
                         <%}%>
@@ -119,7 +124,19 @@
                             <input type="hidden" name="id" value="<%=id%>">
                             <input type="hidden" name="username" value="<%=username%>">
                         </form>
-                        <%}}%>
+                        <form id="printForm" action="PrintServlet" method="POST" target="_blank">
+                            <input type="hidden" name="action" value="deck">
+                            <input type="hidden" name="id" value="<%=id%>">
+                        </form>
+                        <%}} else {%>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Print Deck" onclick="document.getElementById('printForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-print"></span>
+                        </div>
+                        <form id="printForm" action="PrintServlet" method="POST" target="_blank">
+                            <input type="hidden" name="action" value="deck">
+                            <input type="hidden" name="id" value="<%=id%>">
+                        </form>
+                        <%}%>
                     </div>
                 </h4>
             </div>

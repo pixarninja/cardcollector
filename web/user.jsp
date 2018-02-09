@@ -273,17 +273,18 @@
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteDeckForm<%=id%>').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                         </div>
-                        <%
-                                        }
-                                    }
+                        <%}%>
+                        <form id="favoriteDeckForm<%=id%>" action="DeckServlet" method="POST">
+                            <input type="hidden" name="action" value="favorite">
+                            <input type="hidden" name="id" value="<%=id%>">
+                            <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <%          
                                 }
-                            %>
+                            }
+                        %>
                     </div>
-                    <form id="favoriteDeckForm<%=id%>" action="DeckServlet" method="POST">
-                        <input type="hidden" name="action" value="favorite">
-                        <input type="hidden" name="id" value="<%=id%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                    </form>
+                    <%if(username != null && !username.equals("")) {%><br><%}%>
                     <p align="center" style="position: relative;top: -5px;">
                         <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
                             <%=myDeck.getName()%> by <%=myDeck.getUser()%>
@@ -410,17 +411,18 @@
                             <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteCollectionForm<%=id%>').submit();">
                                 <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                             </div>
+                            <%}%>
+                            <form id="favoriteCollectionForm<%=id%>" action="CollectionServlet" method="POST">
+                                <input type="hidden" name="action" value="favorite">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
                             <%
-                                        }
                                     }
                                 }
                             %>
                         </div>
-                        <form id="favoriteCollectionForm<%=id%>" action="CollectionServlet" method="POST">
-                            <input type="hidden" name="action" value="favorite">
-                            <input type="hidden" name="id" value="<%=id%>">
-                            <input type="hidden" name="username" value="<%=username%>">
-                        </form>
+                        <%if(username != null && !username.equals("")) {%><br><%}%>
                         <p align="center" style="position: relative;top: -5px;">
                             <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
                                 <%=myCollection.getName()%> by <%=myCollection.getUser()%>
@@ -535,13 +537,15 @@
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Add Card To Favorites List" onclick="document.getElementById('favoriteCardForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                 </div>
-                                <%}}%>
+                                <%}%>
+                                <form id="favoriteCardForm<%=id%>" action="CardServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
+                                <%}%>
                             </div>
-                            <form id="favoriteCardForm<%=id%>" action="CardServlet" method="POST">
-                                <input type="hidden" name="action" value="favorite">
-                                <input type="hidden" name="id" value="<%=id%>">
-                                <input type="hidden" name="username" value="<%=username%>">
-                            </form>
+                            <%if(username != null && !username.equals("")) {%><br><%}%>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('cardForm<%=id%>').submit();">
                                     <%=card.getName()%>
@@ -659,27 +663,28 @@
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteDeckForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                 </div>
-                                <%
-                                            }
-                                        }
-                                    }
-                                %>
+                                <%}%>
                                 <form id="favoriteDeckForm<%=id%>" action="DeckServlet" method="POST">
                                     <input type="hidden" name="action" value="favorite">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
                                 </form>
-                                <p align="center" style="position: relative;top: -5px;">
-                                    <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
-                                        <%=deck.getName()%> by <%=deck.getUser()%>
-                                    </a>
-                                </p>
-                                <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
-                                    <input type="hidden" name="action" value="deck">
-                                    <input type="hidden" name="id" value="<%=id%>">
-                                    <input type="hidden" name="username" value="<%=username%>">
-                                </form>
+                                <%
+                                        }
+                                    }
+                                %>
                             </div>
+                            <%if(username != null && !username.equals("")) {%><br><%}%>
+                            <p align="center" style="position: relative;top: -5px;">
+                                <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                                    <%=deck.getName()%> by <%=deck.getUser()%>
+                                </a>
+                            </p>
+                            <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
+                                <input type="hidden" name="action" value="deck">
+                                <input type="hidden" name="id" value="<%=id%>">
+                                <input type="hidden" name="username" value="<%=username%>">
+                            </form>
                         </div>
                         <%
                             String spacer = "";
@@ -792,27 +797,28 @@
                                     <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteCollectionForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                     </div>
-                                    <%
-                                                }
-                                            }
-                                        }
-                                    %>
+                                    <%}%>
                                     <form id="favoriteCollectionForm<%=id%>" action="CollectionServlet" method="POST">
                                         <input type="hidden" name="action" value="favorite">
                                         <input type="hidden" name="id" value="<%=id%>">
                                         <input type="hidden" name="username" value="<%=username%>">
                                     </form>
-                                    <p align="center" style="position: relative;top: -5px;">
-                                        <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
-                                            <%=collection.getName()%> by <%=collection.getUser()%>
-                                        </a>
-                                    </p>
-                                    <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
-                                        <input type="hidden" name="action" value="collection">
-                                        <input type="hidden" name="id" value="<%=id%>">
-                                        <input type="hidden" name="username" value="<%=username%>">
-                                    </form>
+                                    <%
+                                            }
+                                        }
+                                    %>
                                 </div>
+                                <%if(username != null && !username.equals("")) {%><br><%}%>
+                                <p align="center" style="position: relative;top: -5px;">
+                                    <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                        <%=collection.getName()%> by <%=collection.getUser()%>
+                                    </a>
+                                </p>
+                                <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
+                                    <input type="hidden" name="action" value="collection">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
                             </div>
                         </div>
                         <%
@@ -888,7 +894,6 @@
                             <img class="img-special" width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img">
                             <br>
                             <%if(user.getUsername().equals(username)) {%>
-                            <br>
                             <div class="row" style="margin: auto;display: table">
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Refresh Profile Picture" onclick="document.getElementById('pictureUserForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-refresh"></span>
@@ -908,14 +913,11 @@
                                 <input type="hidden" name="action" value="edit_profile">
                                 <input type="hidden" name="username" value="<%=username%>">
                             </form>
-                            <%
-                                } else {
-                                    if(username != null && !username.equals("")) {
-                            %>
-                            <br>
                             <div class="row" style="margin: auto;display: table">
                                 <%
-                                    if(favorited) {
+                                    } else {
+                                        if(username != null && !username.equals("")) {
+                                            if(favorited) {
                                 %>
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove User From Favorites List" onclick="document.getElementById('favoriteUserForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
@@ -924,17 +926,18 @@
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add User To Favorites List" onclick="document.getElementById('favoriteUserForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                 </div>
+                                <%}%>
+                                <form id="favoriteUserForm<%=id%>" action="UserServlet" method="POST">
+                                    <input type="hidden" name="action" value="favorite">
+                                    <input type="hidden" name="id" value="<%=id%>">
+                                    <input type="hidden" name="username" value="<%=username%>">
+                                </form>
                                 <%
-                                            }
                                         }
                                     }
                                 %>
                             </div>
-                            <form id="favoriteUserForm<%=id%>" action="UserServlet" method="POST">
-                                <input type="hidden" name="action" value="favorite">
-                                <input type="hidden" name="id" value="<%=id%>">
-                                <input type="hidden" name="username" value="<%=username%>">
-                            </form>
+                            <%if(username != null && !username.equals("")) {%><br><%}%>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('userForm<%=id%>').submit();">
                                     <%=user.getUsername()%> (<%=user.getName()%>)

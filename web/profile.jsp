@@ -247,7 +247,7 @@
                             <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                         </div>
                     </div>
-                    <form id="editForm<%=id%>" action="DeckServlet" method="POST">
+                    <form id="editDeckForm<%=id%>" action="DeckServlet" method="POST">
                         <input type="hidden" name="action" value="edit">
                         <input type="hidden" name="id" value="<%=id%>">
                         <input type="hidden" name="username" value="<%=username%>">
@@ -371,7 +371,7 @@
                                 <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                             </div>
                         </div>
-                        <form id="editForm<%=id%>" action="CollectionServlet" method="POST">
+                        <form id="editCollectionForm<%=id%>" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="edit">
                             <input type="hidden" name="id" value="<%=id%>">
                             <input type="hidden" name="username" value="<%=username%>">

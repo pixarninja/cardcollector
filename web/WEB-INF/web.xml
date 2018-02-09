@@ -49,6 +49,14 @@
         <servlet-name>PopupServlet</servlet-name>
         <url-pattern>/PopupServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>PrintServlet</servlet-name>
+        <servlet-class>PrintServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PrintServlet</servlet-name>
+        <url-pattern>/PrintServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             60

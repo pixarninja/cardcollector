@@ -303,7 +303,10 @@
                         <%
                             if(username != null && !username.equals("")) {
                         %>
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Print Card" onclick="document.getElementById('printForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-print"></span>
+                        </div>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
                             <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
                         </div>
                         <%
@@ -321,6 +324,18 @@
                             <input type="hidden" name="action" value="favorite">
                             <input type="hidden" name="id" value="<%=id%>">
                             <input type="hidden" name="username" value="<%=username%>">
+                        </form>
+                        <form id="printForm" action="PrintServlet" method="POST" target="_blank">
+                            <input type="hidden" name="action" value="card">
+                            <input type="hidden" name="id" value="<%=id%>">
+                        </form>
+                        <%} else {%>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Print Card" onclick="document.getElementById('printForm').submit();">
+                            <span id="button-symbol" class="glyphicon glyphicon-print"></span>
+                        </div>
+                        <form id="printForm" action="PrintServlet" method="POST" target="_blank">
+                            <input type="hidden" name="action" value="card">
+                            <input type="hidden" name="id" value="<%=id%>">
                         </form>
                         <%}%>
                     </div>
