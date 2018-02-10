@@ -4,3 +4,4 @@ dist*
 nbproject*
 web/images/icons*
 src/java*
+web/WEB-INF*
