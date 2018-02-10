@@ -27,9 +27,17 @@
                         while((card = cardInfo.getCardById(id)) != null) {
                             if(printed == 1) {
                     %>
-                    <div><br>
-                    <%}%>
-                        &nbsp;<img class="img-noborder" style="width: 230px; height: 322px; display: inline-block;" src="<%=card.getFront()%>" alt="<%=card.getFront()%>">&nbsp;
+                    <div>&nbsp;
+                    <%
+                        }
+                        int buffer = 0;
+                        if(tracker > 6) {
+                            buffer = 2;
+                        } else if(tracker > 3) {
+                            buffer = 1;
+                        }
+                    %>
+                        <img class="img-noborder" style="width: 230px; height: 322px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=card.getFront()%>" alt="<%=card.getFront()%>">
                         <%
                             tracker++;
                             printed++;

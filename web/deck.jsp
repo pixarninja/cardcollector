@@ -107,6 +107,10 @@
                             <input type="hidden" name="id" value="<%=id%>">
                             <input type="hidden" name="username" value="<%=username%>">
                         </form>
+                        <form id="printForm" action="PrintServlet" method="POST" target="_blank">
+                            <input type="hidden" name="action" value="deck">
+                            <input type="hidden" name="id" value="<%=id%>">
+                        </form>
                         <%
                             } else {
                                 if(favorited) {

@@ -83,7 +83,7 @@
         </div>
         <div class="col-xs-12">
             <%
-                int max = 12;
+                int max = 24;
                 count = 0;
                 int total = 0;
                 if(request.getParameter("total") != null) {

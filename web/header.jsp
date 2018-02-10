@@ -1,10 +1,11 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <script src="js/jquery.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <!DOCTYPE html>
 <%
     String font = "Quicksand|Poiret+One";
 %>
+<%@page import="beans.*"%>
+<jsp:useBean id="notificationInfo" class="beans.NotificationInfo" scope="request"/>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -37,6 +38,10 @@
             <input type="hidden" name="action" value="playmat">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
+        <form id="notificationsForm" action="UserServlet" method="POST">
+            <input type="hidden" name="action" value="notifications">
+            <input type="hidden" name="username" value="<%=username%>">
+        </form>
         <form id="searchForm" action="SearchServlet" method="POST">
             <input type="hidden" name="action" value="search">
             <input type="hidden" name="username" value="<%=username%>">
@@ -53,6 +58,16 @@
         </form>
     </head>
     <body onload="refresh();">
+        <%
+            int count = 1;
+            int num = 0;
+            NotificationInfo notification;
+            while((notification = notificationInfo.getNotificationByNum(count)) != null) {
+                if(notification.getUser().equals(username)) {
+                    num++;
+                }
+            }
+        %>
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="hidden-xs hidden-sm col-md-1"></div>
@@ -94,6 +109,13 @@
                                         <span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help<hr>
                                     </a>
                                 </li>
+                                <%if(username != null && !username.equals("")) {%>
+                                <li>
+                                    <a id="menu-item" title="Notifications (<%=num%>)" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=num%>)<hr>
+                                    </a>
+                                </li>
+                                <%}%>
                                 <li>
                                     <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Advanced Search<hr>
@@ -154,6 +176,13 @@
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
+                                <%if(username != null && !username.equals("")) {%>
+                                <li>
+                                    <a id="menu-item" title="Notifications (<%=num%>)" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift" id="small-icon"></span>&nbsp;&nbsp;(<%=num%>)
+                                    </a>
+                                </li>
+                                <%}%>
                                 <li>
                                     <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;&nbsp;Search
@@ -214,6 +243,13 @@
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
+                                <%if(username != null && !username.equals("")) {%>
+                                <li>
+                                    <a id="menu-item" title="Notifications (<%=num%>)" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=num%>)
+                                    </a>
+                                </li>
+                                <%}%>
                                 <li>
                                     <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
                                         <span class="glyphicon glyphicon-search"></span>

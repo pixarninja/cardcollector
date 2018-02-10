@@ -216,25 +216,25 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
             </h4>";
         } else {
             view += "<h4>\
-                Select the collection and/or deck you would like to add the card to from the drop-down list(s) and then click the button below.\
+                Select the collection and/or deck you would like to add the card to from the drop-down list(s), input the number of cards, and then click the button below.\
             </h4><hr>\
             <h4 id='title'>\
-                Add <input id='input-field' class='input-number' name='collection_total' type='number' placeholder='0'> To Collection:<br><br>\
+                Add <input id='input-field' class='input-number' name='collection_total' type='number' value='0'> To Collection:<br><br>\
                 <select name='collection' id='input-field'>\
-                    <option value=''></option>";
+                    <option value=''>Choose collection...</option>";
             for (i = 0; i < collectionNum; i++) {
                 view += "<option value='" + collectionIds[i] + "'>" + collectionNames[i] + "</option>";
             }
             view += "</select><br><br>\
-                    Add <input id='input-field' class='input-number' name='deck_total' type='number' placeholder='0'> To Deck:<br><br>\
+                    Add <input id='input-field' class='input-number' name='deck_total' type='number' value='0'> To Deck:<br><br>\
                     <select name='deck' id='input-field'>\
-                        <option value=''></option>";
+                        <option value=''>Choose deck...</option>";
             for (i = 0; i < deckNum; i++) {
                 view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
             }
             view += "</select>\
                 <br><br>\
-                <button title='Add Card To Collection/Deck' id='form-submit' type='submit'><span class='glyphicon glyphicon-plus'></span></button>\
+                <button title='Add Card To Collection/Deck' id='form-submit' type='submit'>Submit</button>\
                 <div class='col-xs-12'><br></div>\
             </h4>";
         }
@@ -523,6 +523,52 @@ function deleteCollectionPopup(id, username) {
         </div>\
         <div class='col-xs-6'>\
             <button type='button' title='Cancel' id='form-submit' onclick='hideForm(\"popupForm\");'>No, Cancel</button>\
+        </div>\
+        <div class='col-xs-12'><br></div>\
+    </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
+function forgotPasswordPopup() {
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='forgot'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                Forgotten Password\
+            </p>\
+        </h2><br>\
+        <h4>\
+            <p align='center'>\
+                Did you forget your password? Fill in the following fields with your username and email, and a new password will be sent to you.\
+            </p>\
+            <br><br>\
+            <div class='col-xs-12 col-sm-4 col-md-3'>\
+                <div class='row'>\
+                    <p id='title'>Username</p>\
+                </div>\
+            </div>\
+            <div class='col-xs-12 col-sm-8 col-md-9'>\
+                <div class='row'>\
+                    <input id='input-field' name='username' type='text' placeholder='username'>\
+                </div>\
+            </div>\
+            <div class='col-xs-12'><br></div>\
+            <div class='col-xs-12 col-sm-4 col-md-3'>\
+                <div class='row'>\
+                    <p id='title'>Email</p>\
+                </div>\
+            </div>\
+            <div class='col-xs-12 col-sm-8 col-md-9'>\
+                <div class='row'>\
+                    <input id='input-field' name='email' type='text' placeholder='email@example.com'>\
+                </div>\
+            </div>\
+        </h4><br><hr>\
+        <div class='col-xs-12'><br></div>\
+        <div class='col-xs-12'>\
+            <button title='Submit Forgot Password Form' id='form-submit' type='submit'>Submit</button>\
         </div>\
         <div class='col-xs-12'><br></div>\
     </div>";

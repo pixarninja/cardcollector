@@ -508,10 +508,10 @@
                         <p>Inclusion</p>
                     </div>
                     <div class="col-xs-4">
-                        <input name="inclusion" type="radio" value="exc" checked> Exclusive ("AND")
+                        <input name="inclusion" type="radio" value="exc" checked> Match Exactly ("AND")
                     </div>
                     <div class="col-xs-4">
-                        <input name="inclusion" type="radio" value="inc"> Inclusive ("OR")
+                        <input name="inclusion" type="radio" value="inc"> Match Any ("OR")
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
@@ -573,10 +573,10 @@
                         <p>Inclusion</p>
                     </div>
                     <div class="col-xs-4">
-                        <input name="inclusion" type="radio" value="exc" checked> Exclusive ("AND")
+                        <input name="inclusion" type="radio" value="exc" checked> Match Exactly ("AND")
                     </div>
                     <div class="col-xs-4">
-                        <input name="inclusion" type="radio" value="inc"> Inclusive ("OR")
+                        <input name="inclusion" type="radio" value="inc"> Match Any ("OR")
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
