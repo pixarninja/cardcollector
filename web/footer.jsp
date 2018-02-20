@@ -22,6 +22,12 @@
                                 <span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help
                             </a>
                             &nbsp;&nbsp;|&nbsp;
+                            <%if(username != null && !username.equals("")) {%>
+                            <a id="menu-item" title="Notifications (<%=notifications%>)" class="footer-link" onclick="document.getElementById('notificationsForm').submit();">
+                                <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=notifications%>)
+                            </a>
+                            <%}%>
+                            &nbsp;&nbsp;|&nbsp;
                             <a id="menu-item" title="Advanced Search" class="footer-link" onclick="document.getElementById('searchForm').submit();">
                                 <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search
                             </a>
@@ -39,7 +45,7 @@
                         </p>
                     </div>
                     <!-- Ad Bar -->
-                    <div class="col-xs-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
+                    <div class="col-xs-1" style="background-image:url(images/background.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
                 </div>
             </div>
         </div>

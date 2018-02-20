@@ -51,13 +51,20 @@
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
+            <h4>
+                <div class="well" id="black-well">
+                    <p align="center" style="position: relative;top: 5px;">
+                        <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;Notice: We have updated our Terms of Service. You can view them <a href="/terms.jsp" target="_blank">here</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
+                    </p>
+                </div>
+            </h4>
             <h2>Welcome To Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector!</h2><br>
             <h4>
                 <p>
                     We invite you to use this website to log your collections and decks of Magic The Gathering Cards. By creating content on this website, you are leaving it publicly available for other users to look at, favorite, and comment on.
                 <p><br>
                 <p>
-                    Below are recently updated decks and collections.
+                    Below are recently updated decks and collections. If you would like to interact with any of them, use the links and/or options below each deck or collection to do so.
                 </p>
                 <br>
             </h4>

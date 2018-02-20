@@ -8,8 +8,10 @@
     <div class="col-xs-12">
         <div class="col-xs-12">
             <%
-                int max = 9;
                 int count = 1;
+                int multiple = 1;
+                int tick = 0;
+                boolean printBack = false;
             %>
             <h4>
                 <div class="row">
@@ -17,36 +19,52 @@
                         CardInfo card;
                         int printed = 1;
                         int tracker = 1;
-                        String id;
+                        String id = "";
                         if(request.getAttribute(Integer.toString(count)) != null) {
                             id = (String) request.getAttribute(Integer.toString(count));
-                        }
-                        else {
-                            id = request.getParameter(Integer.toString(count));
+                            multiple = (Integer) request.getAttribute(Integer.toString(count) + "total");
                         }
                         while((card = cardInfo.getCardById(id)) != null) {
                             if(printed == 1) {
                     %>
                     <div>&nbsp;
-                    <%
-                        }
-                        int buffer = 0;
-                        if(tracker > 6) {
-                            buffer = 2;
-                        } else if(tracker > 3) {
-                            buffer = 1;
-                        }
-                    %>
-                        <img class="img-noborder" style="width: 230px; height: 322px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=card.getFront()%>" alt="<%=card.getFront()%>">
                         <%
+                            }
+                            int buffer = 0;
+                            if(tracker > 6) {
+                                buffer = 2;
+                            } else if(tracker > 3) {
+                                buffer = 1;
+                            }
+                            if(printBack && card.getBack() != null && !card.getBack().equals("")) {
+                                tick++;
+                        %>
+                        <img class="img-noborder" style="width: 237px; height: 331px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=card.getBack()%>" alt="<%=card.getBack()%>">
+                        <%
+                                printBack = false;
+                            } else {
+                                tick++;
+                        %>
+                        <img class="img-noborder" style="width: 237px; height: 331px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=card.getFront()%>" alt="<%=card.getFront()%>">
+                        <%
+                                printBack = false;
+                                if(card.getBack() != null && !card.getBack().equals("")) {
+                                    printBack = true;
+                                    tick--;
+                                }
+                            }
+                            if(!printBack && (tick >= multiple)) {
+                                count++;
+                                tick = 0;
+                            }
                             tracker++;
                             printed++;
-                            count++;
                             if(request.getAttribute(Integer.toString(count)) != null) {
                                 id = (String) request.getAttribute(Integer.toString(count));
+                                multiple = (Integer) request.getAttribute(Integer.toString(count) + "total");
                             }
                             else {
-                                id = request.getParameter(Integer.toString(count));
+                                id = "";
                             }
                             try {
                                 Thread.sleep(250);

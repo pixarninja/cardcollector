@@ -59,7 +59,23 @@
             </h4><br>
         </div>
         <%}%>
-        <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: propted redirect") && !buffer.equals("error: user does not exist")) {%>
+        <%if(username != null && buffer.equals("error: username email mismatch")) {%>
+        <div class="col-xs-12">
+            <h2>Form Submission Error: Username Email Mismatch</h2> <br>
+            <h4>
+                The username and email you entered does not match any of the users in our database. Please check your spelling and submit the form again.
+            </h4><br>
+        </div>
+        <%}%>
+        <%if(username != null && buffer.equals("password successfully reset")) {%>
+        <div class="col-xs-12">
+            <h2>Password Reset: Success</h2> <br>
+            <h4>
+                An email has been sent to you with a temporary password. Please change your password upon logging back in.
+            </h4><br>
+        </div>
+        <%}%>
+        <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: propted redirect") && !buffer.equals("error: user does not exist") && !buffer.equals("error: username email mismatch") && !buffer.equals("password successfully reset")) {%>
         <div class="col-xs-12">
             <h2>Login</h2> <br>
             <h4>
@@ -91,7 +107,7 @@
                         <div class="hidden-xs col-md-4"></div>
                         <div class="col-xs-12 col-md-8">
                             <button title="Login" id="form-submit" type="submit">Login</button><br><br>
-                            <!--<a href="#" onclick="document.getElementById('forgotForm').submit();">Forgot your password?</a>-->
+                            <a style="cursor: pointer;" onclick="forgotPasswordPopup();">Forgot your password?</a>
                         </div>
                     </div>
                 </h4>
@@ -118,4 +134,6 @@
         </div>
     </div>
 </div>
+<form id="popupForm" action="PopupServlet" method="POST"></form>
+<script src="js/scripts.js"></script>
 <%@include file="footer.jsp"%>

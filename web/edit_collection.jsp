@@ -217,14 +217,14 @@
                                                         <input type="checkbox" name="<%=printed%>" value="<%=collectionContents.getCardId()%>">
                                                     </div>
                                                     <div id="container<%=collectionContents.getCardId()%>" class="col-xs-5">
-                                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
-                                                            <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
+                                                        <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
+                                                            <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
                                                                 <%=card.getName()%>
-                                                            </span>
-                                                        </a>
+                                                            </a>
+                                                        </span>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input id="input-field" class="input-number" type="number" name="total<%=collectionContents.getCardId()%>" placeholder="<%=collectionContents.getCardTotal()%>">
+                                                        <input id="input-field" class="input-number" type="number" name="total<%=collectionContents.getCardId()%>" value="<%=collectionContents.getCardTotal()%>">
                                                     </div>
                                                     <div class="<%=spacer%>"><br></div>
                                                     <%
@@ -236,6 +236,13 @@
                                                     <input type="hidden" name="<%=printed%>" value="ENDTOKEN">
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
+                                                <div class="col-xs-1">
+                                                    <input type="checkbox" name="0" value="select_all">
+                                                </div>
+                                                <div class="col-xs-11">
+                                                    Select All
+                                                </div>
+                                                <div class="col-xs-12"><hr></div>
                                                 <div class="col-xs-6">
                                                     <span style="float: right;">
                                                         Copy Selected To Collection:
@@ -243,7 +250,7 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <select name="copy_collection" id="input-field">
-                                                        <option value=""></option>
+                                                        <option value="">Choose collection...</option>
                                                         <%
                                                             num = 1;
                                                             while((collection = collectionInfo.getCollectionByNum(num)) != null) {
@@ -265,7 +272,7 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <select name="copy_deck" id="input-field">
-                                                        <option value=""></option>
+                                                        <option value="">Choose deck...</option>
                                                         <%
                                                             num = 1;
                                                             DeckInfo deck;

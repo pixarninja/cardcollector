@@ -89,7 +89,7 @@
         <div class="col-xs-12">
             <h2>User Information</h2><br>
             <h4>
-                <p>Below is the selected user's information. You can add or remove this user from your favorites list, or interact with their favorited items.</p>
+                <p>Below is the selected user's information. You can add or remove this user from your favorites list, or interact with their decks, collections, or favorited items.</p>
                 <br><br><hr>
             </h4>
         </div>
@@ -913,11 +913,11 @@
                                 <input type="hidden" name="action" value="edit_profile">
                                 <input type="hidden" name="username" value="<%=username%>">
                             </form>
+                            <%} else {%>
                             <div class="row" style="margin: auto;display: table">
                                 <%
-                                    } else {
-                                        if(username != null && !username.equals("")) {
-                                            if(favorited) {
+                                    if(username != null && !username.equals("")) {
+                                        if(favorited) {
                                 %>
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove User From Favorites List" onclick="document.getElementById('favoriteUserForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
@@ -932,11 +932,9 @@
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
                                 </form>
-                                <%
-                                        }
-                                    }
-                                %>
+                            <%}%>
                             </div>
+                            <%}%>
                             <%if(username != null && !username.equals("")) {%><br><%}%>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('userForm<%=id%>').submit();">

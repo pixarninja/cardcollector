@@ -42,7 +42,7 @@
                     Welcome to Card<span class="glyphicon glyphicon-globe" id="small-icon"></span>Collector, your personal Magic The Gathering collection logbook! Using this website, you can log collections and decks of cards. You can also comment on cards and collections or decks other users have made.
                 </p>
                 <p>
-                    This website is free to use. All card information was imported via the <a href="https://scryfall.com/docs/api/" target="_blank">Scryfall API</a>. I do not own any of the content on this website, nor do I take responsibility for information put on the website by its users. This website's source code (aside from sensitive backend data) is provided on my <a href="https://github.com/pixarninja/cardcollector" target="_blank">GitHub</a>. I used a secure MVC architecture to design this website, with the help from the NetBeans IDE and Amazon AWS services to develop and deploy it.
+                    This website is free to use. All card information was imported via the <a href="https://scryfall.com/docs/api/" target="_blank">Scryfall API</a>. The website owner does not own any of the content on this website, nor do they take responsibility for information put on the website by its users. This website's source code (aside from sensitive backend data) is provided on <a href="https://github.com/pixarninja/cardcollector" target="_blank">GitHub</a>. An MVC architecture and SHA-1 encryption was used to design and secure this website, with the help from the NetBeans IDE and Amazon AWS to develop and deploy it. This website uses cookies to store the username of the user logged in.
                 </p>
                 <br>
             </h4>
@@ -50,7 +50,7 @@
         <div class="col-xs-12">
             <h2>How To<hr></h2>
             <h4>
-                Below are different sections of information which discuss how to use this website. Please be responsible in your use of the website. I reserve the right to remove any content that is inappropriate or degrading. If you are concerned about content on this website, send me an email about it and I'll investigate the issue.
+                Below are different sections of information which discuss how to use this website. Please be responsible in your use of the website. The website owner reserves the right to remove any content that is inappropriate or degrading. If you are concerned about content on this website, send the owner an email describing the issue and it will be investigated. The website owner's email can be found at the bottom of this page.
             </h4>
             <br>
         </div>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="col-xs-12 col-sm-8">
                     <h4>
-                        <p>My name is Wes Harris, I am a Computer Science Undergraduate student at New Mexico Institute of Mining and Technology. I created this website to improve my web application development skills. If you would like to contact me, you can do so via the contact details below.</p>
+                        <p>My name is Wes Harris, I am a Computer Science Undergraduate student at New Mexico Institute of Mining and Technology. I created this website to provide a unique platform for logging collections and decks of Magic cards. If you would like to contact me, you can do so via the contact details below.</p>
                         <br><br>
                         <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
                         <div class="col-xs-12 col-sm-6">

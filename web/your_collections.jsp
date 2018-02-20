@@ -57,7 +57,7 @@
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>
             <h4>
-                <p>Below are your collections, organized by title. You may view a collection's information (including comments) by clicking the eye button. You may edit a collection by selecting the edit button. You may delete a collection by selecting the trashcan button. Be warned, deleting a collection is irreversible, so don't delete one you would want to keep later!<p>
+                <p>Below are your collections, organized by title. You may view a collection's information (including comments) by clicking the eye button. You may edit a collection by selecting the pencil button. You may delete a collection by selecting the trashcan button. Be warned, deleting a collection is irreversible, so don't delete one you would want to keep later!<p>
                 <br><p>If you would like to add a new collection, click the button below:</p>
                 <br>
                 <div class="row">
@@ -134,7 +134,7 @@
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
-                <h2 id="capsule<%=num%>">Collection: <%=name%><hr></h2>
+                <h2 id="capsule<%=num%>"><%=name%><hr></h2>
                 <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
@@ -202,11 +202,11 @@
                                 %>
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
                                 <div id="container<%=collectionContents.getCardId()%><%=num%>" class="col-xs-8 col-sm-6">
-                                    <span onmouseover="reveal('image<%=collectionContents.getCardId()%><%=num%>', 'container<%=collectionContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%><%=num%>')">
-                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%><%=num%>').submit();">
+                                    <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%><%=num%>').submit();">
+                                        <span onmouseover="reveal('image<%=collectionContents.getCardId()%><%=num%>', 'container<%=collectionContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%><%=num%>')">
                                             <%=card.getName()%>
-                                        </a>&nbsp;x&nbsp;<%=collectionContents.getCardTotal()%>
-                                    </span>
+                                        </span>
+                                    </a>&nbsp;x&nbsp;<%=collectionContents.getCardTotal()%>
                                 </div>
                                 <div class="col-xs-12<%=spacer%>"><br></div>
                                 <%

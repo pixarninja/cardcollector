@@ -5,7 +5,7 @@
     String font = "Quicksand|Poiret+One";
 %>
 <%@page import="beans.*"%>
-<jsp:useBean id="notificationInfo" class="beans.NotificationInfo" scope="request"/>
+<jsp:useBean id="headerNotificationInfo" class="beans.NotificationInfo" scope="request"/>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -59,13 +59,14 @@
     </head>
     <body onload="refresh();">
         <%
-            int count = 1;
-            int num = 0;
-            NotificationInfo notification;
-            while((notification = notificationInfo.getNotificationByNum(count)) != null) {
-                if(notification.getUser().equals(username)) {
-                    num++;
+            int countSpecial = 1;
+            int notifications = 0;
+            NotificationInfo headerNotification;
+            while((headerNotification = headerNotificationInfo.getNotificationByNum(countSpecial)) != null) {
+                if(headerNotification.getOwner().equals(username)) {
+                    notifications++;
                 }
+                countSpecial++;
             }
         %>
         <nav class="navbar navbar-default navbar-fixed-top">
@@ -111,8 +112,8 @@
                                 </li>
                                 <%if(username != null && !username.equals("")) {%>
                                 <li>
-                                    <a id="menu-item" title="Notifications (<%=num%>)" onclick="document.getElementById('notificationsForm').submit();">
-                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=num%>)<hr>
+                                    <a id="menu-item" title="Notifications (<%=notifications%>)" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;Notifications (<%=notifications%>)<hr>
                                     </a>
                                 </li>
                                 <%}%>
@@ -178,8 +179,8 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <%if(username != null && !username.equals("")) {%>
                                 <li>
-                                    <a id="menu-item" title="Notifications (<%=num%>)" onclick="document.getElementById('notificationsForm').submit();">
-                                        <span class="glyphicon glyphicon-gift" id="small-icon"></span>&nbsp;&nbsp;(<%=num%>)
+                                    <a id="menu-item" title="Notifications (<%=notifications%>)" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift" id="small-icon"></span>&nbsp;&nbsp;(<%=notifications%>)
                                     </a>
                                 </li>
                                 <%}%>
@@ -245,8 +246,8 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <%if(username != null && !username.equals("")) {%>
                                 <li>
-                                    <a id="menu-item" title="Notifications (<%=num%>)" onclick="document.getElementById('notificationsForm').submit();">
-                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=num%>)
+                                    <a id="menu-item" title="Notifications (<%=notifications%>)" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=notifications%>)
                                     </a>
                                 </li>
                                 <%}%>
@@ -278,6 +279,6 @@
     <div class="container-fluid">
         <div class="row" align="left">
             <!-- Ad Bar -->
-            <div class="hidden-xs col-sm-1" style="background-image:url(images/planeswalkers.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
+            <div class="hidden-xs col-sm-1" style="background-image:url(images/background.jpg);height: 100%;overflow: hidden;margin-bottom: -9999px;padding-bottom: 9999px;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
             <div class="hidden-xs col-sm-1"></div>
             <div id="content" class="col-xs-12 col-sm-10" style="background-color: black;background-repeat: repeat;min-height: 100%;">

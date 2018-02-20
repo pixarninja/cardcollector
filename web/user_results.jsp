@@ -263,7 +263,7 @@
                             } catch(InterruptedException ex) {
                                 System.out.println("ERROR: sleep was interrupted!");
                             }
-                        }
+                        }%><div class="col-xs-12"></div><%
                         count = 0;
                         total = 0;
                         if(request.getParameter("total") != null) {

@@ -188,14 +188,14 @@
                                                         <input type="checkbox" name="<%=printed%>" value="<%=deckContents.getCardId()%>">
                                                     </div>
                                                     <div id="container<%=deckContents.getCardId()%>" class="col-xs-5">
-                                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
-                                                            <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
+                                                        <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
+                                                            <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
                                                                 <%=card.getName()%>
-                                                            </span>
-                                                        </a>
+                                                            </a>
+                                                        </span>
                                                     </div>
                                                     <div class="col-xs-6">
-                                                        <input id="input-field" class="input-number" type="number" name="total<%=deckContents.getCardId()%>" placeholder="<%=deckContents.getCardTotal()%>">
+                                                        <input id="input-field" class="input-number" type="number" name="total<%=deckContents.getCardId()%>" value="<%=deckContents.getCardTotal()%>">
                                                     </div>
                                                     <div class="<%=spacer%>"><br></div>
                                                     <%
@@ -207,6 +207,12 @@
                                                     <input type="hidden" name="<%=printed%>" value="ENDTOKEN">
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
+                                                <div class="col-xs-1">
+                                                    <input type="checkbox" name="0" value="select_all">
+                                                </div>
+                                                <div class="col-xs-11">
+                                                    Select All
+                                                </div>
                                                 <div class="col-xs-12"><hr></div>
                                                 <div class="col-xs-6">
                                                     <span style="float: right;">
@@ -215,7 +221,7 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <select name="copy_collection" id="input-field">
-                                                        <option value=""></option>
+                                                        <option value="">Choose collection...</option>
                                                         <%
                                                             num = 1;
                                                             CollectionInfo collection;
@@ -238,7 +244,7 @@
                                                 </div>
                                                 <div class="col-xs-6">
                                                     <select name="copy_deck" id="input-field">
-                                                        <option value=""></option>
+                                                        <option value="">Choose deck...</option>
                                                         <%
                                                             num = 1;
                                                             while((deck = deckInfo.getDeckByNum(num)) != null) {

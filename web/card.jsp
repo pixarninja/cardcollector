@@ -160,7 +160,7 @@
         if(back != null) {
             String[] revParsedCost = card.getRevManaCost().split("}");
             for(i = 0; i < revParsedCost.length; i++) {
-                String symbol = parsedCost[i] + "}";
+                String symbol = revParsedCost[i] + "}";
                 symbol = symbol.replaceAll(Pattern.quote("/"),"-");
                 revIcons.add("images/" + symbol + ".png");
             }
@@ -434,9 +434,6 @@
                                 </div>
                             </div>
                             <div class="col-xs-12"><br></div>
-                            <%
-                                if(card.getConvertedManaCost() != 0) {
-                            %>
                             <div class="col-xs-12 col-sm-4 col-lg-3">
                                 <div class="row">
                                     <p id="title">Mana Cost</p>
@@ -447,11 +444,26 @@
                                 <div class="row">
                                     <p>
                                         <%
-                                            for(String s : icons) {
-                                                if(icons.equals("images/}.png")) {
-                                                    %>None<%
+                                            found = false;
+                                            String[] params = {"{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", "{7}", "{8}", "{9}", "{1000000}", "{100}", "{10}", "{11}", "{12}", "{13}", "{14}", "{15}", "{16}", "{17}", "{18}", "{19}", "{20}", "{2/W}", "{2/U}", "{2/B}", "{2/R}", "{2/G}", "{W/U}", "{W/B}", "{W/P}", "{U/B}", "{U/R}", "{U/P}", "{B/G}", "{B/R}", "{B/P}", "{R/G}", "{R/W}", "{R/P}", "{G/U}", "{G/W}", "{G/P}", "{W}", "{U}", "{B}", "{R}", "{G}", "{C}", "{E}", "{HR}", "{HW}", "{PW}", "{P}", "{Q}", "{T}", "{S}", "{X}", "{Y}", "{Z}", "{CHAOS}", "{½}", "{∞}"};
+                                            for(String p : params) {
+                                                p = p.replace("/", "-");
+                                                p = "images/" + p + ".png";
+                                                for(String c : icons) {
+                                                    if(c.equals(p)) {
+                                                        found = true;
+                                                        break;
+                                                    }
                                                 }
-                                                else {
+                                                if(found) {
+                                                    break;
+                                                }
+                                            }
+                                            if(!found) {
+                                                %>None<%
+                                            }
+                                            else {
+                                                for(String s : icons) {
                                         %>
                                         <img class="img-noborder" style="height: 16px;position: relative;top: -1px;" src="<%=s%>" alt="<%=s%>">
                                         <%
@@ -461,7 +473,6 @@
                                     </p>
                                 </div>
                             </div>
-                            <%}%>
                         </div>
                     </div>
                     <%if(power != null || toughness != null || loyalty != null) {%>
@@ -550,7 +561,6 @@
                                 <div class="row">
                                     <p>
                                         <%
-                                            String[] params = {"{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", "{7}", "{8}", "{9}", "{1000000}", "{100}", "{10}", "{11}", "{12}", "{13}", "{14}", "{15}", "{16}", "{17}", "{18}", "{19}", "{20}", "{2/W}", "{2/U}", "{2/B}", "{2/R}", "{2/G}", "{W/U}", "{W/B}", "{W/P}", "{U/B}", "{U/R}", "{U/P}", "{B/G}", "{B/R}", "{B/P}", "{R/G}", "{R/W}", "{R/P}", "{G/U}", "{G/W}", "{G/P}", "{W}", "{U}", "{B}", "{R}", "{G}", "{C}", "{E}", "{HR}", "{HW}", "{PW}", "{P}", "{Q}", "{T}", "{S}", "{X}", "{Y}", "{Z}", "{CHAOS}", "{½}", "{∞}"};
                                             for(String p : params) {
                                                 text = text.replace(p, "<img src='images/" + p.replace("/", "-") + ".png' alt='images/" + p.replace("/", "-") + ".png' style='border: none !important;height: 16px;position: relative;top: -1px;'> ");
                                             }
@@ -594,6 +604,61 @@
                             <div class="col-xs-12 col-sm-8 col-lg-9">
                                 <div class="row">
                                     <p><%=revName%></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Colors</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p><%=revColors%></p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Mana Cost</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <p>
+                                        <%
+                                            found = false;
+                                            for(String p : params) {
+                                                p = p.replace("/", "-");
+                                                p = "images/" + p + ".png";
+                                                for(String c : revIcons) {
+                                                    if(c.equals(p)) {
+                                                        found = true;
+                                                        break;
+                                                    }
+                                                }
+                                                if(found) {
+                                                    break;
+                                                }
+                                            }
+                                            if(!found) {
+                                                %>None<%
+                                            }
+                                            else {
+                                                for(String s : revIcons) {
+                                        %>
+                                        <img class="img-noborder" style="height: 16px;position: relative;top: -1px;" src="<%=s%>" alt="<%=s%>">
+                                        <%
+                                                }
+                                            }
+                                        %>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -676,7 +741,6 @@
                                 <div class="row">
                                     <p>
                                         <%
-                                            String[] params = {"{0}", "{1}", "{2}", "{3}", "{4}", "{5}", "{6}", "{7}", "{8}", "{9}", "{1000000}", "{100}", "{10}", "{11}", "{12}", "{13}", "{14}", "{15}", "{16}", "{17}", "{18}", "{19}", "{20}", "{2/W}", "{2/U}", "{2/B}", "{2/R}", "{2/G}", "{W/U}", "{W/B}", "{W/P}", "{U/B}", "{U/R}", "{U/P}", "{B/G}", "{B/R}", "{B/P}", "{R/G}", "{R/W}", "{R/P}", "{G/U}", "{G/W}", "{G/P}", "{W}", "{U}", "{B}", "{R}", "{G}", "{C}", "{E}", "{HR}", "{HW}", "{PW}", "{P}", "{Q}", "{T}", "{S}", "{X}", "{Y}", "{Z}", "{CHAOS}", "{½}", "{∞}"};
                                             for(String p : params) {
                                                 revText = revText.replace(p, "<img src='images/" + p.replace("/", "-") + ".png' alt='images/" + p.replace("/", "-") + ".png' style='border: none !important;height: 16px;position: relative;top: -1px;'> ");
                                             }

@@ -57,7 +57,7 @@
         <div class="col-xs-12">
             <h2>Your Decks</h2><br>
             <h4>
-                <p>Below are your decks, organized by title. You may view a deck's information (including comments) by clicking the eye button. You may edit a deck by selecting the "Edit" button. You may delete a deck by selecting the "Delete" button. Be warned, deleting a deck is irreversible, so don't delete one you would want to keep later!<p>
+                <p>Below are your decks, organized by title. You may view a deck's information (including comments) by clicking the eye button. You may edit a deck by selecting the pencil button. You may delete a deck by selecting the trashcan button. Be warned, deleting a deck is irreversible, so don't delete one you would want to keep later!<p>
                 <br><p>If you would like to add a new deck, click the button below:</p>
                 <br>
                 <div class="row">
@@ -128,7 +128,7 @@
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
-                <h2 id="capsule<%=num%>">Deck: <%=name%><hr></h2>
+                <h2 id="capsule<%=num%>"><%=name%><hr></h2>
                 <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
@@ -196,11 +196,11 @@
                                 %>
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
                                 <div id="container<%=deckContents.getCardId()%><%=num%>" class="col-xs-8 col-sm-6">
-                                    <span onmouseover="reveal('image<%=deckContents.getCardId()%><%=num%>', 'container<%=deckContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_decks')" onmouseout="conceal('image<%=deckContents.getCardId()%><%=num%>')">
-                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%><%=num%>').submit();">
+                                    <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%><%=num%>').submit();">
+                                        <span onmouseover="reveal('image<%=deckContents.getCardId()%><%=num%>', 'container<%=deckContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_decks')" onmouseout="conceal('image<%=deckContents.getCardId()%><%=num%>')">
                                             <%=card.getName()%>
-                                        </a>&nbsp;x&nbsp;<%=deckContents.getCardTotal()%>
-                                    </span>
+                                        </span>
+                                    </a>&nbsp;x&nbsp;<%=deckContents.getCardTotal()%>
                                 </div>
                                 <div class="col-xs-12<%=spacer%>"><br></div>
                                 <%

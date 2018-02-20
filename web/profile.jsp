@@ -202,7 +202,7 @@
                 count = 1;
                 DeckInfo myDeck;
                 while((myDeck = deckInfo.getDeckByNum(count)) != null) {
-                    if(!myDeck.getUser().equals(username)) {
+                    if(myDeck.getUser().equals(username)) {
                         found = true;
                         break;
                     }
@@ -240,7 +240,7 @@
                     </div>
                     <br>
                     <div class="row" style="margin: auto;display: table">
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm<%=id%>').submit();">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editDeckForm<%=id%>').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                         </div>
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
@@ -364,7 +364,7 @@
                         <img class="img-special collect-fore" width="100%" src="<%=top%>" alt="<%=top%>">
                         <br>
                         <div class="row" style="margin: auto;display: table">
-                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editForm<%=id%>').submit();">
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editCollectionForm<%=id%>').submit();">
                                 <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                             </div>
                             <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Collection" onclick="deleteCollectionPopup('<%=id%>', '<%=username%>');">

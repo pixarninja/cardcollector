@@ -216,7 +216,7 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
             </h4>";
         } else {
             view += "<h4>\
-                Select the collection and/or deck you would like to add the card to from the drop-down list(s), input the number of cards, and then click the button below.\
+                Select the collection and/or deck you would like to add the card to from the drop-down list(s), input the number of cards, and then click the button below. If the card already exists, it will be added to the current card total.\
             </h4><hr>\
             <h4 id='title'>\
                 Add <input id='input-field' class='input-number' name='collection_total' type='number' value='0'> To Collection:<br><br>\
@@ -457,7 +457,12 @@ function deleteUserPopup(username) {
         <h4>\
             <p align='center'>\
                 Do you really want to delete your account? This action cannot be undone.\
+            </p><p align='center'>\
+                If you do, type in your password below:\
             </p>\
+            <div class='col-xs-12'>\
+                <input id='input-field' type='text' name='password' placeholder='Input your password...' required>\
+            </div>\
         </h4><br><hr>\
         <div class='col-xs-12'><br></div>\
         <div class='col-xs-6'>\
@@ -541,34 +546,36 @@ function forgotPasswordPopup() {
         </h2><br>\
         <h4>\
             <p align='center'>\
-                Did you forget your password? Fill in the following fields with your username and email, and a new password will be sent to you.\
+                Did you forget your password? Fill in the following fields with your username and email, and a temporary password will be sent to you. Please change your password upon logging in again.\
             </p>\
-            <br><br>\
-            <div class='col-xs-12 col-sm-4 col-md-3'>\
+            <hr>\
+            <div class='col-xs-12 col-sm-3 col-md-2'>\
                 <div class='row'>\
                     <p id='title'>Username</p>\
                 </div>\
             </div>\
-            <div class='col-xs-12 col-sm-8 col-md-9'>\
+            <div class='col-xs-12 col-sm-9 col-md-10'>\
                 <div class='row'>\
-                    <input id='input-field' name='username' type='text' placeholder='username'>\
+                    <input id='input-field' name='username' type='text' placeholder='username' required>\
                 </div>\
             </div>\
             <div class='col-xs-12'><br></div>\
-            <div class='col-xs-12 col-sm-4 col-md-3'>\
+            <div class='col-xs-12 col-sm-3 col-md-2'>\
                 <div class='row'>\
                     <p id='title'>Email</p>\
                 </div>\
             </div>\
-            <div class='col-xs-12 col-sm-8 col-md-9'>\
+            <div class='col-xs-12 col-sm-9 col-md-10'>\
                 <div class='row'>\
-                    <input id='input-field' name='email' type='text' placeholder='email@example.com'>\
+                    <input id='input-field' name='email' type='text' placeholder='email@example.com' required>\
                 </div>\
             </div>\
         </h4><br><hr>\
         <div class='col-xs-12'><br></div>\
         <div class='col-xs-12'>\
-            <button title='Submit Forgot Password Form' id='form-submit' type='submit'>Submit</button>\
+            <div class='row'>\
+                    <button title='Submit Forgot Password Form' id='form-submit' type='submit'>Submit</button>\
+            </div>\
         </div>\
         <div class='col-xs-12'><br></div>\
     </div>";

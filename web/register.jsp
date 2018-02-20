@@ -45,7 +45,7 @@
                 <%if(username == null || username.equals("")) {%>
                 <h2>Register</h2><br>
                 <h4>
-                    <p>Fill out the fields below with a chosen username and password in order to register for an account.</p>
+                    <p>Fill out the fields below with a chosen username and password in order to register for an account. By registering, you are agreeing to our <a href="/terms.jsp" target="_blank">Terms of Service</a>. Your email and password will not be visible to anyone besides the administrators who manage this website. Your name, username, and biographical information will be visible to other users. If you have any questions about our policies, please contact us via the means specified on the Help Page.</p>
                     <br><br><hr>
                 </h4>
                 <%} else if(username != null && buffer.equals("error: password mismatch")) {%>
@@ -109,7 +109,7 @@
                                 <p id="title">Email</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
-                                Enter your email. This will not be displayed to other users.<br><br>
+                                Enter your email. This will not be displayed to other users. We only use your email for password recovery purposes.<br><br>
                                 <input id="input-field" name="email" type="text" required><br><br>
                             </div>
                             <div class="col-xs-12"><hr></div>

@@ -387,7 +387,7 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
-                        <p>Also Match Unselected Colors</p>
+                        <p>Match With Unselected Colors</p>
                     </div>
                     <div class="col-xs-4">
                         <input name="selective" type="radio" value="inc" checked> Yes
@@ -398,52 +398,45 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-sm-3">
                         <p>Minimum Mana Cost</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-sm-3">
                         <input id="input-field-alt" class="input-number" name="min_cmc" type="number">
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-sm-3">
                         <p>Maximum Mana Cost</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-sm-3">
                         <input id="input-field-alt" class="input-number" name="max_cmc" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
-                        <p>Minimum Power</p>
+                    <div class="col-xs-4 col-sm-3">
+                        <p>Min Power</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-sm-3">
                         <input id="input-field-alt" class="input-number" name="min_power" type="number"><br><br>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <p>Maximum Power</p>
+                    <div class="col-xs-4 col-sm-3">
+                        <p>Max Power</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-sm-3">
                         <input id="input-field-alt" class="input-number" name="max_power" type="number"><br><br>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
-                        <p>Minimum Toughness</p>
+                    <div class="col-xs-4 col-sm-3">
+                        <p>Min Toughness</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-sm-3">
                         <input id="input-field-alt" class="input-number" name="min_toughness" type="number"><br><br>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
-                        <p>Maximum Toughness</p>
+                    <div class="col-xs-4 col-sm-3">
+                        <p>Max Toughness</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-sm-3">
                         <input id="input-field-alt" class="input-number" name="max_toughness" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
