@@ -119,14 +119,14 @@
                             <%if(deck.getUser().equals(username)) {%>
                             <br>
                             <div class="row" style="margin: auto;display: table">
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editDeckForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                                 </div>
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
                                     <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                                 </div>
                             </div>
-                            <form id="editForm<%=id%>" action="DeckServlet" method="POST">
+                            <form id="editDeckForm<%=id%>" action="DeckServlet" method="POST">
                                 <input type="hidden" name="action" value="edit">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
@@ -140,16 +140,16 @@
                                 <%
                                     if(favorited) {
                                 %>
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteDeckForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                 </div>
                                 <%} else {%>
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteDeckForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                 </div>
                                 <%}%>
                             </div>
-                            <form id="favoriteForm<%=id%>" action="DeckServlet" method="POST">
+                            <form id="favoriteDeckForm<%=id%>" action="DeckServlet" method="POST">
                                 <input type="hidden" name="action" value="favorite">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
@@ -209,14 +209,14 @@
                             <%if(deck.getUser().equals(username)) {%>
                             <br>
                             <div class="row" style="margin: auto;display: table">
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Deck" onclick="document.getElementById('editDeckXSForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                                 </div>
                                 <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Deck" onclick="deleteDeckPopup('<%=id%>', '<%=username%>');">
                                     <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                                 </div>
                             </div>
-                            <form id="editForm<%=id%>" action="DeckServlet" method="POST">
+                            <form id="editDeckXSForm<%=id%>" action="DeckServlet" method="POST">
                                 <input type="hidden" name="action" value="edit">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
@@ -230,16 +230,16 @@
                                 <%
                                     if(favorited) {
                                 %>
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteDeckXSForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                 </div>
                                 <%} else {%>
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Deck To Favorites List" onclick="document.getElementById('favoriteDeckXSForm<%=id%>').submit();">
                                     <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                 </div>
                                 <%}%>
                             </div>
-                            <form id="favoriteForm<%=id%>" action="DeckServlet" method="POST">
+                            <form id="favoriteDeckXSForm<%=id%>" action="DeckServlet" method="POST">
                                 <input type="hidden" name="action" value="favorite">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
@@ -248,11 +248,11 @@
                             <br>
                             <%}}%>
                             <p align="center" style="position: relative;top: -5px;">
-                                <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
+                                <a id="menu-item" onclick="document.getElementById('deckXSForm<%=id%>').submit();">
                                     <%=deck.getName()%> by <%=deck.getUser()%>
                                 </a>
                             </p>
-                            <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
+                            <form id="deckXSForm<%=id%>" action="DeckServlet" method="POST">
                                 <input type="hidden" name="action" value="deck">
                                 <input type="hidden" name="id" value="<%=id%>">
                                 <input type="hidden" name="username" value="<%=username%>">
@@ -297,14 +297,14 @@
                                 <br>
                                 <%if(collection.getUser().equals(username)) {%>
                                 <div class="row" style="margin: auto;display: table">
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editCollectionForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                                     </div>
                                     <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Collection" onclick="deleteCollectionPopup('<%=id%>', '<%=username%>');">
                                         <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                                     </div>
                                 </div>
-                                <form id="editForm<%=id%>" action="CollectionServlet" method="POST">
+                                <form id="editCollectionForm<%=id%>" action="CollectionServlet" method="POST">
                                     <input type="hidden" name="action" value="edit">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
@@ -317,16 +317,16 @@
                                     <%
                                         if(favorited) {
                                     %>
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteCollectionForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                     </div>
                                     <%} else {%>
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteCollectionForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                     </div>
                                     <%}%>
                                 </div>
-                                <form id="favoriteForm<%=id%>" action="CollectionServlet" method="POST">
+                                <form id="favoriteCollectionForm<%=id%>" action="CollectionServlet" method="POST">
                                     <input type="hidden" name="action" value="favorite">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
@@ -389,14 +389,14 @@
                                 <br>
                                 <%if(collection.getUser().equals(username)) {%>
                                 <div class="row" style="margin: auto;display: table">
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Edit Collection" onclick="document.getElementById('editCollectionXSForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-pencil"></span>
                                     </div>
                                     <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Delete Collection" onclick="deleteCollectionPopup('<%=id%>', '<%=username%>');">
                                         <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                                     </div>
                                 </div>
-                                <form id="editForm<%=id%>" action="CollectionServlet" method="POST">
+                                <form id="editCollectionXSForm<%=id%>" action="CollectionServlet" method="POST">
                                     <input type="hidden" name="action" value="edit">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
@@ -409,27 +409,27 @@
                                     <%
                                         if(favorited) {
                                     %>
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Remove Collection From Favorites List" onclick="document.getElementById('favoriteCollectionXSForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-star"></span>
                                     </div>
                                     <%} else {%>
-                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteForm<%=id%>').submit();">
+                                    <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Add Collection To Favorites List" onclick="document.getElementById('favoriteCollectionXSForm<%=id%>').submit();">
                                         <span id="button-symbol" class="glyphicon glyphicon-star-empty"></span>
                                     </div>
                                     <%}%>
                                 </div>
-                                <form id="favoriteForm<%=id%>" action="CollectionServlet" method="POST">
+                                <form id="favoriteCollectionXSForm<%=id%>" action="CollectionServlet" method="POST">
                                     <input type="hidden" name="action" value="favorite">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">
                                 </form>
                                 <%}}%>
                                 <p align="center" style="position: relative;top: -5px;">
-                                    <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
+                                    <a id="menu-item" onclick="document.getElementById('collectionXSForm<%=id%>').submit();">
                                         <%=collection.getName()%> by <%=collection.getUser()%>
                                     </a>
                                 </p>
-                                <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
+                                <form id="collectionXSForm<%=id%>" action="CollectionServlet" method="POST">
                                     <input type="hidden" name="action" value="collection">
                                     <input type="hidden" name="id" value="<%=id%>">
                                     <input type="hidden" name="username" value="<%=username%>">

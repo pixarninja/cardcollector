@@ -460,15 +460,6 @@ body {
     background-attachment: fixed;
 }
 
-.fixed-column {
-    background-image: url(images/downvote.png);
-    background-repeat: repeat;
-    height: 100%;
-    position: relative;
-    top: -20px;
-    background-attachment: fixed;
-}
-
 /* DECKS AND COLLECTIONS */
 .deck-image {
     position: relative;

@@ -283,10 +283,73 @@
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
+            <%
+                String collectionId = (String) request.getAttribute("collection_id");
+                String collectionTotal = (String) request.getAttribute("collection_total");
+                String deckId = (String) request.getAttribute("deck_id");
+                String deckTotal = (String) request.getAttribute("deck_total");
+                String end = "";
+                if(collectionId != null && collectionTotal != null && deckId != null && deckTotal != null) {
+                    end = ", and ";
+                }
+                if((collectionId != null && collectionTotal != null) || (deckId != null && deckTotal != null)) {
+            %>
+            <h4>
+                <div class="well" id="black-well">
+                    <p align="center" style="position: relative;top: 5px;">
+                        <%
+                            if(deckId != null && deckTotal != null) {
+                                DeckInfo sender = deckInfo.getDeckById(Integer.parseInt(deckId));
+                        %>
+                        <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;<%=Integer.parseInt(deckTotal)%> of this card were added to your deck, <a style="cursor: pointer;" onclick="document.getElementById('deckForm').submit();"><%=sender.getName()%></a>
+                        <%
+                            if(end.equals("")) {
+                        %>
+                        &nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
+                        <%
+                                }
+                            }
+                            if(collectionId != null && collectionTotal != null) {
+                                CollectionInfo sender = collectionInfo.getCollectionById(Integer.parseInt(collectionId));
+                                if(end.equals("")) {
+                        %>
+                            <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
+                            <%}%>
+                            <%=end%><%=Integer.parseInt(collectionTotal)%> of this card were added to your collection, <a style="cursor: pointer;" onclick="document.getElementById('collectionForm').submit();"><%=sender.getName()%></a>&nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
+                        <%
+                            }
+                        %>
+                    </p>
+                </div>
+            </h4>
+            <%}%>
             <h2>Card Information</h2><br>
             <h4>
                 <p>Below is the selected card's information. You may add this card to your collections or decks, and you may add or remove this card from your favorites list by using the buttons beneath the card image. You may write a comment by submitting one at the bottom of the page.</p>
-                <br><br><hr>
+                <%
+                    if(collectionId != null && collectionTotal != null) {
+                        CollectionInfo sender = collectionInfo.getCollectionById(Integer.parseInt(collectionId));
+                %>
+                <form id="collectionForm" action="CollectionServlet" method="POST">
+                    <input type="hidden" name="action" value="collection">
+                    <input type="hidden" name="id" value="<%=sender.getId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <%
+                    } if(deckId != null && deckTotal != null) {
+                        DeckInfo sender = deckInfo.getDeckById(Integer.parseInt(deckId));
+                %>
+                <form id="deckForm" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="deck">
+                    <input type="hidden" name="id" value="<%=sender.getId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <%
+                    } if(collectionId == null && collectionTotal == null && deckId == null && deckTotal == null) {
+                %>
+                <br>
+                <%}%>
+                <br><hr>
             </h4>
         </div>
         <div class="col-xs-12">

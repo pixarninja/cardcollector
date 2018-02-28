@@ -43,7 +43,7 @@
             <hr>
             <h4>
                 <p>
-                    Last Updated: 02/15/2018
+                    Last Updated: 02/22/2018
                 <p>
                 <br>
                 <p>
@@ -73,7 +73,10 @@
             <hr>
             <h4>
                 <p>
-                    Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ("Content"). You are responsible for the Content you put on our Service, and similarly we reserve the right to remove Content which is deemed inappropriate or degrading to other individuals in any way. The Content provided by our Service is not owned by us, nor do we take responsibility for any Content put on our Service by you or other users.
+                    Our Service allows you to post, link, store, share and otherwise make available certain information, text, graphics, videos, or other material ("Content"). You are responsible for the Content you put or use on our Service, and similarly we reserve the right to remove Content which is deemed inappropriate or degrading to other individuals in any way. The Content provided by our Service is not owned by us, nor do we take responsibility for any Content put on our Service by you or other users. 
+                </p>
+                <p>
+                    You also agree to not misuse any Content on our Service, including but not limited to the illegal printing of Magic The Gathering cards or proxies.
                 </p>
             </h4>
             <br>

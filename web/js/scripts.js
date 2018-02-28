@@ -188,6 +188,95 @@ function revealForm(formId) {
     document.getElementById(formId).style.display = "block";
 }
 
+function sortCards(type, id, username, cardNum, cardIdList, cardFrontList, cardNameList, cardTotalList, cardFavoriteList) {
+    var cardIds = cardIdList.split("`");
+    var cardFronts = cardFrontList.split("`");
+    var cardNames = cardNameList.split("`");
+    var cardTotals = cardTotalList.split("`");
+    var cardFavorites = cardFavoriteList.split("`");
+    var i;
+    if(type === "deck") {
+        var view = "div class='col-xs-12'>\
+            <h3>Sorting Area<hr></h3>\
+            <div class='row'>\
+                <div class='col-xs-12'>\
+                    <h4>";
+            var printed = 1;
+            for(i = 0; i < cardNum; i++) {
+                var favorited = false;
+                if(cardFavorites[i] === 1) {
+                    favorited = true;
+                }
+                view += "<div class='col-xs-6 col-sm-4 col-md-3'>\
+                <img class='img-special' width='100%' src='" + cardFronts[i] + "' alt='" + cardFronts[i] + "' id='center-img'>";
+                if(username !== null && username !== "") {
+                    view += "<br>\
+                        <div class='row' style='margin: auto;display: table'>\
+                            <div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Remove Card From Deck' onclick=\"removeCardFromDeckPopup('" + id + "', '" + cardIds[i] + "', '" + username + "');\">\
+                                <span id='button-symbol' class='glyphicon glyphicon-minus'></span>\
+                            </div>";
+                    if(favorited) {
+                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Remove Card From Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
+                                <span id='button-symbol' class='glyphicon glyphicon-star'></span>\
+                            </div>";
+                    }
+                    else {
+                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Add Card To Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
+                                <span id='button-symbol' class='glyphicon glyphicon-star-empty'></span>\
+                            </div>";
+                    }
+                    view += "</div>\
+                    <form id='favoriteForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
+                        <input type='hidden' name='action' value='favorite'>\
+                        <input type='hidden' name='id' value='" + cardIds[i] + "'>\
+                        <input type='hidden' name='username' value='" + username + "'>\
+                    </form>";
+                } else {
+                    view += "<br>";
+                }
+                view += "<p align='center' style='position: relative;top: -5px;'>\
+                        <a id='menu-item' onclick=\"document.getElementById('cardForm" + cardIds[i] + "').submit();\">\
+                            " + cardNames[i] + " (" + cardTotals[i] + ")\
+                        </a>\
+                    </p>\
+                    <form id='cardForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
+                        <input type='hidden' name='action' value='card'>\
+                        <input type='hidden' name='id' value='" + cardIds[i] + "'>\
+                        <input type='hidden' name='username' value='" + username + "'>\
+                    </form>\
+                </div>";
+                var spacer = "";
+                if((printed % 2) === 0) {
+                    spacer += "col-xs-12";
+                }
+                else {
+                    spacer += "hidden-xs";
+                }
+                if((printed % 3) === 0) {
+                    spacer += " col-sm-12";
+                }
+                else {
+                    spacer += " hidden-sm";
+                }
+                if((printed % 4) === 0) {
+                    spacer += " col-md-12";
+                }
+                else {
+                    spacer += " hidden-md hidden-lg";
+                }
+                view += "<div class='" + spacer + "'><br></div>";
+                printed++;
+            }
+            view += "<div class='col-xs-12'></div>\
+                    </h4>\
+                </div>\
+            </div>\
+        </div>";
+    }
+    document.getElementById("sortArea").innerHTML = view;
+    revealForm("sortArea");
+}
+
 function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, collectionNameList, deckNum, deckIdList, deckNameList) {
     var collectionIds = collectionIdList.split("`");
     var collectionNames = collectionNameList.split("`");
@@ -219,21 +308,20 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
                 Select the collection and/or deck you would like to add the card to from the drop-down list(s), input the number of cards, and then click the button below. If the card already exists, it will be added to the current card total.\
             </h4><hr>\
             <h4 id='title'>\
-                Add <input id='input-field' class='input-number' name='collection_total' type='number' value='0'> To Collection:<br><br>\
-                <select name='collection' id='input-field'>\
+                Add <input id='input-field' class='input-number' name='deck_total1' type='number' value='0'> To Deck:<br><br>\
+                <select name='deck1' id='input-field'>\
+                    <option value=''>Choose deck...</option>";
+            for (i = 0; i < deckNum; i++) {
+                view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
+            }
+            view += "</select><br><br>\
+                Add <input id='input-field' class='input-number' name='collection_total1' type='number' value='0'> To Collection:<br><br>\
+                <select name='collection2' id='input-field'>\
                     <option value=''>Choose collection...</option>";
             for (i = 0; i < collectionNum; i++) {
                 view += "<option value='" + collectionIds[i] + "'>" + collectionNames[i] + "</option>";
             }
             view += "</select><br><br>\
-                    Add <input id='input-field' class='input-number' name='deck_total' type='number' value='0'> To Deck:<br><br>\
-                    <select name='deck' id='input-field'>\
-                        <option value=''>Choose deck...</option>";
-            for (i = 0; i < deckNum; i++) {
-                view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
-            }
-            view += "</select>\
-                <br><br>\
                 <button title='Add Card To Collection/Deck' id='form-submit' type='submit'>Submit</button>\
                 <div class='col-xs-12'><br></div>\
             </h4>";
@@ -247,25 +335,24 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
             </h4>";
         } else {
             view += "<h4 id='title'>\
-                Add <input id='input-field' name='collection_total' type='number' style='width: 40px;' placeholder='0'> To Collection:<br><br>\
-                <select name='collection' id='input-field'>\
-                    <option value=''></option>";
+                Add <input id='input-field' class='input-number' name='deck_total2' type='number' value='0'> To Deck:<br><br>\
+                <select name='deck2' id='input-field'>\
+                    <option value=''>Choose deck...</option>";
+            for (i = 0; i < deckNum; i++) {
+                view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
+            }
+            view += "</select><br><br>\
+                Add <input id='input-field' class='input-number' name='collection_total2' type='number' value='0'> To Collection:<br><br>\
+                <select name='collection1' id='input-field'>\
+                    <option value=''>Choose collection...</option>";
             for (i = 0; i < collectionNum; i++) {
                 view += "<option value='" + collectionIds[i] + "'>" + collectionNames[i] + "</option>";
             }
             view += "</select><br><br>\
-                Add <input id='input-field' name='deck_total' type='number' style='width: 40px;' placeholder='0'> To Deck:<br><br>\
-                <select name='deck' id='input-field'>\
-                    <option value=''></option>";
-            for (i = 0; i < deckNum; i++) {
-                view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
-            }
-            view += "</select>\
-                <br><br>\
-                <button title='Add Card To Collection/Deck' id='form-submit' type='submit'><span class='glyphicon glyphicon-plus'></span></button>\
+                <button title='Add Card To Collection/Deck' id='form-submit' type='submit'>Submit</button>\
                 <div class='col-xs-12'><br></div>\
             </h4>";
-            }
+        }
         view += "</div>\
     </div>";
     document.getElementById("popupForm").innerHTML = view;

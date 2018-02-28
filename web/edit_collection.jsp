@@ -298,7 +298,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12"><br></div>
                                     </div>
                                     <%
                                         num = 1;

@@ -390,6 +390,7 @@
                     }
                 %>
             </div>
+            <div class="col-xs-12" id="sortArea"></div>
             <div class="col-xs-12">
                 <br>
                 <h2>Write A Comment</h2><br>
