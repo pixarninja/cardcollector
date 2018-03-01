@@ -4,11 +4,13 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
+<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
 <jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
 <jsp:useBean id="collectionCommentInfo" class="beans.CollectionCommentInfo" scope="request"/>
 <jsp:useBean id="collectionFavoriteInfo" class="beans.CollectionFavoriteInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="cardFavoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -41,8 +43,145 @@
 <%@include file="header.jsp"%>
 <%
     int id = Integer.parseInt(request.getParameter("id"));
-    CollectionInfo collection = (CollectionInfo) collectionInfo.getCollectionById(id);
+    int count = 1;
+    String collectionIdList = "";
+    String collectionNameList = "";
+    int collectionNum = 0;
+    CollectionInfo collection;
+    while((collection = collectionInfo.getCollectionByNum(count)) != null) {
+        if(collection.getUser().equals(username)) {
+            collectionNum++;
+            if(collectionNum > 1) {
+                collectionIdList += "`";
+                collectionNameList += "`";
+            }
+            collectionIdList += collection.getId();
+            collectionNameList += collection.getName();
+        }
+        count++;
+    }
+    String deckIdList = "";
+    String deckNameList = "";
+    int deckNum = 0;
+    DeckInfo deck;
+    count = 1;
+    while((deck = deckInfo.getDeckByNum(count)) != null) {
+        if(deck.getUser().equals(username)) {
+            deckNum++;
+            if(deckNum > 1) {
+                deckIdList += "`";
+                deckNameList += "`";
+            }
+            deckIdList += deck.getId();
+            deckNameList += deck.getName();
+        }
+        count++;
+    }
+    collection = (CollectionInfo) collectionInfo.getCollectionById(id);
     if(collection != null) {
+        count = 1;
+        String cardIdList = "";
+        String cardFrontList = "";
+        String cardNameList = "";
+        String cardSetList = "";
+        String cardTotalList = "";
+        String cardColorList = "";
+        String cardCostList = "";
+        String cardFavoriteList = "";
+        int cardNum = 0;
+        CollectionContentsInfo collectionContents;
+        while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
+            if(collectionContents.getCollectionId() != id) {
+                count++;
+                continue;
+            }
+            CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+            cardNum++;
+            if(cardNum > 1) {
+                cardIdList += "`";
+                cardFrontList += "`";
+                cardNameList += "`";
+                cardSetList += "`";
+                cardTotalList += "`";
+                cardColorList += "`";
+                cardCostList += "`";
+                cardFavoriteList += "`";
+            }
+            cardIdList += card.getId();
+            cardFrontList += card.getFront().replace("'", "\\'").replace("\"", "\\\"");
+            cardNameList += card.getName().replace("'", "\\'").replace("\"", "\\\"");
+            cardSetList += card.getSetName().replace("'", "\\'").replace("\"", "\\\"");
+            cardTotalList += collectionContents.getCardTotal();
+            int i;
+            String[] parsedColors = card.getColors().split(", ");
+            String colors = "";
+            if(card.getColors() != null && card.getColors() != "") {
+                for(i = 0; i < parsedColors.length; i++) {
+                    String symbol = parsedColors[i];
+                    if(symbol.contains("W")) {
+                        if(colors.equals("")) {
+                            colors = "White";
+                        }
+                        else {
+                            colors = colors + ", White";
+                        }
+                    } else if (symbol.contains("U")) {
+                        if(colors.equals("")) {
+                            colors = "Blue";
+                        }
+                        else {
+                            colors = colors + ", Blue";
+                        }
+                    } else if (symbol.contains("B")) {
+                        if(colors.equals("")) {
+                            colors = "Black";
+                        }
+                        else {
+                            colors = colors + ", Black";
+                        }
+                    } else if (symbol.contains("R")) {
+                        if(colors.equals("")) {
+                            colors = "Red";
+                        }
+                        else {
+                            colors = colors + ", Red";
+                        }
+                    } else if (symbol.contains("G")) {
+                        if(colors.equals("")) {
+                            colors = "Green";
+                        }
+                        else {
+                            colors = colors + ", Green";
+                        }
+                    }
+                }
+                if(colors.equals("") || (card.getText() != null && card.getText().contains("Devoid"))) {
+                    colors = "Devoid";
+                }
+            }
+            else {
+                colors = "Devoid";
+            }
+            cardColorList += colors;
+            cardCostList += card.getConvertedManaCost();
+            CardFavoriteInfo favorite;
+            boolean favorited = false;
+            int num = 1;
+            while((favorite = cardFavoriteInfo.getFavoriteByNum(num)) != null) {
+                if(favorite.getUser().equals(username) && favorite.getCardId().equals(card.getId())) {
+                    favorited = true;
+                    break;
+                }
+                num++;
+            }
+            if(favorited) {
+                cardFavoriteList += "1";
+            }
+            else {
+                cardFavoriteList += "0";
+            }
+            count++;
+        }
         CollectionFavoriteInfo favorite;
         boolean favorited = false;
         int num = 1;
@@ -212,10 +351,9 @@
                         <div class="col-xs-12">
                             <div class="well col-xs-12" id="black-well">
                                 <%
-                                    int count = 1;
+                                    count = 1;
                                     int printed = 1;
                                     String spacer = "";
-                                    CollectionContentsInfo collectionContents;
                                     while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
                                         if(collectionContents.getCollectionId() == id) {
                                             CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
@@ -267,6 +405,33 @@
                     <h4><p>There are no cards in this collection.</p></h4>
                     <%}%>
                 </h4>
+            </div>
+            <div class="col-xs-12">
+                <h3>Sorting Area<hr></h3>
+                <h4>
+                    <p>
+                        Click the buttons below to sort the cards visually in different ways: "Number" will sort the cards as you see in the Contents window above, "Name" will sort alphabetically by name, "Color" will sort the cards by color, and "Cost" will sort them by cost.
+                    </p>
+                </h4>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="col-xs-12"><br></div>
+                        <div class="col-xs-3">
+                            <button title="Sort By Number" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'number', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Number</button>
+                        </div>
+                        <div class="col-xs-3">
+                            <button title="Sort By Name" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'name', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Name</button>
+                        </div>
+                        <div class="col-xs-3">
+                            <button title="Sort By Color" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'color', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Color</button>
+                        </div>
+                        <div class="col-xs-3">
+                            <button title="Sort By Cost" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'cost', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Cost</button>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                        <div id="sortArea"></div>
+                    </div>
+                </div>
             </div>
             <div class="col-xs-12">
                 <h3>Comments<hr></h3>

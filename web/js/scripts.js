@@ -188,90 +188,365 @@ function revealForm(formId) {
     document.getElementById(formId).style.display = "block";
 }
 
-function sortCards(type, id, username, cardNum, cardIdList, cardFrontList, cardNameList, cardTotalList, cardFavoriteList) {
+function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardFrontList, cardNameList, cardSetList, cardTotalList, cardColorList, cardCostList, cardFavoriteList, collectionNum, collectionIdList, collectionNameList, deckNum, deckIdList, deckNameList) {
     var cardIds = cardIdList.split("`");
     var cardFronts = cardFrontList.split("`");
     var cardNames = cardNameList.split("`");
+    var cardSets = cardSetList.split("`");
     var cardTotals = cardTotalList.split("`");
+    var cardColors = cardColorList.split("`");
+    var cardCosts = cardCostList.split("`");
     var cardFavorites = cardFavoriteList.split("`");
     var i;
-    if(type === "deck") {
-        var view = "div class='col-xs-12'>\
-            <h3>Sorting Area<hr></h3>\
-            <div class='row'>\
-                <div class='col-xs-12'>\
-                    <h4>";
-            var printed = 1;
-            for(i = 0; i < cardNum; i++) {
-                var favorited = false;
-                if(cardFavorites[i] === 1) {
-                    favorited = true;
+    hideForm("sortArea");
+    if(sortBy === "name") {
+        var i = 0;
+        var j = 0;
+        var tmpId;
+        var tmpFront;
+        var tmpName;
+        var tmpSet;
+        var tmpTotal;
+        var tmpFavorite;
+        for(i = 0 ; i < cardNum - 2 ; i++) {
+            for (j = 0 ; j < cardNum - 1 ; j++) {
+                var compare = (cardNames[j]).localeCompare(cardNames[j + 1]);
+                if (compare > 0) {
+                    /* tmp storage */
+                    tmpId = cardIds[j];
+                    tmpFront = cardFronts[j];
+                    tmpName = cardNames[j];
+                    tmpSet = cardSets[j];
+                    tmpTotal = cardTotals[j];
+                    tmpFavorite = cardFavorites[j];
+                    /* store new value */
+                    cardIds[j] = cardIds[j + 1];
+                    cardFronts[j] = cardFronts[j + 1];
+                    cardNames[j] = cardNames[j + 1];
+                    cardSets[j] = cardSets[j + 1];
+                    cardTotals[j] = cardTotals[j + 1];
+                    cardFavorites[j] = cardFavorites[j + 1];
+                    /* restore tmp */
+                    cardIds[j + 1] = tmpId;
+                    cardFronts[j + 1] = tmpFront;
+                    cardNames[j + 1] = tmpName;
+                    cardSets[j + 1] = tmpSet;
+                    cardTotals[j + 1] = tmpTotal;
+                    cardFavorites[j + 1] = tmpFavorite;
                 }
-                view += "<div class='col-xs-6 col-sm-4 col-md-3'>\
-                <img class='img-special' width='100%' src='" + cardFronts[i] + "' alt='" + cardFronts[i] + "' id='center-img'>";
-                if(username !== null && username !== "") {
-                    view += "<br>\
-                        <div class='row' style='margin: auto;display: table'>\
-                            <div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Remove Card From Deck' onclick=\"removeCardFromDeckPopup('" + id + "', '" + cardIds[i] + "', '" + username + "');\">\
+            }
+        }
+    }
+    else if(sortBy === "color") {
+        var i = 0;
+        var j = 0;
+        var tmpId;
+        var tmpFront;
+        var tmpName;
+        var tmpSet;
+        var tmpTotal;
+        var tmpColor;
+        var tmpCost;
+        var tmpFavorite;
+        for(i = 0 ; i < cardNum - 2 ; i++) {
+            for (j = 0 ; j < cardNum - 1 ; j++) {
+                var compare = (cardColors[j]).localeCompare(cardColors[j + 1]);
+                if (compare > 0) {
+                    /* tmp storage */
+                    tmpId = cardIds[j];
+                    tmpFront = cardFronts[j];
+                    tmpName = cardNames[j];
+                    tmpSet = cardSets[j];
+                    tmpTotal = cardTotals[j];
+                    tmpColor = cardColors[j];
+                    tmpCost = cardCosts[j];
+                    tmpFavorite = cardFavorites[j];
+                    /* store new value */
+                    cardIds[j] = cardIds[j + 1];
+                    cardFronts[j] = cardFronts[j + 1];
+                    cardNames[j] = cardNames[j + 1];
+                    cardSets[j] = cardSets[j + 1];
+                    cardTotals[j] = cardTotals[j + 1];
+                    cardColors[j] = cardColors[j + 1];
+                    cardCosts[j] = cardCosts[j + 1];
+                    cardFavorites[j] = cardFavorites[j + 1];
+                    /* restore tmp */
+                    cardIds[j + 1] = tmpId;
+                    cardFronts[j + 1] = tmpFront;
+                    cardNames[j + 1] = tmpName;
+                    cardSets[j + 1] = tmpSet;
+                    cardTotals[j + 1] = tmpTotal;
+                    cardColors[j + 1] = tmpColor;
+                    cardCosts[j + 1] = tmpCost;
+                    cardFavorites[j + 1] = tmpFavorite;
+                }
+            }
+        }
+    }
+    else if(sortBy === "cost") {
+        var i = 0;
+        var j = 0;
+        var tmpId;
+        var tmpFront;
+        var tmpName;
+        var tmpSet;
+        var tmpTotal;
+        var tmpFavorite;
+        for(i = 0 ; i < cardNum - 2 ; i++) {
+            for (j = 0 ; j < cardNum - 1 ; j++) {
+                if (cardCosts[j] > cardCosts[j + 1]) {
+                    /* tmp storage */
+                    tmpId = cardIds[j];
+                    tmpFront = cardFronts[j];
+                    tmpName = cardNames[j];
+                    tmpSet = cardSets[j];
+                    tmpTotal = cardTotals[j];
+                    tmpColor = cardColors[j];
+                    tmpCost = cardCosts[j];
+                    tmpFavorite = cardFavorites[j];
+                    /* store new value */
+                    cardIds[j] = cardIds[j + 1];
+                    cardFronts[j] = cardFronts[j + 1];
+                    cardNames[j] = cardNames[j + 1];
+                    cardSets[j] = cardSets[j + 1];
+                    cardTotals[j] = cardTotals[j + 1];
+                    cardColors[j] = cardColors[j + 1];
+                    cardCosts[j] = cardCosts[j + 1];
+                    cardFavorites[j] = cardFavorites[j + 1];
+                    /* restore tmp */
+                    cardIds[j + 1] = tmpId;
+                    cardFronts[j + 1] = tmpFront;
+                    cardNames[j + 1] = tmpName;
+                    cardSets[j + 1] = tmpSet;
+                    cardTotals[j + 1] = tmpTotal;
+                    cardColors[j + 1] = tmpColor;
+                    cardCosts[j + 1] = tmpCost;
+                    cardFavorites[j + 1] = tmpFavorite;
+                }
+            }
+        }
+    }
+    if(type === "deck") {
+        var curr = "";
+        var view = "";
+        var printed = 1;
+        for(i = 0; i < cardNum; i++) {
+            var favorited = false;
+            if(cardFavorites[i] === 1) {
+                favorited = true;
+            }
+            if(sortBy === "number") {
+                if(cardTotals[i] !== curr) {
+                    curr = cardTotals[i];
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Card Number: " + curr + "<hr></h3></div></div>";
+                }
+            }
+            else if(sortBy === "name") {
+                if(cardNames[i].charAt(0).toUpperCase() !== curr) {
+                    curr = cardNames[i].charAt(0).toUpperCase();
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Card Name: " + curr + "<hr></h3></div></div>";
+                }
+            }
+            else if(sortBy === "color") {
+                if(cardColors[i] !== curr) {
+                    curr = cardColors[i];
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Color(s): " + curr + "<hr></h3></div></div>";
+                }
+            }
+            else if(sortBy === "cost") {
+                if(cardCosts[i] !== curr) {
+                    curr = cardCosts[i];
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Converted Mana Cost: " + curr + "<hr></h3></div></div>";
+                }
+            }
+            view += "<div class='col-xs-6 col-sm-4 col-md-3'>\
+            <img class='img-special' width='100%' src='" + cardFronts[i] + "' alt='" + cardFronts[i] + "' id='center-img'>";
+            if(username !== null && username !== "") {
+                view += "<br><div class='row' style='margin: auto;display: table'>";
+                if(username === owner) {
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Remove This Card From Deck' onclick=\"document.getElementById('removeForm" + cardIds[i] + "').submit();\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-minus'></span>\
+                        </div>";
+                }
+                else {
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Add Card To Collection/Deck' onclick=\"addCardPopup('" + cardIds[i] + "', '" + cardFronts[i] + "', '" + username + "', '" + collectionNum + "', '" + collectionIdList + "', '" + collectionNameList + "', '" + deckNum + "', '" + deckIdList + "', '" + deckNameList + "');\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-plus'></span>\
+                        </div>";
+                }
+                if(favorited) {
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Remove Card(s) From Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-star'></span>\
+                        </div>";
+                }
+                else {
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Add Card To Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-star-empty'></span>\
+                        </div>";
+                }
+                view += "</div>\
+                <form id='favoriteForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
+                    <input type='hidden' name='action' value='favorite'>\
+                    <input type='hidden' name='id' value='" + cardIds[i] + "'>\
+                    <input type='hidden' name='username' value='" + username + "'>\
+                </form>\
+                <form id='removeForm" + cardIds[i] + "' action='DeckServlet' method='POST'>\
+                    <input type='hidden' name='action' value='remove_card'>\
+                    <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
+                    <input type='hidden' name='id' value='" + id + "'>\
+                    <input type='hidden' name='username' value='" + username + "'>\
+                </form>";
+            } else {
+                view += "<br>";
+            }
+            view += "<h4><p align='center' style='position: relative;top: -5px;'>\
+                    <a id='menu-item' onclick=\"document.getElementById('cardForm" + cardIds[i] + "').submit();\">\
+                        " + cardNames[i] + " (" + cardSets[i] + ") x " + cardTotals[i] + "\
+                    </a>\
+                </p></h4>\
+                <form id='cardForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
+                    <input type='hidden' name='action' value='card'>\
+                    <input type='hidden' name='id' value='" + cardIds[i] + "'>\
+                    <input type='hidden' name='username' value='" + username + "'>\
+                </form>\
+            </div>";
+            var spacer = "";
+            if((printed % 2) === 0) {
+                spacer += "col-xs-12";
+            }
+            else {
+                spacer += "hidden-xs";
+            }
+            if((printed % 3) === 0) {
+                spacer += " col-sm-12";
+            }
+            else {
+                spacer += " hidden-sm";
+            }
+            if((printed % 4) === 0) {
+                spacer += " col-md-12";
+            }
+            else {
+                spacer += " hidden-md hidden-lg";
+            }
+            view += "<div class='" + spacer + "'><br></div>";
+            printed++;
+        }
+        view += "<div class='col-xs-12'></div>";
+    }
+    else if(type === "collection") {
+        var curr = "";
+        var view = "";
+        var printed = 1;
+        for(i = 0; i < cardNum; i++) {
+            var favorited = false;
+            if(cardFavorites[i] === 1) {
+                favorited = true;
+            }
+            if(sortBy === "number") {
+                if(cardTotals[i] !== curr) {
+                    curr = cardTotals[i];
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Card Number: " + curr + "<hr></h3></div></div>";
+                }
+            }
+            else if(sortBy === "name") {
+                if(cardNames[i].charAt(0).toUpperCase() !== curr) {
+                    curr = cardNames[i].charAt(0).toUpperCase();
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Card Name: " + curr + "<hr></h3></div></div>";
+                }
+            }
+            else if(sortBy === "color") {
+                if(cardColors[i] !== curr) {
+                    curr = cardColors[i];
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Color(s): " + curr + "<hr></h3></div></div>";
+                }
+            }
+            else if(sortBy === "cost") {
+                if(cardCosts[i] !== curr) {
+                    curr = cardCosts[i];
+                    printed = 1;
+                    view += "<div class='row'><div class='col-xs-12'><h3>Converted Mana Cost: " + curr + "<hr></h3></div></div>";
+                }
+            }
+            view += "<div class='col-xs-6 col-sm-4 col-md-3'>\
+            <img class='img-special' width='100%' src='" + cardFronts[i] + "' alt='" + cardFronts[i] + "' id='center-img'>";
+            if(username !== null && username !== "") {
+                view += "<br><div class='row' style='margin: auto;display: table'>";
+                if(username === owner) {
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Remove This Card From Deck' onclick=\"document.getElementById('removeForm" + cardIds[i] + "').submit();\">\
                                 <span id='button-symbol' class='glyphicon glyphicon-minus'></span>\
                             </div>";
-                    if(favorited) {
-                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Remove Card From Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
-                                <span id='button-symbol' class='glyphicon glyphicon-star'></span>\
-                            </div>";
-                    }
-                    else {
-                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Add Card To Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
-                                <span id='button-symbol' class='glyphicon glyphicon-star-empty'></span>\
-                            </div>";
-                    }
-                    view += "</div>\
-                    <form id='favoriteForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
-                        <input type='hidden' name='action' value='favorite'>\
-                        <input type='hidden' name='id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>";
-                } else {
-                    view += "<br>";
-                }
-                view += "<p align='center' style='position: relative;top: -5px;'>\
-                        <a id='menu-item' onclick=\"document.getElementById('cardForm" + cardIds[i] + "').submit();\">\
-                            " + cardNames[i] + " (" + cardTotals[i] + ")\
-                        </a>\
-                    </p>\
-                    <form id='cardForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
-                        <input type='hidden' name='action' value='card'>\
-                        <input type='hidden' name='id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>\
-                </div>";
-                var spacer = "";
-                if((printed % 2) === 0) {
-                    spacer += "col-xs-12";
                 }
                 else {
-                    spacer += "hidden-xs";
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Add Card To Collection/Deck' onclick=\"addCardPopup('" + cardIds[i] + "', '" + cardFronts[i] + "', '" + username + "', '" + collectionNum + "', '" + collectionIdList + "', '" + collectionNameList + "', '" + deckNum + "', '" + deckIdList + "', '" + deckNameList + "');\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-plus'></span>\
+                        </div>";
                 }
-                if((printed % 3) === 0) {
-                    spacer += " col-sm-12";
-                }
-                else {
-                    spacer += " hidden-sm";
-                }
-                if((printed % 4) === 0) {
-                    spacer += " col-md-12";
+                if(favorited) {
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Remove Card(s) From Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-star'></span>\
+                        </div>";
                 }
                 else {
-                    spacer += " hidden-md hidden-lg";
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Add Card To Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
+                            <span id='button-symbol' class='glyphicon glyphicon-star-empty'></span>\
+                        </div>";
                 }
-                view += "<div class='" + spacer + "'><br></div>";
-                printed++;
+                view += "</div>\
+                <form id='favoriteForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
+                    <input type='hidden' name='action' value='favorite'>\
+                    <input type='hidden' name='id' value='" + cardIds[i] + "'>\
+                    <input type='hidden' name='username' value='" + username + "'>\
+                </form>\
+                <form id='removeForm" + cardIds[i] + "' action='CollectionServlet' method='POST'>\
+                    <input type='hidden' name='action' value='remove_card'>\
+                    <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
+                    <input type='hidden' name='id' value='" + id + "'>\
+                    <input type='hidden' name='username' value='" + username + "'>\
+                </form>";
+            } else {
+                view += "<br>";
             }
-            view += "<div class='col-xs-12'></div>\
-                    </h4>\
-                </div>\
-            </div>\
-        </div>";
+            view += "<h4><p align='center' style='position: relative;top: -5px;'>\
+                    <a id='menu-item' onclick=\"document.getElementById('cardForm" + cardIds[i] + "').submit();\">\
+                        " + cardNames[i] + " (" + cardSets[i] + ") x " + cardTotals[i] + "\
+                    </a>\
+                </p></h4>\
+                <form id='cardForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
+                    <input type='hidden' name='action' value='card'>\
+                    <input type='hidden' name='id' value='" + cardIds[i] + "'>\
+                    <input type='hidden' name='username' value='" + username + "'>\
+                </form>\
+            </div>";
+            var spacer = "";
+            if((printed % 2) === 0) {
+                spacer += "col-xs-12";
+            }
+            else {
+                spacer += "hidden-xs";
+            }
+            if((printed % 3) === 0) {
+                spacer += " col-sm-12";
+            }
+            else {
+                spacer += " hidden-sm";
+            }
+            if((printed % 4) === 0) {
+                spacer += " col-md-12";
+            }
+            else {
+                spacer += " hidden-md hidden-lg";
+            }
+            view += "<div class='" + spacer + "'><br></div>";
+            printed++;
+        }
+        view += "<div class='col-xs-12'></div>";
     }
     document.getElementById("sortArea").innerHTML = view;
     revealForm("sortArea");
