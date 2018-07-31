@@ -78,11 +78,13 @@
         count++;
     }
     collection = (CollectionInfo) collectionInfo.getCollectionById(id);
+    int legalityInfo = 0;
     if(collection != null) {
         count = 1;
         String cardIdList = "";
         String cardFrontList = "";
         String cardNameList = "";
+        String cardTypeList = "";
         String cardSetList = "";
         String cardTotalList = "";
         String cardColorList = "";
@@ -96,11 +98,18 @@
                 continue;
             }
             CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+            if(legalityInfo == 0) {
+                legalityInfo = Integer.parseInt(card.getLegalities(), 2);
+            }
+            else {
+                legalityInfo &= Integer.parseInt(card.getLegalities(), 2);
+            }
             cardNum++;
             if(cardNum > 1) {
                 cardIdList += "`";
                 cardFrontList += "`";
                 cardNameList += "`";
+                cardTypeList += "`";
                 cardSetList += "`";
                 cardTotalList += "`";
                 cardColorList += "`";
@@ -110,6 +119,7 @@
             cardIdList += card.getId();
             cardFrontList += card.getFront().replace("'", "\\'").replace("\"", "\\\"");
             cardNameList += card.getName().replace("'", "\\'").replace("\"", "\\\"");
+            cardTypeList += card.getType().replace("'", "\\'").replace("\"", "\\\"");
             cardSetList += card.getSetName().replace("'", "\\'").replace("\"", "\\\"");
             cardTotalList += collectionContents.getCardTotal();
             int i;
@@ -182,6 +192,11 @@
             }
             count++;
         }
+        
+        String legalities = Integer.toBinaryString(legalityInfo);
+        while(legalities.length() < 12) {
+            legalities = "0" + legalities;
+        }
         CollectionFavoriteInfo favorite;
         boolean favorited = false;
         int num = 1;
@@ -199,7 +214,7 @@
         <div class="col-xs-12">
             <h2>Collection Information</h2><br>
             <h4>
-                <p>Below is the selected collection's information. If you are the creator of this collection, you will be able to edit or delete it by using the buttons beneath the collection image. If you are not the creator, you may add or remove the collection from your favorites list. You may write a comment by submitting one at the bottom of the page.<p>
+                <p>Below is the selected collection's information. If you are the creator of this collection, you will be able to edit or delete it by using the buttons beneath the collection image. If you are not the creator, you may add or remove the collection from your favorites list or print the collection (in order to print with the correct formatting, please remove all margins under PDF options on the generated page). You may write a comment by submitting one at the bottom of the page.<p>
                 <br><br><hr>
             </h4>
         </div>
@@ -287,6 +302,115 @@
                             <%}%>
                         </div>
                     </div>
+                    <div class="col-xs-12"><br></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-sm-12 col-lg-4">
+                        <p id="title">Legalities</p>
+                    </div>
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <%
+                        if(legalities.contains("1")) {
+                            if(legalities.charAt(0) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Standard</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(1) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Future</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(2) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Frontier</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(3) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Modern</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(4) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Legacy</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(5) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Pauper</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(6) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Vintage</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(7) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Penny</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(8) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Commander</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(9) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>1 vs 1</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(10) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Duel</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(11) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Brawl</p>
+                    </div>
+                        <%
+                            }
+                        } else {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>None</p>
+                    </div>
+                    <%}%>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
@@ -357,6 +481,47 @@
                                     while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
                                         if(collectionContents.getCollectionId() == id) {
                                             CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                            legalities = card.getLegalities();
+                                            String legalityText = "";
+                                            if(legalities.charAt(0) == '1') {
+                                                legalityText += "S";
+                                            }
+                                            if(legalities.charAt(1) == '1') {
+                                                legalityText += "F";
+                                            }
+                                            if(legalities.charAt(2) == '1') {
+                                                legalityText += "R";
+                                            }
+                                            if(legalities.charAt(3) == '1') {
+                                                legalityText += "M";
+                                            }
+                                            if(legalities.charAt(4) == '1') {
+                                                legalityText += "L";
+                                            }
+                                            if(legalities.charAt(5) == '1') {
+                                                legalityText += "A";
+                                            }
+                                            if(legalities.charAt(6) == '1') {
+                                                legalityText += "V";
+                                            }
+                                            if(legalities.charAt(7) == '1') {
+                                                legalityText += "P";
+                                            }
+                                            if(legalities.charAt(8) == '1') {
+                                                legalityText += "C";
+                                            }
+                                            if(legalities.charAt(9) == '1') {
+                                                legalityText += "1";
+                                            }
+                                            if(legalities.charAt(10) == '1') {
+                                                legalityText += "D";
+                                            }
+                                            if(legalities.charAt(11) == '1') {
+                                                legalityText += "B";
+                                            }
+                                            if(legalityText == "") {
+                                                legalityText = "-";
+                                            }
                                             if((printed % 2) == 0 && printed != entries) {
                                                 spacer = " col-sm-12";
                                             }
@@ -366,11 +531,16 @@
                                 %>
                                 <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
                                 <div id="container<%=collectionContents.getCardId()%>" class="col-xs-8 col-sm-6">
-                                    <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
-                                        <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
-                                            <%=card.getName()%>
-                                        </span>
-                                    </a>&nbsp;x&nbsp;<%=collectionContents.getCardTotal()%>
+                                    <div class="col-xs-2">
+                                        <%=collectionContents.getCardTotal()%>&nbsp;x
+                                    </div>
+                                    <div class="col-xs-10">
+                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
+                                            <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
+                                                <%=card.getName()%> (<%=legalityText%>)
+                                            </span>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="col-xs-12<%=spacer%>"><br></div>
                                 <%
@@ -410,23 +580,26 @@
                 <h3>Sorting Area<hr></h3>
                 <h4>
                     <p>
-                        Click the buttons below to sort the cards visually in different ways: "Number" will sort the cards as you see in the Contents window above, "Name" will sort alphabetically by name, "Color" will sort the cards by color, and "Cost" will sort them by cost.
+                        Click the buttons below to sort the cards visually in different ways.
                     </p>
                 </h4>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="col-xs-12"><br></div>
-                        <div class="col-xs-3">
-                            <button title="Sort By Number" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'number', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Number</button>
+                        <div class="col-xs-12"><br><br></div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <button title="Sort By Number" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'number', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardTypeList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Number</button>
                         </div>
-                        <div class="col-xs-3">
-                            <button title="Sort By Name" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'name', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Name</button>
+                        <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <button title="Sort By Type" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'type', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardTypeList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Type</button>
                         </div>
-                        <div class="col-xs-3">
-                            <button title="Sort By Color" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'color', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Color</button>
+                        <div class="col-xs-12 hidden-md hidden-lg"><br></div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <button title="Sort By Color" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'color', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardTypeList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Color</button>
                         </div>
-                        <div class="col-xs-3">
-                            <button title="Sort By Cost" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'cost', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Cost</button>
+                        <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                        <div class="col-xs-12 col-sm-6 col-md-3">
+                            <button title="Sort By Cost" id="form-submit" onclick="sortCards('<%=id%>', 'collection', 'cost', '<%=username%>', '<%=collection.getUser()%>', '<%=cardNum%>', '<%=cardIdList%>', '<%=cardFrontList%>', '<%=cardNameList%>', '<%=cardTypeList%>', '<%=cardSetList%>', '<%=cardTotalList%>', '<%=cardColorList%>', '<%=cardCostList%>', '<%=cardFavoriteList%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">Cost</button>
                         </div>
                         <div class="col-xs-12"><br></div>
                         <div id="sortArea"></div>

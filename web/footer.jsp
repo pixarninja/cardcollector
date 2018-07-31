@@ -45,7 +45,7 @@
                         </p>
                     </div>
                     <!-- Ad Bar -->
-                    <div class="col-xs-1" style="background-image:url(images/background.jpg);height: 100%;overflow: hidden;margin-bottom: -2000%;padding-bottom: 2000%;background-repeat: repeat-y;background-position: center center;background-size: 100%;background-attachment: fixed;"></div>
+                    <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;right: 0px;background-position: center-x;"></div>
                 </div>
             </div>
         </div>

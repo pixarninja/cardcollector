@@ -445,7 +445,7 @@
                 <p>
                     Below are your favorited cards, decks, collections, and users. If you choose to unfavorite any of your favorited items, they will be removed from this list. This action cannot be undone.
                 </p>
-            </h4><br><br>
+            </h4><br>
             <%
                 CardFavoriteInfo cardFavorite;
                 int num = 1;

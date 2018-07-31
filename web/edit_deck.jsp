@@ -142,17 +142,23 @@
                                 <div class="col-xs-8">
                                     <select name="sleeves" id="input-field">
                                         <option value=""></option>
-                                        <option value="images/magic_card_sleeves_default.jpg">Blue (default)</option>
-                                        <option value="images/magic_card_sleeves_purple.jpg">Purple</option>
-                                        <option value="images/magic_card_sleeves_black.jpg">Black</option>
-                                        <option value="images/magic_card_sleeves_white.jpg">White</option>
-                                        <option value="images/magic_card_sleeves_pink.jpg">Pink</option>
-                                        <option value="images/magic_card_sleeves_red.jpg">Red</option>
-                                        <option value="images/magic_card_sleeves_brown.jpg">Brown</option>
-                                        <option value="images/magic_card_sleeves_orange.jpg">Orange</option>
-                                        <option value="images/magic_card_sleeves_yellow.jpg">Yellow</option>
-                                        <option value="images/magic_card_sleeves_green.jpg">Green</option>
-                                        <option value="images/magic_card_sleeves_cyan.jpg">Cyan</option>
+                                        <option value="images/magic_card_sleeves_default.jpg" style="background-color: #0751cc !important; color: white !important;">Blue (default)</option>
+                                        <option value="images/magic_card_sleeves_purple.jpg" style="background-color: #8e07c5 !important; color: white !important;">Purple</option>
+                                        <option value="images/magic_card_sleeves_black.jpg" style="background-color: #2a2e3a !important; color: white !important;">Black</option>
+                                        <option value="images/magic_card_sleeves_platinum.jpg" style="background-color: #6c87a2 !important; color: black !important;">Platinum</option>
+                                        <option value="images/magic_card_sleeves_silver.jpg" style="background-color: #a7a7a7 !important; color: black !important;">Silver</option>
+                                        <option value="images/magic_card_sleeves_white.jpg" style="background-color: #ffffe1 !important; color: black !important;">White</option>
+                                        <option value="images/magic_card_sleeves_pink.jpg" style="background-color: #fa6d97 !important; color: black !important;">Pink</option>
+                                        <option value="images/magic_card_sleeves_magenta.jpg" style="background-color: #d50984 !important; color: white !important;">Magenta</option>
+                                        <option value="images/magic_card_sleeves_red.jpg" style="background-color: #d92109 !important; color: white !important;">Red</option>
+                                        <option value="images/magic_card_sleeves_brown.jpg" style="background-color: #995610 !important; color: white !important;">Brown</option>
+                                        <option value="images/magic_card_sleeves_orange.jpg" style="background-color: #d95a09 !important; color: white !important;">Orange</option>
+                                        <option value="images/magic_card_sleeves_bronze.jpg" style="background-color: #d47428 !important; color: white !important;">Bronze</option>
+                                        <option value="images/magic_card_sleeves_gold.jpg" style="background-color: #ddac29 !important; color: black !important;">Gold</option>
+                                        <option value="images/magic_card_sleeves_yellow.jpg" style="background-color: #f7d70a !important; color: black !important;">Yellow</option>
+                                        <option value="images/magic_card_sleeves_green.jpg" style="background-color: #68dc09 !important; color: black !important;">Green</option>
+                                        <option value="images/magic_card_sleeves_emerald.jpg" style="background-color: #0b850e !important; color: white !important;">Emerald</option>
+                                        <option value="images/magic_card_sleeves_cyan.jpg" style="background-color: #07ccba !important; color: white !important;">Cyan</option>
                                     </select><br><br><br>
                                 </div>
                                 <p>You may copy cards to a different deck, update the number of cards in this deck, or remove them from this deck by using the options below.</p><br>
@@ -166,7 +172,7 @@
                                                     Card Name
                                                 </div>
                                                 <div class="col-xs-6">
-                                                    Card Number
+                                                    Number in Deck
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
                                                 <div>
@@ -177,6 +183,47 @@
                                                         while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
                                                             if(deckContents.getDeckId() == id) {
                                                                 CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                                                String legalities = card.getLegalities();
+                                                                String legalityText = "";
+                                                                if(legalities.charAt(0) == '1') {
+                                                                    legalityText += "S";
+                                                                }
+                                                                if(legalities.charAt(1) == '1') {
+                                                                    legalityText += "F";
+                                                                }
+                                                                if(legalities.charAt(2) == '1') {
+                                                                    legalityText += "R";
+                                                                }
+                                                                if(legalities.charAt(3) == '1') {
+                                                                    legalityText += "M";
+                                                                }
+                                                                if(legalities.charAt(4) == '1') {
+                                                                    legalityText += "L";
+                                                                }
+                                                                if(legalities.charAt(5) == '1') {
+                                                                    legalityText += "A";
+                                                                }
+                                                                if(legalities.charAt(6) == '1') {
+                                                                    legalityText += "V";
+                                                                }
+                                                                if(legalities.charAt(7) == '1') {
+                                                                    legalityText += "P";
+                                                                }
+                                                                if(legalities.charAt(8) == '1') {
+                                                                    legalityText += "C";
+                                                                }
+                                                                if(legalities.charAt(9) == '1') {
+                                                                    legalityText += "1";
+                                                                }
+                                                                if(legalities.charAt(10) == '1') {
+                                                                    legalityText += "D";
+                                                                }
+                                                                if(legalities.charAt(11) == '1') {
+                                                                    legalityText += "B";
+                                                                }
+                                                                if(legalityText == "") {
+                                                                    legalityText = "-";
+                                                                }
                                                                 if(printed == entries) {
                                                                     spacer = "hidden-xs hidden-sm hidden-md hidden-lg";
                                                                 }
@@ -190,7 +237,7 @@
                                                     <div id="container<%=deckContents.getCardId()%>" class="col-xs-5">
                                                         <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
                                                             <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
-                                                                <%=card.getName()%>
+                                                                <%=card.getName()%> (<%=legalityText%>)
                                                             </a>
                                                         </span>
                                                     </div>
@@ -226,7 +273,7 @@
                                                             num = 1;
                                                             CollectionInfo collection;
                                                             while((collection = collectionInfo.getCollectionByNum(num)) != null) {
-                                                                if(collection.getId() != id && collection.getUser().equals(username)) {
+                                                                if(collection.getUser().equals(username)) {
                                                         %>
                                                         <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                                         <%
@@ -248,7 +295,7 @@
                                                         <%
                                                             num = 1;
                                                             while((deck = deckInfo.getDeckByNum(num)) != null) {
-                                                                if(deck.getUser().equals(username)) {
+                                                                if(deck.getId() != id && deck.getUser().equals(username)) {
                                                         %>
                                                         <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
                                                         <%

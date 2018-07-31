@@ -108,6 +108,14 @@
                     <div class="col-xs-8">
                         <select name="set_id" id="input-field">
                             <option></option>
+                            <option value="m19">Core Set 2019 (2018)</option>
+                            <option value="gs1">Global Series Jiang Yanggu & Mu Yanling (2018)</option>
+                            <option value="ss1">Signature Spellbook: Jace (2018)</option>
+                            <option value="bbd">Battlebond (2018)</option>
+                            <option value="cm2">Commander Anthology Volume II (2018)</option>
+                            <option value="dom">Dominaria (2018)</option>
+                            <option value="ddu">Duel Decks: Elves vs. Inventors (2018)</option>
+                            <option value="a25">Masters 25 (2018)</option>
                             <option value="rix">Rivals of Ixalan (2018)</option>
                             <option value="ust">Unstable (2017)</option>
                             <option value="e02">Explorers of Ixalan (2017)</option>

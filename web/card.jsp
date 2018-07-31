@@ -147,6 +147,9 @@
         if(card.getLoyalty() != null && card.getLoyalty() != "") {
             loyalty = card.getLoyalty();
         }
+        int multiverse = card.getMultiverse();
+        String legalities = card.getLegalities();
+        String kingdom = card.getKingdom();
         String back = card.getBack();
         String revName = null;
         String revType = null;
@@ -403,7 +406,133 @@
                         <%}%>
                     </div>
                     <div class="col-xs-12"><br></div>
-                    <br>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-sm-12 col-lg-4">
+                        <p id="title">Links</p>
+                    </div>
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <%if(multiverse == -1 && kingdom == null) {%>
+                    <div class="col-sm-12 col-lg-8"><p>None</p></div>
+                    <%} else {
+                        if(multiverse > -1) {%>
+                    <div class="col-sm-12 col-lg-8"><p><a href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=<%=multiverse%>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span> MTG Gatherer</a></p></div>
+                    <%if(kingdom != null) {%>
+                    <div class="col-xs-12"><br></div>
+                    <%}%>
+                    <div class="hidden-sm col-lg-4"></div>
+                    <%} if(kingdom != null) {%>
+                    <div class="col-sm-12 col-lg-8"><p><a href="<%=kingdom%>" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Card Kingdom</a></p></div>
+                    <div class="hidden-sm col-lg-4"></div>
+                    <%}}%>
+                    <div class="col-xs-12"><br></div>
+                    <div class="col-sx-12"><hr id="in-line-hr"></div>
+                    <div class="col-sm-12 col-lg-4">
+                        <p id="title">Legalities</p>
+                    </div>
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <%
+                        if(legalities.contains("1")) {
+                            if(legalities.charAt(0) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Standard</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(1) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Future</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(2) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Frontier</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(3) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Modern</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(4) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Legacy</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(5) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Pauper</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(6) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Vintage</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(7) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Penny</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(8) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Commander</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(9) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>1 vs 1</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(10) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Duel</p>
+                    </div>
+                    <div class="hidden-sm col-lg-4"></div>
+                        <%
+                            }
+                        if(legalities.charAt(11) == '1') {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>Brawl</p>
+                    </div>
+                        <%
+                            }
+                        } else {
+                    %>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>None</p>
+                    </div>
+                    <%}%>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
@@ -614,13 +743,13 @@
                         <% if(text != null) {%>
                         <div class="col-xs-12"><br></div>
                         <div class="row">
-                            <div class="col-xs-12 col-lg-3">
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
                                 <div class="row">
                                     <p id="title">Text</p>
                                 </div>
                             </div>
                             <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
-                            <div class="col-xs-12 col-lg-9">
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
                                 <div class="row">
                                     <p>
                                         <%

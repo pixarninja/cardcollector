@@ -51,13 +51,13 @@
 <div class="well row">
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h4>
+            <!--<h4>
                 <div class="well" id="black-well">
                     <p align="center" style="position: relative;top: 5px;">
                         <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;Notice: We have updated our Terms of Service. You can view them <a href="/terms.jsp" target="_blank">here</a>&nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
                     </p>
                 </div>
-            </h4>
+            </h4>-->
             <h2>Welcome To Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector!</h2><br>
             <h4>
                 <p>
@@ -159,7 +159,7 @@
                             <%}}%>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
-                                    <%=deck.getName()%> by <%=deck.getUser()%>
+                                    <%=deck.getName()%> by <%=deck.getUser()%> (<%=deck.getTotal()%>)
                                 </a>
                             </p>
                             <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
@@ -249,7 +249,7 @@
                             <%}}%>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('deckXSForm<%=id%>').submit();">
-                                    <%=deck.getName()%> by <%=deck.getUser()%>
+                                    <%=deck.getName()%> by <%=deck.getUser()%> (<%=deck.getTotal()%>)
                                 </a>
                             </p>
                             <form id="deckXSForm<%=id%>" action="DeckServlet" method="POST">
@@ -334,7 +334,7 @@
                                 <%}}%>
                                 <p align="center" style="position: relative;top: -5px;">
                                     <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
-                                        <%=collection.getName()%> by <%=collection.getUser()%>
+                                        <%=collection.getName()%> by <%=collection.getUser()%> (<%=collection.getTotal()%>)
                                     </a>
                                 </p>
                                 <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
@@ -426,7 +426,7 @@
                                 <%}}%>
                                 <p align="center" style="position: relative;top: -5px;">
                                     <a id="menu-item" onclick="document.getElementById('collectionXSForm<%=id%>').submit();">
-                                        <%=collection.getName()%> by <%=collection.getUser()%>
+                                        <%=collection.getName()%> by <%=collection.getUser()%> (<%=collection.getTotal()%>)
                                     </a>
                                 </p>
                                 <form id="collectionXSForm<%=id%>" action="CollectionServlet" method="POST">

@@ -191,6 +191,47 @@
                             id = request.getParameter(Integer.toString(count));
                         }
                         while((card = cardInfo.getCardById(id)) != null) {
+                            String legalities = card.getLegalities();
+                            String legalityText = "";
+                            if(legalities.charAt(0) == '1') {
+                                legalityText += "S";
+                            }
+                            if(legalities.charAt(1) == '1') {
+                                legalityText += "F";
+                            }
+                            if(legalities.charAt(2) == '1') {
+                                legalityText += "R";
+                            }
+                            if(legalities.charAt(3) == '1') {
+                                legalityText += "M";
+                            }
+                            if(legalities.charAt(4) == '1') {
+                                legalityText += "L";
+                            }
+                            if(legalities.charAt(5) == '1') {
+                                legalityText += "A";
+                            }
+                            if(legalities.charAt(6) == '1') {
+                                legalityText += "V";
+                            }
+                            if(legalities.charAt(7) == '1') {
+                                legalityText += "P";
+                            }
+                            if(legalities.charAt(8) == '1') {
+                                legalityText += "C";
+                            }
+                            if(legalities.charAt(9) == '1') {
+                                legalityText += "1";
+                            }
+                            if(legalities.charAt(10) == '1') {
+                                legalityText += "D";
+                            }
+                            if(legalities.charAt(11) == '1') {
+                                legalityText += "B";
+                            }
+                            if(legalityText == "") {
+                                legalityText = "-";
+                            }
                             CardFavoriteInfo favorite;
                             boolean favorited = false;
                             int num = 1;
@@ -234,7 +275,7 @@
                         <%}%>
                         <p align="center" style="position: relative;top: -5px;">
                             <a id="menu-item" onclick="document.getElementById('cardForm<%=id%>').submit();">
-                                <%=card.getName()%> (<%=card.getSetName()%>)
+                                <%=card.getName()%> | <%=card.getSetName()%> (<%=legalityText%>)
                             </a>
                         </p>
                         <form id="cardForm<%=id%>" action="CardServlet" method="POST">

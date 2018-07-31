@@ -195,7 +195,7 @@
                                                     Card Name
                                                 </div>
                                                 <div class="col-xs-6">
-                                                    Card Number
+                                                    Number in Collection
                                                 </div>
                                                 <div class="col-xs-12"><hr></div>
                                                 <div>
@@ -206,6 +206,47 @@
                                                         while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
                                                             if(collectionContents.getCollectionId() == id) {
                                                                 CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                                                String legalities = card.getLegalities();
+                                                                String legalityText = "";
+                                                                if(legalities.charAt(0) == '1') {
+                                                                    legalityText += "S";
+                                                                }
+                                                                if(legalities.charAt(1) == '1') {
+                                                                    legalityText += "F";
+                                                                }
+                                                                if(legalities.charAt(2) == '1') {
+                                                                    legalityText += "R";
+                                                                }
+                                                                if(legalities.charAt(3) == '1') {
+                                                                    legalityText += "M";
+                                                                }
+                                                                if(legalities.charAt(4) == '1') {
+                                                                    legalityText += "L";
+                                                                }
+                                                                if(legalities.charAt(5) == '1') {
+                                                                    legalityText += "A";
+                                                                }
+                                                                if(legalities.charAt(6) == '1') {
+                                                                    legalityText += "V";
+                                                                }
+                                                                if(legalities.charAt(7) == '1') {
+                                                                    legalityText += "P";
+                                                                }
+                                                                if(legalities.charAt(8) == '1') {
+                                                                    legalityText += "C";
+                                                                }
+                                                                if(legalities.charAt(9) == '1') {
+                                                                    legalityText += "1";
+                                                                }
+                                                                if(legalities.charAt(10) == '1') {
+                                                                    legalityText += "D";
+                                                                }
+                                                                if(legalities.charAt(11) == '1') {
+                                                                    legalityText += "B";
+                                                                }
+                                                                if(legalityText == "") {
+                                                                    legalityText = "-";
+                                                                }
                                                                 if(printed == entries) {
                                                                     spacer = "hidden-xs hidden-sm hidden-md hidden-lg";
                                                                 }
@@ -219,7 +260,7 @@
                                                     <div id="container<%=collectionContents.getCardId()%>" class="col-xs-5">
                                                         <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'edit_deck')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
                                                             <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
-                                                                <%=card.getName()%>
+                                                                <%=card.getName()%> (<%=legalityText%>)
                                                             </a>
                                                         </span>
                                                     </div>

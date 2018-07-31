@@ -65,7 +65,7 @@
             <h3>Finding Cards<hr></h3>
             <h4>
                 <p>
-                    In order to find cards to add to your collections and decks, click the "<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search" link at the header or footer of any page. This will take you to an advanced search page, where you can either search for cards, decks, collections or users. By selecting to search for collections or decks, you can view them and add cards from them to your own collections or decks if you wish.
+                    In order to find cards to add to your collections and decks, click the "<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search" link at the header or footer of any page. This will take you to an advanced search page, where you can either search for cards, decks, collections or users. By selecting to search for collections or decks, you can view them and add cards from them to your own collections or decks if you wish. When looking at the search results for cards, the card's set and legality information is displayed.
                 </p>
                 <br>
             </h4>

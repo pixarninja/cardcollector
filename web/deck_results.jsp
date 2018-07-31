@@ -1,5 +1,3 @@
-<%@page import="java.net.HttpURLConnection"%>
-<%@page import="java.net.URL"%>
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
