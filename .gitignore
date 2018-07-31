@@ -3,5 +3,5 @@ build*
 dist*
 nbproject*
 web/images/icons*
-src/java*
+src/java/secure*
 web/WEB-INF*
