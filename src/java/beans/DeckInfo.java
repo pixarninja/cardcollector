@@ -21,6 +21,8 @@ public class DeckInfo implements Serializable{
     private int total;
     private java.util.Date dateUpdated;
     private String description;
+    private int wins;
+    private int losses;
     
     public DeckInfo() {
         try {
@@ -47,9 +49,11 @@ public class DeckInfo implements Serializable{
                 int total = rs.getInt("total");
                 java.util.Date dateUpdated = rs.getDate("date_updated");
                 String description = rs.getString("description");
+                int wins = rs.getInt("wins");
+                int losses = rs.getInt("losses");
                 
-                decksById.put(id, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description));
-                decksByNum.put(num, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description));
+                decksById.put(id, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description, wins, losses));
+                decksByNum.put(num, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description, wins, losses));
                 num++;
             }
             rs.close();
@@ -61,7 +65,7 @@ public class DeckInfo implements Serializable{
         }
     }
     
-    public DeckInfo(int id, String name, String user, String top, String bottom, int entries, int total, java.util.Date dateUpdated, String description) {
+    public DeckInfo(int id, String name, String user, String top, String bottom, int entries, int total, java.util.Date dateUpdated, String description, int wins, int losses) {
         this.id = id;
         this.name = name;
         this.user = user;
@@ -71,6 +75,8 @@ public class DeckInfo implements Serializable{
         this.total = total;
         this.dateUpdated = dateUpdated;
         this.description = description;
+        this.wins = wins;
+        this.losses = losses;
     }
     
     public static DeckInfo getDeckById(int id) {
@@ -115,6 +121,14 @@ public class DeckInfo implements Serializable{
     
     public String getDescription() {
         return description;
+    }
+    
+    public int getWins() {
+        return wins;
+    }
+    
+    public int getLosses() {
+        return losses;
     }
     
 }

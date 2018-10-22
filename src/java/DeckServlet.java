@@ -99,6 +99,129 @@ public class DeckServlet extends HttpServlet {
         String url = "/";
         if(action.equals("new")) {
             url = "/new_deck.jsp";
+        } else if(action.equals("accept_match")) {
+            int owner_id = Integer.parseInt(request.getParameter("id"));
+            int challenger_id = Integer.parseInt(request.getParameter("challenger_id"));
+            int notification_id = Integer.parseInt(request.getParameter("notification_id"));
+            int match_id = Integer.parseInt(request.getParameter("match_id"));
+            int won = Integer.parseInt(request.getParameter("won"));
+            int matches = Integer.parseInt(request.getParameter("matches"));
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                Statement statement = connection.createStatement();
+                ResultSet rs;
+                String query;
+                PreparedStatement ps;
+                
+                int wins;
+                int losses;
+                
+                /* update owner deck */
+                statement = connection.createStatement();
+                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + owner_id + "'");
+                rs.next();
+                wins = rs.getInt("wins");
+                losses = rs.getInt("losses");
+                rs.close();
+
+                query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, wins + matches - won);
+                ps.setInt(2, losses + won);
+                ps.setInt(3, owner_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                /* update challenger deck */
+                statement = connection.createStatement();
+                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + challenger_id + "'");
+                rs.next();
+                wins = rs.getInt("wins");
+                losses = rs.getInt("losses");
+                rs.close();
+
+                query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, wins + won);
+                ps.setInt(2, losses + matches - won);
+                ps.setInt(3, challenger_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                /* delete notification */
+                query = "DELETE FROM `" + secure.DBStructure.table15 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, notification_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                /* delete match */
+                query = "DELETE FROM `" + secure.DBStructure.table18 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, match_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                connection.close();
+                url = "/deck.jsp";
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("reject_match")) {
+            int notification_id = Integer.parseInt(request.getParameter("notification_id"));
+            int match_id = Integer.parseInt(request.getParameter("match_id"));
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                String query;
+                PreparedStatement ps;
+                
+                /* delete notification */
+                query = "DELETE FROM `" + secure.DBStructure.table15 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, notification_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                /* delete match */
+                query = "DELETE FROM `" + secure.DBStructure.table18 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, match_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                connection.close();
+                url = "/deck.jsp";
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if(action.equals("upvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
             int likes = Integer.parseInt(request.getParameter("likes"));

@@ -349,6 +349,13 @@ textarea {
     overflow: hidden;
 }
 
+textarea-small {
+    min-width: 100%;
+    max-width: 101%;
+    min-height: 50px;
+    overflow: hidden;
+}
+
 #in-line-hr {
     position: relative;
     left: -8px;
@@ -490,6 +497,13 @@ body {
     top: 5%;
     left: 5%;
     width: 90%;
+}
+
+.cover-special {
+    position: absolute;
+    top: 2.5%;
+    left: 5%;
+    right: 5%;
 }
 
 .buffer {

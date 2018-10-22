@@ -3,11 +3,7 @@
 <%@page import="beans.*"%>
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
-<jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
-<jsp:useBean id="collectionContentsInfo" class="beans.CollectionContentsInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
-<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -138,6 +134,15 @@
                 <h4>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
+                            <p id="title">Date Updated</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <p><%=dateUpdated%></p>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Card Total</p>
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
@@ -152,15 +157,6 @@
                         <div class="col-xs-12 col-sm-8 col-md-9">
                             <p><%=entries%></p>
                         </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <p id="title">Date Updated</p>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <p><%=dateUpdated%></p>
-                        </div>
                     </div>
                     <% if(description != null) {%>
                     <div class="row">
@@ -173,72 +169,6 @@
                             <p><%=description%></p>
                         </div>
                     </div>
-                    <%}%>
-                    <hr>
-                </h4>
-                <%
-                    if(total != 0) {
-                %>
-                <div class="col-xs-12"><br></div>
-                <h3>Contents</h3>
-                <h4>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="well col-xs-12" id="black-well">
-                                <%
-                                    count = 1;
-                                    int printed = 1;
-                                    String spacer = "";
-                                    CollectionContentsInfo collectionContents;
-                                    while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
-                                        if(collectionContents.getCollectionId() == id) {
-                                            CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
-                                            if((printed % 2) == 0 && printed != entries) {
-                                                spacer = " col-sm-12";
-                                            }
-                                            else {
-                                                spacer = " hidden-sm hidden-md hidden-lg";
-                                            }
-                                %>
-                                <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
-                                <div id="container<%=collectionContents.getCardId()%><%=num%>" class="col-xs-8 col-sm-6">
-                                    <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%><%=num%>').submit();">
-                                        <span onmouseover="reveal('image<%=collectionContents.getCardId()%><%=num%>', 'container<%=collectionContents.getCardId()%><%=num%>', 'capsule<%=num%>', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%><%=num%>')">
-                                            <%=card.getName()%>
-                                        </span>
-                                    </a>&nbsp;x&nbsp;<%=collectionContents.getCardTotal()%>
-                                </div>
-                                <div class="col-xs-12<%=spacer%>"><br></div>
-                                <%
-                                            printed++;
-                                        }
-                                        count++;
-                                    }
-                                %>
-                            </div>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <%
-                        count = 1;
-                        while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
-                            if(collectionContents.getCollectionId() == id) {
-                                CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
-                    %>
-                    <form id="cardForm<%=collectionContents.getCardId()%><%=num%>" action="CardServlet" method="POST">
-                        <input type="hidden" name="action" value="card">
-                        <input type="hidden" name="id" value="<%=collectionContents.getCardId()%>">
-                        <input type="hidden" name="username" value="<%=username%>">
-                    </form>
-                    <img class="img-special" id="image<%=collectionContents.getCardId()%><%=num%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" style="display: none;"/>
-                    <%
-                                }
-                                count++;
-                            }
-                        } else {
-                    %>
-                    <div class="col-xs-12"><br></div>
-                    <h4><p>There are no cards in this collection.</p></h4>
                     <%}%>
                 </h4>
             </div>

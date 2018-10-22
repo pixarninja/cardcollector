@@ -43,7 +43,9 @@ public class RecentInfo implements Serializable{
                     int total = rsDeck.getInt("total");
                     java.util.Date dateUpdated = rsDeck.getDate("date_updated");
                     String description = rsDeck.getString("description");
-                    deck = new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description);
+                    int wins = rsDeck.getInt("wins");
+                    int losses = rsDeck.getInt("losses");
+                    deck = new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description, wins, losses);
                 }
                 else {
                     deck = null;

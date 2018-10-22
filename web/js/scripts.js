@@ -18,11 +18,7 @@ function reveal(imageId, containerId, capsuleId, target) {
     }
     var xpos = rect.left - cap.left - width + 15;
     var ypos;
-    if(target === "your_decks") {
-        ypos = rect.top - cap.top - (2 * height / 3);
-    } else if(target === "your_collections") {
-        ypos = rect.top - cap.top - (2 * height / 3);
-    } else if(target === "edit_deck") {
+    if(target === "edit_deck") {
         ypos = rect.top - cap.top - (4 * height / 5);
         xpos = xpos - 20;
     } else if(target === "edit_collection") {
@@ -711,6 +707,78 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
         }
         view += "</div>\
     </div>";
+    document.getElementById("popupForm").innerHTML = view;
+    revealForm("popupForm");
+}
+
+function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, deckNum, deckIdList, deckNameList) {
+    var deckIds = deckIdList.split("`");
+    var deckNames = deckNameList.split("`");
+    var i;
+    var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
+    <input type='hidden' name='action' value='challenge_deck'>\
+    <input type='hidden' name='username' value='" + username + "'>\
+    <input type='hidden' name='id' value='" + id + "'>\
+    <input type='hidden' name='owner' value='" + owner + "'>\
+    <div class='col-xs-12'>\
+        <h2>\
+            <p align='center'>\
+                Challenge Deck Request\
+            </p>\
+        </h2><br>\
+        <div class='hidden-xs hidden-sm col-md-6'>\
+            <div class='deck-image'>\
+                <img width='90%' src='" + imagePathBottom + "' alt='" + imagePathBottom + "' id='center-img'>\
+                <img class='img-special cover-special' width='85%' src='" + imagePathTop + "' alt='" + imagePathTop + "' id='center-img'>\
+                <br>\
+            </div>\
+        </div>\
+        <div class='hidden-xs hidden-sm col-md-6' style='position: relative;left: -22px;'>";
+        if(username === null || username === "") {
+            view += "<h4>\
+                In order to challenge this deck, you must first login or sign up for an account.\
+                <div class='col-xs-12'><br></div>\
+            </h4>";
+        } else {
+            view += "<h4>\
+                Select the deck which you used to challenge this deck from the drop-down list below. You must also input the number of times you won out of the number of matches played. Once submitted, the user you challenged can accept or reject the outcome from their Notifications Page.\
+            </h4><hr>\
+            <h4 id='title'>\
+                Your Deck: <select name='deck1' id='input-field'><br><br>\
+                    <option value=''>Choose deck...</option>";
+            for (i = 0; i < deckNum; i++) {
+                view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
+            }
+            view += "</select><br><br>\
+                You Won <input id='input-field' class='input-number' name='times_won1' type='number' value='0'> Out Of <input id='input-field' class='input-number' name='times_played1' type='number' value='0'> Matches<br><br>\
+                Memo: <input id='input-field-alt' name='text' value='Good game!'><br><br>\
+                <button title='Submit Challenge Request' id='form-submit' type='submit'>Submit</button>\
+                <div class='col-xs-12'><br></div>\
+            </h4>";
+        }
+        view += "</div>\
+        <div class='col-xs-12 hidden-md hidden-lg'>";
+        if(username === null || username === "") {
+            view += "<h4>\
+                In order to challenge this deck, you must first login or sign up for an account.\
+                <div class='col-xs-12'><br></div>\
+            </h4>";
+        } else {
+            view += "<h4 id='title'>\
+                Your Deck: <select name='deck1' id='input-field'><br><br>\
+                    <option value=''>Choose deck...</option>";
+            for (i = 0; i < deckNum; i++) {
+                view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
+            }
+            view += "</select><br><br>\
+                You Won <input id='input-field' class='input-number' name='times_won1' type='number' value='0'> Out Of <input id='input-field' class='input-number' name='times_played1' type='number' value='0'> Matches<br><br>\
+                Memo: <input id='input-field-alt' name='text' value='Good game!'><br><br>\
+                <button title='Submit Challenge Request' id='form-submit' type='submit'>Submit</button>\
+                <div class='col-xs-12'><br></div>\
+            </h4>";
+        }
+        view += "</div>\
+            </div>";
     document.getElementById("popupForm").innerHTML = view;
     revealForm("popupForm");
 }

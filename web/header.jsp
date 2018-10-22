@@ -12,8 +12,8 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Card Collector</title>
-        <link rel="shortcut icon" href="http://cardcollector.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
-        <link rel="icon" href="http://cardcollector.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="http://cardcollector-webapp:.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
+        <link rel="icon" href="http://cardcollector-webapp.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

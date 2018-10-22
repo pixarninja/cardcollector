@@ -14,6 +14,7 @@
 <jsp:useBean id="collectionCommentInfo" class="beans.CollectionCommentInfo" scope="request"/>
 <jsp:useBean id="collectionCommentReactionInfo" class="beans.CollectionCommentReactionInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
+<jsp:useBean id="deckMatchInfo" class="beans.DeckMatchInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -548,6 +549,72 @@
                         </div>
                         <div class="col-xs-12"><br><br></div>
                         <%
+                            }
+                            if(notification.getType() == 5) { // match update
+                                DeckMatchInfo deckMatch = DeckMatchInfo.getMatchById(notification.getTypeId());
+                                if(deckMatch == null) {count++; continue;}
+                                DeckInfo challengerDeck = deckInfo.getDeckById(deckMatch.getChallengerId());
+                                if(challengerDeck == null) {count++; continue;}
+                                DeckInfo ownerDeck = deckInfo.getDeckById(deckMatch.getOwnerId());
+                                if(ownerDeck == null) {count++; continue;}
+                                dateAdded = deckMatch.getDateAdded();
+                                content = deckMatch.getText();
+                                UserInfo challenger = (UserInfo) userInfo.getUser(challengerDeck.getUser());
+                                if(challenger == null) {count++; continue;}
+                                owner = (UserInfo) userInfo.getUser(ownerDeck.getUser());
+                                if(owner == null) {count++; continue;}
+                                picture = challenger.getPicture();
+                        %>
+                        <div class="col-xs-1">
+                            <input type="checkbox" name="<%=num%>" value="<%=notification.getId()%>">
+                        </div>
+                        <div class="col-xs-11">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p><span id="title">Date Added:</span> <%=notification.getDateAdded()%></p>
+                                    <p><span id="title">Notification: </span> <%=notification.getUser()%> challenged your deck, <a style="cursor: pointer;" onclick="document.getElementById('ownerDeckForm<%=count%>').submit();"><%=ownerDeck.getName()%></a>, with their deck, <a style="cursor: pointer;" onclick="document.getElementById('challengerDeckForm<%=count%>').submit();"><%=challengerDeck.getName()%></a></p>
+                                    <br>
+                                    <div class="col-xs-7 col-sm-3">
+                                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"><br>
+                                        <%
+                                            if(username == null || username.equals("")) {
+                                        %>
+                                        <%} else {%>
+                                        <div class="row" style="margin: auto;display: table">
+                                            <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-left" title="Accept Match" onclick="document.getElementById('acceptMatchForm<%=count%>').submit();">
+                                                <span id="button-symbol" class="glyphicon glyphicon-ok"></span>
+                                            </div>
+                                            <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-right" title="Reject Match" onclick="document.getElementById('rejectMatchForm<%=count%>').submit();">
+                                                <span id="button-symbol" class="glyphicon glyphicon-remove"></span>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                    <div class="col-xs-5 col-sm-9">
+                                        <div class="row">
+                                            <p><span id="title">Challenger: </span><%=challenger.getUsername()%></p>
+                                            <p><span id="title">Date Played: </span><%=dateAdded%></p>
+                                            <div class="well hidden-xs col-sm-12" id="black-well">
+                                                <p>
+                                                    <%=content%>
+                                                </p><hr>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                                    <div class="well col-xs-12 hidden-sm hidden-md hidden-lg" id="black-well">
+                                        <p>
+                                            <%=content%>
+                                        </p><hr>
+                                        <%=challenger.getUsername()%> won <%=deckMatch.getWon()%> times out of <%=deckMatch.getMatches()%> matches
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br><br></div>
+                        <%
                                     }
                                 }
                                 count++;
@@ -668,6 +735,39 @@
                 <form id="collectionCommentReactionForm<%=count%>" action="CollectionServlet" method="POST">
                     <input type="hidden" name="action" value="collection">
                     <input type="hidden" name="id" value="<%=collectionComment.getCollectionId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <%
+                    }
+                    if(notification.getType() == 5) {
+                        DeckMatchInfo deckMatch = deckMatchInfo.getMatchById(notification.getTypeId());
+                        if(deckMatch == null) {count++; continue;}
+                %>
+                <form id="ownerDeckForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="deck">
+                    <input type="hidden" name="id" value="<%=deckMatch.getOwnerId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <form id="challengerDeckForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="deck">
+                    <input type="hidden" name="id" value="<%=deckMatch.getChallengerId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <form id="acceptMatchForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="accept_match">
+                    <input type="hidden" name="match_id" value="<%=deckMatch.getId()%>">
+                    <input type="hidden" name="notification_id" value="<%=notification.getId()%>">
+                    <input type="hidden" name="challenger_id" value="<%=deckMatch.getChallengerId()%>">
+                    <input type="hidden" name="id" value="<%=deckMatch.getOwnerId()%>">
+                    <input type="hidden" name="won" value="<%=deckMatch.getWon()%>">
+                    <input type="hidden" name="matches" value="<%=deckMatch.getMatches()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <form id="rejectMatchForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="reject_match">
+                    <input type="hidden" name="match_id" value="<%=deckMatch.getId()%>">
+                    <input type="hidden" name="notification_id" value="<%=notification.getId()%>">
+                    <input type="hidden" name="id" value="<%=deckMatch.getOwnerId()%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
                 <%

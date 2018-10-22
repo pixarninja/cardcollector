@@ -1,3 +1,5 @@
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.math.BigDecimal"%>
 <%@page import="java.net.HttpURLConnection"%>
 <%@page import="java.net.URL"%>
 <%@page import="beans.*"%>
@@ -91,6 +93,7 @@
         String cardCostList = "";
         String cardFavoriteList = "";
         int cardNum = 0;
+        double usd = 0.0;
         DeckContentsInfo deckContents;
         while((deckContents = deckContentsInfo.getContentsByNum(count)) != null) {
             if(deckContents.getDeckId() != id) {
@@ -98,6 +101,14 @@
                 continue;
             }
             CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+            if(!card.getUsd().equals("Unknown")) {
+                try {
+                    usd += deckContents.getCardTotal() * Double.parseDouble(card.getUsd());
+                } catch(NumberFormatException ex) {
+                    ; // do nothing
+                }
+            }
+            
             if(legalityInfo == 0 && cardNum == 0) {
                 legalityInfo = Integer.parseInt(card.getLegalities(), 2);
             }
@@ -193,6 +204,23 @@
             count++;
         }
         
+        BigDecimal bd = new BigDecimal(usd);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        String price = Double.toString(bd.doubleValue());
+        String[] subprice = price.split("\\.");
+        if(subprice == null || subprice.length < 2) {
+            price = price + ".00";
+        }
+        else {
+            while(subprice[1].length() < 2) {
+                subprice[1] = subprice[1] + "0";
+            }
+            price = subprice[0] + "." + subprice[1];
+        }
+        
+        int wins = deck.getWins();
+        int losses = deck.getLosses();
+        
         String legalities = Integer.toBinaryString(legalityInfo);
         while(legalities.length() < 12) {
             legalities = "0" + legalities;
@@ -267,7 +295,12 @@
                         </form>
                         <%
                             } else {
-                                if(favorited) {
+                        %>
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Request To Challenge This Deck" onclick="challengeDeckPopup('<%=deck.getId()%>', '<%=top%>', '<%=bottom%>', '<%=username%>', '<%=deck.getUser()%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                            <span id="button-symbol" class="glyphicon glyphicon-certificate"></span>
+                        </div>
+                        <%
+                            if(favorited) {
                         %>
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-right" title="Remove Deck From Favorites List" onclick="document.getElementById('favoriteForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-star"></span>
@@ -297,6 +330,14 @@
                         <%}%>
                     </div>
                     <div class="col-xs-12"><br></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-sm-12 col-lg-4">
+                        <p id="title">Price</p>
+                    </div>
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>$<%=price%></p>
+                    </div>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-sm-12 col-lg-4">
                         <p id="title">Legalities</p>
@@ -421,6 +462,15 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
+                            <p id="title">Date Updated</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <p><%=dateUpdated%></p>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Card Total</p>
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
@@ -439,10 +489,19 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
-                            <p id="title">Date Updated</p>
+                            <p id="title">Wins</p>
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
-                            <p><%=dateUpdated%></p>
+                            <p><%=wins%></p>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <p id="title">Losses</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <p><%=losses%></p>
                         </div>
                     </div>
                     <% if(description != null) {%>

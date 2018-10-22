@@ -1,3 +1,5 @@
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.math.BigDecimal"%>
 <%@page import="java.net.HttpURLConnection"%>
 <%@page import="java.net.URL"%>
 <%@page import="beans.*"%>
@@ -91,6 +93,7 @@
         String cardCostList = "";
         String cardFavoriteList = "";
         int cardNum = 0;
+        double usd = 0.0;
         CollectionContentsInfo collectionContents;
         while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
             if(collectionContents.getCollectionId() != id) {
@@ -98,6 +101,14 @@
                 continue;
             }
             CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+            if(!card.getUsd().equals("Unknown")) {
+                try {
+                    usd += collectionContents.getCardTotal() * Double.parseDouble(card.getUsd());
+                } catch(NumberFormatException ex) {
+                    ; // do nothing
+                }
+            }
+            
             if(legalityInfo == 0) {
                 legalityInfo = Integer.parseInt(card.getLegalities(), 2);
             }
@@ -191,6 +202,20 @@
                 cardFavoriteList += "0";
             }
             count++;
+        }
+        
+        BigDecimal bd = new BigDecimal(usd);
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        String price = Double.toString(bd.doubleValue());
+        String[] subprice = price.split("\\.");
+        if(subprice == null || subprice.length < 2) {
+            price = price + ".00";
+        }
+        else {
+            while(subprice[1].length() < 2) {
+                subprice[1] = subprice[1] + "0";
+            }
+            price = subprice[0] + "." + subprice[1];
         }
         
         String legalities = Integer.toBinaryString(legalityInfo);
@@ -303,6 +328,14 @@
                         </div>
                     </div>
                     <div class="col-xs-12"><br></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-sm-12 col-lg-4">
+                        <p id="title">Price</p>
+                    </div>
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-sm-12 col-lg-8">
+                        <p>$<%=price%></p>
+                    </div>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-sm-12 col-lg-4">
                         <p id="title">Legalities</p>
@@ -427,6 +460,15 @@
                     </div>
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
+                            <p id="title">Date Updated</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <p><%=dateUpdated%></p>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Card Total</p>
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
@@ -440,15 +482,6 @@
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
                             <p><%=entries%></p>
-                        </div>
-                        <div class="col-xs-12"><br></div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-4 col-md-3">
-                            <p id="title">Date Updated</p>
-                        </div>
-                        <div class="col-xs-12 col-sm-8 col-md-9">
-                            <p><%=dateUpdated%></p>
                         </div>
                     </div>
                     <% if(description != null) {%>

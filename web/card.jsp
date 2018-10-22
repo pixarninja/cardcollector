@@ -1,3 +1,5 @@
+<%@page import="java.math.RoundingMode"%>
+<%@page import="java.math.BigDecimal"%>
 <%@page import="java.util.regex.Pattern"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.net.HttpURLConnection"%>
@@ -150,6 +152,37 @@
         int multiverse = card.getMultiverse();
         String legalities = card.getLegalities();
         String kingdom = card.getKingdom();
+        
+        String price = "";
+        double usd;
+        if(card.getUsd().equals("Unknown")) {
+            price = "Unknown";
+        }
+        else {
+            try {
+                usd = Double.parseDouble(card.getUsd());
+            } catch(NumberFormatException ex) {
+                price = "Unknown";
+            }
+        }
+        if(!price.equals("Unknown")) {
+            BigDecimal bd = new BigDecimal(card.getUsd());
+            bd = bd.setScale(2, RoundingMode.HALF_UP);
+            price = Double.toString(bd.doubleValue());
+            String[] subprice = price.split("\\.");
+            if(subprice == null || subprice.length < 2) {
+                price = "$" + price + ".00";
+            }
+            else {
+                while(subprice[1].length() < 2) {
+                    subprice[1] = subprice[1] + "0";
+                }
+                price = "$" + subprice[0] + "." + subprice[1];
+            }
+        }
+        
+        Boolean digital = card.getDigital();
+        
         String back = card.getBack();
         String revName = null;
         String revType = null;
@@ -396,7 +429,7 @@
                             <input type="hidden" name="id" value="<%=id%>">
                         </form>
                         <%} else {%>
-                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Print Card" onclick="document.getElementById('printForm').submit();">
+                        <div class="col-xs-2" style="margin: auto;display: table" id="button-back-pill" title="Print Card" onclick="document.getElementById('printForm').submit();">
                             <span id="button-symbol" class="glyphicon glyphicon-print"></span>
                         </div>
                         <form id="printForm" action="PrintServlet" method="POST" target="_blank">
@@ -406,6 +439,14 @@
                         <%}%>
                     </div>
                     <div class="col-xs-12"><br></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                    <div class="col-sm-12 col-lg-4">
+                        <p id="title">Price</p>
+                    </div>
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-sm-12 col-lg-8">
+                        <p><%=price%></p>
+                    </div>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-sm-12 col-lg-4">
                         <p id="title">Links</p>
@@ -424,8 +465,7 @@
                     <div class="col-sm-12 col-lg-8"><p><a href="<%=kingdom%>" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Card Kingdom</a></p></div>
                     <div class="hidden-sm col-lg-4"></div>
                     <%}}%>
-                    <div class="col-xs-12"><br></div>
-                    <div class="col-sx-12"><hr id="in-line-hr"></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-sm-12 col-lg-4">
                         <p id="title">Legalities</p>
                     </div>
@@ -549,6 +589,22 @@
                             <div class="col-xs-12 col-sm-8 col-lg-9">
                                 <div class="row">
                                     <p><%=game%></p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><br></div>
+                            <div class="col-xs-12 col-sm-4 col-lg-3">
+                                <div class="row">
+                                    <p id="title">Digital</p>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                            <div class="col-xs-12 col-sm-8 col-lg-9">
+                                <div class="row">
+                                    <%if(digital) {%>
+                                    <p>Yes</p>
+                                    <%} else {%>
+                                    <p>No</p>
+                                    <%}%>
                                 </div>
                             </div>
                             <div class="col-xs-12"><br></div>
