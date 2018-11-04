@@ -71,12 +71,7 @@
                 else {
                     end = total;
                 }
-                if(end < max) {
-                    %><h3>Showing: <%=count%> through <%=end%> out of <%=total%></h3><hr><%
-                }  
-                else {
-                    %><h3>Showing: <%=end - max + 1%> through <%=end%> out of <%=total%></h3><hr><%
-                }
+                %><h3>Showing: <%=count%> through <%=end%> out of <%=total%></h3><hr><%
                 int i;
                 %>
                 <form id="requestMoreForm" action="SearchServlet" method="POST">
@@ -155,7 +150,6 @@
                         int printed = 1;
                         int tracker = 1;
                         int id;
-                        count = 1;
                         if(request.getAttribute(Integer.toString(count)) != null) {
                             id = Integer.parseInt((String) request.getAttribute(Integer.toString(count)));
                         }
@@ -235,7 +229,7 @@
                             <%}}%>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
-                                    <%=collection.getName()%> by <%=collection.getUser()%>
+                                    <%=collection.getName()%> by <%=collection.getUser()%> (<%=collection.getTotal()%>)
                                 </a>
                             </p>
                             <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">

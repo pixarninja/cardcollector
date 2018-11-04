@@ -13,6 +13,7 @@ public class RecentInfo implements Serializable{
     
     private DeckInfo deck;
     private CollectionInfo collection;
+    private UserInfo user;
     
     public RecentInfo() {
         try {
@@ -29,8 +30,10 @@ public class RecentInfo implements Serializable{
 
             ResultSet rsDeck = statementDeck.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` ORDER BY date_updated DESC");
             ResultSet rsCollection = statementCollection.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` ORDER BY date_updated DESC");
+            ResultSet rsUser = statementCollection.executeQuery("SELECT * FROM `" + secure.DBStructure.table16 + "` ORDER BY joined DESC");
             DeckInfo deck;
             CollectionInfo collection;
+            UserInfo userInfo;
             int num = 1;
             while(true) {
                 if(rsDeck.next()) {
@@ -66,11 +69,28 @@ public class RecentInfo implements Serializable{
                 else {
                     collection = null;
                 }
-                if((deck == null && collection == null) || num > 50) {
+                if(rsUser.next()) {
+                    String user = rsUser.getString("username");
+                    String pass = rsUser.getString("password");
+                    String picture = rsUser.getString("picture");
+                    if(picture == null || picture.equals("") || picture.equals("null")) {
+                        picture = "images/blank_user.jpg";
+                    }
+                    String email = rsUser.getString("email");
+                    String name = rsUser.getString("name");
+                    java.util.Date dateJoined = rsUser.getDate("joined");
+                    String bio = rsUser.getString("bio");
+
+                    userInfo = new UserInfo(user, pass, picture, email, name, dateJoined, bio);
+                }
+                else {
+                    userInfo = null;
+                }
+                if((deck == null && collection == null) || num > 24) {
                     break;
                 }
                 
-                recentsByNum.put(num, new RecentInfo(deck, collection));
+                recentsByNum.put(num, new RecentInfo(deck, collection, userInfo));
                 num++;
             }
             rsDeck.close();
@@ -83,9 +103,10 @@ public class RecentInfo implements Serializable{
         }
     }
     
-    public RecentInfo(DeckInfo deck, CollectionInfo collection) {
+    public RecentInfo(DeckInfo deck, CollectionInfo collection, UserInfo user) {
         this.deck = deck;
         this.collection = collection;
+        this.user = user;
     }
     
     public static RecentInfo getRecentsByNum(int num) {
@@ -98,6 +119,10 @@ public class RecentInfo implements Serializable{
     
     public CollectionInfo getCollection() {
         return collection;
+    }
+    
+    public UserInfo getUser() {
+        return user;
     }
     
 }

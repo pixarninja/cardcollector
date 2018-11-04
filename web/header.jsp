@@ -12,7 +12,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Card Collector</title>
-        <link rel="shortcut icon" href="http://cardcollector-webapp:.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
+        <link rel="shortcut icon" href="images/webicon.ico" type="image/x-icon">
         <link rel="icon" href="http://cardcollector-webapp.us-east-1.elasticbeanstalk.com/images/webicon.ico" type="image/x-icon">
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <link href="css/main.css" rel="stylesheet">
@@ -279,6 +279,7 @@
     <div class="container-fluid">
         <div class="row" align="left">
             <!-- Ad Bar -->
-            <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;background-position: center-x;"></div>
-            <div class="hidden-xs col-sm-1"></div>
+            <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;left: 0px;background-position: center-x;"></div>
+            <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;right: 0px;background-position: center-x;"></div>
+            <div class="col-xs-12 col-sm-1"></div>
             <div id="content" class="col-xs-12 col-sm-10" style="background-color: black;background-repeat: repeat;min-height: 100%;">

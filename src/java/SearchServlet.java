@@ -98,6 +98,48 @@ public class SearchServlet extends HttpServlet {
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
                 
+                String query = "SELECT * FROM `" + secure.DBStructure.table16 + "` ORDER BY joined DESC;";
+                PreparedStatement ps = connection.prepareStatement(query);
+                
+                ResultSet rs = ps.executeQuery( );
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("username"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                if(count == 0) {
+                    url = "/advanced.jsp";
+                }
+                else {
+                    url = "/user_results.jsp";
+                }
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("users_alpha")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
                 String search = "";
                 String prefix = "";
                 String order = "";
@@ -112,9 +154,15 @@ public class SearchServlet extends HttpServlet {
                         order = " DESC;";
                     }
                 }
+                else {
+                    order = " ASC;";
+                }
                 if((request.getParameter("order_by") != null) && !request.getParameter("order_by").equals("")) {
                     request.setAttribute("order_by", request.getParameter("order_by"));
                     orderBy = " ORDER BY " + request.getParameter("order_by");
+                }
+                else {
+                    orderBy = " ORDER BY name";
                 }
                 String[] parameters = {"name", "user"};
                 for (String name : parameters) {
@@ -192,6 +240,48 @@ public class SearchServlet extends HttpServlet {
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
                 
+                String query = "SELECT * FROM `" + secure.DBStructure.table10 + "` ORDER BY date_updated DESC;";
+                PreparedStatement ps = connection.prepareStatement(query);
+                
+                ResultSet rs = ps.executeQuery( );
+                
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), Integer.toString(rs.getInt("id")));
+                }
+                
+                request.setAttribute("total", count);
+                
+                if(count == 0) {
+                    url = "/advanced.jsp";
+                }
+                else {
+                    url = "/deck_results.jsp";
+                }
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("decks_alpha")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
                 String search = "";
                 String prefix = "";
                 String order = "";
@@ -207,9 +297,15 @@ public class SearchServlet extends HttpServlet {
                         order = " DESC;";
                     }
                 }
+                else {
+                    order = " ASC;";
+                }
                 if((request.getParameter("order_by") != null) && !request.getParameter("order_by").equals("")) {
                     request.setAttribute("order_by", request.getParameter("order_by"));
                     orderBy = " ORDER BY " + request.getParameter("order_by");
+                }
+                else {
+                    orderBy = " ORDER BY name";
                 }
                 if((request.getParameter("inclusion") != null) && !request.getParameter("inclusion").equals("")) {
                     request.setAttribute("inclusion", request.getParameter("inclusion"));
@@ -219,6 +315,9 @@ public class SearchServlet extends HttpServlet {
                     else {
                         inclusion = " AND";
                     }
+                }
+                else {
+                    inclusion = " AND";
                 }
                 String[] parameters = {"name", "user"};
                 for (String name : parameters) {
@@ -288,6 +387,48 @@ public class SearchServlet extends HttpServlet {
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
                 
+                String query = "SELECT * FROM `" + secure.DBStructure.table5 + "` ORDER BY date_updated DESC;";
+                PreparedStatement ps = connection.prepareStatement(query);
+                
+                ResultSet rs = ps.executeQuery( );
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), Integer.toString(rs.getInt("id")));
+                }
+                
+                request.setAttribute("total", count);
+                
+                if(count == 0) {
+                    url = "/advanced.jsp";
+                }
+                else {
+                    url = "/collection_results.jsp";
+                }
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("collections_alpha")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
                 String search = "";
                 String prefix = "";
                 String order = "";
@@ -303,9 +444,15 @@ public class SearchServlet extends HttpServlet {
                         order = " DESC;";
                     }
                 }
+                else {
+                    order = " ASC;";
+                }
                 if((request.getParameter("order_by") != null) && !request.getParameter("order_by").equals("")) {
                     request.setAttribute("order_by", request.getParameter("order_by"));
                     orderBy = " ORDER BY " + request.getParameter("order_by");
+                }
+                else {
+                    orderBy = " ORDER BY name";
                 }
                 if((request.getParameter("inclusion") != null) && !request.getParameter("inclusion").equals("")) {
                     request.setAttribute("inclusion", request.getParameter("inclusion"));
@@ -384,6 +531,48 @@ public class SearchServlet extends HttpServlet {
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
                 
+                String query = "SELECT * FROM `" + secure.DBStructure.table1 + "` ORDER BY viewed DESC;";
+                PreparedStatement ps = connection.prepareStatement(query);
+                
+                ResultSet rs = ps.executeQuery( );
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("id"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                if(count == 0) {
+                    url = "/advanced.jsp";
+                }
+                else {
+                    url = "/card_results.jsp";
+                }
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("cards_alpha")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
                 String search = "";
                 String prefix = "";
                 String order = "";
@@ -401,9 +590,15 @@ public class SearchServlet extends HttpServlet {
                         order = " DESC;";
                     }
                 }
+                else {
+                    order = " ASC;";
+                }
                 if((request.getParameter("order_by") != null) && !request.getParameter("order_by").equals("")) {
                     request.setAttribute("order_by", request.getParameter("order_by"));
                     orderBy = " ORDER BY " + request.getParameter("order_by");
+                }
+                else {
+                    orderBy = " ORDER BY name";
                 }
                 if((request.getParameter("inclusion") != null) && !request.getParameter("inclusion").equals("")) {
                     request.setAttribute("inclusion", request.getParameter("inclusion"));
@@ -431,6 +626,9 @@ public class SearchServlet extends HttpServlet {
                     else {
                         selective = true;
                     }
+                }
+                else {
+                    selective = false;
                 }
                 String[] parameters = {"common", "uncommon", "rare", "mythic", "set_id", "name", "type", "text", "flavor", "min_cmc", "max_cmc", "set_name", "min_power", "max_power", "min_toughness", "max_toughness", "artist", "year"};
                 for (String name : parameters) {
@@ -491,104 +689,110 @@ public class SearchServlet extends HttpServlet {
                     /* first group all the selected options */
                     for(String name : options) {
                         String value = request.getParameter(name);
-                        if(value.equals("off")) {
-                            continue;
-                        }
-                        String postfix = "";
-                        if(num == 1) {
-                            if(count == 0) {
-                                prefix = " WHERE (";
-                                count++;
+                        if((value != null) && !value.equals("")) {
+                            if(value.equals("off")) {
+                                continue;
+                            }
+                            String postfix = "";
+                            if(num == 1) {
+                                if(count == 0) {
+                                    prefix = " WHERE (";
+                                    count++;
+                                }
+                                else {
+                                    prefix = inclusion + " (";
+                                }
                             }
                             else {
-                                prefix = inclusion + " (";
+                                prefix = manaInclusion;
                             }
+                            if(num == total) {
+                                postfix += " )";
+                            }
+                            prefix += "(";
+                            postfix += ")";
+                            if(name.equals("white")) {
+                                search += prefix + " mc LIKE '%W%'" + postfix;
+                            }
+                            else if(name.equals("blue")) {
+                                search += prefix + " mc LIKE '%U%'" + postfix;
+                            }
+                            else if(name.equals("black")) {
+                                search += prefix + " mc LIKE '%B%'" + postfix;
+                            }
+                            else if(name.equals("red")) {
+                                search += prefix + " mc LIKE '%R%'" + postfix;
+                            }
+                            else if(name.equals("green")) {
+                                search += prefix + " mc LIKE '%G%'" + postfix;
+                            }
+                            else if(name.equals("colorless")) {
+                                search += prefix + " mc LIKE '%C%' OR (mc != '' AND mc NOT LIKE '%W%' AND mc NOT LIKE '%U%' AND mc NOT LIKE '%B%' AND mc NOT LIKE '%R%' AND mc NOT LIKE '%G%')" + postfix;
+                            }
+                            num++;
                         }
-                        else {
-                            prefix = manaInclusion;
-                        }
-                        if(num == total) {
-                            postfix += " )";
-                        }
-                        prefix += "(";
-                        postfix += ")";
-                        if(name.equals("white")) {
-                            search += prefix + " mc LIKE '%W%'" + postfix;
-                        }
-                        else if(name.equals("blue")) {
-                            search += prefix + " mc LIKE '%U%'" + postfix;
-                        }
-                        else if(name.equals("black")) {
-                            search += prefix + " mc LIKE '%B%'" + postfix;
-                        }
-                        else if(name.equals("red")) {
-                            search += prefix + " mc LIKE '%R%'" + postfix;
-                        }
-                        else if(name.equals("green")) {
-                            search += prefix + " mc LIKE '%G%'" + postfix;
-                        }
-                        else if(name.equals("colorless")) {
-                            search += prefix + " mc LIKE '%C%' OR (mc != '' AND mc NOT LIKE '%W%' AND mc NOT LIKE '%U%' AND mc NOT LIKE '%B%' AND mc NOT LIKE '%R%' AND mc NOT LIKE '%G%')" + postfix;
-                        }
-                        num++;
                     }
                     /* now group all the unselected options */
                     for(String name : options) {
                         String value = request.getParameter(name);
-                        if(value.equals("on")) {
-                            continue;
+                        if((value != null) && !value.equals("")) {
+                            if(value.equals("on")) {
+                                continue;
+                            }
+                            if(name.equals("white")) {
+                                search += " AND mc NOT LIKE '%W%'";
+                            }
+                            else if(name.equals("blue")) {
+                                search += " AND mc NOT LIKE '%U%'";
+                            }
+                            else if(name.equals("black")) {
+                                search += " AND mc NOT LIKE '%B%'";
+                            }
+                            else if(name.equals("red")) {
+                                search += " AND mc NOT LIKE '%R%'";
+                            }
+                            else if(name.equals("green")) {
+                                search += " AND mc NOT LIKE '%G%'";
+                            }
+                            else if(name.equals("colorless")) {
+                                search += " AND mc NOT LIKE '%C%'";
+                            }
+                            num++;
                         }
-                        if(name.equals("white")) {
-                            search += " AND mc NOT LIKE '%W%'";
-                        }
-                        else if(name.equals("blue")) {
-                            search += " AND mc NOT LIKE '%U%'";
-                        }
-                        else if(name.equals("black")) {
-                            search += " AND mc NOT LIKE '%B%'";
-                        }
-                        else if(name.equals("red")) {
-                            search += " AND mc NOT LIKE '%R%'";
-                        }
-                        else if(name.equals("green")) {
-                            search += " AND mc NOT LIKE '%G%'";
-                        }
-                        else if(name.equals("colorless")) {
-                            search += " AND mc NOT LIKE '%C%'";
-                        }
-                        num++;
                     }
                 }
                 else {
                     for(String name : options) {
                         String value = request.getParameter(name);
-                        if(value.equals("off")) {
-                            continue;
-                        }
-                        if(count == 0) {
-                            prefix = " WHERE";
-                            count++;
-                        }
-                        else {
-                            prefix = " " + manaInclusion;
-                        }
-                        if(name.equals("white")) {
-                            search += prefix + " mc LIKE '%W%'";
-                        }
-                        else if(name.equals("blue")) {
-                            search += prefix + " mc LIKE '%U%'";
-                        }
-                        else if(name.equals("black")) {
-                            search += prefix + " mc LIKE '%B%'";
-                        }
-                        else if(name.equals("red")) {
-                            search += prefix + " mc LIKE '%R%'";
-                        }
-                        else if(name.equals("green")) {
-                            search += prefix + " mc LIKE '%G%'";
-                        }
-                        else if(name.equals("colorless")) {
-                            search += prefix + " mc LIKE '%C%' OR (mc != '' AND mc NOT LIKE '%W%' AND mc NOT LIKE '%U%' AND mc NOT LIKE '%B%' AND mc NOT LIKE '%R%' AND mc NOT LIKE '%G%')";
+                        if((value != null) && !value.equals("")) {
+                            if(value.equals("off")) {
+                                continue;
+                            }
+                            if(count == 0) {
+                                prefix = " WHERE";
+                                count++;
+                            }
+                            else {
+                                prefix = " " + manaInclusion;
+                            }
+                            if(name.equals("white")) {
+                                search += prefix + " mc LIKE '%W%'";
+                            }
+                            else if(name.equals("blue")) {
+                                search += prefix + " mc LIKE '%U%'";
+                            }
+                            else if(name.equals("black")) {
+                                search += prefix + " mc LIKE '%B%'";
+                            }
+                            else if(name.equals("red")) {
+                                search += prefix + " mc LIKE '%R%'";
+                            }
+                            else if(name.equals("green")) {
+                                search += prefix + " mc LIKE '%G%'";
+                            }
+                            else if(name.equals("colorless")) {
+                                search += prefix + " mc LIKE '%C%' OR (mc != '' AND mc NOT LIKE '%W%' AND mc NOT LIKE '%U%' AND mc NOT LIKE '%B%' AND mc NOT LIKE '%R%' AND mc NOT LIKE '%G%')";
+                            }
                         }
                     }
                 }

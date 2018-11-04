@@ -53,7 +53,7 @@
         <div class="col-xs-12 col-md-5">
             <h3>Cards<hr></h3>
             <form id="searchCardsForm" action="SearchServlet" method="POST">
-                <input type="hidden" name="action" value="cards">
+                <input type="hidden" name="action" value="cards_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
@@ -478,7 +478,7 @@
         <div class="col-xs-12 col-md-5">
             <h3>Decks<hr></h3>
             <form id="searchDecksForm" action="SearchServlet" method="POST">
-                <input type="hidden" name="action" value="decks">
+                <input type="hidden" name="action" value="decks_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
@@ -543,7 +543,7 @@
             </form><br>
             <h3>Collections<hr></h3>
             <form id="searchCollectionsForm" action="SearchServlet" method="POST">
-                <input type="hidden" name="action" value="collections">
+                <input type="hidden" name="action" value="collections_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">
@@ -608,7 +608,7 @@
             </form><br>
             <h3>Users<hr></h3>
             <form id="searchUsersForm" action="SearchServlet" method="POST">
-                <input type="hidden" name="action" value="users">
+                <input type="hidden" name="action" value="users_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
                     <div class="col-xs-4">

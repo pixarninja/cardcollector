@@ -50,7 +50,7 @@
     String collectionNameList = "";
     int collectionNum = 0;
     CollectionInfo collection;
-    while((collection = collectionInfo.getCollectionByNum(count)) != null) {
+    while((collection = collectionInfo.getCollectionByNumAlpha(count)) != null) {
         if(collection.getUser().equals(username)) {
             collectionNum++;
             if(collectionNum > 1) {
@@ -67,7 +67,7 @@
     int deckNum = 0;
     DeckInfo deck;
     count = 1;
-    while((deck = deckInfo.getDeckByNum(count)) != null) {
+    while((deck = deckInfo.getDeckByNumAlpha(count)) != null) {
         if(deck.getUser().equals(username)) {
             deckNum++;
             if(deckNum > 1) {
@@ -101,7 +101,7 @@
                 continue;
             }
             CardInfo card = cardInfo.getCardById(deckContents.getCardId());
-            if(!card.getUsd().equals("Unknown")) {
+            if(card.getUsd() != null && !card.getUsd().equals("Unknown")) {
                 try {
                     usd += deckContents.getCardTotal() * Double.parseDouble(card.getUsd());
                 } catch(NumberFormatException ex) {

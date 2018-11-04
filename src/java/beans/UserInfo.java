@@ -8,7 +8,8 @@ import java.util.logging.Logger;
 
 public class UserInfo implements Serializable{
     
-    private static LinkedHashMap users = new LinkedHashMap();
+    private static LinkedHashMap usersById = new LinkedHashMap();
+    private static LinkedHashMap usersByNum = new LinkedHashMap();
     private Connection connection;
     
     private String username;
@@ -21,7 +22,8 @@ public class UserInfo implements Serializable{
     
     public UserInfo() {
         try {
-            users = new LinkedHashMap();
+            usersById = new LinkedHashMap();
+            usersByNum = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
             Class.forName(driver);
             String dbURL = secure.DBConnection.dbURL;
@@ -31,7 +33,8 @@ public class UserInfo implements Serializable{
         
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table16 + "`");
+            int num = 1;
+            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table16 + "` ORDER BY joined DESC");
             while(rs.next()) {
                 String user = rs.getString("username");
                 String pass = rs.getString("password");
@@ -44,7 +47,9 @@ public class UserInfo implements Serializable{
                 java.util.Date dateJoined = rs.getDate("joined");
                 String bio = rs.getString("bio");
                 
-                users.put(user, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
+                usersById.put(user, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
+                usersByNum.put(num, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
+                num++;
             }
             rs.close();
             connection.close();
@@ -66,7 +71,11 @@ public class UserInfo implements Serializable{
     }
     
     public static UserInfo getUser(String username) {
-        return ((UserInfo)users.get(username));
+        return ((UserInfo)usersById.get(username));
+    }
+    
+    public static UserInfo getUserByNum(int num) {
+        return ((UserInfo)usersByNum.get(num));
     }
     
     public String getUsername() {

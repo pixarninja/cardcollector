@@ -99,7 +99,38 @@ public class CardServlet extends HttpServlet {
         }
         String url = "/";
         if(action.equals("card")) {
-            url = "/card.jsp";
+            String id = request.getParameter("id");
+            
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
+                /* Date */
+                java.util.Date date = new Date();
+                Object dateViewed = new java.sql.Timestamp(date.getTime());
+                String query = "UPDATE `" + secure.DBStructure.table1 + "` SET viewed = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setObject(1, dateViewed);
+                ps.setString(2, id);
+                ps.executeUpdate();
+                ps.close();
+                
+                url = "/card.jsp";
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if(action.equals("upvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
             int likes = Integer.parseInt(request.getParameter("likes"));
@@ -517,6 +548,16 @@ public class CardServlet extends HttpServlet {
                     ps.executeUpdate();
                     ps.close();
                 }
+                
+                /* Date */
+                java.util.Date date = new Date();
+                Object dateViewed = new java.sql.Timestamp(date.getTime());
+                String query = "UPDATE `" + secure.DBStructure.table1 + "` SET viewed = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setObject(1, dateViewed);
+                ps.setString(2, id);
+                ps.executeUpdate();
+                ps.close();
                 
                 connection.close();
                 url = "/profile.jsp";

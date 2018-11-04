@@ -52,7 +52,7 @@
         int count = 1;
         int collectionNum = 0;
         CollectionInfo collection;
-        while((collection = collectionInfo.getCollectionByNum(count)) != null) {
+        while((collection = collectionInfo.getCollectionByNumAlpha(count)) != null) {
             if(collection.getUser().equals(username)) {
                 collectionNum++;
                 if(collectionNum > 1) {
@@ -69,7 +69,7 @@
         int deckNum = 0;
         DeckInfo deck;
         count = 1;
-        while((deck = deckInfo.getDeckByNum(count)) != null) {
+        while((deck = deckInfo.getDeckByNumAlpha(count)) != null) {
             if(deck.getUser().equals(username)) {
                 deckNum++;
                 if(deckNum > 1) {
@@ -470,6 +470,47 @@
                                 if(cardFavorite.getUser().equals(username)) {
                                     CardInfo card = cardInfo.getCardById(cardFavorite.getCardId());
                                     String id = card.getId();
+                                    String legalities = card.getLegalities();
+                                    String legalityText = "";
+                                    if(legalities.charAt(0) == '1') {
+                                        legalityText += "S";
+                                    }
+                                    if(legalities.charAt(1) == '1') {
+                                        legalityText += "F";
+                                    }
+                                    if(legalities.charAt(2) == '1') {
+                                        legalityText += "R";
+                                    }
+                                    if(legalities.charAt(3) == '1') {
+                                        legalityText += "M";
+                                    }
+                                    if(legalities.charAt(4) == '1') {
+                                        legalityText += "L";
+                                    }
+                                    if(legalities.charAt(5) == '1') {
+                                        legalityText += "A";
+                                    }
+                                    if(legalities.charAt(6) == '1') {
+                                        legalityText += "V";
+                                    }
+                                    if(legalities.charAt(7) == '1') {
+                                        legalityText += "P";
+                                    }
+                                    if(legalities.charAt(8) == '1') {
+                                        legalityText += "C";
+                                    }
+                                    if(legalities.charAt(9) == '1') {
+                                        legalityText += "1";
+                                    }
+                                    if(legalities.charAt(10) == '1') {
+                                        legalityText += "D";
+                                    }
+                                    if(legalities.charAt(11) == '1') {
+                                        legalityText += "B";
+                                    }
+                                    if(legalityText == "") {
+                                        legalityText = "-";
+                                    }
                         %>
                         <div class="col-xs-6 col-sm-4 col-md-3">
                             <img class="img-special" width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img">
@@ -489,7 +530,7 @@
                             </form>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('cardForm<%=id%>').submit();">
-                                    <%=card.getName()%> (<%=card.getSetName()%>)
+                                    <%=card.getName()%> | <%=card.getSetName()%> (<%=legalityText%>)
                                 </a>
                             </p>
                             <form id="cardForm<%=id%>" action="CardServlet" method="POST">

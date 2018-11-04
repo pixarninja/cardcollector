@@ -263,19 +263,18 @@
                                                 <div class="col-xs-12"><hr></div>
                                                 <div class="col-xs-6">
                                                     <span style="float: right;">
-                                                        Copy Selected To Collection:
+                                                        Copy Selected To Deck:
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-6">
-                                                    <select name="copy_collection" id="input-field">
-                                                        <option value="">Choose collection...</option>
+                                                    <select name="copy_deck" id="input-field">
+                                                        <option value="">Choose deck...</option>
                                                         <%
                                                             num = 1;
-                                                            CollectionInfo collection;
-                                                            while((collection = collectionInfo.getCollectionByNum(num)) != null) {
-                                                                if(collection.getUser().equals(username)) {
+                                                            while((deck = deckInfo.getDeckByNumAlpha(num)) != null) {
+                                                                if(deck.getId() != id && deck.getUser().equals(username)) {
                                                         %>
-                                                        <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
+                                                        <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
                                                         <%
                                                                 }
                                                                 num++;
@@ -286,18 +285,19 @@
                                                 <div class="col-xs-12"><br></div>
                                                 <div class="col-xs-6">
                                                     <span style="float: right;">
-                                                        Copy Selected To Deck:
+                                                        Copy Selected To Collection:
                                                     </span>
                                                 </div>
                                                 <div class="col-xs-6">
-                                                    <select name="copy_deck" id="input-field">
-                                                        <option value="">Choose deck...</option>
+                                                    <select name="copy_collection" id="input-field">
+                                                        <option value="">Choose collection...</option>
                                                         <%
                                                             num = 1;
-                                                            while((deck = deckInfo.getDeckByNum(num)) != null) {
-                                                                if(deck.getId() != id && deck.getUser().equals(username)) {
+                                                            CollectionInfo collection;
+                                                            while((collection = collectionInfo.getCollectionByNumAlpha(num)) != null) {
+                                                                if(collection.getUser().equals(username)) {
                                                         %>
-                                                        <option value="<%=deck.getId()%>"><%=deck.getName()%></option>
+                                                        <option value="<%=collection.getId()%>"><%=collection.getName()%></option>
                                                         <%
                                                                 }
                                                                 num++;

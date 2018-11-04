@@ -467,6 +467,16 @@ public class PopupServlet extends HttpServlet {
                         }
 
                     }
+                    
+                    /* Date */
+                    java.util.Date date = new Date();
+                    Object dateViewed = new java.sql.Timestamp(date.getTime());
+                    query = "UPDATE `" + secure.DBStructure.table1 + "` SET viewed = ? WHERE id = ?";
+                    PreparedStatement ps = connection.prepareStatement(query);
+                    ps.setObject(1, dateViewed);
+                    ps.setString(2, id);
+                    ps.executeUpdate();
+                    ps.close();
 
                     connection.close();
                     url = "card.jsp";

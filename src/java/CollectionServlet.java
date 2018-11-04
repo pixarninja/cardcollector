@@ -831,13 +831,13 @@ public class CollectionServlet extends HttpServlet {
                         String newBottom = tmp.getString("bottom");
                         CardInfo card = CardInfo.getCardById(rs.getString("card_id"));
                         if(card != null && card.getFront() != null) {
-                            if(newTop.equals(card.getFront())) {
+                            if(newTop != null && newTop.equals(card.getFront())) {
                                 newTop = null;
                             }
-                            if(newMiddle.equals(card.getFront())) {
+                            if(newMiddle != null && newMiddle.equals(card.getFront())) {
                                 newMiddle = null;
                             }
-                            if(newBottom.equals(card.getFront())) {
+                            if(newBottom != null && newBottom.equals(card.getFront())) {
                                 newBottom = null;
                             }
                         }
@@ -926,13 +926,13 @@ public class CollectionServlet extends HttpServlet {
                 String newBottom = rs.getString("bottom");
                 CardInfo card = CardInfo.getCardById(cardId);
                 if(card != null && card.getFront() != null) {
-                    if(newTop.equals(card.getFront())) {
+                    if(newTop != null && newTop.equals(card.getFront())) {
                         newTop = null;
                     }
-                    if(newMiddle.equals(card.getFront())) {
+                    if(newMiddle != null && newMiddle.equals(card.getFront())) {
                         newMiddle = null;
                     }
-                    if(newBottom.equals(card.getFront())) {
+                    if(newBottom != null && newBottom.equals(card.getFront())) {
                         newBottom = null;
                     }
                 }

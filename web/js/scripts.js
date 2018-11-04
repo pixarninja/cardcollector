@@ -12,21 +12,18 @@ function reveal(imageId, containerId, capsuleId, target) {
     var rect = container.getBoundingClientRect();
     var cap = capsule.getBoundingClientRect();
     var width = container.clientWidth;
-    var height = width * 1.4;
     if(width > 250) {
         width = 250;
     }
-    var xpos = rect.left - cap.left - width + 15;
-    var ypos;
+    var height = width * 1.4;
+    
+    var xpos = rect.left - cap.left - (4 * width / 5);
+    var ypos = rect.top - cap.top - height / 2;
+    
     if(target === "edit_deck") {
-        ypos = rect.top - cap.top - (4 * height / 5);
-        xpos = xpos - 20;
+        xpos = rect.left - cap.left - (11 * width / 10);
     } else if(target === "edit_collection") {
-        ypos = rect.top - cap.top - (4 * height / 5);
-        xpos = xpos - 20;
-    }
-    else {
-        ypos = rect.top - cap.top;
+        xpos = rect.left - cap.left - (11 * width / 10);
     }
     
     image.style.position = "absolute";

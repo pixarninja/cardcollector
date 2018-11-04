@@ -12,6 +12,7 @@ public class CardInfo implements Serializable{
     
     private static LinkedHashMap cardsByName = new LinkedHashMap();
     private static LinkedHashMap cardsById = new LinkedHashMap();
+    private static LinkedHashMap cardsByNum = new LinkedHashMap();
     private Connection connection;
     
     private String id;
@@ -47,11 +48,13 @@ public class CardInfo implements Serializable{
     private String kingdom;
     private String usd;
     private Boolean digital;
+    private java.util.Date dateViewed;
     
     public CardInfo() {
         try {
             cardsByName = new LinkedHashMap();
             cardsById = new LinkedHashMap();
+            cardsByNum = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
             Class.forName(driver);
             String dbURL = secure.DBConnection.dbURL;
@@ -61,7 +64,8 @@ public class CardInfo implements Serializable{
         
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table1 + "`");
+            int num = 1;
+            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table1 + "` ORDER BY viewed DESC");
             while(rs.next()) {
                 String id = rs.getString("id");
                 String game = rs.getString("game");
@@ -99,9 +103,12 @@ public class CardInfo implements Serializable{
                 if(rs.getInt("digital") == 1) {
                     digital = true;
                 }
+                java.util.Date dateViewed = rs.getDate("viewed");
                 
-                cardsByName.put(name, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital));
-                cardsById.put(id, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital));
+                cardsByName.put(name, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed));
+                cardsById.put(id, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed));
+                cardsByNum.put(num, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed));
+                num++;
             }
             rs.close();
             connection.close();
@@ -112,7 +119,7 @@ public class CardInfo implements Serializable{
         }
     }
     
-    public CardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String front, String back, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital) {
+    public CardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String front, String back, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed) {
         this.id = id;
         this.game = game;
         this.name = name;
@@ -146,6 +153,7 @@ public class CardInfo implements Serializable{
         this.kingdom = kingdom;
         this.usd = usd;
         this.digital = digital;
+        this.dateViewed = dateViewed;
     }
     
     public static String printCards() {
@@ -165,6 +173,10 @@ public class CardInfo implements Serializable{
     
     public static CardInfo getCardById(String id) {
         return ((CardInfo)cardsById.get(id));
+    }
+    
+    public static CardInfo getCardByNum(int num) {
+        return ((CardInfo)cardsByNum.get(num));
     }
     
     public String getId() {
@@ -297,6 +309,10 @@ public class CardInfo implements Serializable{
     
     public Boolean getDigital() {
         return digital;
+    }
+    
+    public java.util.Date getDateViewed() {
+        return dateViewed;
     }
     
 }

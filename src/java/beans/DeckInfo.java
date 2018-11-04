@@ -10,6 +10,7 @@ public class DeckInfo implements Serializable{
     
     private static LinkedHashMap decksById = new LinkedHashMap();
     private static LinkedHashMap decksByNum = new LinkedHashMap();
+    private static LinkedHashMap decksByNumAlpha = new LinkedHashMap();
     private Connection connection;
     
     private int id;
@@ -28,6 +29,7 @@ public class DeckInfo implements Serializable{
         try {
             decksById = new LinkedHashMap();
             decksByNum = new LinkedHashMap();
+            decksByNumAlpha = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
             Class.forName(driver);
             String dbURL = secure.DBConnection.dbURL;
@@ -37,7 +39,7 @@ public class DeckInfo implements Serializable{
         
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` ORDER BY name ASC");
+            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` ORDER BY date_updated DESC");
             int num = 1;
             while(rs.next()) {
                 int id = rs.getInt("id");
@@ -54,6 +56,28 @@ public class DeckInfo implements Serializable{
                 
                 decksById.put(id, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description, wins, losses));
                 decksByNum.put(num, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description, wins, losses));
+                num++;
+            }
+            rs.close();
+            
+            statement = connection.createStatement();
+
+            rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` ORDER BY name ASC");
+            num = 1;
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String user = rs.getString("user");
+                String top = rs.getString("top");
+                String bottom = rs.getString("bottom");
+                int entries = rs.getInt("entries");
+                int total = rs.getInt("total");
+                java.util.Date dateUpdated = rs.getDate("date_updated");
+                String description = rs.getString("description");
+                int wins = rs.getInt("wins");
+                int losses = rs.getInt("losses");
+                
+                decksByNumAlpha.put(num, new DeckInfo(id, name, user, top, bottom, entries, total, dateUpdated, description, wins, losses));
                 num++;
             }
             rs.close();
@@ -85,6 +109,10 @@ public class DeckInfo implements Serializable{
     
     public static DeckInfo getDeckByNum(int num) {
         return ((DeckInfo)decksByNum.get(num));
+    }
+    
+    public static DeckInfo getDeckByNumAlpha(int num) {
+        return ((DeckInfo)decksByNumAlpha.get(num));
     }
     
     public int getId() {

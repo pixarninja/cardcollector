@@ -44,8 +44,6 @@
                             <!--<span style="float: right;">© 2018</span>-->
                         </p>
                     </div>
-                    <!-- Ad Bar -->
-                    <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;right: 0px;background-position: center-x;"></div>
                 </div>
             </div>
         </div>

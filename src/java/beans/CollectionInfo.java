@@ -10,6 +10,7 @@ public class CollectionInfo implements Serializable{
     
     private static LinkedHashMap collectionsById = new LinkedHashMap();
     private static LinkedHashMap collectionsByNum = new LinkedHashMap();
+    private static LinkedHashMap collectionsByNumAlpha = new LinkedHashMap();
     private Connection connection;
     
     private int id;
@@ -27,6 +28,7 @@ public class CollectionInfo implements Serializable{
         try {
             collectionsById = new LinkedHashMap();
             collectionsByNum = new LinkedHashMap();
+            collectionsByNumAlpha = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
             Class.forName(driver);
             String dbURL = secure.DBConnection.dbURL;
@@ -36,7 +38,7 @@ public class CollectionInfo implements Serializable{
         
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` ORDER BY name ASC");
+            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` ORDER BY date_updated DESC");
             int num = 1;
             while(rs.next()) {
                 int id = rs.getInt("id");
@@ -52,6 +54,27 @@ public class CollectionInfo implements Serializable{
                 
                 collectionsById.put(id, new CollectionInfo(id, name, user, top, middle, bottom, entries, total, dateUpdated, description));
                 collectionsByNum.put(num, new CollectionInfo(id, name, user, top, middle, bottom, entries, total, dateUpdated, description));
+                num++;
+            }
+            rs.close();
+            
+            statement = connection.createStatement();
+
+            rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` ORDER BY name ASC");
+            num = 1;
+            while(rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String user = rs.getString("user");
+                String top = rs.getString("top");
+                String middle = rs.getString("middle");
+                String bottom = rs.getString("bottom");
+                int entries = rs.getInt("entries");
+                int total = rs.getInt("total");
+                java.util.Date dateUpdated = rs.getDate("date_updated");
+                String description = rs.getString("description");
+                
+                collectionsByNumAlpha.put(num, new CollectionInfo(id, name, user, top, middle, bottom, entries, total, dateUpdated, description));
                 num++;
             }
             rs.close();
@@ -82,6 +105,10 @@ public class CollectionInfo implements Serializable{
     
     public static CollectionInfo getCollectionByNum(int num) {
         return ((CollectionInfo)collectionsByNum.get(num));
+    }
+    
+    public static CollectionInfo getCollectionByNumAlpha(int num) {
+        return ((CollectionInfo)collectionsByNumAlpha.get(num));
     }
     
     public int getId() {
