@@ -10,6 +10,7 @@ public class UserInfo implements Serializable{
     
     private static LinkedHashMap usersById = new LinkedHashMap();
     private static LinkedHashMap usersByNum = new LinkedHashMap();
+    private static LinkedHashMap usersByNumAlpha = new LinkedHashMap();
     private Connection connection;
     
     private String username;
@@ -24,6 +25,7 @@ public class UserInfo implements Serializable{
         try {
             usersById = new LinkedHashMap();
             usersByNum = new LinkedHashMap();
+            usersByNumAlpha = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
             Class.forName(driver);
             String dbURL = secure.DBConnection.dbURL;
@@ -52,6 +54,27 @@ public class UserInfo implements Serializable{
                 num++;
             }
             rs.close();
+            
+            statement = connection.createStatement();
+
+            rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table16 + "` ORDER BY name ASC");
+            num = 1;
+            while(rs.next()) {
+                String user = rs.getString("username");
+                String pass = rs.getString("password");
+                String picture = rs.getString("picture");
+                if(picture == null || picture.equals("") || picture.equals("null")) {
+                    picture = "images/blank_user.jpg";
+                }
+                String email = rs.getString("email");
+                String name = rs.getString("name");
+                java.util.Date dateJoined = rs.getDate("joined");
+                String bio = rs.getString("bio");
+                
+                usersByNumAlpha.put(num, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
+                num++;
+            }
+            rs.close();
             connection.close();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(UserInfo.class.getName()).log(Level.SEVERE, null, ex);
@@ -76,6 +99,10 @@ public class UserInfo implements Serializable{
     
     public static UserInfo getUserByNum(int num) {
         return ((UserInfo)usersByNum.get(num));
+    }
+    
+    public static UserInfo getUserByNumAlpha(int num) {
+        return ((UserInfo)usersByNumAlpha.get(num));
     }
     
     public String getUsername() {

@@ -6,26 +6,25 @@ import java.util.LinkedHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DeckMatchInfo implements Serializable{
+public class DeckWinLossInfo implements Serializable{
     
-    private static LinkedHashMap matchesById = new LinkedHashMap();
-    private static LinkedHashMap matchesByNum = new LinkedHashMap();
+    private static LinkedHashMap winlossById = new LinkedHashMap();
+    private static LinkedHashMap winlossByNum = new LinkedHashMap();
     private Connection connection;
     
     private int id;
-    private int challengerId;
+    private String verifierId;
     private int ownerId;
-    private String text;
     private java.util.Date dateAdded;
     private int won;
     private int matches;
     private int prevWon;
     private int prevMatches;
     
-    public DeckMatchInfo() {
+    public DeckWinLossInfo() {
         try {
-            matchesById = new LinkedHashMap();
-            matchesByNum = new LinkedHashMap();
+            winlossById = new LinkedHashMap();
+            winlossByNum = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
             Class.forName(driver);
             String dbURL = secure.DBConnection.dbURL;
@@ -35,22 +34,21 @@ public class DeckMatchInfo implements Serializable{
         
             Statement statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table18 + "` ORDER BY date_added ASC");
+            ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table19 + "` ORDER BY date_added ASC");
             
             int num = 1;
             while(rs.next()) {
                 int id = rs.getInt("id");
-                int challegerId = rs.getInt("challenger_id");
+                String verifierId = rs.getString("verifier_id");
                 int ownerId = rs.getInt("owner_id");
-                String text = rs.getString("text");
                 java.util.Date dateAdded = rs.getDate("date_added");
                 int won = rs.getInt("won");
                 int matches = rs.getInt("matches");
                 int prevWon = rs.getInt("prev_won");
                 int prevMatches = rs.getInt("prev_matches");
                 
-                matchesById.put(id, new DeckMatchInfo(id, challegerId, ownerId, text, dateAdded, won, matches, prevWon, prevMatches));
-                matchesByNum.put(num, new DeckMatchInfo(id, challegerId, ownerId, text, dateAdded, won, matches, prevWon, prevMatches));
+                winlossById.put(id, new DeckWinLossInfo(id, verifierId, ownerId, dateAdded, won, matches, prevWon, prevMatches));
+                winlossByNum.put(num, new DeckWinLossInfo(id, verifierId, ownerId, dateAdded, won, matches, prevWon, prevMatches));
                 num++;
             }
             rs.close();
@@ -62,11 +60,10 @@ public class DeckMatchInfo implements Serializable{
         }
     }
     
-    public DeckMatchInfo(int id, int challengerId, int ownerId, String text, java.util.Date dateAdded, int won, int matches, int prevWon, int prevMatches) {
+    public DeckWinLossInfo(int id, String verifierId, int ownerId, java.util.Date dateAdded, int won, int matches, int prevWon, int prevMatches) {
         this.id = id;
-        this.challengerId = challengerId;
+        this.verifierId = verifierId;
         this.ownerId = ownerId;
-        this.text = text;
         this.dateAdded = dateAdded;
         this.won = won;
         this.matches = matches;
@@ -74,28 +71,24 @@ public class DeckMatchInfo implements Serializable{
         this.prevMatches = prevMatches;
     }
     
-    public static DeckMatchInfo getMatchById(int id) {
-        return ((DeckMatchInfo)matchesById.get(id));
+    public static DeckWinLossInfo getWinLossById(int id) {
+        return ((DeckWinLossInfo)winlossById.get(id));
     }
     
-    public static DeckMatchInfo getMatchByNum(int num) {
-        return ((DeckMatchInfo)matchesByNum.get(num));
+    public static DeckWinLossInfo getWinLossByNum(int num) {
+        return ((DeckWinLossInfo)winlossByNum.get(num));
     }
     
     public int getId() {
         return id;
     }
     
-    public int getChallengerId() {
-        return challengerId;
+    public String getVerifierId() {
+        return verifierId;
     }
     
     public int getOwnerId() {
         return ownerId;
-    }
-    
-    public String getText() {
-        return text;
     }
     
     public java.util.Date getDateAdded() {

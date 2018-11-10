@@ -106,6 +106,8 @@ public class DeckServlet extends HttpServlet {
             int match_id = Integer.parseInt(request.getParameter("match_id"));
             int won = Integer.parseInt(request.getParameter("won"));
             int matches = Integer.parseInt(request.getParameter("matches"));
+            int prev_won = Integer.parseInt(request.getParameter("prev_won"));
+            int prev_matches = Integer.parseInt(request.getParameter("prev_matches"));
             try {
                 String driver = secure.DBConnection.driver;
                 Class.forName(driver);
@@ -129,30 +131,32 @@ public class DeckServlet extends HttpServlet {
                 wins = rs.getInt("wins");
                 losses = rs.getInt("losses");
                 rs.close();
-
-                query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
-                ps = connection.prepareStatement(query);
-                ps.setInt(1, wins + matches - won);
-                ps.setInt(2, losses + won);
-                ps.setInt(3, owner_id);
-                ps.executeUpdate();
-                ps.close();
                 
-                /* update challenger deck */
-                statement = connection.createStatement();
-                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + challenger_id + "'");
-                rs.next();
-                wins = rs.getInt("wins");
-                losses = rs.getInt("losses");
-                rs.close();
+                if(prev_won == wins && prev_matches == wins + losses) {
+                    query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1, wins + matches - won);
+                    ps.setInt(2, losses + won);
+                    ps.setInt(3, owner_id);
+                    ps.executeUpdate();
+                    ps.close();
 
-                query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
-                ps = connection.prepareStatement(query);
-                ps.setInt(1, wins + won);
-                ps.setInt(2, losses + matches - won);
-                ps.setInt(3, challenger_id);
-                ps.executeUpdate();
-                ps.close();
+                    /* update challenger deck */
+                    statement = connection.createStatement();
+                    rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + challenger_id + "'");
+                    rs.next();
+                    wins = rs.getInt("wins");
+                    losses = rs.getInt("losses");
+                    rs.close();
+
+                    query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1, wins + won);
+                    ps.setInt(2, losses + matches - won);
+                    ps.setInt(3, challenger_id);
+                    ps.executeUpdate();
+                    ps.close();    
+                }
                 
                 /* delete notification */
                 query = "DELETE FROM `" + secure.DBStructure.table15 + "` WHERE id = ?";
@@ -206,6 +210,115 @@ public class DeckServlet extends HttpServlet {
                 query = "DELETE FROM `" + secure.DBStructure.table18 + "` WHERE id = ?";
                 ps = connection.prepareStatement(query);
                 ps.setInt(1, match_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                connection.close();
+                url = "/deck.jsp";
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("verify_winloss")) {
+            int owner_id = Integer.parseInt(request.getParameter("id"));
+            int notification_id = Integer.parseInt(request.getParameter("notification_id"));
+            int winloss_id = Integer.parseInt(request.getParameter("winloss_id"));
+            int won = Integer.parseInt(request.getParameter("won"));
+            int matches = Integer.parseInt(request.getParameter("matches"));
+            int prev_won = Integer.parseInt(request.getParameter("prev_won"));
+            int prev_matches = Integer.parseInt(request.getParameter("prev_matches"));
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                String query;
+                PreparedStatement ps;
+                
+                int wins;
+                int losses;
+                
+                /* update owner deck */
+                Statement statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + owner_id + "'");
+                rs.next();
+                wins = rs.getInt("wins");
+                losses = rs.getInt("losses");
+                rs.close();
+                
+                if(prev_won == wins && prev_matches == wins + losses) {
+                    /* update owner deck */
+                    query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1, won);
+                    ps.setInt(2, matches - won);
+                    ps.setInt(3, owner_id);
+                    ps.executeUpdate();
+                    ps.close();
+                }
+                
+                /* delete notification */
+                query = "DELETE FROM `" + secure.DBStructure.table15 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, notification_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                /* delete winloss */
+                query = "DELETE FROM `" + secure.DBStructure.table19 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, winloss_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                connection.close();
+                url = "/deck.jsp";
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("reject_winloss")) {
+            int notification_id = Integer.parseInt(request.getParameter("notification_id"));
+            int winloss_id = Integer.parseInt(request.getParameter("winloss_id"));
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                String query;
+                PreparedStatement ps;
+                
+                /* delete notification */
+                query = "DELETE FROM `" + secure.DBStructure.table15 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, notification_id);
+                ps.executeUpdate();
+                ps.close();
+                
+                /* delete winloss */
+                query = "DELETE FROM `" + secure.DBStructure.table19 + "` WHERE id = ?";
+                ps = connection.prepareStatement(query);
+                ps.setInt(1, winloss_id);
                 ps.executeUpdate();
                 ps.close();
                 
@@ -612,6 +725,19 @@ public class DeckServlet extends HttpServlet {
             ArrayList<String> selected = new ArrayList<String>();
             int num = 1;
             boolean error = false;
+            int won = 0;
+            if(request.getParameter("times_won") != null) {
+                won = Integer.parseInt((String) request.getParameter("times_won"));
+            }
+            int matches = 0;
+            if(request.getParameter("times_played") != null) {
+                matches = Integer.parseInt((String) request.getParameter("times_played"));
+            }
+            String verifier = "";
+            if(request.getParameter("verifier") != null) {
+                verifier = (String) request.getParameter("verifier");
+            }
+            
             try {
                 String driver = secure.DBConnection.driver;
                 Class.forName(driver);
@@ -686,6 +812,73 @@ public class DeckServlet extends HttpServlet {
                     ps.executeUpdate();
                     ps.close();
                     
+                }
+                
+                /* Winloss */
+                if(verifier != null && !verifier.equals("") && !error) {
+                    statement = connection.createStatement();
+                    ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + id + "'");
+                    rs.next();
+                    int wins = rs.getInt("wins");
+                    int losses = rs.getInt("losses");
+                    rs.close();
+                    
+                    if(won != wins || losses != (matches - wins)) {
+                        /* add winloss */
+                        rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table19 + "`");
+                        /* find the next possible id */
+                        int winlossId = 1;
+                        while(rs.next()) {
+                            if(rs.getInt("id") > winlossId) {
+                                break;
+                            }
+                            winlossId++;
+                        }
+                        rs.close();
+
+                        java.util.Date date = new Date();
+                        Object dateAdded = new java.sql.Timestamp(date.getTime());
+
+                        String query = "INSERT INTO `" + secure.DBStructure.table19 + "` (`id`, `verifier_id`, `owner_id`, `date_added`, `won`, `matches`, `prev_won`, `prev_matches`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                        PreparedStatement ps = connection.prepareStatement(query);
+                        ps.setInt(1, winlossId);
+                        ps.setString(2, verifier);
+                        ps.setInt(3, id);
+                        ps.setObject(4, dateAdded);
+                        ps.setInt(5, won);
+                        ps.setInt(6, matches);
+                        ps.setInt(7, wins);
+                        ps.setInt(8, wins + losses);
+                        ps.execute();
+                        ps.close();
+
+                        /* add notification */
+                        rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table15 + "`");
+                        /* find the next possible id */
+                        int count = 1;
+                        while(rs.next()) {
+                            if(rs.getInt("id") > count) {
+                                break;
+                            }
+                            count++;
+                        }
+                        rs.close();
+
+                        date = new Date();
+                        dateAdded = new java.sql.Timestamp(date.getTime());
+
+                        query = "INSERT INTO `" + secure.DBStructure.table15 + "` (`id`, `type`, `type_id`, `owner`, `user`, `date_added`, status) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                        ps = connection.prepareStatement(query);
+                        ps.setInt(1, count);
+                        ps.setInt(2, 6); // 6 for win/loss update
+                        ps.setInt(3, winlossId);
+                        ps.setString(4, verifier);
+                        ps.setString(5, username);
+                        ps.setObject(6, dateAdded);
+                        ps.setInt(7, 0);
+                        ps.execute();
+                        ps.close();
+                    }
                 }
                 
                 /* Cover */
@@ -912,14 +1105,24 @@ public class DeckServlet extends HttpServlet {
                             continue;
                         }
                         
+                        /* Date */
+                        java.util.Date date = new Date();
+                        Object dateViewed = new java.sql.Timestamp(date.getTime());
+                        String query = "UPDATE `" + secure.DBStructure.table1 + "` SET viewed = ? WHERE id = ?";
+                        PreparedStatement ps = connection.prepareStatement(query);
+                        ps.setObject(1, dateViewed);
+                        ps.setString(2, rs.getString("card_id"));
+                        ps.executeUpdate();
+                        ps.close();
+                        
                         statement = connection.createStatement();
                         ResultSet tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = '" + id + "' AND card_id = '" + rs.getString("card_id") + "'");
                         tmp.next();
                         int cardTotal = tmp.getInt("card_total");
                         tmp.close();
 
-                        String query = "DELETE FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = ? AND card_id = ?";
-                        PreparedStatement ps = connection.prepareStatement(query);
+                        query = "DELETE FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = ? AND card_id = ?";
+                        ps = connection.prepareStatement(query);
                         ps.setInt(1, id);
                         ps.setString(2, rs.getString("card_id"));
                         ps.executeUpdate();
@@ -964,6 +1167,26 @@ public class DeckServlet extends HttpServlet {
                     ps.executeUpdate();
                     ps.close();
                 }
+                
+                /* Assurance */
+                int total = 0;
+                int entries = 0;
+                statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = '" + id + "'");
+
+                while(rs.next()) {
+                    total += rs.getInt("card_total");
+                    entries++;
+                }
+                rs.close();
+                
+                String query = "UPDATE `" + secure.DBStructure.table10 + "` SET total = ?, entries = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, total);
+                ps.setInt(2, entries);
+                ps.setInt(3, id);
+                ps.executeUpdate();
+                ps.close();
                 
                 if(error) {
                     url = "/edit_deck.jsp";

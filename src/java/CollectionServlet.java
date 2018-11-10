@@ -870,6 +870,26 @@ public class CollectionServlet extends HttpServlet {
                     ps.close();
                 }
                 
+                /* Assurance */
+                int total = 0;
+                int entries = 0;
+                statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "'");
+
+                while(rs.next()) {
+                    total += rs.getInt("card_total");
+                    entries++;
+                }
+                rs.close();
+                
+                String query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ?, entries = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, total);
+                ps.setInt(2, entries);
+                ps.setInt(3, id);
+                ps.executeUpdate();
+                ps.close();
+                
                 if(error) {
                     url = "/edit_collection.jsp";
                 }

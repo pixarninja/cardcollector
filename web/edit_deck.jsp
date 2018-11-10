@@ -89,6 +89,47 @@
                             <div class="col-xs-12"><hr></div>
                         </div>
                         <div class="row">
+                            <div class="col-xs-5 col-sm-4">
+                                <p id="title">Deck Statistics</p>
+                            </div>
+                            <div class="col-xs-7 col-sm-8">
+                                You may update the wins and/or losses for this deck. In order to do so, you must select a verifier out of the users of this website. The verifier will be able to accept or reject the update from their Notifications Page (the <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;icon).<br><br>
+                                <div class="col-xs-12 col-sm-4 col-md-3">
+                                    <p id="title">Verifier</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-9">
+                                    <select name="verifier" id="input-field">
+                                        <option value=""></option>
+                                        <%
+                                            int num = 1;
+                                            UserInfo user;
+                                            while((user = userInfo.getUserByNumAlpha(num)) != null) {
+                                        %>
+                                        <option value="<%=user.getUsername()%>"><%=user.getUsername()%> (<%=user.getName()%>)</option>
+                                        <%
+                                                num++;
+                                            }
+                                        %>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12"><br></div>
+                                <div class="col-xs-12 col-sm-4 col-md-3">
+                                    <p id="title">Matches Won</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-9">
+                                    <input id="input-field" class="input-number" name="times_won" type="number" value="<%=deck.getWins()%>">
+                                </div>
+                                <div class="col-xs-12"><br></div>
+                                <div class="col-xs-12 col-sm-4 col-md-3">
+                                    <p id="title">Matches Played</p>
+                                </div>
+                                <div class="col-xs-12 col-sm-8 col-md-9">
+                                    <input id="input-field" class="input-number" name="times_played" type="number" value="<%=deck.getWins() + deck.getLosses()%>">
+                                </div>
+                            </div>
+                            <div class="col-xs-12"><hr></div>
+                        </div>
+                        <div class="row">
                             <div class="col-xs-12 col-lg-4">
                                 <p id="title">Deck Contents and Appearance</p><br>
                                 <%
@@ -121,7 +162,7 @@
                                     <select name="cover" id="input-field">
                                         <option value=""></option>
                                         <%
-                                            int num = 1;
+                                            num = 1;
                                             while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
                                                 if(deckContents.getDeckId() == id) {
                                                     CardInfo card = cardInfo.getCardById(deckContents.getCardId());

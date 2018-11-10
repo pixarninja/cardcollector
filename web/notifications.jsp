@@ -15,6 +15,7 @@
 <jsp:useBean id="collectionCommentReactionInfo" class="beans.CollectionCommentReactionInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
 <jsp:useBean id="deckMatchInfo" class="beans.DeckMatchInfo" scope="request"/>
+<jsp:useBean id="deckWinLossInfo" class="beans.DeckWinLossInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -598,6 +599,7 @@
                                                 <p>
                                                     <%=content%>
                                                 </p><hr>
+                                                <%=challenger.getUsername()%> won <%=deckMatch.getWon()%> times out of <%=deckMatch.getMatches()%> matches
                                                 <br>
                                             </div>
                                         </div>
@@ -608,6 +610,69 @@
                                             <%=content%>
                                         </p><hr>
                                         <%=challenger.getUsername()%> won <%=deckMatch.getWon()%> times out of <%=deckMatch.getMatches()%> matches
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12"><br><br></div>
+                        <%
+                            }
+                            if(notification.getType() == 6) { // winloss update
+                                DeckWinLossInfo deckWinLoss = deckWinLossInfo.getWinLossById(notification.getTypeId());
+                                UserInfo verifier = userInfo.getUser(deckWinLoss.getVerifierId());
+                                if(verifier == null) {count++; continue;}
+                                DeckInfo ownerDeck = deckInfo.getDeckById(deckWinLoss.getOwnerId());
+                                if(ownerDeck == null) {count++; continue;}
+                                dateAdded = deckWinLoss.getDateAdded();
+                                owner = (UserInfo) userInfo.getUser(ownerDeck.getUser());
+                                if(owner == null) {count++; continue;}
+                                picture = owner.getPicture();
+                        %>
+                        <div class="col-xs-1">
+                            <input type="checkbox" name="<%=num%>" value="<%=notification.getId()%>">
+                        </div>
+                        <div class="col-xs-11">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <p><span id="title">Date Added:</span> <%=notification.getDateAdded()%></p>
+                                    <p><span id="title">Notification: </span> <%=notification.getUser()%> would like you to verify their win/loss update for their deck, <a style="cursor: pointer;" onclick="document.getElementById('ownerDeckForm<%=count%>').submit();"><%=ownerDeck.getName()%></a></p>
+                                    <br>
+                                    <div class="col-xs-7 col-sm-3">
+                                        <img width="100%" src="<%=picture%>" alt="<%=picture%>" id="center-img"><br>
+                                        <%
+                                            if(username == null || username.equals("")) {
+                                        %>
+                                        <%} else {%>
+                                        <div class="row" style="margin: auto;display: table">
+                                            <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-left" title="Verify Update" onclick="document.getElementById('verifyWinLossForm<%=count%>').submit();">
+                                                <span id="button-symbol" class="glyphicon glyphicon-ok"></span>
+                                            </div>
+                                            <div class="hidden-xs col-sm-2" style="margin: auto;display: table" id="button-back-right" title="Reject Update" onclick="document.getElementById('rejectWinLossForm<%=count%>').submit();">
+                                                <span id="button-symbol" class="glyphicon glyphicon-remove"></span>
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                    </div>
+                                    <div class="col-xs-5 col-sm-9">
+                                        <div class="row">
+                                            <p><span id="title">Username: </span><%=owner.getUsername()%></p>
+                                            <p><span id="title">Date Added: </span><%=dateAdded%></p>
+                                            <div class="well hidden-xs col-sm-12" id="black-well">
+                                                <p>
+                                                    <%=owner.getUsername()%> has won <%=deckWinLoss.getWon()%> times out of <%=deckWinLoss.getMatches()%> matches
+                                                </p><hr>
+                                                Please verify that this is correct.
+                                                <br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-12 hidden-sm hidden-md hidden-lg"><br></div>
+                                    <div class="well col-xs-12 hidden-sm hidden-md hidden-lg" id="black-well">
+                                        <p>
+                                            <%=owner.getUsername()%> has won <%=deckWinLoss.getWon()%> times out of <%=deckWinLoss.getMatches()%> matches
+                                        </p><hr>
+                                        Please verify that this is correct.
                                         <br>
                                     </div>
                                 </div>
@@ -641,7 +706,7 @@
                         <div class="hidden-xs col-sm-4"></div>
                         <div class="col-xs-12 col-sm-4">
                             <br>
-                            <button title="Delete Selected Notifications" id="form-submit" type="submit">Submit</button><br><br><br>
+                            <button title="Delete Selected Notifications" id="form-submit" type="submit">Delete Selected</button><br><br><br>
                         </div>
                     </div>
                 </form>
@@ -761,6 +826,8 @@
                     <input type="hidden" name="id" value="<%=deckMatch.getOwnerId()%>">
                     <input type="hidden" name="won" value="<%=deckMatch.getWon()%>">
                     <input type="hidden" name="matches" value="<%=deckMatch.getMatches()%>">
+                    <input type="hidden" name="prev_won" value="<%=deckMatch.getPrevWon()%>">
+                    <input type="hidden" name="prev_matches" value="<%=deckMatch.getPrevMatches()%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
                 <form id="rejectMatchForm<%=count%>" action="DeckServlet" method="POST">
@@ -768,6 +835,35 @@
                     <input type="hidden" name="match_id" value="<%=deckMatch.getId()%>">
                     <input type="hidden" name="notification_id" value="<%=notification.getId()%>">
                     <input type="hidden" name="id" value="<%=deckMatch.getOwnerId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <%
+                    }
+                    if(notification.getType() == 6) {
+                        DeckWinLossInfo deckWinLoss = deckWinLossInfo.getWinLossById(notification.getTypeId());
+                        if(deckWinLoss == null) {count++; continue;}
+                %>
+                <form id="ownerDeckForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="deck">
+                    <input type="hidden" name="id" value="<%=deckWinLoss.getOwnerId()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <form id="verifyWinLossForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="verify_winloss">
+                    <input type="hidden" name="winloss_id" value="<%=deckWinLoss.getId()%>">
+                    <input type="hidden" name="notification_id" value="<%=notification.getId()%>">
+                    <input type="hidden" name="id" value="<%=deckWinLoss.getOwnerId()%>">
+                    <input type="hidden" name="won" value="<%=deckWinLoss.getWon()%>">
+                    <input type="hidden" name="matches" value="<%=deckWinLoss.getMatches()%>">
+                    <input type="hidden" name="prev_won" value="<%=deckWinLoss.getPrevWon()%>">
+                    <input type="hidden" name="prev_matches" value="<%=deckWinLoss.getPrevMatches()%>">
+                    <input type="hidden" name="username" value="<%=username%>">
+                </form>
+                <form id="rejectWinLossForm<%=count%>" action="DeckServlet" method="POST">
+                    <input type="hidden" name="action" value="reject_winloss">
+                    <input type="hidden" name="winloss_id" value="<%=deckWinLoss.getId()%>">
+                    <input type="hidden" name="notification_id" value="<%=notification.getId()%>">
+                    <input type="hidden" name="id" value="<%=deckWinLoss.getOwnerId()%>">
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
                 <%

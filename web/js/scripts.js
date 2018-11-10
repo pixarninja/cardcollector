@@ -708,7 +708,7 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
     revealForm("popupForm");
 }
 
-function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, deckNum, deckIdList, deckNameList) {
+function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, deckNum, deckIdList, deckNameList, prevWon, prevMatches) {
     var deckIds = deckIdList.split("`");
     var deckNames = deckNameList.split("`");
     var i;
@@ -717,6 +717,8 @@ function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, 
     <input type='hidden' name='username' value='" + username + "'>\
     <input type='hidden' name='id' value='" + id + "'>\
     <input type='hidden' name='owner' value='" + owner + "'>\
+    <input type='hidden' name='times_prev_won' value='" + prevWon + "'>\
+    <input type='hidden' name='times_prev_played' value='" + prevMatches + "'>\
     <div class='col-xs-12'>\
         <h2>\
             <p align='center'>\
@@ -741,7 +743,7 @@ function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, 
                 Select the deck which you used to challenge this deck from the drop-down list below. You must also input the number of times you won out of the number of matches played. Once submitted, the user you challenged can accept or reject the outcome from their Notifications Page.\
             </h4><hr>\
             <h4 id='title'>\
-                Your Deck: <select name='deck1' id='input-field'><br><br>\
+                Your Deck<br><select name='deck1' id='input-field'><br><br>\
                     <option value=''>Choose deck...</option>";
             for (i = 0; i < deckNum; i++) {
                 view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
@@ -762,7 +764,7 @@ function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, 
             </h4>";
         } else {
             view += "<h4 id='title'>\
-                Your Deck: <select name='deck1' id='input-field'><br><br>\
+                Your Deck<br><select name='deck2' id='input-field'><br><br>\
                     <option value=''>Choose deck...</option>";
             for (i = 0; i < deckNum; i++) {
                 view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";

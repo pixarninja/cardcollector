@@ -225,7 +225,7 @@
                         <%}}%>
                         <p align="center" style="position: relative;top: -5px;">
                             <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
-                                <%=deck.getName()%> by <%=deck.getUser()%> (<%=deck.getTotal()%>)
+                                <%=deck.getName()%> by <%=deck.getUser()%> (<%=deck.getTotal()%>, <%=deck.getWins()%>/<%=deck.getLosses()%>)
                             </a>
                         </p>
                         <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
