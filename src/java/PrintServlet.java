@@ -128,12 +128,12 @@ public class PrintServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrintServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrintServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("collection")) {
             try {
@@ -167,12 +167,12 @@ public class PrintServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrintServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrintServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("deck")) {
             try {
@@ -206,12 +206,12 @@ public class PrintServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrintServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PrintServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             url = "/help.jsp";

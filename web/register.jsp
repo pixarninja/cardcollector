@@ -129,7 +129,7 @@
                                 <p id="title">Password</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
-                                Choose a password less than 24 characters long.<br><br>
+                                Choose a password less than 24 characters long. All passwords are stored securely as hash values.<br><br>
                                 <input id="input-field" name="password" type="password" required><br><br>
                             </div>
                         </div>

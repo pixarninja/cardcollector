@@ -47,9 +47,9 @@
     UserInfo user = userInfo.getUser(username);
     if(user != null) {
         String picture = user.getPicture();
+        int count = 1;
         String collectionIdList = "";
         String collectionNameList = "";
-        int count = 1;
         int collectionNum = 0;
         CollectionInfo collection;
         while((collection = collectionInfo.getCollectionByNumAlpha(count)) != null) {
@@ -60,7 +60,11 @@
                     collectionNameList += "`";
                 }
                 collectionIdList += collection.getId();
-                collectionNameList += collection.getName();
+                String name = "";
+                for(int i = 0; i < collection.getName().length(); i++) {
+                    name += (int) collection.getName().charAt(i) + ".";
+                }
+                collectionNameList += name;
             }
             count++;
         }
@@ -77,7 +81,11 @@
                     deckNameList += "`";
                 }
                 deckIdList += deck.getId();
-                deckNameList += deck.getName();
+                String name = "";
+                for(int i = 0; i < deck.getName().length(); i++) {
+                    name += (int) deck.getName().charAt(i) + ".";
+                }
+                deckNameList += name;
             }
             count++;
         }
@@ -254,7 +262,7 @@
                     </form>
                     <p align="center" style="position: relative;top: -5px;">
                         <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
-                            <%=myDeck.getName()%> by <%=myDeck.getUser()%>
+                            <%=myDeck.getName()%> by <%=myDeck.getUser()%> (<%=myDeck.getTotal()%>, <%=myDeck.getWins()%>/<%=myDeck.getLosses()%>)
                         </a>
                     </p>
                     <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
@@ -378,7 +386,7 @@
                         </form>
                         <p align="center" style="position: relative;top: -5px;">
                             <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
-                                <%=myCollection.getName()%> by <%=myCollection.getUser()%>
+                                <%=myCollection.getName()%> by <%=myCollection.getUser()%> (<%=myCollection.getTotal()%>)
                             </a>
                         </p>
                         <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">
@@ -623,7 +631,7 @@
                             </form>
                             <p align="center" style="position: relative;top: -5px;">
                                 <a id="menu-item" onclick="document.getElementById('deckForm<%=id%>').submit();">
-                                    <%=deck.getName()%> (<%=deck.getUser()%>)
+                                    <%=deck.getName()%> by <%=deck.getUser()%> (<%=deck.getTotal()%>, <%=deck.getWins()%>/<%=deck.getLosses()%>)
                                 </a>
                             </p>
                             <form id="deckForm<%=id%>" action="DeckServlet" method="POST">
@@ -721,7 +729,7 @@
                                 </form>
                                 <p align="center" style="position: relative;top: -5px;">
                                     <a id="menu-item" onclick="document.getElementById('collectionForm<%=id%>').submit();">
-                                        <%=collection.getName()%> (<%=collection.getUser()%>)
+                                        <%=collection.getName()%> by <%=collection.getUser()%> ( (<%=collection.getTotal()%>)
                                     </a>
                                 </p>
                                 <form id="collectionForm<%=id%>" action="CollectionServlet" method="POST">

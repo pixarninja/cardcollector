@@ -98,7 +98,13 @@ public class DeckServlet extends HttpServlet {
         }
         String url = "/";
         if(action.equals("new")) {
-            url = "/new_deck.jsp";
+            if(username.equals("")) {
+                request.setAttribute("username", "error: propted redirect");
+                url = "/login.jsp";
+            }
+            else {
+                url = "/new_deck.jsp";
+            }
         } else if(action.equals("accept_match")) {
             int owner_id = Integer.parseInt(request.getParameter("id"));
             int challenger_id = Integer.parseInt(request.getParameter("challenger_id"));
@@ -178,12 +184,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("reject_match")) {
             int notification_id = Integer.parseInt(request.getParameter("notification_id"));
@@ -219,12 +225,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("verify_winloss")) {
             int owner_id = Integer.parseInt(request.getParameter("id"));
@@ -287,12 +293,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("reject_winloss")) {
             int notification_id = Integer.parseInt(request.getParameter("notification_id"));
@@ -328,12 +334,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("upvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
@@ -461,12 +467,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("downvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
@@ -594,12 +600,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("comment")) {
             String comment = request.getParameter("comment");
@@ -706,12 +712,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("submit_edit")) {
             int id = Integer.parseInt((String)request.getParameter("id"));
@@ -1198,12 +1204,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_card")) {
             int id = Integer.parseInt((String)request.getParameter("id"));
@@ -1270,12 +1276,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("create")) {
             String name = request.getParameter("name");
@@ -1347,12 +1353,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("favorite")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -1412,12 +1418,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("edit")) {
             url = "/edit_deck.jsp";
@@ -1485,12 +1491,12 @@ public class DeckServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DeckServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("your_decks")) {
             if(username.equals("")) {

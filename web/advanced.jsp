@@ -313,6 +313,63 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-4">
+                        <p>Legalities</p>
+                    </div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="S" type="checkbox" value="legalities">&nbsp;Standard (S)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="F" type="checkbox" value="legalities">&nbsp;Future (F)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="R" type="checkbox" value="legalities">&nbsp;Frontier (R)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="M" type="checkbox" value="legalities">&nbsp;Modern (M)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="L" type="checkbox" value="legalities">&nbsp;Legacy (L)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="A" type="checkbox" value="legalities">&nbsp;Pauper (A)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="V" type="checkbox" value="legalities">&nbsp;Vintage (V)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="P" type="checkbox" value="legalities">&nbsp;Penny (P)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="C" type="checkbox" value="legalities">&nbsp;Commander (C)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="1" type="checkbox" value="legalities">&nbsp;1 vs 1 (1)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="D" type="checkbox" value="legalities">&nbsp;Duel (D)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8 col-md-4 col-lg-8">
+                        <input name="B" type="checkbox" value="legalities">&nbsp;Brawl (B)
+                    </div>
+                    <div class="col-xs-4"></div>
+                    <div class="col-xs-8">
+                        <input name="-" type="checkbox" value="legalities">&nbsp;None (-)
+                    </div>
+                    <div class="col-xs-12"><hr></div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4">
                         <p>Rarity</p>
                     </div>
                     <div class="col-xs-4">

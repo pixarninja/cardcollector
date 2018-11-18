@@ -284,7 +284,11 @@
                     collectionNameList += "`";
                 }
                 collectionIdList += collection.getId();
-                collectionNameList += collection.getName();
+                String collectionName = "";
+                for(int j = 0; j < collection.getName().length(); j++) {
+                    collectionName += (int) collection.getName().charAt(j) + ".";
+                }
+                collectionNameList += collectionName;
             }
             count++;
         }
@@ -301,7 +305,11 @@
                     deckNameList += "`";
                 }
                 deckIdList += deck.getId();
-                deckNameList += deck.getName();
+                String deckName = "";
+                for(int j = 0; j < deck.getName().length(); j++) {
+                    deckName += (int) deck.getName().charAt(j) + ".";
+                }
+                deckNameList += deckName;
             }
             count++;
         }

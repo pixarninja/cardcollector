@@ -93,7 +93,7 @@
                                 <p id="title">Deck Statistics</p>
                             </div>
                             <div class="col-xs-7 col-sm-8">
-                                You may update the wins and/or losses for this deck. In order to do so, you must select a verifier out of the users of this website. The verifier will be able to accept or reject the update from their Notifications Page (the <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;icon).<br><br>
+                                You may update the wins and/or losses for this deck. In order to do so, you must select a verifier out of the users of this website. The verifier will be able to accept or reject the update from their Notifications Page (the <span class="glyphicon glyphicon-gift"></span>&nbsp;icon).<br><br>
                                 <div class="col-xs-12 col-sm-4 col-md-3">
                                     <p id="title">Verifier</p>
                                 </div>
@@ -166,9 +166,11 @@
                                             while((deckContents = deckContentsInfo.getContentsByNum(num)) != null) {
                                                 if(deckContents.getDeckId() == id) {
                                                     CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                                    if(card.getFront() != null && !card.getFront().equals("images/magic_card_back.jpg")) {
                                         %>
                                         <option value="<%=card.getFront()%>"><%=card.getName()%></option>
                                         <%
+                                                    }
                                                 }
                                                 num++;
                                             }

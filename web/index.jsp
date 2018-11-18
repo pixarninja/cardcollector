@@ -57,7 +57,11 @@
                 collectionNameList += "`";
             }
             collectionIdList += collection.getId();
-            collectionNameList += collection.getName();
+            String name = "";
+            for(int i = 0; i < collection.getName().length(); i++) {
+                name += (int) collection.getName().charAt(i) + ".";
+            }
+            collectionNameList += name;
         }
         count++;
     }
@@ -74,7 +78,11 @@
                 deckNameList += "`";
             }
             deckIdList += deck.getId();
-            deckNameList += deck.getName();
+            String name = "";
+            for(int i = 0; i < deck.getName().length(); i++) {
+                name += (int) deck.getName().charAt(i) + ".";
+            }
+            deckNameList += name;
         }
         count++;
     }
@@ -235,12 +243,19 @@
                         }
                     %>
                     <div class="col-xs-12"></div>
-                    <div class="hidden-xs col-xs-8"></div>
                     <div class="col-xs-12 col-sm-4">
-                        <button title="View All Decks" id="form-submit" type="button" onclick="document.getElementById('allDecksForm').submit();"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Decks</button>
+                        <form id="addForm" action="DeckServlet" method="POST">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="username" value="<%=username%>">
+                            <button title="Create New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Deck</button>
+                        </form>
+                    </div>
+                    <div class="hidden-xs col-xs-4"></div>
+                    <div class="col-xs-12 col-sm-4">
                         <form id="allDecksForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="decks">
                             <input type="hidden" name="username" value="<%=username%>">
+                            <button title="View All Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Decks</button>
                         </form>
                     </div>
                 </div>
@@ -375,12 +390,19 @@
                         }
                     %>
                     <div class="col-xs-12"></div>
-                    <div class="hidden-xs col-xs-8"></div>
                     <div class="col-xs-12 col-sm-4">
-                        <button title="View All Collections" id="form-submit" type="button" onclick="document.getElementById('allCollectionsForm').submit();"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Collections</button>
+                        <form id="addForm" action="CollectionServlet" method="POST">
+                            <input type="hidden" name="action" value="new">
+                            <input type="hidden" name="username" value="<%=username%>">
+                            <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Collection</button>
+                        </form>
+                    </div>
+                    <div class="hidden-xs col-xs-4"></div>
+                    <div class="col-xs-12 col-sm-4">
                         <form id="allCollectionsForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="collections">
                             <input type="hidden" name="username" value="<%=username%>">
+                            <button title="View All Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Collections</button>
                         </form>
                     </div>
                 </div>
@@ -531,10 +553,10 @@
                     <div class="col-xs-12"></div>
                     <div class="hidden-xs col-xs-8"></div>
                     <div class="col-xs-12 col-sm-4">
-                        <button title="View All Cards" id="form-submit" type="button" onclick="document.getElementById('allCardsForm').submit();"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Cards</button>
                         <form id="allCardsForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="cards">
                             <input type="hidden" name="username" value="<%=username%>">
+                            <button title="View All Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Cards</button>
                         </form>
                     </div>
                 </div>
@@ -654,10 +676,10 @@
                     <div class="col-xs-12"></div>
                     <div class="hidden-xs col-xs-8"></div>
                     <div class="col-xs-12 col-sm-4">
-                        <button title="View All Users" id="form-submit" type="button" onclick="document.getElementById('allUsersForm').submit();"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Users</button>
                         <form id="allUsersForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="users">
                             <input type="hidden" name="username" value="<%=username%>">
+                            <button title="View All Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Users</button>
                         </form>
                     </div>
                 </div>

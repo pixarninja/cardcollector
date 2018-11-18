@@ -54,9 +54,22 @@
                             int id = 1;
                             for(String s : icons) {
                                 String title = s.substring(6,s.length() - 4);
+                                UserInfo user;
+                                int count = 1;
+                                boolean error = false;
+                                while((user = userInfo.getUserByNum(count)) != null) {
+                                    if(user.getPicture().contains(title)) {
+                                        error = true;
+                                        break;
+                                    }
+                                    count++;
+                                }
+                                if(!error) {
                         %>
-                        <div class="col-xs-2">
+                        <div class="col-xs-4 col-sm-3 col-md-2">
                             <img title="<%=title%>" style="width: 100%;cursor: pointer;" src="images/<%=s%>" alt="images/<%=s%>" onclick="document.getElementById('editPictureForm<%=id%>').submit();">
+                            <br>
+                            <p align="center" id="title"><%=title%></p>
                             <form id="editPictureForm<%=id%>" action="UserServlet" method="POST">
                                 <input type="hidden" name="action" value="update_picture">
                                 <input type="hidden" name="picture" value="images/<%=s%>">
@@ -64,7 +77,30 @@
                             </form>
                         </div>
                         <%
-                                id++;
+                            String spacer = "";
+                            if((id % 3) == 0) {
+                                spacer += "col-xs-12";
+                            }
+                            else {
+                                spacer += "hidden-xs";
+                            }
+                            if((id % 4) == 0) {
+                                spacer += " col-sm-12";
+                            }
+                            else {
+                                spacer += " hidden-sm";
+                            }
+                            if((id % 6) == 0) {
+                                spacer += " col-md-12";
+                            }
+                            else {
+                                spacer += " hidden-md hidden-lg";
+                            }
+                        %>
+                        <div class="<%=spacer%>"><br></div>
+                        <%
+                                    id++;
+                                }
                             }
                         %>
                     </div>

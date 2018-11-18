@@ -98,7 +98,13 @@ public class CollectionServlet extends HttpServlet {
         }
         String url = "/";
         if(action.equals("new")) {
-            url = "/new_collection.jsp";
+            if(username.equals("")) {
+                request.setAttribute("username", "error: propted redirect");
+                url = "/login.jsp";
+            }
+            else {
+                url = "/new_collection.jsp";
+            }
         } else if(action.equals("upvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
             int likes = Integer.parseInt(request.getParameter("likes"));
@@ -225,12 +231,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("downvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
@@ -358,12 +364,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("comment")) {
             String comment = request.getParameter("comment");
@@ -470,12 +476,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("submit_edit")) {
             int id = Integer.parseInt((String)request.getParameter("id"));
@@ -900,12 +906,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_card")) {
             int id = Integer.parseInt((String)request.getParameter("id"));
@@ -984,12 +990,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("create")) {
             String name = request.getParameter("name");
@@ -1062,12 +1068,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("favorite")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -1127,12 +1133,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("edit")) {
             url = "/edit_collection.jsp";
@@ -1200,12 +1206,12 @@ public class CollectionServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("your_collections")) {
             if(username.equals("")) {

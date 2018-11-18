@@ -131,9 +131,11 @@
                                             while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
                                                 if(collectionContents.getCollectionId() == id) {
                                                     CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                                    if(card.getFront() != null && !card.getFront().equals("images/magic_card_back.jpg")) {
                                         %>
                                         <option value="<%=card.getFront()%>"><%=card.getName()%></option>
                                         <%
+                                                    }
                                                 }
                                                 num++;
                                             }
@@ -153,9 +155,11 @@
                                             while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
                                                 if(collectionContents.getCollectionId() == id) {
                                                     CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                                    if(card.getFront() != null && !card.getFront().equals("images/magic_card_back.jpg")) {
                                         %>
                                         <option value="<%=card.getFront()%>"><%=card.getName()%></option>
                                         <%
+                                                    }
                                                 }
                                                 num++;
                                             }
@@ -175,9 +179,11 @@
                                             while((collectionContents = collectionContentsInfo.getContentsByNum(num)) != null) {
                                                 if(collectionContents.getCollectionId() == id) {
                                                     CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+                                                    if(card.getFront() != null && !card.getFront().equals("images/magic_card_back.jpg")) {
                                         %>
                                         <option value="<%=card.getFront()%>"><%=card.getName()%></option>
                                         <%
+                                                    }
                                                 }
                                                 num++;
                                             }

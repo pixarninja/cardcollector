@@ -75,6 +75,14 @@
             </h4><br>
         </div>
         <%}%>
+        <%if(username != null && buffer.equals("error: username not validated")) {%>
+        <div class="col-xs-12">
+            <h2>User Profile Deletion Error: Invalid Password</h2> <br>
+            <h4>
+                The password you entered did not validate the deletion of your user profile. Your user profile was not deleted.
+            </h4><br>
+        </div>
+        <%}%>
         <%if(username != null && !buffer.equals("error: invalid credentials") && !buffer.equals("error: propted redirect") && !buffer.equals("error: user does not exist") && !buffer.equals("error: username email mismatch") && !buffer.equals("password successfully reset")) {%>
         <div class="col-xs-12">
             <h2>Login</h2> <br>

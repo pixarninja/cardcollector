@@ -626,11 +626,37 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
     revealForm("sortArea");
 }
 
+function convertHTML(str) {
+  var map = {
+    '&': '&amp',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    '\'': '&apos;'
+  };
+  return str.replace(/[&<>"']/g, function(m) { return map[m]; });
+}
+
+function parseString(input) {
+    var parsed = input.split(".");
+    var output = "";
+    for(var i = 0; i < parsed.length; i++) {
+        output += String.fromCharCode(parsed[i]);
+    }
+    return convertHTML(output);
+}
+
 function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, collectionNameList, deckNum, deckIdList, deckNameList) {
     var collectionIds = collectionIdList.split("`");
     var collectionNames = collectionNameList.split("`");
+    for(i = 0; i < collectionNum; i++) {
+        collectionNames[i] = parseString(collectionNames[i]);
+    }
     var deckIds = deckIdList.split("`");
     var deckNames = deckNameList.split("`");
+    for(i = 0; i < deckNum; i++) {
+        deckNames[i] = parseString(deckNames[i]);
+    }
     var i;
     var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
     <input type='hidden' name='action' value='add_card'>\
@@ -711,6 +737,9 @@ function addCardPopup(id, imagePath, username, collectionNum, collectionIdList, 
 function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, deckNum, deckIdList, deckNameList, prevWon, prevMatches) {
     var deckIds = deckIdList.split("`");
     var deckNames = deckNameList.split("`");
+    for(i = 0; i < deckNum; i++) {
+        deckNames[i] = parseString(deckNames[i]);
+    }
     var i;
     var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
     <input type='hidden' name='action' value='challenge_deck'>\
@@ -956,8 +985,7 @@ function deleteCollectionCommentPopup(id, commentId, username) {
 function deleteUserPopup(username) {
     var view = "<div id='overlay' onclick='hideForm(\"popupForm\");'></div>\
     <input type='hidden' name='action' value='delete_user'>\
-    <input type='hidden' name='id' value='" + username + "'>\\n\
-    <input type='hidden' name='username' value=''>\
+    <input type='hidden' name='id' value='" + username + "'>\
     <div class='col-xs-12'>\
         <h2>\
             <p align='center'>\

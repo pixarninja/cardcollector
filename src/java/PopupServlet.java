@@ -27,6 +27,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,6 @@ public class PopupServlet extends HttpServlet {
     private String port;
     private String user;
     private String pass;
-    private static final String SALT = "himitsu";
  
     public void init() {
         // reads SMTP server setting from web.xml file
@@ -234,12 +234,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("challenge_deck")) {
             int won = 0;
@@ -350,12 +350,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("add_card")) {
             String collectionTotal = null;
@@ -613,12 +613,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("edit_card_comment")) {
             String comment = request.getParameter("comment");
@@ -654,12 +654,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_card_comment")) {
             int commentId = Integer.parseInt(request.getParameter("comment_id"));
@@ -697,12 +697,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("edit_deck_comment")) {
             String comment = request.getParameter("comment");
@@ -738,12 +738,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_deck_comment")) {
             int commentId = Integer.parseInt(request.getParameter("comment_id"));
@@ -824,12 +824,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_deck")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -903,12 +903,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("edit_collection_comment")) {
             String comment = request.getParameter("comment");
@@ -944,12 +944,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_collection_comment")) {
             int commentId = Integer.parseInt(request.getParameter("comment_id"));
@@ -1030,12 +1030,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_collection")) {
             int id = Integer.parseInt(request.getParameter("id"));
@@ -1109,12 +1109,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("delete_user")) {
             String id = request.getParameter("id");
@@ -1132,12 +1132,12 @@ public class PopupServlet extends HttpServlet {
                 ResultSet rs;
                 boolean validated = false;
                 
-                query = "SELECT * FROM `" + secure.DBStructure.table16 + "` WHERE username = ?";
+                query = "SELECT * FROM `" + secure.DBStructure.table16 + "` WHERE username = ?;";
                 ps = connection.prepareStatement(query);
-                ps.setString(1, username);
+                ps.setString(1, id);
                 rs = ps.executeQuery();
                 if(rs.next()) {
-                    String confirm = UserServlet.generateHash(password);
+                    String confirm = secure.DBConnection.generateHash(secure.DBConnection.SALT + password);
                     if(rs.getString("password").equals(confirm)) {
                         validated = true;
                     }
@@ -1166,8 +1166,8 @@ public class PopupServlet extends HttpServlet {
                     /* delete notification information */
                     query = "DELETE FROM `" + secure.DBStructure.table15 + "` WHERE owner = ? OR user = ?";
                     ps = connection.prepareStatement(query);
-                    ps.setString(1, username);
-                    ps.setString(2, username);
+                    ps.setString(1, id);
+                    ps.setString(2, id);
                     ps.executeUpdate();
                     ps.close();
 
@@ -1199,7 +1199,7 @@ public class PopupServlet extends HttpServlet {
                         query = "SELECT * FROM `" + secure.DBStructure.table12 + "` WHERE comment_id = ?";
                         PreparedStatement ps2 = connection.prepareStatement(query);
                         ps2.setInt(1, rs2.getInt("id"));
-                        ResultSet tmp = ps.executeQuery();
+                        ResultSet tmp = ps2.executeQuery();
                         if(tmp.next()) {
                             int reaction = tmp.getInt("reaction");
                             if(reaction == 1) {
@@ -1216,7 +1216,7 @@ public class PopupServlet extends HttpServlet {
                                 query = "UPDATE `" + secure.DBStructure.table11 + "` SET dislikes = ? WHERE id = ?";
                                 PreparedStatement p = connection.prepareStatement(query);
                                 p.setInt(1, dislikes - 1);
-                                p.setInt(2, rs2.getInt("comment_id"));
+                                p.setInt(2, rs2.getInt("id"));
                                 p.executeUpdate();
                                 p.close();
                             }
@@ -1273,7 +1273,7 @@ public class PopupServlet extends HttpServlet {
                         query = "SELECT * FROM `" + secure.DBStructure.table7 + "` WHERE comment_id = ?";
                         PreparedStatement ps2 = connection.prepareStatement(query);
                         ps2.setInt(1, rs4.getInt("id"));
-                        ResultSet tmp = ps.executeQuery();
+                        ResultSet tmp = ps2.executeQuery();
                         if(tmp.next()) {
                             int reaction = tmp.getInt("reaction");
                             if(reaction == 1) {
@@ -1290,7 +1290,7 @@ public class PopupServlet extends HttpServlet {
                                 query = "UPDATE `" + secure.DBStructure.table6 + "` SET dislikes = ? WHERE id = ?";
                                 PreparedStatement p = connection.prepareStatement(query);
                                 p.setInt(1, dislikes - 1);
-                                p.setInt(2, rs4.getInt("comment_id"));
+                                p.setInt(2, rs4.getInt("id"));
                                 p.executeUpdate();
                                 p.close();
                             }
@@ -1320,24 +1320,38 @@ public class PopupServlet extends HttpServlet {
                     ps.close();
 
                     /* delete user information */
-                    query = "DELETE FROM `" + secure.DBStructure.table16 + "` WHERE username = ?";
+                    query = "DELETE FROM `" + secure.DBStructure.table16 + "` WHERE username = '" + id + "'";
                     ps = connection.prepareStatement(query);
-                    ps.setString(1, id);
                     ps.executeUpdate();
                     ps.close();
+                    
+                    request.setAttribute("username", "");
                 }
-
+                else {
+                    request.setAttribute("username", "error: username not validated");
+                }
+                
+                Cookie[] cookies = request.getCookies();
+                if(cookies != null) {            
+                    for (Cookie cookie : cookies) {
+                        if(cookie.getName().equals("username")) {
+                            cookie.setMaxAge(0);
+                            response.addCookie(cookie);
+                        }
+                    }
+                }
+            
                 url = "/login.jsp";
             } catch (ClassNotFoundException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("forgot")) {
             String email = request.getParameter("email");
@@ -1366,8 +1380,8 @@ public class PopupServlet extends HttpServlet {
                         salt.append(SALTCHARS.charAt(index));
                     }
                     String randomPassword = salt.toString();
-                    String convertedPassword = SALT + randomPassword;
-                    convertedPassword = generateHash(convertedPassword);
+                    String convertedPassword = secure.DBConnection.SALT + randomPassword;
+                    convertedPassword = secure.DBConnection.generateHash(convertedPassword);
                     
                     String subject = "CardCollector: Password Reset Request";
                     String content = "Greetings from CardCollector!\n\n"
@@ -1396,7 +1410,7 @@ public class PopupServlet extends HttpServlet {
                         request.setAttribute("username", "");
                         url = "/index.jsp";
                         request.setAttribute("error", ex);
-                        Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
                 else {
@@ -1409,12 +1423,12 @@ public class PopupServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             url = "/help.jsp";
@@ -1432,25 +1446,5 @@ public class PopupServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
-    public static String generateHash(String input) {
-        StringBuilder hash = new StringBuilder();
-
-        try {
-            MessageDigest sha = MessageDigest.getInstance("SHA-1");
-            byte[] hashedBytes = sha.digest(input.getBytes());
-            char[] digits = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                            'a', 'b', 'c', 'd', 'e', 'f' };
-            for (int idx = 0; idx < hashedBytes.length; ++idx) {
-                byte b = hashedBytes[idx];
-                hash.append(digits[(b & 0xf0) >> 4]);
-                hash.append(digits[b & 0x0f]);
-            }
-        } catch (NoSuchAlgorithmException ex) {
-            ;
-        }
-
-        return hash.toString();
-    }
 
 }

@@ -27,10 +27,11 @@ public class RecentInfo implements Serializable{
         
             Statement statementDeck = connection.createStatement();
             Statement statementCollection = connection.createStatement();
+            Statement statementUser = connection.createStatement();
 
             ResultSet rsDeck = statementDeck.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` ORDER BY date_updated DESC");
             ResultSet rsCollection = statementCollection.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` ORDER BY date_updated DESC");
-            ResultSet rsUser = statementCollection.executeQuery("SELECT * FROM `" + secure.DBStructure.table16 + "` ORDER BY joined DESC");
+            ResultSet rsUser = statementUser.executeQuery("SELECT * FROM `" + secure.DBStructure.table16 + "` ORDER BY joined DESC");
             DeckInfo deck;
             CollectionInfo collection;
             UserInfo userInfo;
@@ -86,7 +87,7 @@ public class RecentInfo implements Serializable{
                 else {
                     userInfo = null;
                 }
-                if((deck == null && collection == null) || num > 24) {
+                if((deck == null && collection == null && userInfo == null) || num > 24) {
                     break;
                 }
                 
@@ -95,6 +96,7 @@ public class RecentInfo implements Serializable{
             }
             rsDeck.close();
             rsCollection.close();
+            rsUser.close();
             connection.close();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(RecentInfo.class.getName()).log(Level.SEVERE, null, ex);

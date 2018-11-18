@@ -124,12 +124,12 @@ public class CardServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("upvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
@@ -257,12 +257,12 @@ public class CardServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("downvote")) {
             int id = Integer.parseInt(request.getParameter("comment_id"));
@@ -390,12 +390,12 @@ public class CardServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("comment")) {
             String comment = request.getParameter("comment");
@@ -490,12 +490,12 @@ public class CardServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("favorite")) {
             String id = request.getParameter("id");
@@ -565,12 +565,12 @@ public class CardServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CardServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("index")) {
             url = "index.jsp";

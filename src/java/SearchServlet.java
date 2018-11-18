@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.BitSet;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -124,12 +125,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("users_alpha")) {
             try {
@@ -221,12 +222,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("search")) {
             request.setAttribute("total", 1);
@@ -266,12 +267,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("decks_alpha")) {
             try {
@@ -371,12 +372,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("collections")) {
             try {
@@ -413,12 +414,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("collections_alpha")) {
             try {
@@ -515,12 +516,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("cards")) {
             try {
@@ -557,12 +558,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("cards_alpha")) {
             try {
@@ -629,6 +630,36 @@ public class SearchServlet extends HttpServlet {
                 }
                 else {
                     selective = false;
+                }
+                if(count == 0) {
+                    prefix = " WHERE";
+                    count++;
+                }
+                else {
+                    prefix = " " + inclusion;
+                }
+
+                if(request.getParameter("-")!= null && !request.getParameter("-").equals("")) { // check if None is selected
+                    search += prefix + " legalities LIKE '000000000000'";
+                }
+                else {
+                    String[] legalities = {"S", "F", "R", "M", "L", "A", "V", "P", "C", "1", "D", "B"};
+                    String legality = "";
+                    boolean processed = false;
+                    for(String flag : legalities) {
+                        request.setAttribute(flag, request.getParameter(flag));
+                        String value = request.getParameter(flag);
+                        if(value != null && !value.equals("")) {
+                            processed = true;
+                            legality += "1";
+                        }
+                        else {
+                            legality += "_";
+                        }
+                    }
+                    if(processed) {
+                        search += prefix + " legalities LIKE '" + legality + "'";
+                    }
                 }
                 String[] parameters = {"common", "uncommon", "rare", "mythic", "set_id", "name", "type", "text", "flavor", "min_cmc", "max_cmc", "set_name", "min_power", "max_power", "min_toughness", "max_toughness", "artist", "year"};
                 for (String name : parameters) {
@@ -850,12 +881,12 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             } catch (SQLException ex) {
                 request.setAttribute("username", "");
                 url = "/index.jsp";
                 request.setAttribute("error", ex);
-                Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else if(action.equals("more_cards")) {
             url = "/card_results.jsp";
