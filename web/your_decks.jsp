@@ -155,6 +155,7 @@
                         </div>
                         <div class="col-xs-12"><br></div>
                     </div>
+                    <!--
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Wins</p>
@@ -172,6 +173,7 @@
                             <p><%=losses%></p>
                         </div>
                     </div>
+                    -->
                     <% if(description != null) {%>
                     <div class="row">
                     <div class="col-xs-12"><br></div>
@@ -208,11 +210,11 @@
                 <p>It looks like you haven't made any decks yet. If you would like to add a new deck, click the button below:</p>
                 <br>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="col-xs-12 col-sm-4">
                         <form id="addForm" action="DeckServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Deck" id="form-submit" type="submit">New</button>
+                            <button title="Create New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Deck</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>

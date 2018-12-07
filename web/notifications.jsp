@@ -254,6 +254,15 @@
                                                     <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                                                 </div>
                                             </div>
+                                            <%} else {%>
+                                            <div class="row" style="margin: auto;display: table">
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-left" title="Like Comment" onclick="document.getElementById('upvoteDeckForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-thumbs-up"></span>
+                                                </div>
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-right" title="Dislike Comment" onclick="document.getElementById('downvoteDeckForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-thumbs-down"></span>
+                                                </div>
+                                            </div>
                                             <%}%>
                                             <div class="well hidden-xs col-sm-12" id="black-well">
                                                 <p>
@@ -437,6 +446,15 @@
                                                     <span id="button-symbol" class="glyphicon glyphicon-trash"></span>
                                                 </div>
                                             </div>
+                                            <%} else {%>
+                                            <div class="row" style="margin: auto;display: table">
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-left" title="Like Comment" onclick="document.getElementById('upvoteCollectionForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-thumbs-up"></span>
+                                                </div>
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-right" title="Dislike Comment" onclick="document.getElementById('downvoteCollectionForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-thumbs-down"></span>
+                                                </div>
+                                            </div>
                                             <%}%>
                                             <div class="well hidden-xs col-sm-12" id="black-well">
                                                 <p>
@@ -595,6 +613,19 @@
                                         <div class="row">
                                             <p><span id="title">Challenger: </span><%=challenger.getUsername()%></p>
                                             <p><span id="title">Date Played: </span><%=dateAdded%></p>
+                                            <%
+                                                if(username == null || username.equals("")) {
+                                            %>
+                                            <%} else {%>
+                                            <div class="row" style="margin: auto;display: table">
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-left" title="Accept Match" onclick="document.getElementById('acceptMatchForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-ok"></span>
+                                                </div>
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-right" title="Reject Match" onclick="document.getElementById('rejectMatchForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-remove"></span>
+                                                </div>
+                                            </div>
+                                            <%}%>
                                             <div class="well hidden-xs col-sm-12" id="black-well">
                                                 <p>
                                                     <%=content%>
@@ -658,6 +689,19 @@
                                         <div class="row">
                                             <p><span id="title">Username: </span><%=owner.getUsername()%></p>
                                             <p><span id="title">Date Added: </span><%=dateAdded%></p>
+                                            <%
+                                                if(username == null || username.equals("")) {
+                                            %>
+                                            <%} else {%>
+                                            <div class="row" style="margin: auto;display: table">
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-left" title="Verify Update" onclick="document.getElementById('verifyWinLossForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-ok"></span>
+                                                </div>
+                                                <div class="col-xs-2 hidden-sm hidden-md hidden-lg" style="margin: auto;display: table" id="button-back-right" title="Reject Update" onclick="document.getElementById('rejectWinLossForm<%=count%>').submit();">
+                                                    <span id="button-symbol" class="glyphicon glyphicon-remove"></span>
+                                                </div>
+                                            </div>
+                                            <%}%>
                                             <div class="well hidden-xs col-sm-12" id="black-well">
                                                 <p>
                                                     <%=owner.getUsername()%> has won <%=deckWinLoss.getWon()%> times out of <%=deckWinLoss.getMatches()%> matches

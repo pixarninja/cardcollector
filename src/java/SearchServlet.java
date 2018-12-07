@@ -631,15 +631,15 @@ public class SearchServlet extends HttpServlet {
                 else {
                     selective = false;
                 }
-                if(count == 0) {
-                    prefix = " WHERE";
-                    count++;
-                }
-                else {
-                    prefix = " " + inclusion;
-                }
-
                 if(request.getParameter("-")!= null && !request.getParameter("-").equals("")) { // check if None is selected
+                    if(count == 0) {
+                        prefix = " WHERE";
+                        count++;
+                    }
+                    else {
+                        prefix = inclusion;
+                    }
+                    
                     search += prefix + " legalities LIKE '000000000000'";
                 }
                 else {
@@ -658,6 +658,14 @@ public class SearchServlet extends HttpServlet {
                         }
                     }
                     if(processed) {
+                        if(count == 0) {
+                            prefix = " WHERE";
+                            count++;
+                        }
+                        else {
+                            prefix = inclusion;
+                        }
+                        
                         search += prefix + " legalities LIKE '" + legality + "'";
                     }
                 }
@@ -671,7 +679,7 @@ public class SearchServlet extends HttpServlet {
                             count++;
                         }
                         else {
-                            prefix = " " + inclusion;
+                            prefix = inclusion;
                         }
                         if(name.equals("common") || name.equals("uncommon") || name.equals("rare") || name.equals("mythic")) {
                             search += prefix + " " + value + " LIKE '%" + name + "%'";
@@ -735,9 +743,9 @@ public class SearchServlet extends HttpServlet {
                                 }
                             }
                             else {
-                                prefix = manaInclusion;
+                                prefix = manaInclusion + " ";
                             }
-                            if(num == total) {
+                            if(num >= total) {
                                 postfix += " )";
                             }
                             prefix += "(";

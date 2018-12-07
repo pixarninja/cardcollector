@@ -121,24 +121,32 @@ public class DeckServlet extends HttpServlet {
                 String user = secure.DBConnection.username;
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
-
                 Statement statement = connection.createStatement();
+                
                 ResultSet rs;
                 String query;
                 PreparedStatement ps;
                 
                 int wins;
                 int losses;
+                int challenger_wins;
+                int challenger_losses;
                 
-                /* update owner deck */
-                statement = connection.createStatement();
                 rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + owner_id + "'");
                 rs.next();
                 wins = rs.getInt("wins");
                 losses = rs.getInt("losses");
                 rs.close();
                 
+                statement = connection.createStatement();
+                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table10 + "` WHERE id = '" + challenger_id + "'");
+                rs.next();
+                challenger_wins = rs.getInt("wins");
+                challenger_losses = rs.getInt("losses");
+                rs.close();
+                
                 if(prev_won == wins && prev_matches == wins + losses) {
+                    /* update owner deck */
                     query = "UPDATE `" + secure.DBStructure.table10 + "` SET wins = ?, losses = ? WHERE id = ?";
                     ps = connection.prepareStatement(query);
                     ps.setInt(1, wins + matches - won);
@@ -161,7 +169,40 @@ public class DeckServlet extends HttpServlet {
                     ps.setInt(2, losses + matches - won);
                     ps.setInt(3, challenger_id);
                     ps.executeUpdate();
-                    ps.close();    
+                    ps.close();
+                    
+                    /* update all other match prev values */
+                    statement = connection.createStatement();
+                    rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table18 + "` WHERE owner_id = " + owner_id);
+                    while(rs.next()) {
+                        if(rs.getInt("id") == match_id) {
+                            continue;
+                        }
+                        query = "UPDATE `" + secure.DBStructure.table18 + "` SET prev_won = ?, prev_matches = ? WHERE id = ?";
+                        ps = connection.prepareStatement(query);
+                        ps.setInt(1, wins + matches - won);
+                        ps.setInt(2, losses + wins + matches);
+                        ps.setInt(3, rs.getInt("id"));
+                        ps.executeUpdate();
+                        ps.close();
+                    }
+                    rs.close();
+
+                    statement = connection.createStatement();
+                    rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table18 + "` WHERE owner_id = " + challenger_id);
+                    while(rs.next()) {
+                        if(rs.getInt("id") == match_id) {
+                            continue;
+                        }
+                        query = "UPDATE `" + secure.DBStructure.table18 + "` SET prev_won = ?, prev_matches = ? WHERE id = ?";
+                        ps = connection.prepareStatement(query);
+                        ps.setInt(1, challenger_wins + won);
+                        ps.setInt(2, challenger_losses + matches + wins);
+                        ps.setInt(3, rs.getInt("id"));
+                        ps.executeUpdate();
+                        ps.close();
+                    }
+                    rs.close();
                 }
                 
                 /* delete notification */
@@ -271,6 +312,23 @@ public class DeckServlet extends HttpServlet {
                     ps.setInt(3, owner_id);
                     ps.executeUpdate();
                     ps.close();
+                    
+                    /* update all other winloss prev values */
+                    statement = connection.createStatement();
+                    rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table19 + "` WHERE owner_id = " + owner_id);
+                    while(rs.next()) {
+                        if(rs.getInt("id") == winloss_id) {
+                            continue;
+                        }
+                        query = "UPDATE `" + secure.DBStructure.table19 + "` SET prev_won = ?, prev_matches = ? WHERE id = ?";
+                        ps = connection.prepareStatement(query);
+                        ps.setInt(1, won);
+                        ps.setInt(2, matches);
+                        ps.setInt(3, rs.getInt("id"));
+                        ps.executeUpdate();
+                        ps.close();
+                    }
+                    rs.close();
                 }
                 
                 /* delete notification */
@@ -732,11 +790,11 @@ public class DeckServlet extends HttpServlet {
             int num = 1;
             boolean error = false;
             int won = 0;
-            if(request.getParameter("times_won") != null) {
+            if(request.getParameter("times_won") != null && !request.getParameter("times_won").equals("")) {
                 won = Integer.parseInt((String) request.getParameter("times_won"));
             }
             int matches = 0;
-            if(request.getParameter("times_played") != null) {
+            if(request.getParameter("times_played") != null && !request.getParameter("times_played").equals("")) {
                 matches = Integer.parseInt((String) request.getParameter("times_played"));
             }
             String verifier = "";
@@ -1221,17 +1279,20 @@ public class DeckServlet extends HttpServlet {
                 String user = secure.DBConnection.username;
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
-                Statement statement;
+                Statement statement = connection.createStatement();
                 
-                statement = connection.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = '" + id + "'");
+                String query = "SELECT * FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = ? AND card_id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setString(2, cardId);
+                ResultSet rs = ps.executeQuery();
 
                 rs.next();
                 int cardTotal = rs.getInt("card_total");
                 rs.close();
 
-                String query = "DELETE FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = ? AND card_id = ?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                query = "DELETE FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = ? AND card_id = ?";
+                ps = connection.prepareStatement(query);
                 ps.setInt(1, id);
                 ps.setString(2, cardId);
                 ps.executeUpdate();

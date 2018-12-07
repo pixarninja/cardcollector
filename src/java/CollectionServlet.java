@@ -923,17 +923,20 @@ public class CollectionServlet extends HttpServlet {
                 String user = secure.DBConnection.username;
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
-                Statement statement;
+                Statement statement = connection.createStatement();
                 
-                statement = connection.createStatement();
-                ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "'");
-
+                String query = "SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = ? AND card_id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, id);
+                ps.setString(2, cardId);
+                ResultSet rs = ps.executeQuery();
+                
                 rs.next();
                 int cardTotal = rs.getInt("card_total");
                 rs.close();
 
-                String query = "DELETE FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = ? AND card_id = ?";
-                PreparedStatement ps = connection.prepareStatement(query);
+                query = "DELETE FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = ? AND card_id = ?";
+                ps = connection.prepareStatement(query);
                 ps.setInt(1, id);
                 ps.setString(2, cardId);
                 ps.executeUpdate();

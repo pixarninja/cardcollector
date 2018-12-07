@@ -772,14 +772,14 @@ function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, 
                 Select the deck which you used to challenge this deck from the drop-down list below. You must also input the number of times you won out of the number of matches played. Once submitted, the user you challenged can accept or reject the outcome from their Notifications Page.\
             </h4><hr>\
             <h4 id='title'>\
-                Your Deck<br><select name='deck1' id='input-field'><br><br>\
+                Your Deck<br><br><select name='deck1' id='input-field'><br><br>\
                     <option value=''>Choose deck...</option>";
             for (i = 0; i < deckNum; i++) {
                 view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
             }
             view += "</select><br><br>\
-                You Won <input id='input-field' class='input-number' name='times_won1' type='number' value='0'> Out Of <input id='input-field' class='input-number' name='times_played1' type='number' value='0'> Matches<br><br>\
-                Memo: <input id='input-field-alt' name='text' value='Good game!'><br><br>\
+                You Won <input id='input-field' class='input-number' name='times_won1' type='number' value=''> Out Of <input id='input-field' class='input-number' name='times_played1' type='number' value=''> Matches<br><br>\
+                Memo: <input id='input-field-alt' name='text1' value=''><br><br>\
                 <button title='Submit Challenge Request' id='form-submit' type='submit'>Submit</button>\
                 <div class='col-xs-12'><br></div>\
             </h4>";
@@ -793,14 +793,14 @@ function challengeDeckPopup(id, imagePathTop, imagePathBottom, username, owner, 
             </h4>";
         } else {
             view += "<h4 id='title'>\
-                Your Deck<br><select name='deck2' id='input-field'><br><br>\
+                Your Deck<br><br><select name='deck2' id='input-field'><br><br>\
                     <option value=''>Choose deck...</option>";
             for (i = 0; i < deckNum; i++) {
                 view += "<option value='" + deckIds[i] + "'>" + deckNames[i] + "</option>";
             }
             view += "</select><br><br>\
-                You Won <input id='input-field' class='input-number' name='times_won1' type='number' value='0'> Out Of <input id='input-field' class='input-number' name='times_played1' type='number' value='0'> Matches<br><br>\
-                Memo: <input id='input-field-alt' name='text' value='Good game!'><br><br>\
+                You Won <input id='input-field' class='input-number' name='times_won2' type='number' value=''> Out Of <input id='input-field' class='input-number' name='times_played2' type='number' value=''> Matches<br><br>\
+                Memo: <input id='input-field-alt' name='text2' value=''><br><br>\
                 <button title='Submit Challenge Request' id='form-submit' type='submit'>Submit</button>\
                 <div class='col-xs-12'><br></div>\
             </h4>";

@@ -88,6 +88,7 @@
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
+                        <!--
                         <div class="row">
                             <div class="col-xs-5 col-sm-4">
                                 <p id="title">Deck Statistics</p>
@@ -129,6 +130,7 @@
                             </div>
                             <div class="col-xs-12"><hr></div>
                         </div>
+                        -->
                         <div class="row">
                             <div class="col-xs-12 col-lg-4">
                                 <p id="title">Deck Contents and Appearance</p><br>

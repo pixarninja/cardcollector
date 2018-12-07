@@ -304,9 +304,11 @@
                         <%
                             } else {
                         %>
+                        <!--
                         <div class="col-xs-2" style="margin: auto;display: table" id="button-back-middle" title="Request To Challenge This Deck" onclick="challengeDeckPopup('<%=deck.getId()%>', '<%=top%>', '<%=bottom%>', '<%=username%>', '<%=deck.getUser()%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>', '<%=deck.getWins()%>', '<%=deck.getLosses() + deck.getWins()%>');">
                             <span id="button-symbol" class="glyphicon glyphicon-certificate"></span>
                         </div>
+                        -->
                         <%
                             if(favorited) {
                         %>
@@ -495,6 +497,7 @@
                         </div>
                         <div class="col-xs-12"><br></div>
                     </div>
+                    <!--
                     <div class="row">
                         <div class="col-xs-12 col-sm-4 col-md-3">
                             <p id="title">Wins</p>
@@ -512,6 +515,7 @@
                             <p><%=losses%></p>
                         </div>
                     </div>
+                    -->
                     <% if(description != null) {%>
                     <div class="row">
                     <div class="col-xs-12"><br></div>

@@ -121,148 +121,28 @@ public class PopupServlet extends HttpServlet {
             username = "";
         }
         String url = "/";
-        if(action.equals("winloss")) {
+        if(action.equals("challenge_deck")) {
             int won = 0;
-            if(request.getParameter("times_won1") != null) {
+            if(request.getParameter("times_won1") != null && !request.getParameter("times_won1").equals("")) {
                 won = Integer.parseInt((String) request.getParameter("times_won1"));
             }
-            else if(request.getParameter("times_won2") != null) {
+            else if(request.getParameter("times_won2") != null && !request.getParameter("times_won2").equals("")) {
                 won = Integer.parseInt((String) request.getParameter("times_won2"));
             }
             int matches = 0;
-            if(request.getParameter("times_played1") != null) {
+            if(request.getParameter("times_played1") != null && !request.getParameter("times_played1").equals("")) {
                 matches = Integer.parseInt((String) request.getParameter("times_played1"));
             }
-            else if(request.getParameter("times_played2") != null) {
+            else if(request.getParameter("times_played2") != null && !request.getParameter("times_played2").equals("")) {
                 matches = Integer.parseInt((String) request.getParameter("times_played2"));
             }
             int prev_won = 0;
-            if(request.getParameter("times_prev_won1") != null) {
-                prev_won = Integer.parseInt((String) request.getParameter("times_prev_won1"));
-            }
-            else if(request.getParameter("times_prev_won2") != null) {
-                prev_won = Integer.parseInt((String) request.getParameter("times_prev_won2"));
-            }
-            int prev_matches = 0;
-            if(request.getParameter("time_prev_played1") != null) {
-                prev_matches = Integer.parseInt((String) request.getParameter("time_prev_played1"));
-            }
-            else if(request.getParameter("time_prev_played2") != null) {
-                prev_matches = Integer.parseInt((String) request.getParameter("time_prev_played2"));
-            }
-            String verifier = "";
-            if(request.getParameter("verifier1") != null && !request.getParameter("verifier1").equals("")) {
-                verifier = (String) request.getParameter("verifier1");
-            }
-            else if(request.getParameter("verifier2") != null && !request.getParameter("verifier2").equals("")) {
-                verifier = (String) request.getParameter("verifier2");
-            }
-            int id = Integer.parseInt((String) request.getParameter("id"));
-            String owner = (String) request.getParameter("owner");
-            
-            try {
-                String driver = secure.DBConnection.driver;
-                Class.forName(driver);
-                String dbURL = secure.DBConnection.dbURL;
-                String user = secure.DBConnection.username;
-                String pass = secure.DBConnection.password;
-                Connection connection = DriverManager.getConnection(dbURL, user, pass);
-
-                Statement statement = connection.createStatement();
-                ResultSet rs;
-                String query;
-                PreparedStatement ps;
-                
-                /* add winloss */
-                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table19 + "`");
-                /* find the next possible id */
-                int winlossId = 1;
-                while(rs.next()) {
-                    if(rs.getInt("id") > winlossId) {
-                        break;
-                    }
-                    winlossId++;
-                }
-                rs.close();
-
-                java.util.Date date = new Date();
-                Object dateAdded = new java.sql.Timestamp(date.getTime());
-
-                query = "INSERT INTO `" + secure.DBStructure.table19 + "` (`id`, `verifier_id`, `owner_id`, `date_added`, `won`, `matches`, `prev_won`, `prev_matches`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-                ps = connection.prepareStatement(query);
-                ps.setInt(1, winlossId);
-                ps.setString(2, verifier);
-                ps.setInt(3, id);
-                ps.setObject(4, dateAdded);
-                ps.setInt(5, won);
-                ps.setInt(6, matches);
-                ps.setInt(7, prev_won);
-                ps.setInt(8, prev_matches);
-                ps.execute();
-                ps.close();
-                
-                /* add notification */
-                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table15 + "`");
-                /* find the next possible id */
-                int count = 1;
-                while(rs.next()) {
-                    if(rs.getInt("id") > count) {
-                        break;
-                    }
-                    count++;
-                }
-                rs.close();
-
-                date = new Date();
-                dateAdded = new java.sql.Timestamp(date.getTime());
-
-                query = "INSERT INTO `" + secure.DBStructure.table15 + "` (`id`, `type`, `type_id`, `owner`, `user`, `date_added`, status) VALUES (?, ?, ?, ?, ?, ?, ?);";
-                ps = connection.prepareStatement(query);
-                ps.setInt(1, count);
-                ps.setInt(2, 6); // 6 for win/loss update
-                ps.setInt(3, winlossId);
-                ps.setString(4, owner);
-                ps.setString(5, username);
-                ps.setObject(6, dateAdded);
-                ps.setInt(7, 0);
-                ps.execute();
-                ps.close();
-                
-                connection.close();
-                url = "/deck.jsp";
-            } catch (ClassNotFoundException ex) {
-                request.setAttribute("username", "");
-                url = "/index.jsp";
-                request.setAttribute("error", ex);
-                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                request.setAttribute("username", "");
-                url = "/index.jsp";
-                request.setAttribute("error", ex);
-                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else if(action.equals("challenge_deck")) {
-            int won = 0;
-            if(request.getParameter("times_won1") != null) {
-                won = Integer.parseInt((String) request.getParameter("times_won1"));
-            }
-            else if(request.getParameter("times_won2") != null) {
-                won = Integer.parseInt((String) request.getParameter("times_won2"));
-            }
-            int matches = 0;
-            if(request.getParameter("times_played1") != null) {
-                matches = Integer.parseInt((String) request.getParameter("times_played1"));
-            }
-            else if(request.getParameter("times_played2") != null) {
-                matches = Integer.parseInt((String) request.getParameter("times_played2"));
-            }
-            int prev_won = 0;
-            if(request.getParameter("times_prev_won") != null) {
+            if(request.getParameter("times_prev_won") != null && !request.getParameter("times_prev_won").equals("")) {
                 prev_won = Integer.parseInt((String) request.getParameter("times_prev_won"));
             }
             int prev_matches = 0;
-            if(request.getParameter("time_prev_played") != null) {
-                prev_matches = Integer.parseInt((String) request.getParameter("time_prev_played"));
+            if(request.getParameter("times_prev_played") != null && !request.getParameter("times_prev_played").equals("")) {
+                prev_matches = Integer.parseInt((String) request.getParameter("times_prev_played"));
             }
             int deckId = 0;
             if(request.getParameter("deck1") != null && !request.getParameter("deck1").equals("")) {
@@ -271,91 +151,102 @@ public class PopupServlet extends HttpServlet {
             else if(request.getParameter("deck2") != null && !request.getParameter("deck2").equals("")) {
                 deckId = Integer.parseInt((String) request.getParameter("deck2"));
             }
+            String text = "";
+            if(request.getParameter("text1") != null && !request.getParameter("text1").equals("")) {
+                text = (String) request.getParameter("text1");
+            }
+            else if(request.getParameter("text2") != null && !request.getParameter("text2").equals("")) {
+                text = (String) request.getParameter("text2");
+            }
             int id = Integer.parseInt((String) request.getParameter("id"));
             String owner = (String) request.getParameter("owner");
-            String text = (String) request.getParameter("text");
             
-            try {
-                String driver = secure.DBConnection.driver;
-                Class.forName(driver);
-                String dbURL = secure.DBConnection.dbURL;
-                String user = secure.DBConnection.username;
-                String pass = secure.DBConnection.password;
-                Connection connection = DriverManager.getConnection(dbURL, user, pass);
-
-                Statement statement = connection.createStatement();
-                ResultSet rs;
-                String query;
-                PreparedStatement ps;
-                
-                /* add match */
-                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table18 + "`");
-                /* find the next possible id */
-                int matchId = 1;
-                while(rs.next()) {
-                    if(rs.getInt("id") > matchId) {
-                        break;
-                    }
-                    matchId++;
-                }
-                rs.close();
-
-                java.util.Date date = new Date();
-                Object dateAdded = new java.sql.Timestamp(date.getTime());
-
-                query = "INSERT INTO `" + secure.DBStructure.table18 + "` (`id`, `challenger_id`, `owner_id`, `text`, `date_added`, `won`, `matches`, `prev_won`, `prev_matches`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                ps = connection.prepareStatement(query);
-                ps.setInt(1, matchId);
-                ps.setInt(2, deckId);
-                ps.setInt(3, id);
-                ps.setString(4, text);
-                ps.setObject(5, dateAdded);
-                ps.setInt(6, won);
-                ps.setInt(7, matches);
-                ps.setInt(8, prev_won);
-                ps.setInt(9, prev_matches);
-                ps.execute();
-                ps.close();
-                
-                /* add notification */
-                rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table15 + "`");
-                /* find the next possible id */
-                int count = 1;
-                while(rs.next()) {
-                    if(rs.getInt("id") > count) {
-                        break;
-                    }
-                    count++;
-                }
-                rs.close();
-
-                date = new Date();
-                dateAdded = new java.sql.Timestamp(date.getTime());
-
-                query = "INSERT INTO `" + secure.DBStructure.table15 + "` (`id`, `type`, `type_id`, `owner`, `user`, `date_added`, status) VALUES (?, ?, ?, ?, ?, ?, ?);";
-                ps = connection.prepareStatement(query);
-                ps.setInt(1, count);
-                ps.setInt(2, 5); // 5 for challenge request
-                ps.setInt(3, matchId);
-                ps.setString(4, owner);
-                ps.setString(5, username);
-                ps.setObject(6, dateAdded);
-                ps.setInt(7, 0);
-                ps.execute();
-                ps.close();
-                
-                connection.close();
+            if(deckId == 0) {
                 url = "/deck.jsp";
-            } catch (ClassNotFoundException ex) {
-                request.setAttribute("username", "");
-                url = "/index.jsp";
-                request.setAttribute("error", ex);
-                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (SQLException ex) {
-                request.setAttribute("username", "");
-                url = "/index.jsp";
-                request.setAttribute("error", ex);
-                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            else {
+                try {
+                    String driver = secure.DBConnection.driver;
+                    Class.forName(driver);
+                    String dbURL = secure.DBConnection.dbURL;
+                    String user = secure.DBConnection.username;
+                    String pass = secure.DBConnection.password;
+                    Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                    Statement statement = connection.createStatement();
+                    ResultSet rs;
+                    String query;
+                    PreparedStatement ps;
+
+                    /* add match */
+                    rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table18 + "`");
+                    /* find the next possible id */
+                    int matchId = 1;
+                    while(rs.next()) {
+                        if(rs.getInt("id") > matchId) {
+                            break;
+                        }
+                        matchId++;
+                    }
+                    rs.close();
+
+                    java.util.Date date = new Date();
+                    Object dateAdded = new java.sql.Timestamp(date.getTime());
+
+                    query = "INSERT INTO `" + secure.DBStructure.table18 + "` (`id`, `challenger_id`, `owner_id`, `text`, `date_added`, `won`, `matches`, `prev_won`, `prev_matches`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1, matchId);
+                    ps.setInt(2, deckId);
+                    ps.setInt(3, id);
+                    ps.setString(4, text);
+                    ps.setObject(5, dateAdded);
+                    ps.setInt(6, won);
+                    ps.setInt(7, matches);
+                    ps.setInt(8, prev_won);
+                    ps.setInt(9, prev_matches);
+                    ps.execute();
+                    ps.close();
+
+                    /* add notification */
+                    rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table15 + "`");
+                    /* find the next possible id */
+                    int count = 1;
+                    while(rs.next()) {
+                        if(rs.getInt("id") > count) {
+                            break;
+                        }
+                        count++;
+                    }
+                    rs.close();
+
+                    date = new Date();
+                    dateAdded = new java.sql.Timestamp(date.getTime());
+
+                    query = "INSERT INTO `" + secure.DBStructure.table15 + "` (`id`, `type`, `type_id`, `owner`, `user`, `date_added`, status) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                    ps = connection.prepareStatement(query);
+                    ps.setInt(1, count);
+                    ps.setInt(2, 5); // 5 for challenge request
+                    ps.setInt(3, matchId);
+                    ps.setString(4, owner);
+                    ps.setString(5, username);
+                    ps.setObject(6, dateAdded);
+                    ps.setInt(7, 0);
+                    ps.execute();
+                    ps.close();
+
+                    connection.close();
+                    url = "/deck.jsp";
+                } catch (ClassNotFoundException ex) {
+                    request.setAttribute("username", "");
+                    url = "/index.jsp";
+                    request.setAttribute("error", ex);
+                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    request.setAttribute("username", "");
+                    url = "/index.jsp";
+                    request.setAttribute("error", ex);
+                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         } else if(action.equals("add_card")) {
             String collectionTotal = null;
@@ -1180,6 +1071,20 @@ public class PopupServlet extends HttpServlet {
                         query = "DELETE FROM `" + secure.DBStructure.table13 + "` WHERE deck_id = ?";
                         PreparedStatement p = connection.prepareStatement(query);
                         p.setInt(1, rs1.getInt("id"));
+                        p.executeUpdate();
+                        p.close();
+                        
+                        query = "DELETE FROM `" + secure.DBStructure.table18 + "` WHERE challenger_id = ? OR owner_id = ?";
+                        p = connection.prepareStatement(query);
+                        p.setInt(1, rs1.getInt("id"));
+                        p.setInt(2, rs1.getInt("id"));
+                        p.executeUpdate();
+                        p.close();
+                        
+                        query = "DELETE FROM `" + secure.DBStructure.table19 + "` WHERE verifier_id = ? OR owner_id = ?";
+                        p = connection.prepareStatement(query);
+                        p.setString(1, username);
+                        p.setInt(2, rs1.getInt("id"));
                         p.executeUpdate();
                         p.close();
                     }

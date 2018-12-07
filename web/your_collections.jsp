@@ -194,11 +194,11 @@
                 <p>It looks like you haven't made any collections yet. If you would like to add a new collection, click the button below:</p>
                 <br>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-4 col-md-3">
+                    <div class="col-xs-12 col-sm-4">
                         <form id="addForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="New Collection" id="form-submit" type="submit">New</button>
+                            <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Collection</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
