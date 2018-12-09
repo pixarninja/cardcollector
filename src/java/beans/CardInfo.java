@@ -1,7 +1,10 @@
 package beans;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import resource.ScryfallScraper;
 import java.io.Serializable;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -49,6 +52,8 @@ public class CardInfo implements Serializable{
     private String usd;
     private Boolean digital;
     private java.util.Date dateViewed;
+    private String frontURI;
+    private String backURI;
     
     public CardInfo() {
         try {
@@ -104,10 +109,12 @@ public class CardInfo implements Serializable{
                     digital = true;
                 }
                 java.util.Date dateViewed = rs.getDate("viewed");
+                String frontURI = rs.getString("frontURI");
+                String backURI = rs.getString("backURI");
                 
-                cardsByName.put(name, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed));
-                cardsById.put(id, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed));
-                cardsByNum.put(num, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed));
+                cardsByName.put(name, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
+                cardsById.put(id, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
+                cardsByNum.put(num, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
                 num++;
             }
             rs.close();
@@ -119,7 +126,7 @@ public class CardInfo implements Serializable{
         }
     }
     
-    public CardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String front, String back, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed) {
+    public CardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String front, String back, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed, String frontURI, String backURI) {
         this.id = id;
         this.game = game;
         this.name = name;
@@ -154,6 +161,8 @@ public class CardInfo implements Serializable{
         this.usd = usd;
         this.digital = digital;
         this.dateViewed = dateViewed;
+        this.frontURI = frontURI;
+        this.backURI = backURI;
     }
     
     public static String printCards() {
@@ -313,6 +322,22 @@ public class CardInfo implements Serializable{
     
     public java.util.Date getDateViewed() {
         return dateViewed;
+    }
+    
+    public String[] getImageURLs() {
+        HashMap<Object,Object> frontMap;
+        HashMap<Object,Object> backMap;
+        try {
+            frontMap = resource.ScryfallScraper.TranslateImageURI(frontURI);
+        } catch(Exception ex) {
+            frontMap = null;
+        }
+        try {
+            backMap = resource.ScryfallScraper.TranslateImageURI(backURI);
+        } catch(Exception ex) {
+            backMap = null;
+        }
+        return resource.ScryfallScraper.ParseImageURIs(frontMap, backMap);
     }
     
 }

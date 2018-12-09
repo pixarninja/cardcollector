@@ -55,7 +55,6 @@
         char lowercase = rarity.charAt(0);
         String captital = ("" + lowercase).toUpperCase();
         rarity = captital + rarity.substring(1);
-        String front = card.getFront();
         String[] parsedCost = card.getManaCost().split("}");
         int i;
         for(i = 0; i < parsedCost.length; i++) {
@@ -183,7 +182,15 @@
         
         Boolean digital = card.getDigital();
         
-        String back = card.getBack();
+        //String front = card.getFront();
+        //String back = card.getBack();
+        String[] imageURLs = card.getImageURLs();
+        String front = imageURLs[0];
+        String back = imageURLs[1];
+        if(front == null) {
+            front = "images/magic_card_back.jpg";
+        }
+        
         String revName = null;
         String revType = null;
         String revText = null;

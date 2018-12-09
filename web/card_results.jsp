@@ -252,7 +252,14 @@
                             }
                     %>
                     <div class="col-xs-6 col-sm-4 col-md-3">
-                        <img class="img-special" width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img">
+                        <%
+                            String[] imageURLs = card.getImageURLs();
+                            String front = imageURLs[0];
+                            if(front == null) {
+                                front = "images/magic_card_back.jpg";
+                            }
+                        %>
+                        <img class="img-special" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img">
                         <%
                             if(username != null && !username.equals("")) {
                         %>
