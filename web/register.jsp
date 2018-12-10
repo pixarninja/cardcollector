@@ -38,8 +38,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="row">
-    <div class="well col-xs-12">
+<div class="row" id="content-well">
         <div class="col-xs-12">
             <div class="col-xs-12">
                 <%if(username == null || username.equals("")) {%>

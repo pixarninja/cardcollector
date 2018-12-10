@@ -1,7 +1,5 @@
 package beans;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import resource.ScryfallScraper;
 import java.io.Serializable;
 import java.sql.*;
 import java.util.HashMap;
@@ -13,7 +11,6 @@ import java.util.logging.Logger;
 
 public class CardInfo implements Serializable{
     
-    private static LinkedHashMap cardsByName = new LinkedHashMap();
     private static LinkedHashMap cardsById = new LinkedHashMap();
     private static LinkedHashMap cardsByNum = new LinkedHashMap();
     private Connection connection;
@@ -24,8 +21,6 @@ public class CardInfo implements Serializable{
     private String set_name;
     private String set_id;
     private String rarity;
-    private String front;
-    private String back;
     private String mc;
     private float cmc;
     private String colors;
@@ -57,7 +52,6 @@ public class CardInfo implements Serializable{
     
     public CardInfo() {
         try {
-            cardsByName = new LinkedHashMap();
             cardsById = new LinkedHashMap();
             cardsByNum = new LinkedHashMap();
             String driver = secure.DBConnection.driver;
@@ -78,8 +72,6 @@ public class CardInfo implements Serializable{
                 String set_name = rs.getString("set_name");
                 String set_id = rs.getString("set_id");
                 String rarity = rs.getString("rarity");
-                String front = rs.getString("front");
-                String back = rs.getString("back");
                 String mc = rs.getString("mc");
                 float cmc = rs.getFloat("cmc");
                 String colors = rs.getString("colors");
@@ -112,9 +104,8 @@ public class CardInfo implements Serializable{
                 String frontURI = rs.getString("frontURI");
                 String backURI = rs.getString("backURI");
                 
-                cardsByName.put(name, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
-                cardsById.put(id, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
-                cardsByNum.put(num, new CardInfo(id, game, name, set_name, set_id, rarity, front, back, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
+                cardsById.put(id, new CardInfo(id, game, name, set_name, set_id, rarity, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
+                cardsByNum.put(num, new CardInfo(id, game, name, set_name, set_id, rarity, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI));
                 num++;
             }
             rs.close();
@@ -126,15 +117,13 @@ public class CardInfo implements Serializable{
         }
     }
     
-    public CardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String front, String back, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed, String frontURI, String backURI) {
+    public CardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed, String frontURI, String backURI) {
         this.id = id;
         this.game = game;
         this.name = name;
         this.set_name = set_name;
         this.set_id = set_id;
         this.rarity = rarity;
-        this.front = front;
-        this.back = back;
         this.mc = mc;
         this.cmc = cmc;
         this.colors = colors;
@@ -163,21 +152,6 @@ public class CardInfo implements Serializable{
         this.dateViewed = dateViewed;
         this.frontURI = frontURI;
         this.backURI = backURI;
-    }
-    
-    public static String printCards() {
-        String s = "";
-        Iterator it = cardsById.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            s = s + pair.getKey() + ": " + pair.getValue() + "\n";
-            it.remove();
-        }
-        return s;
-    }
-    
-    public static CardInfo getCardByName(String name) {
-        return ((CardInfo)cardsByName.get(name));
     }
     
     public static CardInfo getCardById(String id) {
@@ -210,14 +184,6 @@ public class CardInfo implements Serializable{
     
     public String getRarity() {
         return rarity;
-    }
-    
-    public String getFront() {
-        return front;
-    }
-    
-    public String getBack() {
-        return back;
     }
     
     public String getManaCost() {

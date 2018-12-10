@@ -4,6 +4,7 @@
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="deckFavoriteInfo" class="beans.DeckFavoriteInfo" scope="request"/>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -36,7 +37,7 @@
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Search Results: Decks</h2><br>
@@ -171,6 +172,19 @@
                             String top = deck.getTop();
                             if(top == null) {
                                 top = "images/magic_card_back.jpg";
+                            }
+                            else {
+                                CardInfo card = cardInfo.getCardById(top);
+                                if(card != null) {
+                                    String[] imageURLs = card.getImageURLs();
+                                    top = imageURLs[0];
+                                    if(top == null) {
+                                        top = "images/magic_card_back.jpg";
+                                    }
+                                }
+                                else {
+                                    top = "images/magic_card_back.jpg";
+                                }
                             }
                             String bottom = deck.getBottom();
                             if(bottom == null) {

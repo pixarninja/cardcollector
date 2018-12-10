@@ -34,7 +34,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Add code here -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Advanced Search</h2><br>
@@ -108,7 +108,9 @@
                     <div class="col-xs-8">
                         <select name="set_id" id="input-field">
                             <option></option>
+                            <option value="uma">Ultimate Masters (2018)</option>
                             <option value="gnt">Game Night (2018)</option>
+                            <option value="gk1">GRN Guild Kit (2018)</option>
                             <option value="grn">Guilds of Ravnica (2018)</option>
                             <option value="c18">Commander 2018 (2018)</option>
                             <option value="ana">Arena New Player Experience (2018)</option>
@@ -162,10 +164,10 @@
                             <option value="dtk">Dragons of Tarkir (2015)</option>
                             <option value="ddo">Duel Decks: Elspeth vs. Kiora (2015)</option>
                             <option value="frf">Fate Reforged (2015)</option>
-                            <option value="evg">Duel Decks Anthology: Elves vs. Goblins (2014)</option>
-                            <option value="jvc">Duel Decks Anthology: Jace vs. Chandra (2014)</option>
                             <option value="gvl">Duel Decks Anthology: Garruk vs. Liliana (2014)</option>
                             <option value="dvd">Duel Decks Anthology: Divine vs. Demonic (2014)</option>
+                            <option value="jvc">Duel Decks Anthology: Jace vs. Chandra (2014)</option>
+                            <option value="evg">Duel Decks Anthology: Elves vs. Goblins (2014)</option>
                             <option value="c14">Commander 2014 (2014)</option>
                             <option value="ktk">Khans of Tarkir (2014)</option>
                             <option value="ddn">Duel Decks: Speed vs. Cunning (2014)</option>
@@ -290,12 +292,12 @@
                             <option value="mgb">Multiverse Gift Box (1996)</option>
                             <option value="mir">Mirage (1996)</option>
                             <option value="rqs">Rivals Quick Start Set (1996)</option>
-                            <option value="fbb">Foreign Black Border (1996)</option>
                             <option value="hml">Homelands (1995)</option>
                             <option value="rin">Rinascimento (1995)</option>
                             <option value="chr">Chronicles (1995)</option>
                             <option value="ice">Ice Age (1995)</option>
                             <option value="4ed">Fourth Edition (1995)</option>
+                            <option value="fbb">Foreign Black Border (1995)</option>
                             <option value="drk">The Dark (1994)</option>
                             <option value="sum">Summer Magic / Edgar (1994)</option>
                             <option value="leg">Legends (1994)</option>

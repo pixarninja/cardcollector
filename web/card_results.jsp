@@ -80,7 +80,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Search Results: Cards</h2><br>
@@ -265,7 +265,7 @@
                         %>
                         <br>
                         <div class="row" style="margin: auto;display: table">
-                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                            <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=front%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
                                 <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
                             </div>
                             <%

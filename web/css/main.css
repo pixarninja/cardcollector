@@ -139,6 +139,7 @@ button:focus {
 }
 
 #footer {
+    padding-top: 10px;
     padding-bottom: 20px;
     font-family: 'Quicksand', sans-serif;
     color: white;
@@ -417,6 +418,14 @@ p {
 #black-well {
     background: black !important;
     color: white;
+}
+
+#content-well {
+    background: #0d0e0f !important;
+    border-style: solid;
+    border-color:white;
+    border-width:1px;
+    border-radius: 10px;
 }
 
 body {

@@ -25,6 +25,12 @@
                             multiple = (Integer) request.getAttribute(Integer.toString(count) + "total");
                         }
                         while((card = cardInfo.getCardById(id)) != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            String front = imageURLs[0];
+                            String back = imageURLs[1];
+                            if(front == null) {
+                                front = "images/magic_card_back.jpg";
+                            }
                             if(printed == 1) {
                     %>
                     <div>&nbsp;
@@ -36,19 +42,19 @@
                             } else if(tracker > 3) {
                                 buffer = 1;
                             }
-                            if(printBack && card.getBack() != null && !card.getBack().equals("")) {
+                            if(printBack && back != null && !back.equals("") && !back.equals("images/magic_card_back.jpg")) {
                                 tick++;
                         %>
-                        <img class="img-noborder" style="width: 237px; height: 331px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=card.getBack()%>" alt="<%=card.getBack()%>">
+                        <img class="img-noborder" style="width: 237px; height: 331px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=back%>" alt="<%=back%>">
                         <%
                                 printBack = false;
                             } else {
                                 tick++;
                         %>
-                        <img class="img-noborder" style="width: 237px; height: 331px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=card.getFront()%>" alt="<%=card.getFront()%>">
+                        <img class="img-noborder" style="width: 237px; height: 331px; display: inline-block;position: relative;left: <%=-((tracker - 1) % 3) * 3%>px;top: <%=(-(buffer) * 3) + 40%>px;" src="<%=front%>" alt="<%=front%>">
                         <%
                                 printBack = false;
-                                if(card.getBack() != null && !card.getBack().equals("")) {
+                                if(back != null && !back.equals("") && !back.equals("images/magic_card_back.jpg")) {
                                     printBack = true;
                                     tick--;
                                 }

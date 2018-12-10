@@ -4,6 +4,7 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -48,7 +49,7 @@
     if(!error) {
 %>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Your Decks</h2><br>
@@ -83,6 +84,19 @@
                     String top = deck.getTop();
                     if(top == null) {
                         top = "images/magic_card_back.jpg";
+                    }
+                    else {
+                        CardInfo card = cardInfo.getCardById(top);
+                        if(card != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            top = imageURLs[0];
+                            if(top == null) {
+                                top = "images/magic_card_back.jpg";
+                            }
+                        }
+                        else {
+                            top = "images/magic_card_back.jpg";
+                        }
                     }
                     String bottom = deck.getBottom();
                     if(bottom == null) {
@@ -202,7 +216,7 @@
     } else {
 %>
 <!-- Error -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Your Decks</h2><br>

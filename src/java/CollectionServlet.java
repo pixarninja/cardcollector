@@ -836,14 +836,19 @@ public class CollectionServlet extends HttpServlet {
                         String newMiddle = tmp.getString("middle");
                         String newBottom = tmp.getString("bottom");
                         CardInfo card = CardInfo.getCardById(rs.getString("card_id"));
-                        if(card != null && card.getFront() != null) {
-                            if(newTop != null && newTop.equals(card.getFront())) {
+                        if(card != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            String front = imageURLs[0];
+                            if(front == null) {
+                                front = "images/magic_card_back.jpg";
+                            }
+                            if(newTop != null && newTop.equals(front)) {
                                 newTop = null;
                             }
-                            if(newMiddle != null && newMiddle.equals(card.getFront())) {
+                            if(newMiddle != null && newMiddle.equals(front)) {
                                 newMiddle = null;
                             }
-                            if(newBottom != null && newBottom.equals(card.getFront())) {
+                            if(newBottom != null && newBottom.equals(front)) {
                                 newBottom = null;
                             }
                         }
@@ -954,14 +959,19 @@ public class CollectionServlet extends HttpServlet {
                 String newMiddle = rs.getString("middle");
                 String newBottom = rs.getString("bottom");
                 CardInfo card = CardInfo.getCardById(cardId);
-                if(card != null && card.getFront() != null) {
-                    if(newTop != null && newTop.equals(card.getFront())) {
+                if(card != null) {
+                    String[] imageURLs = card.getImageURLs();
+                    String front = imageURLs[0];
+                    if(front == null) {
+                        front = "images/magic_card_back.jpg";
+                    }
+                    if(newTop != null && newTop.equals(front)) {
                         newTop = null;
                     }
-                    if(newMiddle != null && newMiddle.equals(card.getFront())) {
+                    if(newMiddle != null && newMiddle.equals(front)) {
                         newMiddle = null;
                     }
-                    if(newBottom != null && newBottom.equals(card.getFront())) {
+                    if(newBottom != null && newBottom.equals(front)) {
                         newBottom = null;
                     }
                 }

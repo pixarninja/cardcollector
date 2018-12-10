@@ -19,7 +19,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <form id="forgotForm" action="UserServlet" method="POST">
         <input type="hidden" name="action" value="forgot">
         <input type="hidden" name="username" value="<%=username%>">

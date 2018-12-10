@@ -92,7 +92,7 @@
         }
 %>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>User Information</h2><br>
@@ -245,6 +245,19 @@
                         if(top == null) {
                             top = "images/magic_card_back.jpg";
                         }
+                        else {
+                            CardInfo card = cardInfo.getCardById(top);
+                            if(card != null) {
+                                String[] imageURLs = card.getImageURLs();
+                                top = imageURLs[0];
+                                if(top == null) {
+                                    top = "images/magic_card_back.jpg";
+                                }
+                            }
+                            else {
+                                top = "images/magic_card_back.jpg";
+                            }
+                        }
                         String bottom = myDeck.getBottom();
                         if(bottom == null) {
                             bottom = "images/magic_card_sleeves_default.jpg";
@@ -378,13 +391,51 @@
                         if(top == null) {
                             top = "images/magic_card_back.jpg";
                         }
+                        else {
+                            CardInfo card = cardInfo.getCardById(top);
+                            if(card != null) {
+                                String[] imageURLs = card.getImageURLs();
+                                top = imageURLs[0];
+                                if(top == null) {
+                                    top = "images/magic_card_back.jpg";
+                                }
+                            }
+                            else {
+                                top = "images/magic_card_back.jpg";
+                            }
+                        }
                         String middle = myCollection.getMiddle();
                         if(middle == null) {
                             middle = "images/magic_card_back.jpg";
                         }
+                        else {
+                            CardInfo card = cardInfo.getCardById(middle);
+                            if(card != null) {
+                                String[] imageURLs = card.getImageURLs();
+                                middle = imageURLs[0];
+                                if(middle == null) {
+                                    middle = "images/magic_card_back.jpg";
+                                }
+                            } else {
+                                middle = "images/magic_card_back.jpg";
+                            }
+                        }
                         String bottom = myCollection.getBottom();
                         if(bottom == null) {
                             bottom = "images/magic_card_back.jpg";
+                        }
+                        else {
+                            CardInfo card = cardInfo.getCardById(bottom);
+                            if(card != null) {
+                                String[] imageURLs = card.getImageURLs();
+                                bottom = imageURLs[0];
+                                if(bottom == null) {
+                                    bottom = "images/magic_card_back.jpg";
+                                }
+                            }
+                            else {
+                                bottom = "images/magic_card_back.jpg";
+                            }
                         }
                 %>
                 <div class="col-xs-6 col-sm-4 col-md-3">
@@ -526,13 +577,20 @@
                                     }
                         %>
                         <div class="col-xs-6 col-sm-4 col-md-3">
-                            <img class="img-special" width="100%" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" id="center-img">
+                            <%
+                                String[] imageURLs = card.getImageURLs();
+                                String front = imageURLs[0];
+                                if(front == null) {
+                                    front = "images/magic_card_back.jpg";
+                                }
+                            %>
+                            <img class="img-special" width="100%" src="<%=front%>" alt="<%=front%>" id="center-img">
                             <br>
                             <div class="row" style="margin: auto;display: table">
                                 <%
                                     if(username != null && !username.equals("")) {
                                 %>
-                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=card.getFront()%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
+                                <div class="col-xs-2" style="margin: auto;display: table" id="button-back-left" title="Add Card To Collection/Deck" onclick="addCardPopup('<%=card.getId()%>', '<%=front%>', '<%=username%>', '<%=collectionNum%>', '<%=collectionIdList%>', '<%=collectionNameList%>', '<%=deckNum%>', '<%=deckIdList%>', '<%=deckNameList%>');">
                                     <span id="button-symbol" class="glyphicon glyphicon-plus"></span>
                                 </div>
                                 <%
@@ -625,6 +683,19 @@
                                     String top = deck.getTop();
                                     if(top == null) {
                                         top = "images/magic_card_back.jpg";
+                                    }
+                                    else {
+                                        CardInfo card = cardInfo.getCardById(top);
+                                        if(card != null) {
+                                            String[] imageURLs = card.getImageURLs();
+                                            top = imageURLs[0];
+                                            if(top == null) {
+                                                top = "images/magic_card_back.jpg";
+                                            }
+                                        }
+                                        else {
+                                            top = "images/magic_card_back.jpg";
+                                        }
                                     }
                                     String bottom = deck.getBottom();
                                     if(bottom == null) {
@@ -755,13 +826,51 @@
                                     if(top == null) {
                                         top = "images/magic_card_back.jpg";
                                     }
+                                    else {
+                                        CardInfo card = cardInfo.getCardById(top);
+                                        if(card != null) {
+                                            String[] imageURLs = card.getImageURLs();
+                                            top = imageURLs[0];
+                                            if(top == null) {
+                                                top = "images/magic_card_back.jpg";
+                                            }
+                                        }
+                                        else {
+                                            top = "images/magic_card_back.jpg";
+                                        }
+                                    }
                                     String middle = collection.getMiddle();
                                     if(middle == null) {
                                         middle = "images/magic_card_back.jpg";
                                     }
+                                    else {
+                                        CardInfo card = cardInfo.getCardById(middle);
+                                        if(card != null) {
+                                            String[] imageURLs = card.getImageURLs();
+                                            middle = imageURLs[0];
+                                            if(middle == null) {
+                                                middle = "images/magic_card_back.jpg";
+                                            }
+                                        } else {
+                                            middle = "images/magic_card_back.jpg";
+                                        }
+                                    }
                                     String bottom = collection.getBottom();
                                     if(bottom == null) {
                                         bottom = "images/magic_card_back.jpg";
+                                    }
+                                    else {
+                                        CardInfo card = cardInfo.getCardById(bottom);
+                                        if(card != null) {
+                                            String[] imageURLs = card.getImageURLs();
+                                            bottom = imageURLs[0];
+                                            if(bottom == null) {
+                                                bottom = "images/magic_card_back.jpg";
+                                            }
+                                        }
+                                        else {
+                                            bottom = "images/magic_card_back.jpg";
+                                        }
                                     }
                                     favorited = false;
                                     count = 1;
@@ -997,7 +1106,7 @@
     } else {
 %>
 <!-- Error -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>User Information</h2><br>

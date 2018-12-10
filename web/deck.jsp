@@ -136,7 +136,12 @@
                 cardFavoriteList += "`";
             }
             cardIdList += card.getId();
-            cardFrontList += card.getFront().replace("'", "\\'").replace("\"", "\\\"");
+            String[] imageURLs = card.getImageURLs();
+            String front = imageURLs[0];
+            if(front == null) {
+                front = "images/magic_card_back.jpg";
+            }
+            cardFrontList += front;
             cardNameList += card.getName().replace("'", "\\'").replace("\"", "\\\"");
             cardTypeList += card.getType().replace("'", "\\'").replace("\"", "\\\"");
             cardSetList += card.getSetName().replace("'", "\\'").replace("\"", "\\\"");
@@ -245,7 +250,7 @@
         }
 %>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Deck Information</h2><br>
@@ -260,6 +265,19 @@
                 String top = deck.getTop();
                 if(top == null) {
                     top = "images/magic_card_back.jpg";
+                }
+                else {
+                    CardInfo card = cardInfo.getCardById(top);
+                    if(card != null) {
+                        String[] imageURLs = card.getImageURLs();
+                        top = imageURLs[0];
+                        if(top == null) {
+                            top = "images/magic_card_back.jpg";
+                        }
+                    }
+                    else {
+                        top = "images/magic_card_back.jpg";
+                    }
                 }
                 String bottom = deck.getBottom();
                 if(bottom == null) {
@@ -594,12 +612,16 @@
                                                 spacer = " hidden-sm hidden-md hidden-lg";
                                             }
                                 %>
-                                <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
-                                <div id="container<%=deckContents.getCardId()%>" class="col-xs-8 col-sm-6">
+                                <div id="container<%=deckContents.getCardId()%>" class="col-xs-12 col-sm-6">
                                     <div class="col-xs-2">
                                         <%=deckContents.getCardTotal()%>&nbsp;x
                                     </div>
-                                    <div class="col-xs-10">
+                                    <div class="col-xs-10 hidden-sm hidden-md hidden-lg">
+                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
+                                            <%=card.getName()%> (<%=legalityText%>)
+                                        </a>
+                                    </div>
+                                    <div class="hidden-xs col-sm-10">
                                         <a id="menu-item" onclick="document.getElementById('cardForm<%=deckContents.getCardId()%>').submit();">
                                             <span onmouseover="reveal('image<%=deckContents.getCardId()%>', 'container<%=deckContents.getCardId()%>', 'capsule', 'your_decks')" onmouseout="conceal('image<%=deckContents.getCardId()%>')">
                                                 <%=card.getName()%> (<%=legalityText%>)
@@ -623,13 +645,18 @@
                         while((deckContents = deckContentsInfo.getContentsByNum(count)) != null) {
                             if(deckContents.getDeckId() == id) {
                                 CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+                                String[] imageURLs = card.getImageURLs();
+                                String front = imageURLs[0];
+                                if(front == null) {
+                                    front = "images/magic_card_back.jpg";
+                                }
                     %>
                     <form id="cardForm<%=deckContents.getCardId()%>" action="CardServlet" method="POST">
                         <input type="hidden" name="action" value="card">
                         <input type="hidden" name="id" value="<%=deckContents.getCardId()%>">
                         <input type="hidden" name="username" value="<%=username%>">
                     </form>
-                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=card.getFront()%>" alt="<%=card.getFront()%>" style="display: none;"/>
+                    <img class="img-special" id="image<%=deckContents.getCardId()%>" src="<%=front%>" alt="<%=front%>" style="display: none;"/>
                     <%
                                 }
                                 count++;
@@ -834,7 +861,7 @@
     } else {
 %>
 <!-- Error -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Deck Information</h2><br>

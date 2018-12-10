@@ -4,6 +4,7 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
+<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
 <%
     String username = null;
     Cookie cookie = null;
@@ -48,7 +49,7 @@
     if(!error) {
 %>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>
@@ -84,13 +85,51 @@
                     if(top == null) {
                         top = "images/magic_card_back.jpg";
                     }
+                    else {
+                        CardInfo card = cardInfo.getCardById(top);
+                        if(card != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            top = imageURLs[0];
+                            if(top == null) {
+                                top = "images/magic_card_back.jpg";
+                            }
+                        }
+                        else {
+                            top = "images/magic_card_back.jpg";
+                        }
+                    }
                     String middle = collection.getMiddle();
                     if(middle == null) {
                         middle = "images/magic_card_back.jpg";
                     }
+                    else {
+                        CardInfo card = cardInfo.getCardById(middle);
+                        if(card != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            middle = imageURLs[0];
+                            if(middle == null) {
+                                middle = "images/magic_card_back.jpg";
+                            }
+                        } else {
+                            middle = "images/magic_card_back.jpg";
+                        }
+                    }
                     String bottom = collection.getBottom();
                     if(bottom == null) {
                         bottom = "images/magic_card_back.jpg";
+                    }
+                    else {
+                        CardInfo card = cardInfo.getCardById(bottom);
+                        if(card != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            bottom = imageURLs[0];
+                            if(bottom == null) {
+                                bottom = "images/magic_card_back.jpg";
+                            }
+                        }
+                        else {
+                            bottom = "images/magic_card_back.jpg";
+                        }
                     }
                     int entries = collection.getEntries();
                     int total = collection.getTotal();
@@ -186,7 +225,7 @@
     } else {
 %>
 <!-- Error -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>

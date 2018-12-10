@@ -37,7 +37,7 @@
 <script src="js/scripts.js"></script>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="well row">
+<div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Search Results: Users</h2><br>

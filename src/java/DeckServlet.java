@@ -1202,8 +1202,15 @@ public class DeckServlet extends HttpServlet {
                         }
                         String newCover = tmp.getString("top");
                         CardInfo card = CardInfo.getCardById(rs.getString("card_id"));
-                        if(newCover != null && card != null && card.getFront() != null && newCover.equals(card.getFront())) {
-                            newCover = null;
+                        if(newCover != null && card != null) {
+                            String[] imageURLs = card.getImageURLs();
+                            String front = imageURLs[0];
+                            if(front == null) {
+                                front = "images/magic_card_back.jpg";
+                            }
+                            if(newCover.equals(front)) {
+                                newCover = null;
+                            }
                         }
                         tmp.close();
                         
@@ -1308,8 +1315,15 @@ public class DeckServlet extends HttpServlet {
                 }
                 String newCover = rs.getString("top");
                 CardInfo card = CardInfo.getCardById(cardId);
-                if(newCover != null && card != null && card.getFront() != null && newCover.equals(card.getFront())) {
-                    newCover = null;
+                if(newCover != null && card != null) {
+                    String[] imageURLs = card.getImageURLs();
+                    String front = imageURLs[0];
+                    if(front == null) {
+                        front = "images/magic_card_back.jpg";
+                    }
+                    if(newCover.equals(front)) {
+                        newCover = null;
+                    }
                 }
                 rs.close();
 
