@@ -50,28 +50,26 @@
                 <br><br><br><hr>
             </h4>
         </div>
-        <div class="col-xs-12 col-md-5">
+        <div class="col-xs-12">
             <h3>Cards<hr></h3>
             <form id="searchCardsForm" action="SearchServlet" method="POST">
                 <input type="hidden" name="action" value="cards_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="dsc" > Descending
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order By</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <select name="order_by" id="input-field">
                             <option value="name">Name</option>
                             <option value="type">Type</option>
@@ -90,22 +88,22 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Inclusion</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3">
                         <input name="inclusion" type="radio" value="exc" checked> Match Exactly ("AND")
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3">
                         <input name="inclusion" type="radio" value="inc"> Match Any ("OR")
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Edition</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <select name="set_id" id="input-field">
                             <option></option>
                             <option value="uma">Ultimate Masters (2018)</option>
@@ -314,121 +312,114 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Legalities</p>
                     </div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="S" type="checkbox" value="legalities">&nbsp;Standard (S)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="F" type="checkbox" value="legalities">&nbsp;Future (F)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="R" type="checkbox" value="legalities">&nbsp;Frontier (R)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="M" type="checkbox" value="legalities">&nbsp;Modern (M)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="L" type="checkbox" value="legalities">&nbsp;Legacy (L)
-                    </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+</div>
+                    <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="A" type="checkbox" value="legalities">&nbsp;Pauper (A)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 col-md-3 hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="V" type="checkbox" value="legalities">&nbsp;Vintage (V)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="P" type="checkbox" value="legalities">&nbsp;Penny (P)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="C" type="checkbox" value="legalities">&nbsp;Commander (C)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-sm col-md-3 hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="1" type="checkbox" value="legalities">&nbsp;1 vs 1 (1)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 col-lg-2"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="D" type="checkbox" value="legalities">&nbsp;Duel (D)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8 col-md-4 col-lg-8">
+                    <div class="col-xs-4 hidden-sm hidden-md hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="B" type="checkbox" value="legalities">&nbsp;Brawl (B)
                     </div>
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-4 col-md-3 hidden-lg"></div>
+                    <div class="col-xs-8 col-sm-4 col-md-3 col-lg-2">
                         <input name="-" type="checkbox" value="legalities">&nbsp;None (-)
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Rarity</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="common" type="checkbox" value="rarity">&nbsp;Common
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="uncommon" type="checkbox" value="rarity">&nbsp;Uncommon
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4"></div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 hidden-lg"></div>
+                    <div class="col-xs-4 col-md-3 hidden-lg"></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="rare" type="checkbox" value="rarity">&nbsp;Rare
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="mythic" type="checkbox" value="rarity">&nbsp;Mythic
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Search Name</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="name" type="text">
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Search Type</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="type" type="text">
                     </div>
                     <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Search Text</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="text" type="text">
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Search Flavor Text</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="flavor" type="text">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Mana Color</p>
                     </div>
                     <div class="col-xs-8">
@@ -442,120 +433,118 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
+                        <p>Mana Inclusion</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="mana_inclusion" type="radio" value="exc" checked> Match All Selected Colors
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="mana_inclusion" type="radio" value="inc"> Match Any Combination
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Match With Unselected Colors</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="selective" type="radio" value="inc" checked> Yes
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="selective" type="radio" value="exc"> No
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-3">
-                        <p>Minimum Mana Cost</p>
+                    <div class="col-xs-4 col-md-2">
+                        <p>Min Mana Cost</p>
                     </div>
-                    <div class="col-xs-8 col-sm-3">
+                    <div class="col-xs-8 col-md-3">
                         <input id="input-field-alt" class="input-number" name="min_cmc" type="number">
                     </div>
-                    <div class="col-xs-4 col-sm-3">
-                        <p>Maximum Mana Cost</p>
+                    <div class="col-xs-12 hidden-md hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-2">
+                        <p>Max Mana Cost</p>
                     </div>
-                    <div class="col-xs-8 col-sm-3">
+                    <div class="col-xs-8 col-md-3">
                         <input id="input-field-alt" class="input-number" name="max_cmc" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-3">
+                    <div class="col-xs-4 col-md-2">
                         <p>Min Power</p>
                     </div>
-                    <div class="col-xs-8 col-sm-3">
+                    <div class="col-xs-8 col-md-3">
                         <input id="input-field-alt" class="input-number" name="min_power" type="number"><br><br>
                     </div>
-                    <div class="col-xs-4 col-sm-3">
+                    <div class="col-xs-12 hidden-md hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-2">
                         <p>Max Power</p>
                     </div>
-                    <div class="col-xs-8 col-sm-3">
+                    <div class="col-xs-8 col-md-3">
                         <input id="input-field-alt" class="input-number" name="max_power" type="number"><br><br>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4 col-sm-3">
+                    <div class="col-xs-4 col-md-2">
                         <p>Min Toughness</p>
                     </div>
-                    <div class="col-xs-8 col-sm-3">
+                    <div class="col-xs-8 col-md-3">
                         <input id="input-field-alt" class="input-number" name="min_toughness" type="number"><br><br>
                     </div>
-                    <div class="col-xs-4 col-sm-3">
+                    <div class="col-xs-12 hidden-md hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-2">
                         <p>Max Toughness</p>
                     </div>
-                    <div class="col-xs-8 col-sm-3">
+                    <div class="col-xs-8 col-md-3">
                         <input id="input-field-alt" class="input-number" name="max_toughness" type="number">
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Card Artist</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="artist" type="text"><br><br>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Year</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="year" type="text"><br><br>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="hidden-xs col-md-4"></div>
-                    <div class="col-xs-12 col-md-8">
+                    <div class="hidden-xs col-sm-4 col-md-8"></div>
+                    <div class="col-xs-12 col-sm-8 col-md-4">
                         <button title="Search Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Cards</button><br><br><br>
                     </div>
                 </div>
             </form><br>
         </div>
-        <div class="hidden-xs hidden-sm col-md-1" style="border-right: 1px solid white;position: relative;right: 20px;height: 260%;"></div>
-        <div class="col-xs-12 col-md-5">
+        <div class="col-xs-12">
             <h3>Decks<hr></h3>
             <form id="searchDecksForm" action="SearchServlet" method="POST">
                 <input type="hidden" name="action" value="decks_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="dsc" > Descending
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order By</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <select name="order_by" id="input-field">
                             <option value="name">Name</option>
                             <option value="user">Creator (Username)</option>
@@ -564,38 +553,36 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Inclusion</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="inclusion" type="radio" value="exc" checked> Match Exactly ("AND")
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="inclusion" type="radio" value="inc"> Match Any ("OR")
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Deck Title</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="name" type="text">
                     </div>
-                    <div class="col-xs-12"><hr></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Creator (Username)</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="user" type="text"><br><br>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="hidden-xs col-md-4"></div>
-                    <div class="col-xs-12 col-md-8">
+                    <div class="hidden-xs col-sm-4 col-md-8"></div>
+                    <div class="col-xs-12 col-sm-8 col-md-4">
                         <button title="Search Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Decks</button>
                     </div>
                 </div>
@@ -605,22 +592,20 @@
                 <input type="hidden" name="action" value="collections_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="dsc" > Descending
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order By</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <select name="order_by" id="input-field">
                             <option value="name">Name</option>
                             <option value="user">User</option>
@@ -629,38 +614,36 @@
                     <div class="col-xs-12"><br></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Inclusion</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="inclusion" type="radio" value="exc" checked> Match Exactly ("AND")
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="inclusion" type="radio" value="inc"> Match Any ("OR")
                     </div>
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Collection Title</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="name" type="text">
                     </div>
-                    <div class="col-xs-12"><hr></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Creator (Username)</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="user" type="text"><br><br>
                     </div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="hidden-xs col-md-4"></div>
-                    <div class="col-xs-12 col-md-8">
+                    <div class="hidden-xs col-sm-4 col-md-8"></div>
+                    <div class="col-xs-12 col-sm-8 col-md-4">
                         <button title="Search Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Collections</button>
                     </div>
                 </div>
@@ -670,22 +653,20 @@
                 <input type="hidden" name="action" value="users_alpha">
                 <input type="hidden" name="username" value="<%=username%>">
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order</p>
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="asc" checked> Ascending&nbsp;&nbsp;
                     </div>
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <input name="order" type="radio" value="dsc" > Descending
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Order By</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <select name="order_by" id="input-field">
                             <option value="username">Username</option>
                             <option value="name">Name</option>
@@ -694,27 +675,25 @@
                     <div class="col-xs-12"><hr></div>
                 </div>
                 <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Name</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="name" type="text">
                     </div>
-                    <div class="col-xs-12"><br></div>
-                </div>
-                <div class="row">
-                    <div class="col-xs-4">
+                    <div class="col-xs-12 hidden-lg"><br></div>
+                    <div class="col-xs-4 col-md-3 col-lg-2">
                         <p>Username</p>
                     </div>
-                    <div class="col-xs-8">
+                    <div class="col-xs-8 col-md-6 col-lg-4">
                         <input id="input-field" name="user" type="text">
                     </div>
                     <div class="col-xs-12"><br></div>
                 </div>
                 <br>
                 <div class="row">
-                    <div class="hidden-xs col-md-4"></div>
-                    <div class="col-xs-12 col-md-8">
+                    <div class="hidden-xs col-sm-4 col-md-8"></div>
+                    <div class="col-xs-12 col-sm-8 col-md-4">
                         <button title="Search Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Users</button><br><br>
                     </div>
                 </div>

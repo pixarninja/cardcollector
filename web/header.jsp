@@ -42,7 +42,7 @@
             <input type="hidden" name="action" value="notifications">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="searchForm" action="SearchServlet" method="POST">
+        <form id="advancedSearchForm" action="SearchServlet" method="POST">
             <input type="hidden" name="action" value="search">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
@@ -71,33 +71,35 @@
         %>
         <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
-                <div class="hidden-xs hidden-sm col-md-1"></div>
-                <div class="col-xs-12 col-md-10">
+                <div class="col-xs-12">
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
                         <!-- icons and text and lines -->
                         <div id="custom-navbar" class="navbar-header">
+                            <a href="#" title="Card Collector Home" class="navbar-brand" style="position: relative; top: 1px;font-size: 24px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" style="position: relative; top: 1px;font-size: 24px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
-                                <li>
-                                    <a id="menu-item" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
-                                        <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Your Collections<hr>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="menu-item" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
-                                        <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Your Decks<hr>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="menu-item" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
-                                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Your Profile<hr>
-                                    </a>
-                                </li>
+                                <div class="btn-group" style="position:relative;top: 7px;">
+                                    <button type="button" class="btn btn-lg" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                        <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Your Collections
+                                    </button>
+                                </div>
+                                <hr>
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
+                                        <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Your Decks
+                                    </button>
+                                </div>
+                                <hr>
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
+                                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Your Profile
+                                    </button>
+                                </div>
+                                <hr>
                                 <!--
                                 <li>
                                     <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
@@ -105,175 +107,302 @@
                                     </a>
                                 </li>
                                 -->
-                                <li>
-                                    <a id="menu-item" title="Help" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-question-sign"></span>&nbsp;&nbsp;Help<hr>
-                                    </a>
-                                </li>
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Help" onclick="document.getElementById('helpForm').submit();">
+                                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Help
+                                    </button>
+                                </div>
+                                <hr>
                                 <%if(username != null && !username.equals("")) {%>
-                                <li>
-                                    <a id="menu-item" title="Notifications (<%=notifications%>)" onclick="document.getElementById('notificationsForm').submit();">
-                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;Notifications (<%=notifications%>)<hr>
-                                    </a>
-                                </li>
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Notifications" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;Notifications (<%=notifications%>)
+                                    </button>
+                                </div>
+                                <hr>
                                 <%}%>
-                                <li>
-                                    <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
-                                        <span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Advanced Search<hr>
-                                    </a>
-                                </li>
                                 <%if(username == null || username.equals("")) {%>
-                                <li>
-                                    <a id="menu-item" title="Login" onclick="document.getElementById('loginForm').submit();">
-                                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login<hr>
-                                    </a>
-                                </li>
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Login" onclick="document.getElementById('loginForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;Login
+                                    </button>
+                                </div>
+                                <hr>
                                 <%} else {%>
-                                <li>
-                                    <a id="menu-item" title="Logout" onclick="document.getElementById('logoutForm').submit();">
-                                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout<hr>
-                                    </a>
-                                </li>
-                                <%}%>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- icons and text -->
-                    <div class="hidden-xs hidden-sm hidden-md col-lg-12">
-                        <div id="custom-navbar" class="navbar-header">
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="glyphicon glyphicon-list"></span>
-                            </button>
-                            <a href="#" class="navbar-brand" style="position: relative; top: 0px;font-size: 22px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="small-icon"></span>Collector</a>
-                        </div>
-                        <div id="custom-navbar" class="collapse navbar-collapse">
-                            <ul class="nav navbar-nav">
-                                <li>
-                                    <a id="menu-item" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
-                                        <span class="glyphicon glyphicon-book" id="small-icon"></span>&nbsp;&nbsp;Collections
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="menu-item" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
-                                        <span class="glyphicon glyphicon-inbox" id="small-icon"></span>&nbsp;&nbsp;Decks
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="menu-item" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
-                                        <span class="glyphicon glyphicon-user" id="small-icon"></span>&nbsp;&nbsp;Profile
-                                    </a>
-                                </li>
-                                <!--
-                                <li>
-                                    <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
-                                        <span class="glyphicon glyphicon-knight" id="small-icon"></span>&nbsp;Playmat
-                                    </a>
-                                </li>
-                                -->
-                                <li>
-                                    <a id="menu-item" title="Help" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-question-sign" id="small-icon"></span>&nbsp;&nbsp;Help
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul class="nav navbar-nav navbar-right">
-                                <%if(username != null && !username.equals("")) {%>
-                                <li>
-                                    <a id="menu-item" title="Notifications (<%=notifications%>)" onclick="document.getElementById('notificationsForm').submit();">
-                                        <span class="glyphicon glyphicon-gift" id="small-icon"></span>&nbsp;&nbsp;(<%=notifications%>)
-                                    </a>
-                                </li>
-                                <%}%>
-                                <li>
-                                    <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
-                                        <span class="glyphicon glyphicon-search" id="small-icon"></span>&nbsp;&nbsp;Search
-                                    </a>
-                                </li>
-                                <%if(username == null || username.equals("")) {%>
-                                <li>
-                                    <a id="menu-item" title="Login" onclick="document.getElementById('loginForm').submit();">
-                                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;&nbsp;Login
-                                    </a>
-                                </li>
-                                <%} else {%>
-                                <li>
-                                    <a id="menu-item" title="Logout" onclick="document.getElementById('logoutForm').submit();">
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Logout" onclick="document.getElementById('logoutForm').submit();">
                                         <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
-                                    </a>
-                                </li>
+                                    </button>
+                                </div>
+                                <hr>
                                 <%}%>
+                                <div class="btn-group" style="position:relative;top: 2px;">
+                                    <button type="button" class="btn btn-lg" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Advanced Search
+                                    </button>
+                                    <!--<button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;
+                                        <span class="caret" style="position: relative;left: -5px;"></span>&nbsp;
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" style="border-right: 1px solid white !important;border-left: 1px solid white !important;border-bottom: 1px solid white !important;border-bottom-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
+                                        <li class="dropdown-header">Quick search by name, type, text, flavor text, artist, or year</li>
+                                        <div class="dropdown-divider"></div>
+                                        <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
+                                            <input type="hidden" name="username" value="pixarninja">
+                                            <input type="hidden" name="action" value="cards_quick">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
+                                        </form>
+                                    </div>-->
+                                </div>
+                                <hr>
                             </ul>
                         </div>
                     </div>
-                    <!-- only icons -->
-                    <div class="hidden-xs col-sm-12 hidden-lg">
-                        <div id="custom-navbar" class="navbar-header">
+                    <!-- icons and text LG -->
+                    <div class="hidden-xs hidden-sm hidden-md col-lg-12">
+                        <div id="custom-navbar" class="navbar-header" style="position:relative;top: -4px;">
                             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                                 <span class="glyphicon glyphicon-list"></span>
                             </button>
-                            <a href="#" class="navbar-brand" style="position: relative; top: 0px;font-size: 26px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="medium-icon"></span>Collector</a>
                         </div>
-                        <div id="custom-navbar" class="collapse navbar-collapse">
+                        <div id="custom-navbar" class="collapse navbar-collapse" style="position: relative; top: 5px;">
+                            <a href="#" title="Card Collector Home" class="navbar-brand" style="position: relative; top: -7px;font-size: 24px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
                             <ul class="nav navbar-nav">
-                                <li>
-                                    <a id="menu-item" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
-                                        <span class="glyphicon glyphicon-book"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="menu-item" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
-                                        <span class="glyphicon glyphicon-inbox"></span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a id="menu-item" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                    </a>
-                                </li>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                        <span class="glyphicon glyphicon-book"></span>&nbsp;&nbsp;Collections
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
+                                        <span class="glyphicon glyphicon-inbox"></span>&nbsp;&nbsp;Decks
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
+                                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;Profile
+                                    </button>
+                                </div>
                                 <!--
                                 <li>
                                     <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
-                                        <span class="glyphicon glyphicon-knight"></span>
+                                        <span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Playmat<hr>
                                     </a>
                                 </li>
                                 -->
-                                <li>
-                                    <a id="menu-item" title="Help" onclick="document.getElementById('helpForm').submit();">
-                                        <span class="glyphicon glyphicon-question-sign"></span>
-                                    </a>
-                                </li>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Help" onclick="document.getElementById('helpForm').submit();">
+                                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Help
+                                    </button>
+                                </div>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <%if(username != null && !username.equals("")) {%>
-                                <li>
-                                    <a id="menu-item" title="Notifications (<%=notifications%>)" onclick="document.getElementById('notificationsForm').submit();">
-                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=notifications%>)
-                                    </a>
-                                </li>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Notifications" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;Notifications (<%=notifications%>)
+                                    </button>
+                                </div>
                                 <%}%>
-                                <li>
-                                    <a id="menu-item" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
-                                        <span class="glyphicon glyphicon-search"></span>
-                                    </a>
-                                </li>
                                 <%if(username == null || username.equals("")) {%>
-                                <li>
-                                    <a id="menu-item" title="Login" onclick="document.getElementById('loginForm').submit();">
-                                        <span class="glyphicon glyphicon-log-in"></span>
-                                    </a>
-                                </li>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Login" onclick="document.getElementById('loginForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;Login
+                                    </button>
+                                </div>
                                 <%} else {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Logout" onclick="document.getElementById('logoutForm').submit();">
+                                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout
+                                    </button>
+                                </div>
+                                <%}%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-search"></span>&nbsp;&nbsp;Search
+                                    </button>
+                                    <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;
+                                        <span class="caret" style="position: relative;left: -5px;"></span>&nbsp;
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" style="border-right: 1px solid white !important;border-left: 1px solid white !important;border-bottom: 1px solid white !important;border-bottom-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
+                                        <li class="dropdown-header">Quick search by name, type, text, flavor text, artist, or year</li>
+                                        <div class="dropdown-divider"></div>
+                                        <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
+                                            <input type="hidden" name="username" value="pixarninja">
+                                            <input type="hidden" name="action" value="cards_quick">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- only icons SM -->
+                    <div class="hidden-xs col-sm-12 hidden-md hidden-lg">
+                        <div id="custom-navbar" class="navbar-header" style="position:relative;top: -1px;">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </button>
+                        </div>
+                        <div id="custom-navbar" class="collapse navbar-collapse" style="position: relative; top: 5px;">
+                            <a href="#" class="navbar-brand" style="position: relative; top: -5px;font-size: 20px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="medium-icon"></span>Collector</a>
+                            <ul class="nav navbar-nav">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-book"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <!--
                                 <li>
-                                    <a id="menu-item" title="Logout" onclick="document.getElementById('logoutForm').submit();">
-                                        <span class="glyphicon glyphicon-log-out"></span>
+                                    <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
+                                        <span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Playmat<hr>
                                     </a>
                                 </li>
+                                -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Help" onclick="document.getElementById('helpForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+                                    </button>
+                                </div>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <%if(username != null && !username.equals("")) {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Notifications" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=notifications%>)
+                                    </button>
+                                </div>
                                 <%}%>
+                                <%if(username == null || username.equals("")) {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Login" onclick="document.getElementById('loginForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-gift"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <%} else {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Logout" onclick="document.getElementById('logoutForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <%}%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;
+                                        <span class="caret" style="position: relative;left: -5px;"></span>&nbsp;
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" style="border-right: 1px solid white !important;border-left: 1px solid white !important;border-bottom: 1px solid white !important;border-bottom-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
+                                        <li class="dropdown-header">Quick search by name, type, text, flavor text, artist, or year</li>
+                                        <div class="dropdown-divider"></div>
+                                        <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
+                                            <input type="hidden" name="username" value="pixarninja">
+                                            <input type="hidden" name="action" value="cards_quick">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- only icons MD -->
+                    <div class="hidden-xs hidden-sm col-md-12 hidden-lg">
+                        <div id="custom-navbar" class="navbar-header" style="position:relative;top: -1px;">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="glyphicon glyphicon-list"></span>
+                            </button>
+                        </div>
+                        <div id="custom-navbar" class="collapse navbar-collapse" style="position: relative; top: 5px;">
+                            <a href="#" title="Card Collector Home" class="navbar-brand" style="position: relative; top: -7px;font-size: 24px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
+                            <ul class="nav navbar-nav">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-book"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-inbox"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Your Profile" onclick="document.getElementById('profileForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-user"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <!--
+                                <li>
+                                    <a id="menu-item" title="Playmat" onclick="document.getElementById('playmatForm').submit();">
+                                        <span class="glyphicon glyphicon-knight"></span>&nbsp;&nbsp;Playmat<hr>
+                                    </a>
+                                </li>
+                                -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Help" onclick="document.getElementById('helpForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-info-sign"></span>&nbsp;
+                                    </button>
+                                </div>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <%if(username != null && !username.equals("")) {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Notifications" onclick="document.getElementById('notificationsForm').submit();">
+                                        <span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;(<%=notifications%>)
+                                    </button>
+                                </div>
+                                <%}%>
+                                <%if(username == null || username.equals("")) {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Login" onclick="document.getElementById('loginForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-gift"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <%} else {%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Logout" onclick="document.getElementById('logoutForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                                    </button>
+                                </div>
+                                <%}%>
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-lg" title="Advanced Search" onclick="document.getElementById('searchForm').submit();">
+                                        &nbsp;<span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">&nbsp;
+                                        <span class="caret" style="position: relative;left: -5px;"></span>&nbsp;
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu" style="border-right: 1px solid white !important;border-left: 1px solid white !important;border-bottom: 1px solid white !important;border-bottom-right-radius: 10px;border-bottom-right-radius: 10px;border-bottom-left-radius: 10px;">
+                                        <li class="dropdown-header">Quick search by name, type, text, flavor text, artist, or year</li>
+                                        <div class="dropdown-divider"></div>
+                                        <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
+                                            <input type="hidden" name="username" value="pixarninja">
+                                            <input type="hidden" name="action" value="cards_quick">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
+                                        </form>
+                                    </div>
+                                </div>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="hidden-xs hidden-sm col-md-1"></div>
             </nav>
         </div>
     <div class="container-fluid">

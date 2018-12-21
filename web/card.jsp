@@ -8,7 +8,7 @@
 <%@page import="java.util.Date"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <jsp:useBean id="userInfo" class="beans.UserInfo" scope="request"/>
-<jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="cardInfo" class="beans.MoreCardInfo" scope="request"/>
 <jsp:useBean id="cardCommentInfo" class="beans.CardCommentInfo" scope="request"/>
 <jsp:useBean id="deckInfo" class="beans.DeckInfo" scope="request"/>
 <jsp:useBean id="collectionInfo" class="beans.CollectionInfo" scope="request"/>
@@ -46,7 +46,7 @@
 <%
     String id = request.getParameter("id");
     ArrayList<String> icons = new ArrayList();
-    CardInfo card = (CardInfo) cardInfo.getCardById(id);
+    MoreCardInfo card = (MoreCardInfo) cardInfo.getCardById(id);
     if(card != null) {
         String game = card.getGame();
         String name = card.getName();
@@ -330,50 +330,49 @@
             }
             num++;
         }
+        
+        String collectionId = (String) request.getAttribute("collection_id");
+        String collectionTotal = (String) request.getAttribute("collection_total");
+        String deckId = (String) request.getAttribute("deck_id");
+        String deckTotal = (String) request.getAttribute("deck_total");
+        String end = "";
+        if(collectionId != null && collectionTotal != null && deckId != null && deckTotal != null) {
+            end = ", and ";
+        }
+        if((collectionId != null && collectionTotal != null) || (deckId != null && deckTotal != null)) {
 %>
+<h4>
+    <div class="well" id="black-well">
+        <p align="center" style="position: relative;top: 5px;">
+            <%
+                if(deckId != null && deckTotal != null) {
+                    DeckInfo sender = deckInfo.getDeckById(Integer.parseInt(deckId));
+            %>
+            <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;<%=Integer.parseInt(deckTotal)%> of this card were added to your deck, <a style="cursor: pointer;" onclick="document.getElementById('deckForm').submit();"><%=sender.getName()%></a>
+            <%
+                if(end.equals("")) {
+            %>
+            &nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
+            <%
+                    }
+                }
+                if(collectionId != null && collectionTotal != null) {
+                    CollectionInfo sender = collectionInfo.getCollectionById(Integer.parseInt(collectionId));
+                    if(end.equals("")) {
+            %>
+                <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
+                <%}%>
+                <%=end%><%=Integer.parseInt(collectionTotal)%> of this card were added to your collection, <a style="cursor: pointer;" onclick="document.getElementById('collectionForm').submit();"><%=sender.getName()%></a>&nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
+            <%
+                }
+            %>
+        </p>
+    </div>
+</h4>
+<%}%>
 <div class="row" id="content-well">
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <%
-                String collectionId = (String) request.getAttribute("collection_id");
-                String collectionTotal = (String) request.getAttribute("collection_total");
-                String deckId = (String) request.getAttribute("deck_id");
-                String deckTotal = (String) request.getAttribute("deck_total");
-                String end = "";
-                if(collectionId != null && collectionTotal != null && deckId != null && deckTotal != null) {
-                    end = ", and ";
-                }
-                if((collectionId != null && collectionTotal != null) || (deckId != null && deckTotal != null)) {
-            %>
-            <h4>
-                <div class="well" id="black-well">
-                    <p align="center" style="position: relative;top: 5px;">
-                        <%
-                            if(deckId != null && deckTotal != null) {
-                                DeckInfo sender = deckInfo.getDeckById(Integer.parseInt(deckId));
-                        %>
-                        <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;<%=Integer.parseInt(deckTotal)%> of this card were added to your deck, <a style="cursor: pointer;" onclick="document.getElementById('deckForm').submit();"><%=sender.getName()%></a>
-                        <%
-                            if(end.equals("")) {
-                        %>
-                        &nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
-                        <%
-                                }
-                            }
-                            if(collectionId != null && collectionTotal != null) {
-                                CollectionInfo sender = collectionInfo.getCollectionById(Integer.parseInt(collectionId));
-                                if(end.equals("")) {
-                        %>
-                            <span class="glyphicon glyphicon-alert"></span>&nbsp;&nbsp;
-                            <%}%>
-                            <%=end%><%=Integer.parseInt(collectionTotal)%> of this card were added to your collection, <a style="cursor: pointer;" onclick="document.getElementById('collectionForm').submit();"><%=sender.getName()%></a>&nbsp;&nbsp;<span class="glyphicon glyphicon-alert"></span>
-                        <%
-                            }
-                        %>
-                    </p>
-                </div>
-            </h4>
-            <%}%>
             <h2>Card Information</h2><br>
             <h4>
                 <p>Below is the selected card's information. You may add this card to your collections or decks, and you may add or remove this card from your favorites list by using the buttons beneath the card image. You may write a comment by submitting one at the bottom of the page.</p>
@@ -468,20 +467,22 @@
                     </div>
                     <div class="col-xs-12 hidden-lg"><br></div>
                     <%if(multiverse == -1 && kingdom == null) {%>
-                    <div class="col-sm-12 col-lg-8"><p>None</p></div>
+                    <div class="col-xs-12 col-lg-8"><p>None</p></div>
                     <%} else {
                         if(multiverse > -1) {%>
-                    <div class="col-sm-12 col-lg-8"><p><a href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=<%=multiverse%>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span> MTG Gatherer</a></p></div>
-                    <%if(kingdom != null) {%>
-                    <div class="col-xs-12"><br></div>
-                    <%}%>
-                    <div class="hidden-sm col-lg-4"></div>
+                    <div class="col-xs-12 col-lg-8"><p><a href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=<%=multiverse%>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span> MTG Gatherer</a></p></div>
                     <%} if(kingdom != null) {%>
-                    <div class="col-sm-12 col-lg-8"><p><a href="<%=kingdom%>" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Card Kingdom</a></p></div>
-                    <div class="hidden-sm col-lg-4"></div>
+                    <div class="hidden-xs col-lg-4"></div>
+                    <div class="col-xs-12 col-lg-8"><p><a href="<%=kingdom%>" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Card Hoarder</a></p></div>
+                    <%} if(!front.equals("images/magic_card_back.jpg")) {%>
+                    <div class="hidden-xs col-lg-4"></div>
+                    <div class="col-xs-12 col-lg-8"><p><a href="<%=front%>" target="_blank"><span class="glyphicon glyphicon-picture"></span> Front Artwork</a></p></div>
+                    <%} if(back != null && !back.equals("images/magic_card_back.jpg")) {%>
+                    <div class="hidden-xs col-lg-4"></div>
+                    <div class="col-xs-12 col-lg-8"><p><a href="<%=back%>" target="_blank"><span class="glyphicon glyphicon-picture"></span> Back Artwork</a></p></div>
                     <%}}%>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
-                    <div class="col-sm-12 col-lg-4">
+                    <div class="col-xs-12 col-lg-4">
                         <p id="title">Legalities</p>
                     </div>
                     <div class="col-xs-12 hidden-lg"><br></div>

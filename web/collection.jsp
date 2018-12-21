@@ -12,6 +12,7 @@
 <jsp:useBean id="collectionCommentInfo" class="beans.CollectionCommentInfo" scope="request"/>
 <jsp:useBean id="collectionFavoriteInfo" class="beans.CollectionFavoriteInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="moreCardInfo" class="beans.MoreCardInfo" scope="request"/>
 <jsp:useBean id="cardFavoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <%
     String username = null;
@@ -108,7 +109,7 @@
                 count++;
                 continue;
             }
-            CardInfo card = cardInfo.getCardById(collectionContents.getCardId());
+            MoreCardInfo card = moreCardInfo.getCardById(collectionContents.getCardId());
             if(card.getUsd() != null && !card.getUsd().equals("Unknown")) {
                 try {
                     usd += collectionContents.getCardTotal() * Double.parseDouble(card.getUsd());

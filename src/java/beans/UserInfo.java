@@ -20,6 +20,7 @@ public class UserInfo implements Serializable{
     private String name;
     private java.util.Date dateJoined;
     private String bio;
+    private String notifications;
     
     public UserInfo() {
         try {
@@ -48,9 +49,10 @@ public class UserInfo implements Serializable{
                 String name = rs.getString("name");
                 java.util.Date dateJoined = rs.getDate("joined");
                 String bio = rs.getString("bio");
+                String notifications = rs.getString("notifications");
                 
-                usersById.put(user, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
-                usersByNum.put(num, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
+                usersById.put(user, new UserInfo(user, pass, picture, email, name, dateJoined, bio, notifications));
+                usersByNum.put(num, new UserInfo(user, pass, picture, email, name, dateJoined, bio, notifications));
                 num++;
             }
             rs.close();
@@ -70,8 +72,9 @@ public class UserInfo implements Serializable{
                 String name = rs.getString("name");
                 java.util.Date dateJoined = rs.getDate("joined");
                 String bio = rs.getString("bio");
+                String notifications = rs.getString("notifications");
                 
-                usersByNumAlpha.put(num, new UserInfo(user, pass, picture, email, name, dateJoined, bio));
+                usersByNumAlpha.put(num, new UserInfo(user, pass, picture, email, name, dateJoined, bio, notifications));
                 num++;
             }
             rs.close();
@@ -83,7 +86,7 @@ public class UserInfo implements Serializable{
         }
     }
     
-    public UserInfo(String username, String password, String picture, String email, String name, java.util.Date dateJoined, String bio) {
+    public UserInfo(String username, String password, String picture, String email, String name, java.util.Date dateJoined, String bio, String notifications) {
         this.username = username;
         this.password = password;
         this.picture = picture;
@@ -91,6 +94,7 @@ public class UserInfo implements Serializable{
         this.name = name;
         this.dateJoined = dateJoined;
         this.bio = bio;
+        this.notifications = notifications;
     }
     
     public static UserInfo getUser(String username) {
@@ -133,4 +137,53 @@ public class UserInfo implements Serializable{
         return bio;
     }
     
+    /* 10000 */
+    public Boolean getDeckCommentNotification() {
+        if(notifications != null && notifications.contains("1")) {
+            if(notifications.charAt(0) == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /* 01000 */
+    public Boolean getCollectionCommentNotification() {
+        if(notifications != null && notifications.contains("1")) {
+            if(notifications.charAt(1) == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /* 00100 */
+    public Boolean getCardCommentReactionNotification() {
+        if(notifications != null && notifications.contains("1")) {
+            if(notifications.charAt(2) == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /* 00010 */
+    public Boolean getDeckCommentReactionNotification() {
+        if(notifications != null && notifications.contains("1")) {
+            if(notifications.charAt(3) == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    /* 00001 */
+    public Boolean getCollectionCommentReactionNotification() {
+        if(notifications != null && notifications.contains("1")) {
+            if(notifications.charAt(4) == '1') {
+                return true;
+            }
+        }
+        return false;
+    }
 }

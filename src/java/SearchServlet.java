@@ -896,6 +896,95 @@ public class SearchServlet extends HttpServlet {
                 request.setAttribute("error", ex);
                 Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else if(action.equals("cards_quick")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
+                int count = 0;
+                String search = "";
+                String prefix = "";
+                String order = " ASC";
+                String orderBy = " ORDER BY name";
+                String inclusion = " OR";
+                String[] parameters = {"name", "type", "text", "flavor", "artist", "year"};
+                for (String name : parameters) {
+                    if(count == 0) {
+                        prefix = " WHERE";
+                        count++;
+                    }
+                    else {
+                        prefix = inclusion;
+                    }
+                    if(name.equals("year")) {
+                        search += prefix + " year = ?";
+                    }
+                    else if(name.equals("name") || name.equals("type") || name.equals("text") || name.equals("flavor")) {
+                        search += prefix + " ((" + name + " LIKE ?) OR (rev_" + name + " LIKE ?))";
+                    }
+                    else {
+                        search += prefix + " " + name + " LIKE ?";
+                    }
+                }
+                
+                search += (orderBy + order);
+                
+                String query = "SELECT * FROM `" + secure.DBStructure.table1 + "`" + search;
+                PreparedStatement ps = connection.prepareStatement(query);
+                
+                int i = 1;
+                String value = request.getParameter("query");
+                if((value != null) && !value.equals("")) {
+                    for (String name : parameters) {
+                        if(name.equals("year")) {
+                            ps.setString(i, value);
+                        }
+                        else if(name.equals("name") || name.equals("type") || name.equals("text") || name.equals("flavor")) {
+                            ps.setString(i, "%" + value + "%");
+                            i++;
+                            ps.setString(i, "%" + value + "%");
+                        }
+                        else {
+                            ps.setString(i, "%" + value + "%");
+                        }
+                        i++;
+                    }
+                }
+                
+                ResultSet rs = ps.executeQuery( );
+
+                count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("id"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                if(count == 0) {
+                    url = "/advanced.jsp";
+                }
+                else {
+                    url = "/card_results.jsp";
+                }
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         } else if(action.equals("more_cards")) {
             url = "/card_results.jsp";
         } else if(action.equals("less_cards")) {

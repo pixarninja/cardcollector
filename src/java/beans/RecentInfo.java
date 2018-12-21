@@ -81,8 +81,9 @@ public class RecentInfo implements Serializable{
                     String name = rsUser.getString("name");
                     java.util.Date dateJoined = rsUser.getDate("joined");
                     String bio = rsUser.getString("bio");
+                    String notifications = rsUser.getString("notifications");
 
-                    userInfo = new UserInfo(user, pass, picture, email, name, dateJoined, bio);
+                    userInfo = new UserInfo(user, pass, picture, email, name, dateJoined, bio, notifications);
                 }
                 else {
                     userInfo = null;

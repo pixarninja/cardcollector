@@ -12,6 +12,7 @@
 <jsp:useBean id="deckCommentInfo" class="beans.DeckCommentInfo" scope="request"/>
 <jsp:useBean id="deckFavoriteInfo" class="beans.DeckFavoriteInfo" scope="request"/>
 <jsp:useBean id="cardInfo" class="beans.CardInfo" scope="request"/>
+<jsp:useBean id="moreCardInfo" class="beans.MoreCardInfo" scope="request"/>
 <jsp:useBean id="cardFavoriteInfo" class="beans.CardFavoriteInfo" scope="request"/>
 <%
     String username = null;
@@ -108,7 +109,7 @@
                 count++;
                 continue;
             }
-            CardInfo card = cardInfo.getCardById(deckContents.getCardId());
+            MoreCardInfo card = moreCardInfo.getCardById(deckContents.getCardId());
             if(card.getUsd() != null && !card.getUsd().equals("Unknown")) {
                 try {
                     usd += deckContents.getCardTotal() * Double.parseDouble(card.getUsd());

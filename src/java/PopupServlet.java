@@ -17,14 +17,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.Cookie;
@@ -39,19 +36,6 @@ import secure.EmailUtility;
  */
 @WebServlet(urlPatterns = {"/PopupServlet"})
 public class PopupServlet extends HttpServlet {
-    private String host;
-    private String port;
-    private String user;
-    private String pass;
- 
-    public void init() {
-        // reads SMTP server setting from web.xml file
-        ServletContext context = getServletContext();
-        host = context.getInitParameter("host");
-        port = context.getInitParameter("port");
-        user = context.getInitParameter("user");
-        pass = context.getInitParameter("pass");
-    }
     
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -1308,7 +1292,7 @@ public class PopupServlet extends HttpServlet {
                     ps.close();
 
                     try {
-                        EmailUtility.sendEmail(host, port, this.user, this.pass, email, subject, content);
+                        EmailUtility.sendEmail(email, subject, content);
                         request.setAttribute("username", "password successfully reset");
                         url = "/login.jsp";
                     } catch (Exception ex) {

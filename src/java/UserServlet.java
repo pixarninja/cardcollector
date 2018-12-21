@@ -266,7 +266,7 @@ public class UserServlet extends HttpServlet {
                         java.util.Date date = new Date();
                         Object dateJoined = new java.sql.Timestamp(date.getTime());
 
-                        String query = "INSERT INTO `" + secure.DBStructure.table16 + "` (`username`, `password`, `picture`, `email`, `name`, `joined`, `bio`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                        String query = "INSERT INTO `" + secure.DBStructure.table16 + "` (`username`, `password`, `picture`, `email`, `name`, `joined`, `bio`, `notifications`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
                         PreparedStatement ps = connection.prepareStatement(query);
 
@@ -277,6 +277,7 @@ public class UserServlet extends HttpServlet {
                         ps.setString(5, name);
                         ps.setObject(6, dateJoined);
                         ps.setString(7, bio);
+                        ps.setString(8, "11111");
                         ps.execute();
                         ps.close();
                         
@@ -373,6 +374,11 @@ public class UserServlet extends HttpServlet {
             String newUser = request.getParameter("new_user");
             String name = request.getParameter("name");
             String bio = request.getParameter("bio");
+            String deckc = request.getParameter("deck_comment");
+            String collectionc = request.getParameter("collection_comment");
+            String cardcr = request.getParameter("card_comment_reaction");
+            String deckcr = request.getParameter("deck_comment_reaction");
+            String collectioncr = request.getParameter("collection_comment_reaction");
             if (newUser == null || newUser.equals(""))
                 newUser = username;
             boolean error = false;
@@ -467,6 +473,45 @@ public class UserServlet extends HttpServlet {
                         ps.setString(2, newUser);
                         ps.executeUpdate();
                     }
+                    
+                    /* Notifications */
+                    String notifications = "";
+                    if (deckc != null && deckc.equals("receive")) {
+                        notifications += '1';
+                    }
+                    else {
+                        notifications += '0';
+                    }
+                    if (collectionc != null && collectionc.equals("receive")) {
+                        notifications += '1';
+                    }
+                    else {
+                        notifications += '0';
+                    }
+                    if (cardcr != null && cardcr.equals("receive")) {
+                        notifications += '1';
+                    }
+                    else {
+                        notifications += '0';
+                    }
+                    if (deckcr != null && deckcr.equals("receive")) {
+                        notifications += '1';
+                    }
+                    else {
+                        notifications += '0';
+                    }
+                    if (collectioncr != null && collectioncr.equals("receive")) {
+                        notifications += '1';
+                    }
+                    else {
+                        notifications += '0';
+                    }
+                    
+                    query = "UPDATE `" + secure.DBStructure.table16 + "` SET notifications = ? WHERE username = ?";
+                    ps = connection.prepareStatement(query);
+                    ps.setString(1, notifications);
+                    ps.setString(2, newUser);
+                    ps.executeUpdate();
 
                     url = "/profile.jsp";
                     request.setAttribute("username", newUser);
