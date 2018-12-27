@@ -42,10 +42,11 @@ public class MoreCardInfo implements Serializable{
     private java.util.Date dateViewed;
     private String frontURI;
     private String backURI;
+    private int scryId;
     
     public MoreCardInfo() {}
     
-    public MoreCardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed, String frontURI, String backURI) {
+    public MoreCardInfo(String id, String game, String name, String set_name, String set_id, String rarity, String mc, float cmc, String colors, String type, String text, String flavor, String power, String toughness, String loyalty, String revMc, String revColors, String revName, String revType, String revText, String revFlavor, String revPower, String revToughness, String revLoyalty, String artist, String year, int multiverse, String legalities, String kingdom, String usd, Boolean digital, java.util.Date dateViewed, String frontURI, String backURI, int scryId) {
         this.id = id;
         this.game = game;
         this.name = name;
@@ -80,6 +81,7 @@ public class MoreCardInfo implements Serializable{
         this.dateViewed = dateViewed;
         this.frontURI = frontURI;
         this.backURI = backURI;
+        this.scryId = scryId;
     }
     
     public static MoreCardInfo getCardById(String id) {
@@ -133,8 +135,9 @@ public class MoreCardInfo implements Serializable{
                 java.util.Date dateViewed = rs.getDate("viewed");
                 String frontURI = rs.getString("frontURI");
                 String backURI = rs.getString("backURI");
+                int scryId = rs.getInt("scryId");
                 
-                cardInfo = new MoreCardInfo(id, game, name, set_name, set_id, rarity, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI);
+                cardInfo = new MoreCardInfo(id, game, name, set_name, set_id, rarity, mc, cmc, colors, type, text, flavor, power, toughness, loyalty, revMc, revColors, revName, revType, revText, revFlavor, revPower, revToughness, revLoyalty, artist, year, multiverse, legalities, kingdom, usd, digital, dateViewed, frontURI, backURI, scryId);
             }
             rs.close();
             connection.close();
@@ -289,6 +292,75 @@ public class MoreCardInfo implements Serializable{
             backMap = null;
         }
         return resource.ScryfallScraper.ParseImageURIs(frontMap, backMap);
+    }
+    
+    public String[] scrapeImageURLs() {
+        Object[] scrapedImageURIs = {null, null};
+        try {
+            scrapedImageURIs = resource.ScryfallScraper.ScrapeImageURIs(scryId, set_id);
+            
+            /* update database if necessary */
+            if(scrapedImageURIs[0] != null && !scrapedImageURIs[0].toString().equals("") && !scrapedImageURIs[0].toString().equals(frontURI)) {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                String query = "UPDATE `" + secure.DBStructure.table1 + "` SET frontURI = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, scrapedImageURIs[0].toString());
+                ps.setString(2, id);
+                ps.executeUpdate();
+                ps.close();
+            }
+            if(scrapedImageURIs[1] != null && !scrapedImageURIs[1].toString().equals("") && !scrapedImageURIs[1].toString().equals(backURI)) {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+
+                String query = "UPDATE `" + secure.DBStructure.table1 + "` SET backURI = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, scrapedImageURIs[1].toString());
+                ps.setString(2, id);
+                ps.executeUpdate();
+                ps.close();
+            }
+            
+            String pair[] = {null, null};
+            
+            @SuppressWarnings("unchecked")
+            HashMap<Object,Object> frontURI = null;
+            @SuppressWarnings("unchecked")
+            HashMap<Object,Object> backURI = null;
+            
+            if(scrapedImageURIs[0] != null) {
+                frontURI = resource.ScryfallScraper.TranslateImageURI(scrapedImageURIs[0].toString());
+                String images[] = resource.ScryfallScraper.ParseImageURIs(frontURI, null);
+                pair[0] = images[0];
+            }
+            else {
+                pair[0] = this.frontURI;
+            }
+            if(scrapedImageURIs[1] != null) {
+                backURI = resource.ScryfallScraper.TranslateImageURI(scrapedImageURIs[1].toString());
+                String images[] = resource.ScryfallScraper.ParseImageURIs(null, backURI);
+                pair[1] = images[1];
+            }
+            else {
+                pair[1] = this.backURI;
+            }
+            
+            return pair;
+        } catch(Exception ex) {
+            Logger.getLogger(CardInfo.class.getName()).log(Level.SEVERE, null, ex);
+            String pair[] = {null, null};
+            return pair;
+        }
     }
     
 }

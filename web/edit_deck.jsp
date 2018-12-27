@@ -56,7 +56,7 @@
         </div>
         <div class="col-xs-12">
             <h4>
-                <form id="editProfileForm" action="DeckServlet" method="POST">
+                <form id="editDeckForm" action="DeckServlet" method="POST">
                     <input type="hidden" name="action" value="submit_edit">
                     <input type="hidden" name="id" value="<%=deck.getId()%>">
                     <input type="hidden" name="username" value="<%=username%>">

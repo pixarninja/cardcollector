@@ -220,29 +220,31 @@ public class CollectionServlet extends HttpServlet {
                             ps.close();
                             
                             /* send email notification */
-                            UserInfo userInfo = UserInfo.getUser(owner);
-                            String email = userInfo.getEmail();
-                            CollectionInfo collectionInfo = CollectionInfo.getCollectionById(collectionId);
+                            if(!username.equals(owner)) {
+                                UserInfo userInfo = UserInfo.getUser(owner);
+                                String email = userInfo.getEmail();
+                                CollectionInfo collectionInfo = CollectionInfo.getCollectionById(collectionId);
 
-                            String subject = "CardCollector: Notification";
-                            String content = "Greetings from CardCollector!\n\n"
-                                    + "This email is to notify you that someone has reacted to your comment on the collection, "
-                                    + collectionInfo.getName()
-                                    + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page."
-                                    + " Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.\n\n"
-                                    + "Happy Collecting!\n\n"
-                                    + "Sincerely,\n"
-                                    + "Wesley Harris, creator of Card Collector\n"
-                                    + "http://mtg.cardcollector.org\n"
-                                    + "http://markwesleyharris.com";
+                                String subject = "CardCollector: Notification";
+                                String content = "Greetings from CardCollector!\n\n"
+                                        + "This email is to notify you that someone has reacted to your comment on the collection, "
+                                        + collectionInfo.getName()
+                                        + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page.\n\n"
+                                        + "Happy Collecting!\n\n\n"
+                                        + "Sincerely,\n"
+                                        + "Wesley Harris, Creator of CardCollector\n"
+                                        + "http://mtg.cardcollector.org\n"
+                                        + "http://markwesleyharris.com\n\n"
+                                        + "Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.";
 
-                            try {
-                                EmailUtility.sendEmail(email, subject, content);
-                            } catch (Exception ex) {
-                                request.setAttribute("username", "");
-                                url = "/index.jsp";
-                                request.setAttribute("error", ex);
-                                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                try {
+                                    EmailUtility.sendEmail(email, subject, content);
+                                } catch (Exception ex) {
+                                    request.setAttribute("username", "");
+                                    url = "/index.jsp";
+                                    request.setAttribute("error", ex);
+                                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         }
                         rs.close();
@@ -380,29 +382,31 @@ public class CollectionServlet extends HttpServlet {
                             ps.close();
                             
                             /* send email notification */
-                            UserInfo userInfo = UserInfo.getUser(owner);
-                            String email = userInfo.getEmail();
-                            CollectionInfo collectionInfo = CollectionInfo.getCollectionById(collectionId);
+                            if(!username.equals(owner)) {
+                                UserInfo userInfo = UserInfo.getUser(owner);
+                                String email = userInfo.getEmail();
+                                CollectionInfo collectionInfo = CollectionInfo.getCollectionById(collectionId);
 
-                            String subject = "CardCollector: Notification";
-                            String content = "Greetings from CardCollector!\n\n"
-                                    + "This email is to notify you that someone has reacted to your comment on the collection, "
-                                    + collectionInfo.getName()
-                                    + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page."
-                                    + " Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.\n\n"
-                                    + "Happy Collecting!\n\n"
-                                    + "Sincerely,\n"
-                                    + "Wesley Harris, creator of Card Collector\n"
-                                    + "http://mtg.cardcollector.org\n"
-                                    + "http://markwesleyharris.com";
+                                String subject = "CardCollector: Notification";
+                                String content = "Greetings from CardCollector!\n\n"
+                                        + "This email is to notify you that someone has reacted to your comment on the collection, "
+                                        + collectionInfo.getName()
+                                        + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page.\n\n"
+                                        + "Happy Collecting!\n\n\n"
+                                        + "Sincerely,\n"
+                                        + "Wesley Harris, Creator of CardCollector\n"
+                                        + "http://mtg.cardcollector.org\n"
+                                        + "http://markwesleyharris.com\n\n"
+                                        + "Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.";
 
-                            try {
-                                EmailUtility.sendEmail(email, subject, content);
-                            } catch (Exception ex) {
-                                request.setAttribute("username", "");
-                                url = "/index.jsp";
-                                request.setAttribute("error", ex);
-                                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                try {
+                                    EmailUtility.sendEmail(email, subject, content);
+                                } catch (Exception ex) {
+                                    request.setAttribute("username", "");
+                                    url = "/index.jsp";
+                                    request.setAttribute("error", ex);
+                                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         }
                         rs.close();
@@ -518,30 +522,32 @@ public class CollectionServlet extends HttpServlet {
                             ps.close();
                             
                             /* send email notification */
-                            UserInfo userInfo = UserInfo.getUser(owner);
-                            String email = userInfo.getEmail();
-                            CollectionInfo collectionInfo = CollectionInfo.getCollectionById(collectionId);
+                            if(!username.equals(owner)) {
+                                UserInfo userInfo = UserInfo.getUser(owner);
+                                String email = userInfo.getEmail();
+                                CollectionInfo collectionInfo = CollectionInfo.getCollectionById(collectionId);
 
-                            String subject = "CardCollector: Notification";
-                            String content = "Greetings from CardCollector!\n\n"
-                                    + "This email is to notify you that someone has commented on your collection, "
-                                    + collectionInfo.getName()
-                                    + ". On " + dateAdded.toString() + ", " + username + " wrote:\n\n\"" + comment + "\"\n\n"
-                                    + " If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page."
-                                    + " Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.\n\n"
-                                    + "Happy Collecting!\n\n"
-                                    + "Sincerely,\n"
-                                    + "Wesley Harris, creator of Card Collector\n"
-                                    + "http://mtg.cardcollector.org\n"
-                                    + "http://markwesleyharris.com";
+                                String subject = "CardCollector: Notification";
+                                String content = "Greetings from CardCollector!\n\n"
+                                        + "This email is to notify you that someone has commented on your collection, "
+                                        + collectionInfo.getName()
+                                        + ". On " + dateAdded.toString() + ", " + username + " wrote:\n\n\"" + comment + "\"\n\n"
+                                        + " If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page.\n\n"
+                                        + "Happy Collecting!\n\n\n"
+                                        + "Sincerely,\n"
+                                        + "Wesley Harris, Creator of CardCollector\n"
+                                        + "http://mtg.cardcollector.org\n"
+                                        + "http://markwesleyharris.com\n\n"
+                                        + "Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.";
 
-                            try {
-                                EmailUtility.sendEmail(email, subject, content);
-                            } catch (Exception ex) {
-                                request.setAttribute("username", "");
-                                url = "/index.jsp";
-                                request.setAttribute("error", ex);
-                                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                try {
+                                    EmailUtility.sendEmail(email, subject, content);
+                                } catch (Exception ex) {
+                                    request.setAttribute("username", "");
+                                    url = "/index.jsp";
+                                    request.setAttribute("error", ex);
+                                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         }
                         rs.close();
@@ -552,6 +558,125 @@ public class CollectionServlet extends HttpServlet {
                 }
                 
                 connection.close();
+                url = "/collection.jsp";
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(CollectionServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("number_edit")) {
+            int id = Integer.parseInt((String)request.getParameter("id"));
+            
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                Statement statement;
+                
+                /* Update Total */
+                statement = connection.createStatement();
+                ResultSet check = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "'");
+
+                while (check.next()) {
+
+                    String total = request.getParameter("total" + check.getString("card_id"));
+                    String query;
+                    PreparedStatement ps;
+
+                    if(total != null && !total.equals("")) {
+                        if(Integer.parseInt(total) < 0) {
+                            total = "0";
+                        }
+
+                        if(total.equals("0")) {
+                            statement = connection.createStatement();
+                            ResultSet tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "' AND card_id = '" + check.getString("card_id") + "'");
+                            tmp.next();
+                            int prevTotal = tmp.getInt("card_total");
+                            tmp.close();
+
+                            query = "DELETE FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = ? AND card_id = ?";
+                            ps = connection.prepareStatement(query);
+                            ps.setInt(1, id);
+                            ps.setString(2, check.getString("card_id"));
+                            ps.executeUpdate();
+                            ps.close();
+
+                            statement = connection.createStatement();
+                            tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` WHERE id = '" + id + "'");
+                            tmp.next();
+                            int collectionTotal = tmp.getInt("total") - prevTotal;
+                            tmp.close();
+
+                            query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ? WHERE id = ?";
+                            ps = connection.prepareStatement(query);
+                            ps.setInt(1, collectionTotal);
+                            ps.setInt(2, id);
+                            ps.executeUpdate();
+                            ps.close();
+                        }
+                        else {
+                            statement = connection.createStatement();
+                            ResultSet tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "' AND card_id = '" + check.getString("card_id") + "'");
+                            tmp.next();
+                            int prevTotal = tmp.getInt("card_total");
+                            tmp.close();
+
+                            query = "UPDATE `" + secure.DBStructure.table8 + "` SET card_total = ? WHERE collection_id = ? AND card_id = ?";
+                            ps = connection.prepareStatement(query);
+                            ps.setInt(1, Integer.parseInt(total));
+                            ps.setInt(2, id);
+                            ps.setString(3, check.getString("card_id"));
+                            ps.executeUpdate();
+                            ps.close();
+
+                            statement = connection.createStatement();
+                            tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` WHERE id = '" + id + "'");
+                            tmp.next();
+                            int collectionTotal = tmp.getInt("total") + Integer.parseInt(total) - prevTotal;
+                            tmp.close();
+
+                            query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ? WHERE id = ?";
+                            ps = connection.prepareStatement(query);
+                            ps.setInt(1, collectionTotal);
+                            ps.setInt(2, id);
+                            ps.executeUpdate();
+                            ps.close();
+                        }
+                    }
+
+                }
+                check.close();
+                
+                /* Assurance */
+                int total = 0;
+                int entries = 0;
+                statement = connection.createStatement();
+                ResultSet rs = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "'");
+
+                while(rs.next()) {
+                    total += rs.getInt("card_total");
+                    entries++;
+                }
+                rs.close();
+                
+                String query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ?, entries = ? WHERE id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, total);
+                ps.setInt(2, entries);
+                ps.setInt(3, id);
+                ps.executeUpdate();
+                ps.close();
+                
                 url = "/collection.jsp";
             } catch (ClassNotFoundException ex) {
                 request.setAttribute("username", "");
@@ -584,7 +709,6 @@ public class CollectionServlet extends HttpServlet {
                 String user = secure.DBConnection.username;
                 String pass = secure.DBConnection.password;
                 Connection connection = DriverManager.getConnection(dbURL, user, pass);
-                
                 Statement statement;
             
                 if(request.getParameter(Integer.toString(0)) != null && request.getParameter(Integer.toString(0)).equals("select_all")) {
@@ -691,7 +815,7 @@ public class CollectionServlet extends HttpServlet {
                 }
                 
                 /* Update Total */
-                if((copyCollection == null || copyCollection.equals("")) || (copyDeck == null || !copyDeck.equals("")) && !error) {
+                if(!error) {
                     statement = connection.createStatement();
                     ResultSet check = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "'");
 
@@ -701,34 +825,66 @@ public class CollectionServlet extends HttpServlet {
                         String query;
                         PreparedStatement ps;
 
-                        if(total != null && !total.equals("") && Integer.parseInt(total) > 0) {
+                        if(total != null && !total.equals("")) {
+                            if(Integer.parseInt(total) < 0) {
+                                total = "0";
+                            }
+                            
+                            if(total.equals("0")) {
+                                statement = connection.createStatement();
+                                ResultSet tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "' AND card_id = '" + check.getString("card_id") + "'");
+                                tmp.next();
+                                int prevTotal = tmp.getInt("card_total");
+                                tmp.close();
 
-                            statement = connection.createStatement();
-                            ResultSet tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "' AND card_id = '" + check.getString("card_id") + "'");
-                            tmp.next();
-                            int prevTotal = tmp.getInt("card_total");
-                            tmp.close();
+                                query = "DELETE FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = ? AND card_id = ?";
+                                ps = connection.prepareStatement(query);
+                                ps.setInt(1, id);
+                                ps.setString(2, check.getString("card_id"));
+                                ps.executeUpdate();
+                                ps.close();
 
-                            query = "UPDATE `" + secure.DBStructure.table8 + "` SET card_total = ? WHERE collection_id = ? AND card_id = ?";
-                            ps = connection.prepareStatement(query);
-                            ps.setInt(1, Integer.parseInt(total));
-                            ps.setInt(2, id);
-                            ps.setString(3, check.getString("card_id"));
-                            ps.executeUpdate();
-                            ps.close();
+                                statement = connection.createStatement();
+                                tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` WHERE id = '" + id + "'");
+                                tmp.next();
+                                int collectionTotal = tmp.getInt("total") - prevTotal;
+                                tmp.close();
 
-                            statement = connection.createStatement();
-                            tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` WHERE id = '" + id + "'");
-                            tmp.next();
-                            int collectionTotal = tmp.getInt("total") + Integer.parseInt(total) - prevTotal;
-                            tmp.close();
+                                query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ? WHERE id = ?";
+                                ps = connection.prepareStatement(query);
+                                ps.setInt(1, collectionTotal);
+                                ps.setInt(2, id);
+                                ps.executeUpdate();
+                                ps.close();
+                            }
+                            else {
+                                statement = connection.createStatement();
+                                ResultSet tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table8 + "` WHERE collection_id = '" + id + "' AND card_id = '" + check.getString("card_id") + "'");
+                                tmp.next();
+                                int prevTotal = tmp.getInt("card_total");
+                                tmp.close();
 
-                            query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ? WHERE id = ?";
-                            ps = connection.prepareStatement(query);
-                            ps.setInt(1, collectionTotal);
-                            ps.setInt(2, id);
-                            ps.executeUpdate();
-                            ps.close();
+                                query = "UPDATE `" + secure.DBStructure.table8 + "` SET card_total = ? WHERE collection_id = ? AND card_id = ?";
+                                ps = connection.prepareStatement(query);
+                                ps.setInt(1, Integer.parseInt(total));
+                                ps.setInt(2, id);
+                                ps.setString(3, check.getString("card_id"));
+                                ps.executeUpdate();
+                                ps.close();
+
+                                statement = connection.createStatement();
+                                tmp = statement.executeQuery("SELECT * FROM `" + secure.DBStructure.table5 + "` WHERE id = '" + id + "'");
+                                tmp.next();
+                                int collectionTotal = tmp.getInt("total") + Integer.parseInt(total) - prevTotal;
+                                tmp.close();
+
+                                query = "UPDATE `" + secure.DBStructure.table5 + "` SET total = ? WHERE id = ?";
+                                ps = connection.prepareStatement(query);
+                                ps.setInt(1, collectionTotal);
+                                ps.setInt(2, id);
+                                ps.executeUpdate();
+                                ps.close();
+                            }
                         }
 
                     }

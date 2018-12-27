@@ -184,7 +184,7 @@
         
         //String front = card.getFront();
         //String back = card.getBack();
-        String[] imageURLs = card.getImageURLs();
+        String[] imageURLs = card.scrapeImageURLs();
         String front = imageURLs[0];
         String back = imageURLs[1];
         if(front == null) {
@@ -342,7 +342,7 @@
         if((collectionId != null && collectionTotal != null) || (deckId != null && deckTotal != null)) {
 %>
 <h4>
-    <div class="well" id="black-well">
+    <div class="row well" id="black-well">
         <p align="center" style="position: relative;top: 5px;">
             <%
                 if(deckId != null && deckTotal != null) {

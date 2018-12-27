@@ -56,7 +56,7 @@
         </div>
         <div class="col-xs-12">
             <h4>
-                <form id="editProfileForm" action="CollectionServlet" method="POST">
+                <form id="editCollectionForm" action="CollectionServlet" method="POST">
                     <input type="hidden" name="action" value="submit_edit">
                     <input type="hidden" name="id" value="<%=collection.getId()%>">
                     <input type="hidden" name="username" value="<%=username%>">

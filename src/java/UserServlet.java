@@ -24,6 +24,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import secure.EmailUtility;
 
 
 @WebServlet(urlPatterns = {"/UserServlet"})
@@ -280,6 +281,33 @@ public class UserServlet extends HttpServlet {
                         ps.setString(8, "11111");
                         ps.execute();
                         ps.close();
+                        
+                        /* send email notification */
+                        String subject = "Welcome to CardCollector!";
+                        String content = "Greetings from CardCollector!\n\n"
+                                + "Welcome to CardCollector!\n\n"
+                                + "It is a pleasure to have you join our family of users."
+                                + " As a first-time user of this website, we ask you to please select your personal profile picture using the picture icon button on the Profile Page."
+                                + " If you would like to know how CardCollector was created, or if you encounter any problems or have suggestions on how to improve the site, please use the information on the Help Page."
+                                + " On the Help Page you will also find information that will help you to use CardCollector to help you to log decks or collections of your Magic The Gathering cards!\n\n"
+                                + "Please remember that CardCollector was not created to gain anything monetarily, and is solely for the purpose of helping you get the most of your Magic The Gathering cards."
+                                + " We own none of the material displayed on CardCollector, nor do we take responsibility for content put on the site."
+                                + " For more information on the Terms of Service, visit http://mtg.cardcollector.org/terms.jsp.\n\n"
+                                + "Happy Collecting!\n\n\n"
+                                + "Sincerely,\n"
+                                + "Wesley Harris, Creator of CardCollector\n"
+                                + "http://mtg.cardcollector.org\n"
+                                + "http://markwesleyharris.com\n\n"
+                                + "Please do not reply to this email, it was sent from an unattended mailbox.";
+
+                        try {
+                            EmailUtility.sendEmail(email, subject, content);
+                        } catch (Exception ex) {
+                            request.setAttribute("username", "");
+                            url = "/index.jsp";
+                            request.setAttribute("error", ex);
+                            Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                         
                         request.setAttribute("username", username);
                         Cookie cookie = new Cookie("username", username);

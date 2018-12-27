@@ -42,7 +42,7 @@
             <input type="hidden" name="action" value="notifications">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
-        <form id="advancedSearchForm" action="SearchServlet" method="POST">
+        <form id="searchForm" action="SearchServlet" method="POST">
             <input type="hidden" name="action" value="search">
             <input type="hidden" name="username" value="<%=username%>">
         </form>
@@ -73,12 +73,20 @@
             <div class="container-fluid">
                 <div class="col-xs-12">
                     <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-                        <!-- icons and text and lines -->
+                        <!-- icons and text and lines XS -->
                         <div id="custom-navbar" class="navbar-header">
-                            <a href="#" title="Card Collector Home" class="navbar-brand" style="position: relative; top: 1px;font-size: 24px;" onclick="document.getElementById('indexForm').submit();">Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector</a>
-                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                <span class="glyphicon glyphicon-list"></span>
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="position: relative;top: 0px;left: 44px;">
+                                <span class="glyphicon glyphicon-list" style="font-size: 18px;position: relative;top: 0px;"></span>
                             </button>
+                            <form action="SearchServlet" method="POST" style="position:relative;top: 9px;left: -20px;">
+                                <input type="hidden" name="username" value="pixarninja">
+                                <input type="hidden" name="action" value="cards_quick">
+                                <a href="#" title="Card Collector Home" class="navbar-brand" style="position: relative; top: -15px;left: -24px;" onclick="document.getElementById('indexForm').submit();"><span class="glyphicon glyphicon-globe" style="font-size: 38px;"></span></a>
+                                <div style="position: absolute;left: 42px;">
+                                    <input name="query" title="Quick search by name, type, text, flavor text, artist, or year" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:65%;border: none !important;padding: 8px;border-radius: 10px;">
+                                    <button title="Quick Search" id="form-submit" type="submit" style="width: 3.5em !important;height: 2.4em;">Go!</button>
+                                </div>
+                            </form>
                         </div>
                         <div id="custom-navbar" class="collapse navbar-collapse">
                             <ul class="nav navbar-nav">
@@ -232,7 +240,7 @@
                                         <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
                                             <input type="hidden" name="username" value="pixarninja">
                                             <input type="hidden" name="action" value="cards_quick">
-                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;border: solid white 1px !important;padding: 8px;border-radius: 10px;position: relative;left: 15px;">
                                             <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
                                         </form>
                                     </div>
@@ -313,7 +321,7 @@
                                         <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
                                             <input type="hidden" name="username" value="pixarninja">
                                             <input type="hidden" name="action" value="cards_quick">
-                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;border: solid white 1px !important;padding: 8px;border-radius: 10px;position: relative;left: 15px;">
                                             <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
                                         </form>
                                     </div>
@@ -394,7 +402,7 @@
                                         <form action="SearchServlet" method="POST" style="position:relative;top: 10px;">
                                             <input type="hidden" name="username" value="pixarninja">
                                             <input type="hidden" name="action" value="cards_quick">
-                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;position: relative;left: 20px;border: none !important;padding-top: 10px;padding-bottom: 10px;">
+                                            <input name="query" type="text" placeholder="Your Quick Search..." style="background-color: black !important;color: white;width:69%;border: solid white 1px !important;padding: 8px;border-radius: 10px;position: relative;left: 15px;">
                                             <button title="Quick Search" id="form-submit" type="submit" style="width: 20% !important;height: 2.5em;position: relative;left: 20px;">Go!</button>
                                         </form>
                                     </div>

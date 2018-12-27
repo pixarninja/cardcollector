@@ -1,3 +1,4 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js" type="text/javascript"></script>
 <%@page import="java.math.RoundingMode"%>
 <%@page import="java.math.BigDecimal"%>
 <%@page import="java.net.HttpURLConnection"%>
@@ -101,6 +102,13 @@
         String cardColorList = "";
         String cardCostList = "";
         String cardFavoriteList = "";
+        
+        int whites = 0;
+        int blues = 0;
+        int blacks = 0;
+        int reds = 0;
+        int greens = 0;
+        int devoids = 0;
         int cardNum = 0;
         double usd = 0.0;
         CollectionContentsInfo collectionContents;
@@ -154,6 +162,9 @@
                 for(i = 0; i < parsedColors.length; i++) {
                     String symbol = parsedColors[i];
                     if(symbol.contains("W")) {
+                        if(!card.getText().contains("Devoid")) {
+                            whites += collectionContents.getCardTotal();
+                        }
                         if(colors.equals("")) {
                             colors = "White";
                         }
@@ -161,6 +172,9 @@
                             colors = colors + ", White";
                         }
                     } else if (symbol.contains("U")) {
+                        if(!card.getText().contains("Devoid")) {
+                            blues += collectionContents.getCardTotal();
+                        }
                         if(colors.equals("")) {
                             colors = "Blue";
                         }
@@ -168,6 +182,9 @@
                             colors = colors + ", Blue";
                         }
                     } else if (symbol.contains("B")) {
+                        if(!card.getText().contains("Devoid")) {
+                            blacks += collectionContents.getCardTotal();
+                        }
                         if(colors.equals("")) {
                             colors = "Black";
                         }
@@ -175,6 +192,9 @@
                             colors = colors + ", Black";
                         }
                     } else if (symbol.contains("R")) {
+                        if(!card.getText().contains("Devoid")) {
+                            reds += collectionContents.getCardTotal();
+                        }
                         if(colors.equals("")) {
                             colors = "Red";
                         }
@@ -182,6 +202,9 @@
                             colors = colors + ", Red";
                         }
                     } else if (symbol.contains("G")) {
+                        if(!card.getText().contains("Devoid")) {
+                            greens += collectionContents.getCardTotal();
+                        }
                         if(colors.equals("")) {
                             colors = "Green";
                         }
@@ -191,6 +214,9 @@
                     }
                 }
                 if(colors.equals("") || (card.getText() != null && card.getText().contains("Devoid"))) {
+                    if(card.getConvertedManaCost() != 0) {
+                        devoids += collectionContents.getCardTotal();
+                    }
                     colors = "Devoid";
                 }
             }
@@ -216,6 +242,112 @@
                 cardFavoriteList += "0";
             }
             count++;
+        }
+        
+        int totalColors = whites + blues + blacks + reds + greens + devoids;
+        int numColors = 0;
+        if(whites > 0) {
+            numColors += 1;
+        }
+        if(blues > 0) {
+            numColors += 1;
+        }
+        if(blacks > 0) {
+            numColors += 1;
+        }
+        if(reds > 0) {
+            numColors += 1;
+        }
+        if(greens > 0) {
+            numColors += 1;
+        }
+        if(devoids > 0) {
+            numColors += 1;
+        }
+        int countColors = 0;
+        
+        String labels = "";
+        String data = "";
+        String backgroundColor = "";
+        String backgroundBorder = "";
+        
+        if(whites > 0) {
+            countColors += 1;
+            labels += "'White'";
+            data += String.format ("%.2f", whites / (float)totalColors);
+            backgroundColor += "'lightyellow'"; // white
+            backgroundBorder += "'white'"; // white
+            if(countColors < numColors) {
+                labels += ", ";
+                data += ", ";
+                backgroundColor += ", ";
+                backgroundBorder += ", ";
+            }
+        }
+        if(blues > 0) {
+            countColors += 1;
+            labels += "'Blue'";
+            data += String.format ("%.2f", blues / (float)totalColors);
+            backgroundColor += "'skyblue'"; // blue
+            backgroundBorder += "'white'"; // blue
+            if(countColors < numColors) {
+                labels += ", ";
+                data += ", ";
+                backgroundColor += ", ";
+                backgroundBorder += ", ";
+            }
+        }
+        if(blacks > 0) {
+            countColors += 1;
+            labels += "'Black'";
+            data += String.format ("%.2f", blacks / (float)totalColors);
+            backgroundColor += "'darkgray'"; // black
+            backgroundBorder += "'white'"; // black
+            if(countColors < numColors) {
+                labels += ", ";
+                data += ", ";
+                backgroundColor += ", ";
+                backgroundBorder += ", ";
+            }
+        }
+        if(reds > 0) {
+            countColors += 1;
+            labels += "'Red'";
+            data += String.format ("%.2f", reds / (float)totalColors);
+            backgroundColor += "'tomato'"; // red
+            backgroundBorder += "'white'"; // red
+            if(countColors < numColors) {
+                labels += ", ";
+                data += ", ";
+                backgroundColor += ", ";
+                backgroundBorder += ", ";
+            }
+        }
+        if(greens > 0) {
+            countColors += 1;
+            labels += "'Green'";
+            data += String.format ("%.2f", greens / (float)totalColors);
+            backgroundColor += "'mediumseagreen'"; // green
+            backgroundBorder += "'white'"; // green
+            if(countColors < numColors) {
+                labels += ", ";
+                data += ", ";
+                backgroundColor += ", ";
+                backgroundBorder += ", ";
+            }
+        }
+        if(devoids > 0) {
+            countColors += 1;
+            labels += "'Devoid'";
+            data += String.format ("%.2f", devoids / (float)totalColors);
+            backgroundColor += "'plum'"; // devoid
+            backgroundBorder += "'white'"; // devoid
+            if(countColors < numColors) {
+                labels += ", ";
+                data += ", ";
+                backgroundColor += ", ";
+                backgroundBorder += ", ";
+            }
         }
         
         BigDecimal bd = new BigDecimal(usd);
@@ -496,6 +628,14 @@
                         <p>None</p>
                     </div>
                     <%}%>
+                    <div class="col-xs-12"><hr></div>
+                    <div class="col-xs-12">
+                        <div class="col-sx-12">
+                            <p id="title">Color Distribution</p>
+                        </div>
+                        <br>
+                        <canvas id="distribution" width="100%"></canvas>
+                    </div>
                 </h4>
             </div>
             <div class="col-xs-12 col-sm-8">
@@ -615,20 +755,23 @@
                                             }
                                 %>
                                 <div id="container<%=collectionContents.getCardId()%>" class="col-xs-12 col-sm-6">
-                                    <div class="col-xs-2">
-                                        <%=collectionContents.getCardTotal()%>&nbsp;x
-                                    </div>
                                     <div class="col-xs-10 hidden-sm hidden-md hidden-lg">
+                                        <%=collectionContents.getCardTotal()%>&nbsp;x
                                         <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
                                             <%=card.getName()%> (<%=legalityText%>)
                                         </a>
                                     </div>
                                     <div class="hidden-xs col-sm-10">
-                                        <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
-                                            <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
-                                                <%=card.getName()%> (<%=legalityText%>)
-                                            </span>
-                                        </a>
+                                        <div class="col-sm-2">
+                                            <%=collectionContents.getCardTotal()%>&nbsp;x
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <a id="menu-item" onclick="document.getElementById('cardForm<%=collectionContents.getCardId()%>').submit();">
+                                                <span onmouseover="reveal('image<%=collectionContents.getCardId()%>', 'container<%=collectionContents.getCardId()%>', 'capsule', 'your_collections')" onmouseout="conceal('image<%=collectionContents.getCardId()%>')">
+                                                    <%=card.getName()%> (<%=legalityText%>)
+                                                </span>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12<%=spacer%>"><br></div>
@@ -674,7 +817,7 @@
                 <h3>Sorting Area<hr></h3>
                 <h4>
                     <p>
-                        Click the buttons below to sort the cards visually in different ways.
+                        Click the buttons below to sort the cards visually in different ways. If you are the owner, you may update the number of each card, any number 0 and below will remove the card from this collection. Remember to click the "Submit" button beneath the Sorting Area to publish your changes.
                     </p>
                 </h4>
                 <div class="row">
@@ -859,6 +1002,28 @@
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
 <script src="js/scripts.js"></script>
+<script>
+Chart.defaults.global.defaultFontColor = "#fff";
+var ctx = document.getElementById("distribution").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: [<%=labels%>],
+        datasets: [{
+            label: '% Cards',
+            data: [<%=data%>],
+            backgroundColor: [<%=backgroundColor%>],
+            borderColor: [<%=backgroundBorder%>],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+           display: false
+        }
+    }
+});
+</script>
 <%
     } else {
 %>

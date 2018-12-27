@@ -339,6 +339,9 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
     if(type === "deck") {
         var curr = "";
         var view = "";
+        if(username === owner) {
+            view = "<form action='DeckServlet' method='POST'>";
+        }
         var printed = 1;
         for(i = 0; i < cardNum; i++) {
             var favorited = false;
@@ -378,83 +381,32 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
             if(username !== null && username !== "") {
                 if(username === owner) {
                     view += "<br><div class='row' style='margin: auto;display: table'>";
-                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Add Card To Deck' onclick=\"addCardPopup('" + cardIds[i] + "', '" + cardFronts[i] + "', '" + username + "', '" + collectionNum + "', '" + collectionIdList + "', '" + collectionNameList + "', '" + deckNum + "', '" + deckIdList + "', '" + deckNameList + "');\">\
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-pill' title='Add Card To Deck' onclick=\"addCardPopup('" + cardIds[i] + "', '" + cardFronts[i] + "', '" + username + "', '" + collectionNum + "', '" + collectionIdList + "', '" + collectionNameList + "', '" + deckNum + "', '" + deckIdList + "', '" + deckNameList + "');\">\
                                 <span id='button-symbol' class='glyphicon glyphicon-plus'></span>\
                             </div>";
-                    if(favorited) {
-                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-middle' title='Remove Card From Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
-                                <span id='button-symbol' class='glyphicon glyphicon-star'></span>\
-                            </div>";
-                    }
-                    else {
-                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-middle' title='Add Card To Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
-                                <span id='button-symbol' class='glyphicon glyphicon-star-empty'></span>\
-                            </div>";
-                    }
-                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Delete Card(s) From Deck' onclick=\"document.getElementById('deleteForm" + cardIds[i] + "').submit();\">\
-                            <span id='button-symbol' class='glyphicon glyphicon-trash'></span>\
-                        </div>";
-                    view += "</div>\
-                    <form id='favoriteForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
-                        <input type='hidden' name='action' value='favorite'>\
-                        <input type='hidden' name='id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>\
-                    <form id='removeForm" + cardIds[i] + "' action='DeckServlet' method='POST'>\
-                        <input type='hidden' name='action' value='remove_card'>\
-                        <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='id' value='" + id + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>\
-                    <form id='deleteForm" + cardIds[i] + "' action='DeckServlet' method='POST'>\
-                        <input type='hidden' name='action' value='delete_card'>\
-                        <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='id' value='" + id + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>";
+                    view += "</div>";
                 }
                 else {
                     view += "<br><div class='row' style='margin: auto;display: table'>";
-                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-left' title='Add Card To Deck' onclick=\"addCardPopup('" + cardIds[i] + "', '" + cardFronts[i] + "', '" + username + "', '" + collectionNum + "', '" + collectionIdList + "', '" + collectionNameList + "', '" + deckNum + "', '" + deckIdList + "', '" + deckNameList + "');\">\
+                    view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-pill' title='Add Card To Deck' onclick=\"addCardPopup('" + cardIds[i] + "', '" + cardFronts[i] + "', '" + username + "', '" + collectionNum + "', '" + collectionIdList + "', '" + collectionNameList + "', '" + deckNum + "', '" + deckIdList + "', '" + deckNameList + "');\">\
                                 <span id='button-symbol' class='glyphicon glyphicon-plus'></span>\
                             </div>";
-                    if(favorited) {
-                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Remove Card From Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
-                                <span id='button-symbol' class='glyphicon glyphicon-star'></span>\
-                            </div>";
-                    }
-                    else {
-                        view += "<div class='col-xs-2' style='margin: auto;display: table' id='button-back-right' title='Add Card To Favorites List' onclick=\"document.getElementById('favoriteForm" + cardIds[i] + "').submit();\">\
-                                <span id='button-symbol' class='glyphicon glyphicon-star-empty'></span>\
-                            </div>";
-                    }
-                    view += "</div>\
-                    <form id='favoriteForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
-                        <input type='hidden' name='action' value='favorite'>\
-                        <input type='hidden' name='id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>\
-                    <form id='removeForm" + cardIds[i] + "' action='DeckServlet' method='POST'>\
-                        <input type='hidden' name='action' value='remove_card'>\
-                        <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='id' value='" + id + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>";
+                    view += "</div>";
                 }
             } else {
                 view += "<br>";
             }
             view += "<h4><p align='center' style='position: relative;top: -5px;'>\
                     <a id='menu-item' onclick=\"document.getElementById('cardForm" + cardIds[i] + "').submit();\">\
-                        " + cardNames[i] + " (" + cardSets[i] + ") x " + cardTotals[i] + "\
-                    </a>\
-                </p></h4>\
-                <form id='cardForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
-                    <input type='hidden' name='action' value='card'>\
-                    <input type='hidden' name='id' value='" + cardIds[i] + "'>\
-                    <input type='hidden' name='username' value='" + username + "'>\
-                </form>\
-            </div>";
+                        " + cardNames[i] + " (" + cardSets[i] + ")\
+                    </a>";
+            if(username === owner) {
+                view += "&nbsp;x <input id='input-field' class='input-number' type='number' name='total" + cardIds[i] + "' value='" + cardTotals[i] + "'>";
+            }
+            else {
+                view += "&nbsp;x " + cardTotals[i];
+            }
+            view += "</p></h4></div>";
             var spacer = "";
             if((printed % 2) === 0) {
                 spacer += "col-xs-12";
@@ -478,10 +430,25 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
             printed++;
         }
         view += "<div class='col-xs-12'></div>";
+        if(username === owner) {
+            view += "<input type='hidden' name='action' value='number_edit'>\
+                <input type='hidden' name='id' value='" + id + "'>\
+                <input type='hidden' name='username' value='" + username + "'>\
+                <div class='row'>\
+                    <div class='hidden-xs col-sm-8'></div>\
+                    <div class='col-xs-12 col-sm-4'>\
+                        <button title='Submit Deck Edit' id='form-submit' type='submit'>Submit</button>\
+                    </div>\
+                </div>\
+            </form>";
+        }
     }
     else if(type === "collection") {
         var curr = "";
         var view = "";
+        if(username === owner) {
+            view = "<form action='CollectionServlet' method='POST'>";
+        }
         var printed = 1;
         for(i = 0; i < cardNum; i++) {
             var favorited = false;
@@ -543,13 +510,7 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
                         <input type='hidden' name='id' value='" + cardIds[i] + "'>\
                         <input type='hidden' name='username' value='" + username + "'>\
                     </form>\
-                    <form id='removeForm" + cardIds[i] + "' action='CollectionServlet' method='POST'>\
-                        <input type='hidden' name='action' value='remove_card'>\
-                        <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='id' value='" + id + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
-                    </form>\
-                    <form id='deleteForm" + cardIds[i] + "' action='CollectionServlet' method='POST'>\
+                    <form id='deleteForm" + cardIds[i] + "' action='DeckServlet' method='POST'>\
                         <input type='hidden' name='action' value='delete_card'>\
                         <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
                         <input type='hidden' name='id' value='" + id + "'>\
@@ -576,12 +537,6 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
                         <input type='hidden' name='action' value='favorite'>\
                         <input type='hidden' name='id' value='" + cardIds[i] + "'>\
                         <input type='hidden' name='username' value='" + username + "'>\
-                    </form>\
-                    <form id='removeForm" + cardIds[i] + "' action='CollectionServlet' method='POST'>\
-                        <input type='hidden' name='action' value='remove_card'>\
-                        <input type='hidden' name='card_id' value='" + cardIds[i] + "'>\
-                        <input type='hidden' name='id' value='" + id + "'>\
-                        <input type='hidden' name='username' value='" + username + "'>\
                     </form>";
                 }
             } else {
@@ -589,15 +544,15 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
             }
             view += "<h4><p align='center' style='position: relative;top: -5px;'>\
                     <a id='menu-item' onclick=\"document.getElementById('cardForm" + cardIds[i] + "').submit();\">\
-                        " + cardNames[i] + " (" + cardSets[i] + ") x " + cardTotals[i] + "\
-                    </a>\
-                </p></h4>\
-                <form id='cardForm" + cardIds[i] + "' action='CardServlet' method='POST'>\
-                    <input type='hidden' name='action' value='card'>\
-                    <input type='hidden' name='id' value='" + cardIds[i] + "'>\
-                    <input type='hidden' name='username' value='" + username + "'>\
-                </form>\
-            </div>";
+                        " + cardNames[i] + " (" + cardSets[i] + ")\
+                    </a>";
+            if(username === owner) {
+                view += "&nbsp;x <input id='input-field' class='input-number' type='number' name='total" + cardIds[i] + "' value='" + cardTotals[i] + "'>";
+            }
+            else {
+                view += "&nbsp;x " + cardTotals[i];
+            }
+            view += "</p></h4></div>";
             var spacer = "";
             if((printed % 2) === 0) {
                 spacer += "col-xs-12";
@@ -621,6 +576,18 @@ function sortCards(id, type, sortBy, username, owner, cardNum, cardIdList, cardF
             printed++;
         }
         view += "<div class='col-xs-12'></div>";
+        if(username === owner) {
+            view += "<input type='hidden' name='action' value='number_edit'>\
+                <input type='hidden' name='id' value='" + id + "'>\
+                <input type='hidden' name='username' value='" + username + "'>\
+                <div class='row'>\
+                    <div class='hidden-xs col-sm-8'></div>\
+                    <div class='col-xs-12 col-sm-4'>\
+                        <button title='Submit Deck Edit' id='form-submit' type='submit'>Submit</button>\
+                    </div>\
+                </div>\
+            </form>";
+        }
     }
     document.getElementById("sortArea").innerHTML = view;
     revealForm("sortArea");

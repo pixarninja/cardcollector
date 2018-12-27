@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -57,7 +56,7 @@ public class ScryfallScraper {
         if(card.get("card_faces") != null) {
 
             String USER_AGENT = "Mozilla/5.0";
-            URL obj = new URL("https://api.scryfall.com/cards/" + setId + "/" + scryId);
+            URL obj = new URL("https://api.scryfall.com/cards/" + code + "/" + scryId);
             HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
             con.setRequestProperty("User-Agent", USER_AGENT);
