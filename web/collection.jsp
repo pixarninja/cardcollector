@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js" type="text/javascript"></script>
 <%@page import="java.math.RoundingMode"%>
 <%@page import="java.math.BigDecimal"%>
@@ -109,8 +110,12 @@
         int reds = 0;
         int greens = 0;
         int devoids = 0;
+        
+        HashMap<Float, Integer> manaCosts = new HashMap();
         int cardNum = 0;
+        
         double usd = 0.0;
+        
         CollectionContentsInfo collectionContents;
         while((collectionContents = collectionContentsInfo.getContentsByNum(count)) != null) {
             if(collectionContents.getCollectionId() != id) {
@@ -225,6 +230,14 @@
             }
             cardColorList += colors;
             cardCostList += card.getConvertedManaCost();
+            
+            if(manaCosts.containsKey(card.getConvertedManaCost())) {
+                manaCosts.put(card.getConvertedManaCost(), manaCosts.get(card.getConvertedManaCost()) + collectionContents.getCardTotal());
+            }
+            else {
+                manaCosts.put(card.getConvertedManaCost(), collectionContents.getCardTotal());
+            }
+            
             CardFavoriteInfo favorite;
             boolean favorited = false;
             int num = 1;
@@ -242,6 +255,59 @@
                 cardFavoriteList += "0";
             }
             count++;
+        }
+        
+        /* parse keys for mana costs */
+        int index;
+        float keys[] = new float [manaCosts.size()];
+        int vals[] = new int [manaCosts.size()];
+        for(index = 0; index < manaCosts.size(); index++) {
+            keys[index] = Float.MAX_VALUE;
+            vals[index] = Integer.MAX_VALUE;
+        }
+        
+        /* sort keys and vals */
+        for (HashMap.Entry<Float, Integer> entry : manaCosts.entrySet()) {
+            for(index = 0; index < manaCosts.size() - 1; index++) {
+                if(keys[index] > entry.getKey()) {
+                    /* move all indices to the right */
+                    for(int tmpIndex = manaCosts.size() - 2; tmpIndex >= index; tmpIndex--) {
+                        keys[tmpIndex + 1] = keys[tmpIndex];
+                        vals[tmpIndex + 1] = vals[tmpIndex];
+                    }
+                    break;
+                }
+            }
+            keys[index] = entry.getKey();
+            vals[index] = entry.getValue();
+        }
+        
+        String costData = "";
+        String costLabels = "";
+        String costBackgroundColor = "";
+        String costBackgroundBorder = "";
+        int r = 51;
+        int g = 153;
+        int b = 255;
+        for(index = 0; index < manaCosts.size(); index++) {
+            if(!costData.equals("")) {
+                costData += ", ";
+                costLabels += ", ";
+                costBackgroundColor += ", ";
+                costBackgroundBorder += ", ";
+                r = 51 + (index + 1) * (255 - 51) / manaCosts.size();
+                if(r > 255) {
+                    r = 255;
+                }
+                b = 255 - (index + 1) * (255 - 51) / manaCosts.size();
+                if(b < 0) {
+                    b = 0;
+                }
+            }
+            costData += vals[index];
+            costLabels += "'" + keys[index] + "'";
+            costBackgroundColor += "'rgba(" + r + ", " + g + ", " + b + ", 1.0)'";
+            costBackgroundBorder += "'white'";
         }
         
         int totalColors = whites + blues + blacks + reds + greens + devoids;
@@ -266,87 +332,87 @@
         }
         int countColors = 0;
         
-        String labels = "";
-        String data = "";
-        String backgroundColor = "";
-        String backgroundBorder = "";
+        String colorLabels = "";
+        String colorData = "";
+        String colorBackgroundColor = "";
+        String colorBackgroundBorder = "";
         
         if(whites > 0) {
             countColors += 1;
-            labels += "'White'";
-            data += String.format ("%.2f", whites / (float)totalColors);
-            backgroundColor += "'lightyellow'"; // white
-            backgroundBorder += "'white'"; // white
+            colorLabels += "'White'";
+            colorData += String.format ("%.2f", whites / (float)totalColors);
+            colorBackgroundColor += "'lightyellow'"; // white
+            colorBackgroundBorder += "'white'"; // white
             if(countColors < numColors) {
-                labels += ", ";
-                data += ", ";
-                backgroundColor += ", ";
-                backgroundBorder += ", ";
+                colorLabels += ", ";
+                colorData += ", ";
+                colorBackgroundColor += ", ";
+                colorBackgroundBorder += ", ";
             }
         }
         if(blues > 0) {
             countColors += 1;
-            labels += "'Blue'";
-            data += String.format ("%.2f", blues / (float)totalColors);
-            backgroundColor += "'skyblue'"; // blue
-            backgroundBorder += "'white'"; // blue
+            colorLabels += "'Blue'";
+            colorData += String.format ("%.2f", blues / (float)totalColors);
+            colorBackgroundColor += "'skyblue'"; // blue
+            colorBackgroundBorder += "'white'"; // blue
             if(countColors < numColors) {
-                labels += ", ";
-                data += ", ";
-                backgroundColor += ", ";
-                backgroundBorder += ", ";
+                colorLabels += ", ";
+                colorData += ", ";
+                colorBackgroundColor += ", ";
+                colorBackgroundBorder += ", ";
             }
         }
         if(blacks > 0) {
             countColors += 1;
-            labels += "'Black'";
-            data += String.format ("%.2f", blacks / (float)totalColors);
-            backgroundColor += "'darkgray'"; // black
-            backgroundBorder += "'white'"; // black
+            colorLabels += "'Black'";
+            colorData += String.format ("%.2f", blacks / (float)totalColors);
+            colorBackgroundColor += "'darkgray'"; // black
+            colorBackgroundBorder += "'white'"; // black
             if(countColors < numColors) {
-                labels += ", ";
-                data += ", ";
-                backgroundColor += ", ";
-                backgroundBorder += ", ";
+                colorLabels += ", ";
+                colorData += ", ";
+                colorBackgroundColor += ", ";
+                colorBackgroundBorder += ", ";
             }
         }
         if(reds > 0) {
             countColors += 1;
-            labels += "'Red'";
-            data += String.format ("%.2f", reds / (float)totalColors);
-            backgroundColor += "'tomato'"; // red
-            backgroundBorder += "'white'"; // red
+            colorLabels += "'Red'";
+            colorData += String.format ("%.2f", reds / (float)totalColors);
+            colorBackgroundColor += "'tomato'"; // red
+            colorBackgroundBorder += "'white'"; // red
             if(countColors < numColors) {
-                labels += ", ";
-                data += ", ";
-                backgroundColor += ", ";
-                backgroundBorder += ", ";
+                colorLabels += ", ";
+                colorData += ", ";
+                colorBackgroundColor += ", ";
+                colorBackgroundBorder += ", ";
             }
         }
         if(greens > 0) {
             countColors += 1;
-            labels += "'Green'";
-            data += String.format ("%.2f", greens / (float)totalColors);
-            backgroundColor += "'mediumseagreen'"; // green
-            backgroundBorder += "'white'"; // green
+            colorLabels += "'Green'";
+            colorData += String.format ("%.2f", greens / (float)totalColors);
+            colorBackgroundColor += "'mediumseagreen'"; // green
+            colorBackgroundBorder += "'white'"; // green
             if(countColors < numColors) {
-                labels += ", ";
-                data += ", ";
-                backgroundColor += ", ";
-                backgroundBorder += ", ";
+                colorLabels += ", ";
+                colorData += ", ";
+                colorBackgroundColor += ", ";
+                colorBackgroundBorder += ", ";
             }
         }
         if(devoids > 0) {
             countColors += 1;
-            labels += "'Devoid'";
-            data += String.format ("%.2f", devoids / (float)totalColors);
-            backgroundColor += "'plum'"; // devoid
-            backgroundBorder += "'white'"; // devoid
+            colorLabels += "'Devoid'";
+            colorData += String.format ("%.2f", devoids / (float)totalColors);
+            colorBackgroundColor += "'plum'"; // devoid
+            colorBackgroundBorder += "'white'"; // devoid
             if(countColors < numColors) {
-                labels += ", ";
-                data += ", ";
-                backgroundColor += ", ";
-                backgroundBorder += ", ";
+                colorLabels += ", ";
+                colorData += ", ";
+                colorBackgroundColor += ", ";
+                colorBackgroundBorder += ", ";
             }
         }
         
@@ -628,13 +694,14 @@
                         <p>None</p>
                     </div>
                     <%}%>
-                    <div class="col-xs-12"><hr></div>
+                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-xs-12">
                         <div class="col-sx-12">
-                            <p id="title">Color Distribution</p>
+                            <p id="title">Data Distribution</p>
                         </div>
+                        <canvas id="color-distribution" width="100%"></canvas>
                         <br>
-                        <canvas id="distribution" width="100%"></canvas>
+                        <canvas id="cost-distribution" width="100%" height="125%"></canvas>
                     </div>
                 </h4>
             </div>
@@ -1004,22 +1071,47 @@
 <script src="js/scripts.js"></script>
 <script>
 Chart.defaults.global.defaultFontColor = "#fff";
-var ctx = document.getElementById("distribution").getContext('2d');
-var myChart = new Chart(ctx, {
+var colorCtx = document.getElementById("color-distribution").getContext('2d');
+var colorChart = new Chart(colorCtx, {
     type: 'pie',
     data: {
-        labels: [<%=labels%>],
+        labels: [<%=colorLabels%>],
         datasets: [{
-            label: '% Cards',
-            data: [<%=data%>],
-            backgroundColor: [<%=backgroundColor%>],
-            borderColor: [<%=backgroundBorder%>],
+            data: [<%=colorData%>],
+            backgroundColor: [<%=colorBackgroundColor%>],
+            borderColor: [<%=colorBackgroundBorder%>],
             borderWidth: 1
         }]
     },
     options: {
         legend: {
            display: false
+        },
+        title: {
+            display: true,
+            text: 'Mana Color Distrubution'
+        }
+    }
+});
+var costCtx = document.getElementById("cost-distribution").getContext('2d');
+var costChart = new Chart(costCtx, {
+    type: 'bar',
+    data: {
+        labels: [<%=costLabels%>],
+        datasets: [{
+            data: [<%=costData%>],
+            backgroundColor: [<%=costBackgroundColor%>],
+            borderColor: [<%=costBackgroundBorder%>],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        legend: {
+            display: false
+        },
+        title: {
+            display: true,
+            text: 'Converted Mana Cost Distrubution'
         }
     }
 });
