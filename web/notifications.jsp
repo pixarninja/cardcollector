@@ -51,7 +51,7 @@
     if(notifications != 0) {
 %>
 <!-- Content -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Notifications</h2><br>
@@ -922,7 +922,7 @@
     </div>
 </div>
 <%} else {%>
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Notifications</h2><br>

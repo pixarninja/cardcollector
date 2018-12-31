@@ -433,6 +433,21 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
+#content-mobile {
+    padding-top: 60px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+#content-mobile a, p a {
+    color: #587bd7;
+    text-decoration: underline;
+}
+
+#content-mobile a:hover, p a:hover {
+    color: #758fff;
+    text-decoration: underline;
+}
+
 #content {
     padding-top: 85px;
     padding-left: 50px;

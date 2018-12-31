@@ -39,7 +39,7 @@
     UserInfo user = userInfo.getUser(username);
 %>
 <!-- Content -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <%if(username != null && !username.equals("")) {%>
@@ -179,53 +179,92 @@
                         <div class="col-xs-5 col-sm-4">
                             <p id="title">Notification Settings</p>
                         </div>
+                        <%
+                            String checked = "";
+                        %>
                         <div class="col-xs-7 col-xs-8">
                             Select/deselect the notifications you would like to receive via email. If disabled notifications will still be viewable on the Notifications Page, however an email will not be sent to you when the type of notification is generated.<br><br>
                             <%
-                                if(userInfo.getDeckCommentNotification()) {
+                                if(user.getDeckCommentNotification()) {
+                                    checked = "checked";
+                                }
+                                else {
+                                    checked = "";
+                                }
                             %>
-                            <input type="checkbox" name="deck_comment" value="receive" checked="checked"> Deck Comments (a comment on your deck)<br>
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    <input type="checkbox" name="deck_comment" value="receive" <%=checked%>>
+                                </div>
+                                <div class="col-xs-11">
+                                    Deck Comments (a comment on your deck)
+                                </div>
+                            </div>
                             <%
-                                } else {
+                                if(user.getCollectionCommentNotification()) {
+                                    checked = "checked";
+                                }
+                                else {
+                                    checked = "";
+                                }
                             %>
-                            <input type="checkbox" name="deck_comment" value="receive"> Deck Comments (a comment on your deck)<br>
-                            <%}%>
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    <input type="checkbox" name="collection_comment" value="receive" <%=checked%>>
+                                </div>
+                                <div class="col-xs-11">
+                                    Collection Comments (a comment on your collection)
+                                </div>
+                            </div>
                             <%
-                                if(userInfo.getCollectionCommentNotification()) {
+                                if(user.getCardCommentReactionNotification()) {
+                                    checked = "checked";
+                                }
+                                else {
+                                    checked = "";
+                                }
                             %>
-                            <input type="checkbox" name="collection_comment" value="receive" checked="checked"> Collection Comments (a comment on your collection)<br>
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    <input type="checkbox" name="card_comment_reaction" value="receive" <%=checked%>>
+                                </div>
+                                <div class="col-xs-11">
+                                    Card Comment Reactions (a reaction to your comment(s) on a card)
+                                </div>
+                            </div>
                             <%
-                                } else {
+                                if(user.getDeckCommentReactionNotification()) {
+                                    checked = "checked";
+                                }
+                                else {
+                                    checked = "";
+                                }
                             %>
-                            <input type="checkbox" name="collection_comment" value="receive"> Collection Comments (a comment on your collection)<br>
-                            <%}%>
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    <input type="checkbox" name="deck_comment_reaction" value="receive" <%=checked%>>
+                                </div>
+                                <div class="col-xs-11">
+                                    Deck Comment Reactions (a reaction to your comment(s) on a deck)
+                                </div>
+                            </div>
                             <%
-                                if(userInfo.getCardCommentReactionNotification()) {
+                                if(user.getCollectionCommentReactionNotification()) {
+                                    checked = "checked";
+                                }
+                                else {
+                                    checked = "";
+                                }
                             %>
-                            <input type="checkbox" name="card_comment_reaction" value="receive" checked="checked"> Card Comment Reactions (a reaction to your comment(s) on a card)<br>
-                            <%
-                                } else {
-                            %>
-                            <input type="checkbox" name="card_comment_reaction" value="receive"> Card Comment Reactions (a reaction to your comment(s) on a card)<br>
-                            <%}%>
-                            <%
-                                if(userInfo.getDeckCommentReactionNotification()) {
-                            %>
-                            <input type="checkbox" name="deck_comment_reaction" value="receive" checked="checked"> Deck Comment Reactions (a reaction to your comment(s) on a deck)<br>
-                            <%
-                                } else {
-                            %>
-                            <input type="checkbox" name="deck_comment_reaction" value="receive"> Deck Comment Reactions (a reaction to your comment(s) on a deck)<br>
-                            <%}%>
-                            <%
-                                if(userInfo.getCollectionCommentReactionNotification()) {
-                            %>
-                            <input type="checkbox" name="collection_comment_reaction" value="receive" checked="checked"> Collection Comment Reactions (a reaction to your comment(s) on a collection)<br><br><br>
-                            <%
-                                } else {
-                            %>
-                            <input type="checkbox" name="collection_comment_reaction" value="receive"> Collection Comment Reactions (a reaction to your comment(s) on a collection)<br><br><br>
-                            <%}%>
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    <input type="checkbox" name="collection_comment_reaction" value="receive" <%=checked%>>
+                                </div>
+                                <div class="col-xs-11">
+                                    Collection Comment Reactions (a reaction to your comment(s) on a collection)
+                                </div>
+                            </div>
+                            <br><br>
                         </div>
                     </div>
                     <div class="row">

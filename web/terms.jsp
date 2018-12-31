@@ -34,7 +34,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Card<span class="glyphicon glyphicon-globe" id="large-icon"></span>Collector Terms of Service Agreement</h2>

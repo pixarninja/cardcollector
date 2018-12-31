@@ -49,7 +49,7 @@
     if(!error) {
 %>
 <!-- Content -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>
@@ -225,7 +225,7 @@
     } else {
 %>
 <!-- Error -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Your Collections</h2><br>

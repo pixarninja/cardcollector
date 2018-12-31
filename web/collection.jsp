@@ -261,6 +261,7 @@
         int index;
         float keys[] = new float [manaCosts.size()];
         int vals[] = new int [manaCosts.size()];
+        int maxVal = -1;
         for(index = 0; index < manaCosts.size(); index++) {
             keys[index] = Float.MAX_VALUE;
             vals[index] = Integer.MAX_VALUE;
@@ -280,6 +281,9 @@
             }
             keys[index] = entry.getKey();
             vals[index] = entry.getValue();
+            if(vals[index] > maxVal) {
+                maxVal = vals[index];
+            }
         }
         
         String costData = "";
@@ -416,6 +420,11 @@
             }
         }
         
+        String style = "";
+        if(colorData.equals("") || costData.equals("")) {
+            style = "display: none;";
+        }
+        
         BigDecimal bd = new BigDecimal(usd);
         bd = bd.setScale(2, RoundingMode.HALF_UP);
         String price = Double.toString(bd.doubleValue());
@@ -446,7 +455,7 @@
         }
 %>
 <!-- Content -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Collection Information</h2><br>
@@ -578,130 +587,16 @@
                         </div>
                     </div>
                     <div class="col-xs-12"><br></div>
-                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
-                    <div class="col-sm-12 col-lg-4">
-                        <p id="title">Price</p>
-                    </div>
-                    <div class="col-xs-12 hidden-lg"><br></div>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>$<%=price%></p>
-                    </div>
-                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
-                    <div class="col-sm-12 col-lg-4">
-                        <p id="title">Legalities</p>
-                    </div>
-                    <div class="col-xs-12 hidden-lg"><br></div>
-                    <%
-                        if(legalities.contains("1")) {
-                            if(legalities.charAt(0) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Standard</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(1) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Future</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(2) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Frontier</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(3) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Modern</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(4) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Legacy</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(5) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Pauper</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(6) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Vintage</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(7) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Penny</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(8) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Commander</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(9) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>1 vs 1</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(10) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Duel</p>
-                    </div>
-                    <div class="hidden-sm col-lg-4"></div>
-                        <%
-                            }
-                        if(legalities.charAt(11) == '1') {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>Brawl</p>
-                    </div>
-                        <%
-                            }
-                        } else {
-                    %>
-                    <div class="col-sm-12 col-lg-8">
-                        <p>None</p>
-                    </div>
-                    <%}%>
-                    <div class="col-xs-12"><hr id="in-line-hr-big"></div>
-                    <div class="col-xs-12">
-                        <div class="col-sx-12">
-                            <p id="title">Data Distribution</p>
+                    <div style="<%=style%>">
+                        <div class="col-xs-12"><hr id="in-line-hr-big"></div>
+                        <div class="col-xs-12">
+                            <div class="col-sx-12">
+                                <p id="title">Data Distribution</p>
+                            </div>
+                            <canvas id="color-distribution" width="100%"></canvas>
+                            <br>
+                            <canvas id="cost-distribution" width="100%" height="110"></canvas>
                         </div>
-                        <canvas id="color-distribution" width="100%"></canvas>
-                        <br>
-                        <canvas id="cost-distribution" width="100%" height="125%"></canvas>
                     </div>
                 </h4>
             </div>
@@ -741,6 +636,89 @@
                         </div>
                         <div class="col-xs-12 col-sm-8 col-md-9">
                             <p><%=entries%></p>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <p id="title">Price</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                            <p>$<%=price%></p>
+                        </div>
+                        <div class="col-xs-12"><br></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4 col-md-3">
+                            <p id="title">Legalities</p>
+                        </div>
+                        <div class="col-xs-12 col-sm-8 col-md-9">
+                        <%
+                            if(legalities.contains("1")) {
+                                if(legalities.charAt(0) == '1') {
+                        %>
+                            <p>Standard</p>
+                            <%
+                                }
+                                if(legalities.charAt(1) == '1') {
+                        %>
+                            <p>Future</p>
+                            <%
+                                }
+                                if(legalities.charAt(2) == '1') {
+                        %>
+                            <p>Frontier</p>
+                            <%
+                                }
+                                if(legalities.charAt(3) == '1') {
+                        %>
+                            <p>Modern</p>
+                            <%
+                                }
+                                if(legalities.charAt(4) == '1') {
+                        %>
+                            <p>Legacy</p>
+                            <%
+                                }
+                                if(legalities.charAt(5) == '1') {
+                        %>
+                            <p>Pauper</p>
+                            <%
+                                }
+                                if(legalities.charAt(6) == '1') {
+                        %>
+                            <p>Vintage</p>
+                            <%
+                                }
+                            if(legalities.charAt(7) == '1') {
+                        %>
+                            <p>Penny</p>
+                            <%
+                                }
+                                if(legalities.charAt(8) == '1') {
+                        %>
+                            <p>Commander</p>
+                            <%
+                                }
+                                if(legalities.charAt(9) == '1') {
+                        %>
+                            <p>1 vs 1</p>
+                            <%
+                                }
+                                if(legalities.charAt(10) == '1') {
+                        %>
+                            <p>Duel</p>
+                            <%
+                                }
+                                if(legalities.charAt(11) == '1') {
+                        %>
+                            <p>Brawl</p>
+                            <%
+                                }
+                            } else {
+                        %>
+                            <p>None</p>
+                        <%}%>
                         </div>
                     </div>
                     <% if(description != null) {%>
@@ -1112,6 +1090,15 @@ var costChart = new Chart(costCtx, {
         title: {
             display: true,
             text: 'Converted Mana Cost Distrubution'
+        },
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    stepSize: <%=maxVal%>,
+                    max: <%=maxVal%>
+                }
+            }]
         }
     }
 });
@@ -1120,7 +1107,7 @@ var costChart = new Chart(costCtx, {
     } else {
 %>
 <!-- Error -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Collection Information</h2><br>

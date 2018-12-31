@@ -2,8 +2,6 @@ import beans.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Math.abs;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 import java.util.logging.Level;
@@ -397,8 +394,10 @@ public class UserServlet extends HttpServlet {
             }
         } else if(action.equals("submit_edit")) {
             String confirm = request.getParameter("confirm");
-            confirm = secure.DBConnection.SALT + confirm;
-            confirm = secure.DBConnection.generateHash(confirm);
+            if(confirm != null && !confirm.equals("")) {
+                confirm = secure.DBConnection.SALT + confirm;
+                confirm = secure.DBConnection.generateHash(confirm);
+            }
             String newUser = request.getParameter("new_user");
             String name = request.getParameter("name");
             String bio = request.getParameter("bio");
@@ -410,7 +409,7 @@ public class UserServlet extends HttpServlet {
             if (newUser == null || newUser.equals(""))
                 newUser = username;
             boolean error = false;
-            if(password != null && !password.equals("")) {
+            if(request.getParameter("password") != null && !request.getParameter("password").equals("")) {
                 if(!password.equals(confirm)) {
                     error = true;
                 }
@@ -476,7 +475,7 @@ public class UserServlet extends HttpServlet {
                     }
 
                     /* Password */
-                    if (password != null && !password.equals("")) {
+                    if (request.getParameter("password") != null && !request.getParameter("password").equals("")) {
                         query = "UPDATE `" + secure.DBStructure.table16 + "` SET password = ? WHERE username = ?";
                         ps = connection.prepareStatement(query);
                         ps.setString(1, password);

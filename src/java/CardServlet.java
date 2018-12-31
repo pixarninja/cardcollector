@@ -252,28 +252,30 @@ public class CardServlet extends HttpServlet {
                             
                             /* send email notification */
                             UserInfo userInfo = UserInfo.getUser(owner);
-                            String email = userInfo.getEmail();
-                            CardInfo cardInfo = CardInfo.getCardById(cardId);
+                            if(userInfo.getCardCommentReactionNotification()) {
+                                String email = userInfo.getEmail();
+                                CardInfo cardInfo = CardInfo.getCardById(cardId);
 
-                            String subject = "CardCollector: Notification";
-                            String content = "Greetings from CardCollector!\n\n"
-                                    + "This email is to notify you that someone has reacted to your comment on the card, "
-                                    + cardInfo.getName()
-                                    + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page."
-                                    + " Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.\n\n"
-                                    + "Happy Collecting!\n\n"
-                                    + "Sincerely,\n"
-                                    + "Wesley Harris, creator of Card Collector\n"
-                                    + "http://mtg.cardcollector.org\n"
-                                    + "http://markwesleyharris.com";
+                                String subject = "CardCollector: Notification";
+                                String content = "Greetings from CardCollector!\n\n"
+                                        + "This email is to notify you that someone has reacted to your comment on the card, "
+                                        + cardInfo.getName()
+                                        + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page.\n\n"
+                                        + "Happy Collecting!\n\n\n"
+                                        + "Sincerely,\n"
+                                        + "Wesley Harris, creator of CardCollector\n"
+                                        + "http://mtg.cardcollector.org\n"
+                                        + "http://markwesleyharris.com\n\n"
+                                        + "Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.";
 
-                            try {
-                                EmailUtility.sendEmail(email, subject, content);
-                            } catch (Exception ex) {
-                                request.setAttribute("username", "");
-                                url = "/index.jsp";
-                                request.setAttribute("error", ex);
-                                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                try {
+                                    EmailUtility.sendEmail(email, subject, content);
+                                } catch (Exception ex) {
+                                    request.setAttribute("username", "");
+                                    url = "/index.jsp";
+                                    request.setAttribute("error", ex);
+                                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         }
                         rs.close();
@@ -412,28 +414,30 @@ public class CardServlet extends HttpServlet {
                             
                             /* send email notification */
                             UserInfo userInfo = UserInfo.getUser(owner);
-                            String email = userInfo.getEmail();
-                            CardInfo cardInfo = CardInfo.getCardById(cardId);
+                            if(userInfo.getCardCommentReactionNotification()) {
+                                String email = userInfo.getEmail();
+                                CardInfo cardInfo = CardInfo.getCardById(cardId);
 
-                            String subject = "CardCollector: Notification";
-                            String content = "Greetings from CardCollector!\n\n"
-                                    + "This email is to notify you that someone has reacted to your comment on the card, "
-                                    + cardInfo.getName()
-                                    + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page."
-                                    + " Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.\n\n"
-                                    + "Happy Collecting!\n\n"
-                                    + "Sincerely,\n"
-                                    + "Wesley Harris, creator of Card Collector\n"
-                                    + "http://mtg.cardcollector.org\n"
-                                    + "http://markwesleyharris.com";
+                                String subject = "CardCollector: Notification";
+                                String content = "Greetings from CardCollector!\n\n"
+                                        + "This email is to notify you that someone has reacted to your comment on the card, "
+                                        + cardInfo.getName()
+                                        + ". If you would like to view or delete this notification, please log in to http://mtg.cardcollector.org and navigate to your Notifications Page.\n\n"
+                                        + "Happy Collecting!\n\n\n"
+                                        + "Sincerely,\n"
+                                        + "Wesley Harris, creator of CardCollector\n"
+                                        + "http://mtg.cardcollector.org\n"
+                                        + "http://markwesleyharris.com\n\n"
+                                        + "Please do not reply to this email, it was sent from an unattended mailbox. If you would like to stop receiving this or any other kind of notification via email, you can do so by logging in and editting your profile settings.";
 
-                            try {
-                                EmailUtility.sendEmail(email, subject, content);
-                            } catch (Exception ex) {
-                                request.setAttribute("username", "");
-                                url = "/index.jsp";
-                                request.setAttribute("error", ex);
-                                Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                try {
+                                    EmailUtility.sendEmail(email, subject, content);
+                                } catch (Exception ex) {
+                                    request.setAttribute("username", "");
+                                    url = "/index.jsp";
+                                    request.setAttribute("error", ex);
+                                    Logger.getLogger(PopupServlet.class.getName()).log(Level.SEVERE, null, ex);
+                                }
                             }
                         }
                         rs.close();

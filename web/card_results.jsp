@@ -80,7 +80,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Content -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Search Results: Cards</h2><br>
@@ -150,9 +150,9 @@
                 if(count > 1) {
                     if(end >= total) {
             %>
-            <div class="col-xs-4"></div>
+            <div class="col-xs-3 col-sm-4"></div>
             <%}%>
-            <div class="col-xs-4">
+            <div class="col-xs-6 col-sm-4">
                 <div class="col-xs-12"><br></div>
                 <button title="Previous <%=max%> Cards" id="form-submit" type="button" onclick="document.getElementById('requestLessForm').submit();"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
                 <div class="col-xs-12"><br></div>
@@ -160,7 +160,7 @@
             <%
                 if(end >= total) {
             %>
-            <div class="col-xs-4"></div>
+            <div class="col-xs-3 col-sm-4"></div>
             <%
                     }
                 }
@@ -169,9 +169,9 @@
                 if(end < total && count != 0) {
                     if(count >= 1) {
             %>
-            <div class="col-xs-4"></div>
+            <div class="hidden-xs col-sm-4"></div>
             <%}%>
-            <div class="col-xs-4">
+            <div class="col-xs-6 col-sm-4">
                 <div class="col-xs-12"><br></div>
                 <button title="Next <%=max%> Cards" id="form-submit" type="button" onclick="document.getElementById('requestMoreForm').submit();">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
                 <div class="col-xs-12"><br></div>
@@ -179,7 +179,7 @@
             <%
                 if(count == 1) {
             %>
-            <div class="col-xs-4"></div>
+            <div class="col-xs-3 col-sm-4"></div>
             <%
                     }
                 }
@@ -364,16 +364,16 @@
                         if(count > 1) {
                         if(end >= total) {
                     %>
-                    <div class="col-xs-4"></div>
+                    <div class="col-xs-3 col-sm-4"></div>
                     <%}%>
-                    <div class="col-xs-4">
+                    <div class="col-xs-6 col-sm-4">
                         <button title="Previous <%=max%> Cards" id="form-submit" type="button" onclick="document.getElementById('requestLessForm').submit();"><span class="glyphicon glyphicon-menu-left"></span>&nbsp;&nbsp;Previous <%=max%></button>
                         <div class="col-xs-12"><br></div>
                     </div>
                     <%
                         if(end >= total) {
                     %>
-                    <div class="col-xs-4"></div>
+                    <div class="col-xs-3 col-sm-4"></div>
                     <%
                             }
                         }
@@ -382,16 +382,16 @@
                         if(end < total && count != 0) {
                             if(count >= 1) {
                     %>
-                    <div class="col-xs-4"></div>
+                    <div class="hidden-xs col-sm-4"></div>
                     <%}%>
-                    <div class="col-xs-4">
+                    <div class="col-xs-6 col-sm-4">
                         <button title="Next <%=max%> Cards" id="form-submit" type="button" onclick="document.getElementById('requestMoreForm').submit();">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
                         <div class="col-xs-12"><br></div>
                     </div>
                     <%
                         if(count == 1) {
                     %>
-                    <div class="col-xs-4"></div>
+                    <div class="col-xs-3 col-sm-4"></div>
                     <%
                             }
                         }

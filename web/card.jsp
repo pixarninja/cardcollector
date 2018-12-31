@@ -342,7 +342,7 @@
         if((collectionId != null && collectionTotal != null) || (deckId != null && deckTotal != null)) {
 %>
 <h4>
-    <div class="row well" id="black-well">
+    <div class="row well" id="black-well" style="border-radius: 10px;">
         <p align="center" style="position: relative;top: 5px;">
             <%
                 if(deckId != null && deckTotal != null) {
@@ -370,7 +370,7 @@
     </div>
 </h4>
 <%}%>
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Card Information</h2><br>
@@ -470,16 +470,16 @@
                     <div class="col-xs-12 col-lg-8"><p>None</p></div>
                     <%} else {
                         if(multiverse > -1) {%>
-                    <div class="col-xs-12 col-lg-8"><p><a href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=<%=multiverse%>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span> MTG Gatherer</a></p></div>
+                    <div class="col-xs-12 col-lg-8" style="position: relative; z-index: 2;"><p><a href="http://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=<%=multiverse%>" target="_blank"><span class="glyphicon glyphicon-info-sign"></span> MTG Gatherer</a></p></div>
                     <%} if(kingdom != null) {%>
                     <div class="hidden-xs col-lg-4"></div>
-                    <div class="col-xs-12 col-lg-8"><p><a href="<%=kingdom%>" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Card Hoarder</a></p></div>
+                    <div class="col-xs-12 col-lg-8" style="position: relative; z-index: 2;"><p><a href="<%=kingdom%>" target="_blank"><span class="glyphicon glyphicon-shopping-cart"></span> Card Hoarder</a></p></div>
                     <%} if(!front.equals("images/magic_card_back.jpg")) {%>
                     <div class="hidden-xs col-lg-4"></div>
-                    <div class="col-xs-12 col-lg-8"><p><a href="<%=front%>" target="_blank"><span class="glyphicon glyphicon-picture"></span> Front Artwork</a></p></div>
+                    <div class="col-xs-12 col-lg-8" style="position: relative; z-index: 2;"><p><a href="<%=front%>" target="_blank"><span class="glyphicon glyphicon-picture"></span> Front Artwork</a></p></div>
                     <%} if(back != null && !back.equals("images/magic_card_back.jpg")) {%>
                     <div class="hidden-xs col-lg-4"></div>
-                    <div class="col-xs-12 col-lg-8"><p><a href="<%=back%>" target="_blank"><span class="glyphicon glyphicon-picture"></span> Back Artwork</a></p></div>
+                    <div class="col-xs-12 col-lg-8" style="position: relative; z-index: 2;"><p><a href="<%=back%>" target="_blank"><span class="glyphicon glyphicon-picture"></span> Back Artwork</a></p></div>
                     <%}}%>
                     <div class="col-xs-12"><hr id="in-line-hr-big"></div>
                     <div class="col-xs-12 col-lg-4">
@@ -1198,7 +1198,7 @@
     } else {
 %>
 <!-- Error -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Card Information</h2><br>

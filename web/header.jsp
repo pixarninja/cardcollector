@@ -3,6 +3,14 @@
 <!DOCTYPE html>
 <%
     String font = "Quicksand|Poiret+One";
+    String welled = "class='row' id='content-well'";
+    String contentMobile = "";
+    String userAgent = request.getHeader("user-agent");
+    if (userAgent.matches(".*Android.*") || userAgent.matches(".*Phone.*"))
+    {
+        welled = "class='row'";
+        contentMobile = "-mobile";
+    }
 %>
 <%@page import="beans.*"%>
 <jsp:useBean id="headerNotificationInfo" class="beans.NotificationInfo" scope="request"/>
@@ -418,5 +426,5 @@
             <!-- Ad Bar -->
             <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;left: 0px;background-position: center-x;"></div>
             <div class="hidden-xs col-sm-1" style="background:url(images/wallart.jpg);height: 100%;position: fixed;right: 0px;background-position: center-x;"></div>
-            <div class="col-xs-12 col-sm-1"></div>
-            <div id="content" class="col-xs-12 col-sm-10" style="background-color: black;background-repeat: repeat;min-height: 100%;">
+            <div class="hidden-xs col-sm-1"></div>
+            <div id="content<%=contentMobile%>" class="col-xs-12 col-sm-10" style="background-color: black;background-repeat: repeat;min-height: 100%;">

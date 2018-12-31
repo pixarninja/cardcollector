@@ -34,7 +34,7 @@
 %>
 <%@include file="header.jsp"%>
 <!-- Add code here -->
-<div class="row" id="content-well">
+<div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
             <h2>Advanced Search</h2><br>
