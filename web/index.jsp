@@ -251,11 +251,6 @@
                             tracker++;
                             printed++;
                             count++;
-                            try {
-                                Thread.sleep(250);
-                            } catch(InterruptedException ex1) {
-                                System.out.println("ERROR: sleep was interrupted!");
-                            }
                         }
                     %>
                     <div class="col-xs-12"></div>
@@ -263,7 +258,7 @@
                         <form id="addForm" action="DeckServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Create New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Deck</button>
+                            <button title="Create New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
                         </form>
                     </div>
                     <div class="hidden-xs col-xs-4"></div>
@@ -271,7 +266,7 @@
                         <form id="allDecksForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="decks">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="View All Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Decks</button>
+                            <button title="View All Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
                         </form>
                     </div>
                 </div>
@@ -285,7 +280,7 @@
                     <%
                         printed = 1;
                         tracker = 1;
-                        max = 8;
+                        max = 4;
                         count = 1;
                         while((collection = collectionInfo.getCollectionByNum(count)) != null) {
                             int id = collection.getId();
@@ -436,27 +431,22 @@
                             tracker++;
                             printed++;
                             count++;
-                            try {
-                                Thread.sleep(250);
-                            } catch(InterruptedException ex1) {
-                                System.out.println("ERROR: sleep was interrupted!");
-                            }
                         }
                     %>
                     <div class="col-xs-12"></div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="col-xs-6 col-sm-4">
                         <form id="addForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Collection</button>
+                            <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
                         </form>
                     </div>
-                    <div class="hidden-xs col-xs-4"></div>
-                    <div class="col-xs-12 col-sm-4">
+                    <div class="hidden-xs col-sm-4"></div>
+                    <div class="col-xs-6 col-sm-4">
                         <form id="allCollectionsForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="collections">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="View All Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Collections</button>
+                            <button title="View All Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
                         </form>
                     </div>
                 </div>
@@ -470,7 +460,7 @@
                     <%
                         printed = 1;
                         tracker = 1;
-                        max = 12;
+                        max = 8;
                         count = 1;
                         CardInfo card;
                         while((card = cardInfo.getCardByNum(count)) != null) {
@@ -604,11 +594,6 @@
                             tracker++;
                             printed++;
                             count++;
-                            try {
-                                Thread.sleep(250);
-                            } catch(InterruptedException ex1) {
-                                System.out.println("ERROR: sleep was interrupted!");
-                            }
                         }
                     %>
                     <div class="col-xs-12"></div>
@@ -617,7 +602,7 @@
                         <form id="allCardsForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="cards">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="View All Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Cards</button>
+                            <button title="View All Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
                         </form>
                     </div>
                 </div>
@@ -631,7 +616,7 @@
                     <%
                         printed = 1;
                         tracker = 1;
-                        max = 12;
+                        max = 6;
                         count = 1;
                         UserInfo user;
                         while((user = userInfo.getUserByNum(count)) != null) {
@@ -727,11 +712,6 @@
                             tracker++;
                             printed++;
                             count++;
-                            try {
-                                Thread.sleep(250);
-                            } catch(InterruptedException ex1) {
-                                System.out.println("ERROR: sleep was interrupted!");
-                            }
                         }
                     %>
                     <div class="col-xs-12"></div>
@@ -740,7 +720,7 @@
                         <form id="allUsersForm" action="SearchServlet" method="POST">
                             <input type="hidden" name="action" value="users">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="View All Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All Users</button>
+                            <button title="View All Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
                         </form>
                     </div>
                 </div>
@@ -749,5 +729,5 @@
     </div>
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%@include file="footer.jsp"%>

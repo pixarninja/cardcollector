@@ -225,7 +225,8 @@
                 <br><br>
                 <%
                     count = 1;
-                    int printed = 1;
+                    int printed = 0;
+                    int max = 8;
                     while((myDeck = deckInfo.getDeckByNum(count)) != null) {
                         if(!myDeck.getUser().equals(username)) {
                             count++;
@@ -286,6 +287,7 @@
                 </div>
                 <%
                     String spacer = "";
+                    printed++;
                     if((printed % 2) == 0) {
                         spacer += "col-xs-12";
                     }
@@ -307,15 +309,27 @@
                 %>
                 <div class="<%=spacer%>"><br></div>
                 <%
-                        printed++;
-                        count++;
-                        try {
-                            Thread.sleep(250);
-                        } catch(InterruptedException ex) {
-                            System.out.println("ERROR: sleep was interrupted!");
+                        if(printed >= max) {
+                            break;
                         }
+                        count++;
                     }
+                    if(printed >= max) {
                 %>
+                <div class="col-xs-12 col-sm-4">
+                    <form id="addForm" action="DeckServlet" method="POST">
+                        <input type="hidden" name="action" value="new">
+                        <input type="hidden" name="username" value="<%=username%>">
+                        <button title="Create New Deck" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
+                    </form>
+                </div>
+                <div class="hidden-xs col-xs-4"></div>
+                <div class="col-xs-12 col-sm-4">
+                    <button id="form-submit" type="submit" title="View All Your Decks" onclick="document.getElementById('yourDecksForm').submit();">
+                        <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All
+                    </button>
+                </div>
+                <%}%>
                 <div class="col-xs-12"><br></div>
             </h4>
             <%} else {%>
@@ -357,7 +371,8 @@
                 <br><br>
                 <%
                     count = 1;
-                    int printed = 1;
+                    int printed = 0;
+                    int max = 8;
                     while((myCollection = collectionInfo.getCollectionByNum(count)) != null) {
                         if(!myCollection.getUser().equals(username)) {
                             count++;
@@ -449,6 +464,7 @@
                 </div>
                 <%
                     String spacer = "";
+                    printed++;
                     if((printed % 2) == 0) {
                         spacer += "col-xs-12";
                     }
@@ -470,15 +486,27 @@
                 %>
                 <div class="<%=spacer%>"><br></div>
                 <%
-                        printed++;
-                        count++;
-                        try {
-                            Thread.sleep(250);
-                        } catch(InterruptedException ex) {
-                            System.out.println("ERROR: sleep was interrupted!");
+                        if(printed >= max) {
+                            break;
                         }
+                        count++;
                     }
+                    if(printed >= max) {
                 %>
+                <div class="col-xs-12 col-sm-4">
+                    <form id="addForm" action="CollectionServlet" method="POST">
+                        <input type="hidden" name="action" value="new">
+                        <input type="hidden" name="username" value="<%=username%>">
+                        <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
+                    </form>
+                </div>
+                <div class="hidden-xs col-xs-4"></div>
+                <div class="col-xs-12 col-sm-4">
+                    <button id="form-submit" type="submit" title="View All Your Collections" onclick="document.getElementById('yourCollectionsForm').submit();">
+                        <span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All
+                    </button>
+                </div>
+                <%}%>
                 <div class="col-xs-12"><br></div>
             </h4>
             <%} else {%>
@@ -524,7 +552,8 @@
                     <h4>
                         <%
                             num = 1;
-                            int printed = 1;
+                            int printed = 0;
+                            int max = 8;
                             while((cardFavorite = cardFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(cardFavorite.getUser().equals(username)) {
                                     CardInfo card = cardInfo.getCardById(cardFavorite.getCardId());
@@ -607,6 +636,7 @@
                         </div>
                         <%
                             String spacer = "";
+                            printed++;
                             if((printed % 2) == 0) {
                                 spacer += "col-xs-12";
                             }
@@ -628,11 +658,23 @@
                         %>
                         <div class="<%=spacer%>"><br></div>
                         <%
-                                    printed++;
+                                    if(printed >= max) {
+                                        break;
+                                    }
                                 }
                                 num++;
                             }
+                            if(printed >= max) {
                         %>
+                        <div class="hidden-xs col-sm-8"></div>
+                        <div class="col-xs-12 col-sm-4">
+                            <form id="allCardFavoritesForm" action="UserServlet" method="POST">
+                                <input type="hidden" name="action" value="card_favorites">
+                                <input type="hidden" name="username" value="<%=username%>">
+                                <button title="View All Favorited Cards" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
+                            </form>
+                        </div>
+                        <%}%>
                     </h4>
                 </div>
             </div>
@@ -657,7 +699,8 @@
                     <h4>
                         <%
                             num = 1;
-                            int printed = 1;
+                            int printed = 0;
+                            int max = 8;
                             while((deckFavorite = deckFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(deckFavorite.getUser().equals(username)) {
                                     deck = deckInfo.getDeckById(deckFavorite.getDeckId());
@@ -713,6 +756,7 @@
                         </div>
                         <%
                             String spacer = "";
+                            printed++;
                             if((printed % 2) == 0) {
                                 spacer += "col-xs-12";
                             }
@@ -734,11 +778,23 @@
                         %>
                         <div class="<%=spacer%>"><br></div>
                         <%
-                                    printed++;
+                                    if(printed >= max) {
+                                        break;
+                                    }
                                 }
                                 num++;
                             }
+                            if(printed >= max) {
                         %>
+                        <div class="hidden-xs col-sm-8"></div>
+                        <div class="col-xs-12 col-sm-4">
+                            <form id="allDeckFavoritesForm" action="UserServlet" method="POST">
+                                <input type="hidden" name="action" value="deck_favorites">
+                                <input type="hidden" name="username" value="<%=username%>">
+                                <button title="View All Favorited Decks" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
+                            </form>
+                        </div>
+                        <%}%>
                     </h4>
                 </div>
             </div>
@@ -763,7 +819,8 @@
                     <h4>
                         <%
                             num = 1;
-                            int printed = 1;
+                            int printed = 0;
+                            int max = 8;
                             while((collectionFavorite = collectionFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(collectionFavorite.getUser().equals(username)) {
                                     collection = collectionInfo.getCollectionById(collectionFavorite.getCollectionId());
@@ -850,6 +907,7 @@
                         </div>
                         <%
                             String spacer = "";
+                            printed++;
                             if((printed % 2) == 0) {
                                 spacer += "col-xs-12";
                             }
@@ -871,11 +929,23 @@
                         %>
                         <div class="<%=spacer%>"><br></div>
                         <%
-                                    printed++;
+                                    if(printed >= max) {
+                                        break;
+                                    }
                                 }
                                 num++;
                             }
+                            if(printed >= max) {
                         %>
+                        <div class="hidden-xs col-sm-8"></div>
+                        <div class="col-xs-12 col-sm-4">
+                            <form id="allCollectionFavoritesForm" action="UserServlet" method="POST">
+                                <input type="hidden" name="action" value="collection_favorites">
+                                <input type="hidden" name="username" value="<%=username%>">
+                                <button title="View All Favorited Collections" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
+                            </form>
+                        </div>
+                        <%}%>
                     </h4>
                 </div>
             </div>
@@ -900,7 +970,8 @@
                     <h4>
                         <%
                             num = 1;
-                            int printed = 1;
+                            int printed = 0;
+                            int max = 6;
                             while((userFavorite = userFavoriteInfo.getFavoriteByNum(num)) != null) {
                                 if(userFavorite.getUser().equals(username)) {
                                     user = userInfo.getUser(userFavorite.getUserId());
@@ -933,6 +1004,7 @@
                         </div>
                         <%
                             String spacer = "";
+                            printed++;
                             if((printed % 3) == 0) {
                                 spacer += "col-xs-12";
                             }
@@ -954,11 +1026,23 @@
                         %>
                         <div class="<%=spacer%>"><br></div>
                         <%
-                                    printed++;
+                                    if(printed >= max) {
+                                        break;
+                                    }
                                 }
                                 num++;
                             }
+                            if(printed >= max) {
                         %>
+                        <div class="hidden-xs col-sm-8"></div>
+                        <div class="col-xs-12 col-sm-4">
+                            <form id="allUserFavoritesForm" action="UserServlet" method="POST">
+                                <input type="hidden" name="action" value="user_favorites">
+                                <input type="hidden" name="username" value="<%=username%>">
+                                <button title="View All Favorited Users" id="form-submit" type="submit"><span class="glyphicon glyphicon-th"></span>&nbsp;&nbsp;View All</button>
+                            </form>
+                        </div>
+                        <%}%>
                     </h4>
                 </div>
             </div>
@@ -968,7 +1052,7 @@
     </div>
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%
     } else {
 %>

@@ -109,6 +109,166 @@ public class UserServlet extends HttpServlet {
         String image = "images/" + icons[abs(random.nextInt()) % size];
         if(action.equals("user")) {
             url = "/user.jsp";
+        } else if(action.equals("card_favorites")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
+                String query = "SELECT * FROM `" + secure.DBStructure.table4 + "` WHERE user = '" + username + "';";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("card_id"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                url = "/card_favorites.jsp";
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("more_cards")) {
+            url = "/card_favorites.jsp";
+        } else if(action.equals("less_cards")) {
+            url = "/card_favorites.jsp";
+        } else if(action.equals("deck_favorites")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
+                String query = "SELECT * FROM `" + secure.DBStructure.table14 + "` WHERE user = '" + username + "';";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("deck_id"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                url = "/deck_favorites.jsp";
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("more_decks")) {
+            url = "/deck_favorites.jsp";
+        } else if(action.equals("less_decks")) {
+            url = "/deck_favorites.jsp";
+        } else if(action.equals("collection_favorites")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
+                String query = "SELECT * FROM `" + secure.DBStructure.table9 + "` WHERE user = '" + username + "';";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("collection_id"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                url = "/collection_favorites.jsp";
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("more_collections")) {
+            url = "/collection_favorites.jsp";
+        } else if(action.equals("less_collections")) {
+            url = "/collection_favorites.jsp";
+        } else if(action.equals("user_favorites")) {
+            try {
+                String driver = secure.DBConnection.driver;
+                Class.forName(driver);
+                String dbURL = secure.DBConnection.dbURL;
+                String user = secure.DBConnection.username;
+                String pass = secure.DBConnection.password;
+                Connection connection = DriverManager.getConnection(dbURL, user, pass);
+                
+                String query = "SELECT * FROM `" + secure.DBStructure.table17 + "` WHERE user = '" + username + "';";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+
+                int count = 0;
+                while(rs.next()) {
+                    count++;
+                    request.setAttribute(Integer.toString(count), rs.getString("user_id"));
+                }
+                
+                request.setAttribute("total", count);
+                
+                url = "/user_favorites.jsp";
+
+                rs.close();
+                connection.close();
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                request.setAttribute("username", "");
+                url = "/index.jsp";
+                request.setAttribute("error", ex);
+                Logger.getLogger(SearchServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else if(action.equals("more_users")) {
+            url = "/user_favorites.jsp";
+        } else if(action.equals("less_users")) {
+            url = "/user_favorites.jsp";
         } else if(action.equals("edit_notifications")) {
             try {
                 String driver = secure.DBConnection.driver;

@@ -342,11 +342,6 @@
                 <%
                         printed++;
                         count++;
-                        try {
-                            Thread.sleep(250);
-                        } catch(InterruptedException ex) {
-                            System.out.println("ERROR: sleep was interrupted!");
-                        }
                     }
                 %>
                 <div class="col-xs-12"><br></div>
@@ -519,11 +514,6 @@
                 <%
                         printed++;
                         count++;
-                        try {
-                            Thread.sleep(250);
-                        } catch(InterruptedException ex) {
-                            System.out.println("ERROR: sleep was interrupted!");
-                        }
                     }
                 %>
                 <div class="col-xs-12"><br></div>
@@ -1101,7 +1091,7 @@
     </div>
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%
     } else {
 %>

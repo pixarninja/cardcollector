@@ -42,9 +42,9 @@
 <div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h2>Search Results: Collections</h2><br>
+            <h2>Favorites: Collections</h2><br>
             <h4>
-                <p>Below are the results of your search. You may choose to view a collection's information page by clicking the "View" link. You may add the collection to your favorites by clicking the star button.</p>
+                <p>Below are your favorited collections. You may choose to view a collection's information page by clicking the "View" link. You may remove the collection from your favorites by clicking the star button.</p>
                 <br>
             </h4>
         </div>
@@ -75,7 +75,7 @@
                 %><h3>Showing: <%=count%> through <%=end%> out of <%=total%></h3><hr><%
                 int i;
                 %>
-                <form id="requestMoreForm" action="SearchServlet" method="POST">
+                <form id="requestMoreForm" action="UserServlet" method="POST">
                     <input type="hidden" name="action" value="more_collections">
                     <input type="hidden" name="start" value="<%=count + max%>">
                     <input type="hidden" name="total" value="<%=total%>">
@@ -90,7 +90,7 @@
                     %>
                     <input type="hidden" name="username" value="<%=username%>">
                 </form>
-                <form id="requestLessForm" action="SearchServlet" method="POST">
+                <form id="requestLessForm" action="UserServlet" method="POST">
                     <input type="hidden" name="action" value="less_collections">
                     <input type="hidden" name="start" value="<%=count - max%>">
                     <input type="hidden" name="total" value="<%=total%>">

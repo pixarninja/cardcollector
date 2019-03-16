@@ -436,6 +436,7 @@ body {
 #content-mobile {
     padding-top: 60px;
     font-family: 'Quicksand', sans-serif;
+    color: white;
 }
 
 #content-mobile a, p a {

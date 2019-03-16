@@ -83,9 +83,9 @@
 <div <%=welled%>>
     <div class="col-xs-12">
         <div class="col-xs-12">
-            <h2>Search Results: Cards</h2><br>
+            <h2>Favorites: Cards</h2><br>
             <h4>
-                <p>Below are the results of your search. You may choose to view a card's information page by clicking the link below it. You may add the card to a deck or collection by clicking the plus button, and you can add the card to your favorites list by clicking the star button.</p>
+                <p>Below are your favorited cards. You may choose to view a card's information page by clicking the link below it. You may add the card to a deck or collection by clicking the plus button, and you can remove the card from your favorites list by clicking the star button.</p>
                 <br>
             </h4>
         </div>
@@ -116,7 +116,7 @@
                 %><h3>Showing: <%=count%> through <%=end%> out of <%=total%></h3><hr><%
                 int i;
             %>
-            <form id="requestLessForm" action="SearchServlet" method="POST">
+            <form id="requestLessForm" action="UserServlet" method="POST">
                 <input type="hidden" name="action" value="less_cards">
                 <input type="hidden" name="total" value="<%=total%>">
                 <input type="hidden" name="start" value="<%=count - max%>">
@@ -131,7 +131,7 @@
                 %>
                 <input type="hidden" name="username" value="<%=username%>">
             </form>
-            <form id="requestMoreForm" action="SearchServlet" method="POST">
+            <form id="requestMoreForm" action="UserServlet" method="POST">
                 <input type="hidden" name="action" value="more_cards">
                 <input type="hidden" name="total" value="<%=total%>">
                 <input type="hidden" name="start" value="<%=count + max%>">
@@ -341,11 +341,6 @@
                             else {
                                 id = request.getParameter(Integer.toString(count));
                             }
-                            /*try {
-                                Thread.sleep(250);
-                            } catch(InterruptedException ex) {
-                                System.out.println("ERROR: sleep was interrupted!");
-                            }*/
                         }%><div class="col-xs-12"></div><%
                         count = 0;
                         total = 0;

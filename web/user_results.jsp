@@ -34,7 +34,7 @@
         username = "";
     }
 %>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%@include file="header.jsp"%>
 <!-- Content -->
 <div <%=welled%>>
@@ -42,7 +42,7 @@
         <div class="col-xs-12">
             <h2>Search Results: Users</h2><br>
             <h4>
-                <p>Below are the results of your search. You may choose to view a user's information page by clicking the "View" link. You may add the cards from the deck to your selection by clicking the "Add" link.</p>
+                <p>Below are the results of your search. You may choose to view a user's information page by clicking the "View" link. You may add the user to your favorites by clicking the star button.</p>
                 <br>
             </h4>
         </div>
@@ -129,10 +129,17 @@
             %>
             <%
                 if(end < total && count != 0) {
-                    if(count >= 1) {
+                    if(count > 1) {
             %>
             <div class="hidden-xs col-sm-4"></div>
             <%}%>
+            <%
+                if(count == 1) {
+            %>
+            <div class="col-xs-3 col-sm-4"></div>
+            <%
+                }
+            %>
             <div class="col-xs-6 col-sm-4">
                 <div class="col-xs-12"><br></div>
                 <button title="Next <%=max%> Users" id="form-submit" type="button" onclick="document.getElementById('requestMoreForm').submit();">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
@@ -258,11 +265,6 @@
                             else {
                                 id = request.getParameter(Integer.toString(count));
                             }
-                            try {
-                                Thread.sleep(250);
-                            } catch(InterruptedException ex) {
-                                System.out.println("ERROR: sleep was interrupted!");
-                            }
                         }%><div class="col-xs-12"></div><%
                         count = 0;
                         total = 0;
@@ -304,10 +306,17 @@
                     %>
                     <%
                         if(end < total && count != 0) {
-                            if(count >= 1) {
+                            if(count > 1) {
                     %>
                     <div class="hidden-xs col-sm-4"></div>
                     <%}%>
+                    <%
+                        if(count == 1) {
+                    %>
+                    <div class="col-xs-3 col-sm-4"></div>
+                    <%
+                        }
+                    %>
                     <div class="col-xs-6 col-sm-4">
                         <button title="Next <%=max%> Users" id="form-submit" type="button" onclick="document.getElementById('requestMoreForm').submit();">Next <%=max%>&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></button>
                         <div class="col-xs-12"><br></div>
@@ -326,5 +335,5 @@
     </div>
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%@include file="footer.jsp"%>

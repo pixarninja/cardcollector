@@ -37,7 +37,7 @@
         username = "";
     }
 %>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%@include file="header.jsp"%>
 <%
     int id = Integer.parseInt(request.getParameter("id"));

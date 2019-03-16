@@ -1035,7 +1035,7 @@
     </div>
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <script>
 Chart.defaults.global.defaultFontColor = "#fff";
 var colorCtx = document.getElementById("color-distribution").getContext('2d');

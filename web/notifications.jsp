@@ -935,5 +935,5 @@
 </div>
 <%}%>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%@include file="footer.jsp"%>

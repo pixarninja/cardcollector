@@ -701,5 +701,5 @@
         </div>
     </div>
 </div>
-<script src="js/scripts.js"></script>
+<script src="js/mana.js"></script>
 <%@include file="footer.jsp"%>

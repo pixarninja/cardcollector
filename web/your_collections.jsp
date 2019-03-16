@@ -62,7 +62,7 @@
                         <form id="addForm" action="CollectionServlet" method="POST">
                             <input type="hidden" name="action" value="new">
                             <input type="hidden" name="username" value="<%=username%>">
-                            <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New Collection</button>
+                            <button title="Create New Collection" id="form-submit" type="submit"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;New</button>
                         </form>
                     </div>
                     <div class="col-xs-12"><br></div>
@@ -220,7 +220,7 @@
     </div>
 </div>
 <form id="popupForm" action="PopupServlet" method="POST"></form>
-<script src="js/scripts.js"></script>
+<script src="js/popups.js"></script>
 <%
     } else {
 %>
